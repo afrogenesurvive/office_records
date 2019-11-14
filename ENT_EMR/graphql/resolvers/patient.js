@@ -6,7 +6,7 @@ const DataLoader = require('dataloader');
 const User = require('../../models/user');
 const Patient = require('../../models/patient');
 const Appointment = require('../../models/appointment');
-// const util = require('util');
+const util = require('util');
 
 const { transformPatient } = require('./merge');
 const { dateToString } = require('../../helpers/date');
@@ -15,67 +15,70 @@ const { pocketVariables } = require('../../helpers/pocketVars');
 
 module.exports = {
   patients: async (args, req) => {
-    // console.log("args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    // console.log("patients...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    console.log("patients...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables));
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
 
     try {
-      const users = await User.find()
+      const patients = await Patient.find()
       .populate('appointments');
 
-      return users.map(user => {
-        return transformUser(user);
+      return patients.map(patient => {
+        return transformPatient(patient);
       });
     } catch (err) {
       throw err;
     }
   },
-  getUserId: async (args, req) => {
-    // console.log("args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+  getPatientId: async (args, req) => {
+    console.log("args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
 
     try {
-      const user = await User.findById(args.otherUserId)
+      const patient = await Patient.findById(args.patientId)
       .populate('appointments');
 
         return {
-            ...user._doc,
-            _id: user.id,
-            name: user.name,
-            username: user.username
+            ...patient._doc,
+            _id: patient.id,
+            name: patient.name
         };
     } catch (err) {
       throw err;
     }
   },
-  getUserField: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+  getPatientField: async (args, req) => {
+    console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
 
     try {
-      const user = await User.findOne({username: args.username})
+
+      const resolverField = args.field;
+      const resolverQuery = args.query;
+
+      const patient = await Patient.find({resolverField: esolverQuery})
       .populate('appointments');
 
         return {
-            ...user._doc,
-            _id: user.id,
-            name: user.name,
-            username: user.username
+            ...patient._doc,
+            _id: patient.id,
+            name: patient.name
         };
     } catch (err) {
       throw err;
     }
   },
-  updateUser: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+  updatePatient: async (args, req) => {
+    console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -83,62 +86,46 @@ module.exports = {
 
     try {
 
-      const user = await User.findOneAndUpdate({_id:args.userId},{
-        email: args.userInput.email,
-        password: hashedPassword,
-        name: args.userInput.name,
-        dob: new Date(args.userInput.dob),
-        username: args.userInput.username,
-        description: args.userInput.description,
-        avatar: args.userInput.avatar,
-        phone: args.userInput.phone,
-        address: args.userInput.address
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{
+        name: args.patientInput.name,
       },{new: true})
       .populate('appointments');
 
         return {
-            ...user._doc,
-            _id: user.id,
-            name: user.name,
-            username: user.username,
-            phone: user.phone,
-            address: user.address
+            ...patient._doc,
+            _id: patient.id,
+            name: patient.name
         };
     } catch (err) {
       throw err;
     }
   },
-  updateUserAction: async (args, req) => {
+  updatePatientField: async (args, req) => {
     // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables));
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
-        const userAction = await Action.findById({_id:args.ActionId});
-        const userActionId = userAction.id
-        console.log("userAction... " + userAction.target);
-        console.log("userActionId... " + userActionId);
+        const resolverField = args.field;
+        const resolverQuery = args.query;
 
-        const user = await User.findOneAndUpdate({_id:args.userId},{$addToSet: {actions:userAction}},{new: true})
-        .populate('appointments')
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {resolverField:resolverQuery}},{new: true})
+        .populate('appointments');
 
         return {
-            ...user._doc,
-            _id: user.id,
-            name: user.name,
-            username: user.username,
-            email: user.email,
-            actions: user.actions
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
         };
     } catch (err) {
       throw err;
     }
   },
-  deleteUser: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+  deletePatient: async (args, req) => {
+    console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -146,20 +133,20 @@ module.exports = {
 
     try {
 
-      const user = await User.findByIdAndRemove(args.userId)
+      const patient = await Patient.findByIdAndRemove(args.patientId)
       .populate('appointments');
 
         return {
-            ...user._doc,
-            _id: user.id,
-            username: user.username
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
         };
     } catch (err) {
       throw err;
     }
   },
-  createUser: async args => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+  createPatient: async (args, req) => {
+    console.log("createPatient...args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -167,43 +154,27 @@ module.exports = {
 
     try {
 
-      const user = new User({
-        email: args.userInput.email,
-        password: hashedPassword,
-        name: args.userInput.name,
-        dob: new Date(args.userInput.dob),
-        username: args.userInput.username,
-        description: args.userInput.description,
-        avatar: args.userInput.avatar,
-        phone: args.userInput.phone,
-        address: args.userInput.address,
-        socialMedia: args.userInput.socialMedia,
-        demographics: args.userInput.demographics,
-        biographics: args.userInput.biographics,
-        psychgraphics: args.userInput.psychgraphics,
-        consumption: args.userInput.consumption,
-        actions: args.userInput.actions,
-        content: args.userInput.content,
-        groups: args.userInput.groups,
-        searches: args.userInput.searches,
-        perks: args.userInput.perks
+      const patient = new Patient({
+        name: args.patientInput.name,
+        dob: args.patientInput.dob,
+        address: args.patientInput.address,
+        contact: {
+          phone: args.patientInput.contactPhone,
+          email: args.patientInput.contactEmail
+        }
       });
 
-      const result = await user.save();
+      const result = await patient.save();
 
       return {
         ...result._doc,
-        password: hashedPassword,
-        _id: result.id,
-        email: result.email,
         name: result.name,
         dob: result.dob,
-        username: result.username,
-        description: result.description,
-        avatar: result.avatar,
-        phone: result.phone,
         address: result.address,
-        socialMedia: result.socialMedia
+        contact: {
+          phone: result.contactPhone,
+          email: result.contactEmail
+        }
       };
     } catch (err) {
       throw err;

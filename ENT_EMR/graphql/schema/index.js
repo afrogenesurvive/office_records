@@ -125,7 +125,7 @@ input AppointmentInput {
 
 type RootQuery {
 
-    users: [User]
+    users(userId: ID!): [User]
     getUserId(userId: ID! otherUserId: ID!): User
     getUserField(userId: ID!, field: String!, query: String!): User
     getThisUser: User
