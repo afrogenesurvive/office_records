@@ -2,15 +2,15 @@ const jwt = require('jsonwebtoken');
 // const util = require('util')
 
 module.exports = (req, res, next) => {
-  // console.log("here.....req object...", util.inspect(req));
   const authHeader = req.get('Authorization');
-  console.log("authHeader.....", authHeader);
+  console.log("isAuth.authHeader:   ", authHeader);
   if (!authHeader) {
     req.isAuth = false;
     console.log("is auth...???", req.isAuth);
     return next();
   }
   const token = authHeader.split(' ')[1];
+  console.log("isAuth token:   ", token);
   if (!token || token === '') {
     req.isAuth = false;
     return next();
@@ -18,6 +18,7 @@ module.exports = (req, res, next) => {
   let decodedToken;
   try {
     decodedToken = jwt.verify(token, 'MsBarbri');
+    console.log("isAuth.decodedToken:   ", decodedToken);
   } catch (err) {
     req.isAuth = false;
     return next();
