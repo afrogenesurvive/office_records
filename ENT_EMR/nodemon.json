@@ -1,0 +1,7 @@
+{
+  "env": {
+      "MONGO_USER": "profblack",
+      "MONGO_PASSWORD": "Y1goCqtw71ttDblZ",
+      "MONGO_URI": "mongodb+srv://profblack:Y1goCqtw71ttDblZ@cluster0-yauot.mongodb.net/test?retryWrites=true&w=majority"
+  }
+}
