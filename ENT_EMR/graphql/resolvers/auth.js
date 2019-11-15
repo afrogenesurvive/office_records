@@ -18,6 +18,8 @@ module.exports = {
     }
     const token = jwt.sign({ userId: user.id },'MsBarbri',{expiresIn: '1h'});
 
+    pocketVariables.token = token;
+    pocketVariables.userId = user.id;
 
     return { userId: user.id, token: token, tokenExpiration: 1 };
   }
