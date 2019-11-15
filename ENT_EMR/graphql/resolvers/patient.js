@@ -15,8 +15,8 @@ const { pocketVariables } = require('../../helpers/pocketVars');
 
 module.exports = {
   patients: async (args, req) => {
-    // console.log("patients...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("patients...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables));
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -34,7 +34,8 @@ module.exports = {
     }
   },
   getPatientId: async (args, req) => {
-    console.log("args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -54,7 +55,8 @@ module.exports = {
     }
   },
   getPatientField: async (args, req) => {
-    console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -78,7 +80,8 @@ module.exports = {
     }
   },
   updatePatient: async (args, req) => {
-    console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -101,8 +104,8 @@ module.exports = {
     }
   },
   updatePatientField: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables));
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -125,7 +128,8 @@ module.exports = {
     }
   },
   deletePatient: async (args, req) => {
-    console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -146,7 +150,8 @@ module.exports = {
     }
   },
   createPatient: async (args, req) => {
-    console.log("createPatient...args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');

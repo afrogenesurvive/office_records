@@ -5,6 +5,8 @@ import { Router, Route, Switch } from "react-router-dom";
 
 import "assets/scss/material-kit-react.scss?v=1.8.0";
 
+import AuthContext from '../context/auth-context';
+
 // pages for this product
 import Components from "views/Components/Components.js";
 import LandingPage from "views/LandingPage/LandingPage.js";

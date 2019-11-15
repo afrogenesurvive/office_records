@@ -127,7 +127,7 @@ type RootQuery {
 
     users(userId: ID!): [User]
     getUserId(userId: ID! otherUserId: ID!): User
-    getUserField(userId: ID!, field: String!, query: String!): User
+    getUserField(userId: ID!, field: String!, query: String!): [User]
     getThisUser: User
 
     patients(userId: ID!): [Patient]
