@@ -23,9 +23,16 @@ import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/bg7.jpg";
 
+import AuthData from "components/authContext/authContext.js";
 const useStyles = makeStyles(styles);
+const authData = AuthData;
+console.log(authData);
+
+
 
 export default function LoginPage(props) {
+
+
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
     setCardAnimation("");
@@ -33,6 +40,8 @@ export default function LoginPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   return (
+
+
     <div>
       <Header
         absolute
@@ -138,7 +147,7 @@ export default function LoginPage(props) {
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary" size="lg">
+                    <Button onClick={() => { console.log('loggin in'); }} simple color="primary" size="lg">
                       Get started
                     </Button>
                   </CardFooter>
