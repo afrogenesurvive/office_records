@@ -19,16 +19,17 @@ type AuthData {
   tokenExpiration: Int!
 }
 
+
 type Patient {
   _id: ID!
   name: String
   dob: String
   address: String
   registrationDate: String
-  referringDoctor: String
-  contact: String
+  referringDoctor: referringDoctor
+  contact: PatientContact
   appointments: [Appointment]
-  occupation: String
+  occupation: PatientOccupation
   nextOfKin: String
   insurance: String
   complaint: [String]
@@ -40,6 +41,25 @@ type Patient {
   management: [String]
   notes: [String]
   tags: [String]
+}
+
+type referringDoctor {
+  name: String
+  email: String
+  phone: String
+}
+type PatientContact {
+  email: String
+  phone: String
+}
+type PatientOccupation {
+  role: String
+  employer: String
+  contact: PatientOccupationContact
+}
+type PatientOccupationContact {
+  email: String
+  phone: String
 }
 
 type Appointment {

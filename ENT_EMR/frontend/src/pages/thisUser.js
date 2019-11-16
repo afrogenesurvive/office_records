@@ -21,67 +21,12 @@ class UsersPage extends Component {
     this.emailElRef = React.createRef();
     this.passwordElRef = React.createRef();
     this.nameElRef = React.createRef();
-    this.usernameElRef = React.createRef();
-    this.descriptionElRef = React.createRef();
-    this.avatarElRef = React.createRef();
-    this.dobElRef = React.createRef();
-    this.phoneElRef = React.createRef();
-    this.addressElRef =  React.createRef();
+    this.roleElRef = React.createRef();
     this.user = null;
   }
 
   componentDidMount() {
     this.getThisUser();
-  }
-
-  createAction(creatorId,type,body) {
-
-    console.log("'create actions function' context object... " + JSON.stringify(this.context));
-    console.log("args.creatorId..." + creatorId, "action type..." + type, "action body..." + body);
-    const userId = creatorId;
-    const token = this.context.token;
-
-    const requestBody = {
-      query: `
-          mutation createAction($userId: ID!, $type: String!, $body: String!) {
-            createAction(userId: $userId, actionInput: {type: $type, body: $body}) {
-              _id
-              creator
-              {_id,username}
-              body
-            }
-          }
-        `,
-        variables: {
-          userId: userId,
-          type: type,
-          body: body
-        }
-    };
-
-    fetch('http://localhost:10000/graphql', {
-      method: 'POST',
-      body: JSON.stringify(requestBody),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token
-      }
-    })
-      .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Failed!');
-        }
-        return res.json();
-      })
-      .then(resData => {
-
-        console.log("response data... " + JSON.stringify(resData));
-        this.context.action1 = null;
-
-          })
-      .catch(err => {
-        console.log(err);
-      });
   }
 
 
@@ -94,44 +39,29 @@ class UsersPage extends Component {
     const email = this.emailElRef.current.value;
     const password = this.passwordElRef.current.value;
     const name = this.nameElRef.current.value;
-    const username = this.usernameElRef.current.value;
-    const description = this.descriptionElRef.current.value;
-    const avatar = this.avatarElRef.current.value;
-    const dob = this.dobElRef.current.value;
-    const phone = this.phoneElRef.current.value;
-    const address = this.addressElRef.current.value;
+    const role = this.roleElRef.current.value;
 
     if (
       email.trim().length === 0 ||
       password.trim().length === 0 ||
       name.trim().length === 0 ||
-      username.trim().length === 0 ||
-      description.trim().length === 0 ||
-      avatar.trim().length === 0 ||
-      dob.trim().length === 0 ||
-      phone.trim().length === 0 ||
-      address.trim().length === 0
+      role.trim().length === 0
     ) {
       return;
     }
 
-    const user = { email, password, name, username, description, avatar, dob, phone, address };
+    const user = { email, password, name, role };
     console.log("updating user... " + JSON.stringify(user));
 
     const requestBody = {
       query: `
-          mutation UpdateUser($email: String!, $password: String!, $name: String!, $username: String!, $description: String!, $avatar: String!, $dob: String!, $phone: String!, $address: String!) {
-            updateUser(userInput: {email: $email, password: $password, name: $name, username: $username, description: $description, avatar: $avatar, dob: $dob, phone: $phone, address: $address}) {
+          mutation UpdateUser($email: String!, $password: String!, $name: String!, $role: String!) {
+            updateUser(userInput: {email: $email, password: $password, name: $name, role: $role}) {
               _id
               email
               password
               name
-              username
-              description
-              avatar
-              dob
-              phone
-              address
+              role
             }
           }
         `,
@@ -139,12 +69,7 @@ class UsersPage extends Component {
           email: email,
           password: password,
           name: name,
-          username: username,
-          description: description,
-          avatar: avatar,
-          dob: dob,
-          phone: phone,
-          address: address
+          role: role
         }
     };
 
@@ -166,12 +91,6 @@ class UsersPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
-
-        this.context.action1 = JSON.stringify(requestBody);
-        console.log("this context object..." + JSON.stringify(this.context));
-        console.log("this context action1..." + this.context.action1);
-
-        this.createAction(this.context.id,"mutation",this.context.action1);
 
       })
       .catch(err => {
@@ -194,12 +113,7 @@ class UsersPage extends Component {
               email
               password
               name
-              username
-              description
-              avatar
-              dob
-              phone
-              address
+              role
             }
           }
         `
@@ -231,14 +145,7 @@ class UsersPage extends Component {
 
           sessionStorage.setItem('thisUser', JSON.stringify(thisUser));
 
-          this.context.action1 = JSON.stringify(requestBody);
-          console.log("this context object..." + JSON.stringify(this.context));
-          console.log("this context action1..." + this.context.action1);
-
-          this.createAction(this.context.userId,"mutation",this.context.action1);
-
         }
-        // this.user = thisUser;
       })
       .catch(err => {
         console.log(err);
@@ -280,30 +187,9 @@ class UsersPage extends Component {
               <input type="text" id="name" ref={this.nameElRef} />
             </div>
             <div className="form-control">
-              <label htmlFor="username">Username</label>
-              <input type="text" id="username" ref={this.usernameElRef} />
+              <label htmlFor="role">Role</label>
+              <input type="text" id="role" ref={this.roleElRef} />
             </div>
-            <div className="form-control">
-              <label htmlFor="description">Bio</label>
-              <input type="text" id="description" ref={this.descriptionElRef} />
-            </div>
-            <div className="form-control">
-              <label htmlFor="avatar">Avatar Link</label>
-              <input type="text" id="avatar" ref={this.avatarElRef} />
-            </div>
-            <div className="form-control">
-              <label htmlFor="address">Address</label>
-              <input type="text" id="address" ref={this.addressElRef} />
-            </div>
-            <div className="form-control">
-              <label htmlFor="phone">Phone</label>
-              <input type="number" id="phone" ref={this.phoneElRef} />
-            </div>
-            <div className="form-control">
-              <label htmlFor="date">Date of Birth</label>
-              <input type="datetime-local" id="date" ref={this.dobElRef} />
-            </div>
-
           </form>
           </Modal>
         )}

@@ -104,7 +104,7 @@ module.exports = {
     }
   },
   updatePatientField: async (args, req) => {
-    // cgonsole.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
     console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
@@ -159,6 +159,17 @@ module.exports = {
 
     try {
 
+      const existingPatientName = await Patient.findOne({ name: args.patientInput.name});
+
+      if (existingPatientName) {
+        throw new Error('Patient w/ that name exists already.');
+      }
+
+      const today = new Date();
+      const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const dateTime = date+' '+time;
+
       const patient = new Patient({
         name: args.patientInput.name,
         dob: args.patientInput.dob,
@@ -166,6 +177,20 @@ module.exports = {
         contact: {
           phone: args.patientInput.contactPhone,
           email: args.patientInput.contactEmail
+        },
+        registrationDate: dateTime,
+        referringDoctor: {
+          name: args.patientInput.referringDoctorName,
+          email: args.patientInput.referringDoctorEmail,
+          phone: args.patientInput.referringDoctorPhone
+        },
+        occupation: {
+          role: args.patientInput.occupationRole,
+          employer: args.patientInput.occupationEmployer,
+          contact:{
+            phone: args.patientInput.occupationEmployerContactPhone,
+            email: args.patientInput.occupationEmployerContactEmail
+          }
         }
       });
 
@@ -177,8 +202,22 @@ module.exports = {
         dob: result.dob,
         address: result.address,
         contact: {
-          phone: result.contactPhone,
-          email: result.contactEmail
+          phone: result.contact.phone,
+          email: result.contact.email
+        },
+        registrationDate: result.registrationDate,
+        referringDoctor: {
+          name: result.referringDoctor.name,
+          email: result.referringDoctor.email,
+          phone: result.referringDoctor.phone
+        },
+        occupation: {
+          role: result.occupation.role,
+          employer: result.occupation.employer,
+          contact: {
+            phone: result.occupation.contact.phone,
+            email: result.occupation.contact.email
+          }
         }
       };
     } catch (err) {

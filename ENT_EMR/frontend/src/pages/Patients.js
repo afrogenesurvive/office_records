@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 
 import Modal from '../components/Modal/Modal';
 import Backdrop from '../components/Backdrop/Backdrop';
-import UserList from '../components/Users/UserList/UserList';
-import UserDetail from '../components/Users/userDetail';
+import PatientList from '../components/Patients/PatientList/PatientList';
+import PatientDetail from '../components/Patients/PatientDetail';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
-import './Users.css';
+import './Patients.css';
 
-class UsersPage extends Component {
+class PatientsPage extends Component {
   state = {
     creating: false,
-    users: [],
+    patients: [],
     isLoading: false,
-    selectedUser: null
+    selectedPatient: null
   };
   isActive = true;
 
@@ -24,15 +24,20 @@ class UsersPage extends Component {
     this.emailElRef = React.createRef();
     this.passwordElRef = React.createRef();
     this.nameElRef = React.createRef();
-    this.roleElRef = React.createRef();
+    this.usernameElRef = React.createRef();
+    this.descriptionElRef = React.createRef();
+    this.avatarElRef = React.createRef();
+    this.dobElRef = React.createRef();
+    this.phoneElRef = React.createRef();
+    this.addressElRef = React.createRef();
   }
 
   componentDidMount() {
-    this.fetchUsers();
+    this.fetchPatients();
   }
 
 
-  startCreateUserHandler = () => {
+  startCreatePatientHandler = () => {
     this.setState({ creating: true });
   };
 
@@ -41,29 +46,44 @@ class UsersPage extends Component {
     const email = this.emailElRef.current.value;
     const password = this.passwordElRef.current.value;
     const name = this.nameElRef.current.value;
-    const role = this.roleElRef.current.value;
+    const username = this.usernameElRef.current.value;
+    const description = this.descriptionElRef.current.value;
+    const avatar = this.avatarElRef.current.value;
+    const dob = this.dobElRef.current.value;
+    const phone = this.phoneElRef.current.value;
+    const address = this.addressElRef.current.value;
 
     if (
       email.trim().length === 0 ||
       password.trim().length === 0 ||
       name.trim().length === 0 ||
-      role.trim().length === 0
+      username.trim().length === 0 ||
+      description.trim().length === 0 ||
+      avatar.trim().length === 0 ||
+      dob.trim().length === 0 ||
+      phone.trim().length === 0 ||
+      address.trim().length === 0
     ) {
       return;
     }
 
-    const user = { email, password, name, role };
+    const user = { email, password, name, username, description, avatar, dob, phone, address };
     console.log("creating user.. " + JSON.stringify(user));
 
     const requestBody = {
       query: `
-          mutation CreateUser($email: String!, $password: String!, $name: String!, $role: String!) {
-            createUser(userInput: {email: $email, password: $password, name: $name, role: $role}) {
+          mutation CreateUser($email: String!, $password: String!, $name: String!, $username: String!, $description: String!, $avatar: String!, $dob: String!, $phone: String!, $address: String!) {
+            createUser(userInput: {email: $email, password: $password, name: $name, username: $username, description: $description, avatar: $avatar, dob: $dob, phone: $phone, address: $address}) {
               _id
               email
               password
               name
-              role
+              username
+              description
+              avatar
+              dob
+              phone
+              address
             }
           }
         `,
@@ -71,7 +91,12 @@ class UsersPage extends Component {
           email: email,
           password: password,
           name: name,
-          role: role
+          username: username,
+          description: description,
+          avatar: avatar,
+          dob: dob,
+          phone: phone,
+          address: address
         }
     };
 
@@ -99,7 +124,12 @@ class UsersPage extends Component {
             _id: resData.data.createUser._id,
             email: resData.data.createUser.email,
             name: resData.data.createUser.name,
-            role: resData.data.createUser.role
+            username: resData.data.createUser.username,
+            description: resData.data.createUser.description,
+            avatar: resData.data.createUser.avatar,
+            dob: resData.data.createUser.dob,
+            phone: resData.data.createUser.phone,
+            address: resData.data.createUser.address,
           });
 
           return { users: updatedUsers };
