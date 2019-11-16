@@ -6,7 +6,6 @@ import './thisUserProfile.css';
 
 const thisUserProfile = (props) => {
   const {...user} = props.user;
-  console.log("should be user object avatar..." + user.avatar);
   console.log("should be user object id..." + user._id);
   return (
     <Card style={{ width: '18rem' }}>

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 import AuthPage from './pages/Auth';
 import UsersPage from './pages/Users';
+import PatientsPage from './pages/Patients';
 import ThisUserPage from './pages/thisUser';
 import MainNavigation from './components/Navigation/MainNavigation';
 import AuthContext from './context/auth-context';
@@ -46,6 +47,7 @@ class App extends Component {
                 { // logged in -> pages
                 this.state.token && <Redirect from="/" to="/users" exact />}
                 {this.state.token && (<Route path="/users" component={UsersPage} />)}
+                {this.state.token && (<Route path="/patients" component={PatientsPage} />)}
                 {this.state.token && (<Route path="/profile" component={ThisUserPage} />)}
 
                 { // logged in -> users page from login page
