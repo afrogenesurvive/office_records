@@ -16,7 +16,7 @@ const { pocketVariables } = require('../../helpers/pocketVars');
 module.exports = {
   patients: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("patients...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -35,7 +35,7 @@ module.exports = {
   },
   getPatientId: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("getPatientId...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -56,7 +56,7 @@ module.exports = {
   },
   getPatientField: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("getPatientField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -66,22 +66,24 @@ module.exports = {
 
       const resolverField = args.field;
       const resolverQuery = args.query;
+      const query = {[resolverField]:resolverQuery};
 
-      const patient = await Patient.find({resolverField: esolverQuery})
-      .populate('appointments');
+      console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
 
-        return {
-            ...patient._doc,
-            _id: patient.id,
-            name: patient.name
-        };
+      // const patients = await Patient.find(query);
+      const patients = await Patient.find({'address': resolverQuery});
+
+      return patients.map(patient => {
+        return transformPatient(patient);
+
+      });
     } catch (err) {
       throw err;
     }
   },
   updatePatient: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("updatePatient...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -89,8 +91,33 @@ module.exports = {
 
     try {
 
+      const today = new Date();
+      const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const dateTime = date+' '+time;
+
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{
         name: args.patientInput.name,
+        dob: args.patientInput.dob,
+        address: args.patientInput.address,
+        contact: {
+          phone: args.patientInput.contactPhone,
+          email: args.patientInput.contactEmail
+        },
+        registrationDate: dateTime,
+        referringDoctor: {
+          name: args.patientInput.referringDoctorName,
+          email: args.patientInput.referringDoctorEmail,
+          phone: args.patientInput.referringDoctorPhone
+        },
+        occupation: {
+          role: args.patientInput.occupationRole,
+          employer: args.patientInput.occupationEmployer,
+          contact:{
+            phone: args.patientInput.occupationEmployerContactPhone,
+            email: args.patientInput.occupationEmployerContactEmail
+          }
+        }
       },{new: true})
       .populate('appointments');
 
@@ -105,7 +132,7 @@ module.exports = {
   },
   updatePatientField: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("updatePatientField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -114,8 +141,11 @@ module.exports = {
 
         const resolverField = args.field;
         const resolverQuery = args.query;
+        const query = {[resolverField]:resolverQuery};
 
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {resolverField:resolverQuery}},{new: true})
+        console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},query,{new: true})
         .populate('appointments');
 
         return {
@@ -129,7 +159,7 @@ module.exports = {
   },
   deletePatient: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("deletePatient...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -151,7 +181,7 @@ module.exports = {
   },
   createPatient: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("createPatient...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');

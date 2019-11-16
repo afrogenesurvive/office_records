@@ -152,11 +152,11 @@ type RootQuery {
 
     patients(userId: ID!): [Patient]
     getPatientId(patientId: ID! userId: ID!): Patient
-    getPatientField(userId: ID!, field: String!, query: String!): Patient
+    getPatientField(userId: ID!, field: String!, query: String!): [Patient]
 
     appointments(userId: ID!): [Appointment]
     getAppointmentId(appointmentId: ID! userId: ID!): Appointment
-    getAppointmentField(userId: ID!, field: String!, query: String!): Appointment
+    getAppointmentField(userId: ID!, field: String!, query: String!): [Appointment]
 
     login(email: String!, password: String!): AuthData!
 

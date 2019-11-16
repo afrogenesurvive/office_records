@@ -46,23 +46,12 @@ class PatientsPage extends Component {
     const email = this.emailElRef.current.value;
     const password = this.passwordElRef.current.value;
     const name = this.nameElRef.current.value;
-    const username = this.usernameElRef.current.value;
-    const description = this.descriptionElRef.current.value;
-    const avatar = this.avatarElRef.current.value;
-    const dob = this.dobElRef.current.value;
-    const phone = this.phoneElRef.current.value;
-    const address = this.addressElRef.current.value;
 
     if (
       email.trim().length === 0 ||
       password.trim().length === 0 ||
       name.trim().length === 0 ||
       username.trim().length === 0 ||
-      description.trim().length === 0 ||
-      avatar.trim().length === 0 ||
-      dob.trim().length === 0 ||
-      phone.trim().length === 0 ||
-      address.trim().length === 0
     ) {
       return;
     }
