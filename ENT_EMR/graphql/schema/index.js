@@ -39,6 +39,7 @@ type Patient {
   investigation: [String]
   diagnosis: [String]
   management: [String]
+  billing: Billing
   notes: [String]
   tags: [String]
 }
@@ -61,6 +62,15 @@ type PatientOccupationContact {
   email: String
   phone: String
 }
+type Billing {
+  date: String
+  title: String
+  type: String
+  description: String
+  amount: Float
+  paid: Boolean
+  notes: [String]
+}
 
 type Appointment {
   _id: ID!
@@ -70,6 +80,7 @@ type Appointment {
   location: String
   description: String
   patient: Patient
+  inProgress: Boolean
   notes: [String]
 }
 
@@ -91,7 +102,7 @@ input PatientInput {
   referringDoctorName: String
   referringDoctorEmail: String
   referringDoctorPhone: String
-  appointments: [String]
+  appointment: String
   occupationRole: String
   occupationEmployer: String
   occupationEmployerContactPhone: String
@@ -129,8 +140,15 @@ input PatientInput {
   treatmentDose: String
   treatmentFrequency: String
   treatmentType: String
-  notes: [String]
-  tags: [String]
+  billingDate: String
+  billingTitle: String
+  billingType: String
+  billingDescription: String
+  billingAmount: Float
+  billingPaid: Boolean
+  billingNote: String
+  note: String
+  tag: String
 }
 
 input AppointmentInput {
@@ -140,7 +158,8 @@ input AppointmentInput {
   location: String
   description: String
   patient: String
-  notes: [String]
+  inProgress: Boolean
+  note: String
 }
 
 type RootQuery {
@@ -172,11 +191,14 @@ type RootMutation {
     createPatient(userId: ID!, patientInput: PatientInput!): Patient
     updatePatient(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientField(userId: ID!, patientId: ID!, field: String!, query: String!): Patient
+    updatePatientFieldArray(userId: ID!, patientId: ID!, field: String!, query: String!): Patient
+    updatePatientAppointment(userId: ID!, patientId: ID!, appointmentId: ID!): Patient
     deletePatient(userId: ID!, patientId: ID!): Patient
 
-    createAppointment(userId: ID!, appointmentInput: AppointmentInput!): Appointment
+    createAppointment(userId: ID!, patientId: ID!, appointmentInput: AppointmentInput!): Appointment
     updateAppointment(userId: ID!, appointmentId: ID!, appointmentInput: AppointmentInput!): Appointment
     updateAppointmentField(userId: ID!, appointmentId: ID!, field: String!, query: String!): Appointment
+    updateAppointmentFieldArray(userId: ID!, appointmentId: ID!, field: String!, query: String!): Appointment
     deleteAppointment(userId: ID!, appointmentId: ID!): Appointment
 
 }

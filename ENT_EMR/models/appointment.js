@@ -28,6 +28,9 @@ const appointmentSchema = new Schema({
         ref: 'Patient',
         required: true
   },
+  inProgress: {
+    type: Boolean
+  },
   notes: [String]
 },
   { timestamps: true }
