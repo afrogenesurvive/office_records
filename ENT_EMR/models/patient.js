@@ -120,6 +120,19 @@ const patientSchema = new Schema({
       type: String
     }
   ],
+  billing:[{
+    date: {
+      type: Date
+    },
+    title: String,
+    type: String,
+    description: String,
+    amount: Number,
+    paid: {
+      type: Boolean
+    },
+    notes: [String]
+  }],
   notes: [String],
   tags: [String]
 },

@@ -157,6 +157,63 @@ module.exports = {
       throw err;
     }
   },
+  updatePatientFieldArray: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+
+        const resolverField = args.field;
+        const resolverQuery = args.query;
+        const query = {[resolverField]:resolverQuery};
+
+        console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: query},{new: true})
+        .populate('appointments');
+
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientAppointment: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientAppointment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+      // check user role??
+      // }
+      // else {
+
+        const patientAppointment = await Appointment.findById({_id:args.appointmentId});
+        const patientAppointmentId = patientAppointment.id
+        console.log("patientAppointment... " + patientAppointment.name);
+        console.log("patientAppointmentId... " + patientAppointmentId);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {appointments:patientAppointment}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
   deletePatient: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
     console.log("deletePatient...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
@@ -221,8 +278,28 @@ module.exports = {
             phone: args.patientInput.occupationEmployerContactPhone,
             email: args.patientInput.occupationEmployerContactEmail
           }
+        },
+      nextOfKin: {
+          name: args.patientInput.nextOfKinName,
+          phone: args.patientInput.nextOfKinPhone,
+          email: args.patientInput.nextOfKinEmail
+      },
+      insurance: {
+        company: args.patientInput.insuranceCompany,
+        number: args.patientInput.insuranceNumber,
+        description: args.patientInput.insuranceDescription,
+        expiry: args.patientInput.insuranceExpiry,
+        subscriber: {
+          company: args.patientInput.insuranceSubscriberCompany,
+          description: args.patientInput.insuranceSubscriberDescription
         }
-      });
+      },
+      complaint: {
+        date: args.patientInput.complaintDate,
+        title: args.patientInput.complaintTitle,
+        description: args.patientInput.complaintDescription
+      }
+    });
 
       const result = await patient.save();
 
@@ -248,6 +325,26 @@ module.exports = {
             phone: result.occupation.contact.phone,
             email: result.occupation.contact.email
           }
+        },
+        nextOfKin: {
+            name: result.nextOfKinName,
+            phone: result.nextOfKinPhone,
+            email: result.nextOfKinEmail
+        },
+        insurance: {
+          company: result.insuranceCompany,
+          number: result.insuranceNumber,
+          description: result.insuranceDescription,
+          expiry: result.insuranceExpiry,
+          subscriber: {
+            company: result.insuranceSubscriberCompany,
+            description: result.insuranceSubscriberDescription
+          }
+        },
+        complaint: {
+          date: result.complaintDate,
+          title: result.complaintTitle,
+          description: result.complaintDescription
         }
       };
     } catch (err) {
