@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 import './thisUserProfile.css';
 
-const userDetail = (props) => {
+const UserDetail = (props) => {
   const {...user} = props.user;
   const authUserId = props.authUserId;
   console.log("props.authUserId:  ",authUserId, "props.user:  ", {...user});
@@ -22,4 +22,4 @@ const userDetail = (props) => {
   );
 }
 
-export default userDetail;
+export default UserDetail;

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Modal from '../components/Modal/Modal';
 import Backdrop from '../components/Backdrop/Backdrop';
 import UserList from '../components/Users/UserList/UserList';
-import UserDetail from '../components/Users/userDetail';
+import UserDetail from '../components/Users/UserDetail';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
 import './Users.css';
