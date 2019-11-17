@@ -26,12 +26,6 @@ const patientSchema = new Schema({
     phone: String,
     email: String
   },
-  appointments: [
-    {
-      type: Schema.Types.ObjectId,
-          ref: 'Appointment'
-    }
-  ],
   occupation: {
       role: String,
       employer: String,
@@ -40,13 +34,6 @@ const patientSchema = new Schema({
         email: String
       }
   },
-  nextOfKin: [{
-    name: String,
-    contact: {
-      phone: String,
-      email: String
-    }
-  }],
   insurance: {
     company: String,
     number: String,
@@ -59,6 +46,19 @@ const patientSchema = new Schema({
       description: String
     }
   },
+  appointments: [
+    {
+      type: Schema.Types.ObjectId,
+          ref: 'Appointment'
+    }
+  ],
+  nextOfKin: [{
+    name: String,
+    contact: {
+      phone: String,
+      email: String
+    }
+  }],
   complaint: [
     {
       date: {

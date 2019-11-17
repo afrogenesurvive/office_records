@@ -21,15 +21,20 @@ class PatientsPage extends Component {
 
   constructor(props) {
     super(props);
-    this.emailElRef = React.createRef();
-    this.passwordElRef = React.createRef();
     this.nameElRef = React.createRef();
-    this.usernameElRef = React.createRef();
-    this.descriptionElRef = React.createRef();
-    this.avatarElRef = React.createRef();
     this.dobElRef = React.createRef();
-    this.phoneElRef = React.createRef();
     this.addressElRef = React.createRef();
+    this.contactPhoneElRef = React.createRef();
+    this.contactEmailElRef = React.createRef();
+    this.registrationDateElRef = React.createRef();
+    this.referringDoctorElRef = React.createRef();
+    this.referringDoctorNameElRef = React.createRef();
+    this.referringDoctorEmailElRef = React.createRef();
+    this.referringDoctorPhoneElRef = React.createRef();
+    this.occupationRoleElRef = React.createRef();
+    this.occupationEmployerElRef = React.createRef();
+    this.occupationEmployerContactPhoneElRef = React.createRef();
+    this.occupationEmployerContactEmailElRef = React.createRef();
   }
 
   componentDidMount() {
@@ -43,49 +48,93 @@ class PatientsPage extends Component {
 
   modalConfirmHandler = () => {
     this.setState({ creating: false });
-    const email = this.emailElRef.current.value;
-    const password = this.passwordElRef.current.value;
-    const name = this.nameElRef.current.value;
+
+    const userId = this.context.userId;
+
+    const name = this.nameElRef
+    const dob = this.dobElRef.current.value;
+    const address = this.addressElRef.current.value;
+    const contactPhone = this.contactPhoneElRef.current.value;
+    const contactEmail = this.contactEmailElRef.current.value;
+    const registrationDate = this.registrationDateElRef.current.value;
+    const referringDoctor = this.referringDoctorElRef.current.value;
+    const referringDoctorName = this.referringDoctorNameElRef.current.value;
+    const referringDoctorEmail = this.referringDoctorEmailElRef.current.value;
+    const referringDoctorPhone = this.referringDoctorPhoneElRef.current.value;
+    const occupationRole = this.occupationRoleElRef.current.value;
+    const occupationEmployer = this.occupationEmployerElRef.current.value;
+    const occupationEmployerContactPhone = this.occupationEmployerContactPhoneElRef.current.value;
+    const occupationEmployerContactEmail = this.occupationEmployerContactEmailElRef.current.value;
 
     if (
-      email.trim().length === 0 ||
-      password.trim().length === 0 ||
       name.trim().length === 0 ||
-      username.trim().length === 0 ||
+      dob.trim().length === 0 ||
+      address.trim().length === 0 ||
+      contactPhone.trim().length === 0 ||
+      contactEmail.trim().length === 0 ||
+      registrationDate.trim().length === 0 ||
+      referringDoctor.trim().length === 0 ||
+      referringDoctorName.trim().length === 0 ||
+      referringDoctorEmail.trim().length === 0 ||
+      referringDoctorPhone.trim().length === 0 ||
+      occupationRole.trim().length === 0 ||
+      occupationEmployer.trim().length === 0 ||
+      occupationEmployerContactPhone.trim().length === 0 ||
+      occupationEmployerContactEmail.trim().length === 0
     ) {
       return;
     }
 
-    const user = { email, password, name, username, description, avatar, dob, phone, address };
-    console.log("creating user.. " + JSON.stringify(user));
+    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctor, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
+    console.log("creating patient.. " + JSON.stringify(patient));
 
     const requestBody = {
       query: `
-          mutation CreateUser($email: String!, $password: String!, $name: String!, $username: String!, $description: String!, $avatar: String!, $dob: String!, $phone: String!, $address: String!) {
-            createUser(userInput: {email: $email, password: $password, name: $name, username: $username, description: $description, avatar: $avatar, dob: $dob, phone: $phone, address: $address}) {
+          mutation CreatePaitient($userId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctor: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!) {
+            createPaitient(userId: $userId, patientInput: { email: $email, name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctor: $referringDoctor, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail}) {
               _id
-              email
-              password
               name
-              username
-              description
-              avatar
-              dob
-              phone
               address
+              contact{
+                email
+                phone
+              }
+              registrationDate
+              referringDoctor
+              {
+                name
+                email
+                phone
+              }
+              occupation
+              {
+                role
+                employer
+                contact
+                {
+                  email
+                  phone
+                }
+              }
             }
           }
         `,
         variables: {
-          email: email,
-          password: password,
+          userId: userId,
           name: name,
-          username: username,
-          description: description,
-          avatar: avatar,
           dob: dob,
-          phone: phone,
-          address: address
+          address: address,
+          contactPhone: contactPhone,
+          contactEmail: contactEmail,
+          registrationDate: registrationDate,
+          referringDoctor: referringDoctor,
+          referringDoctorName: referringDoctorName,
+          referringDoctorEmail: referringDoctorEmail,
+          referringDoctorPhone: referringDoctorPhone,
+          occupationRole: occupationRole,
+          occupationEmployer: occupationEmployer,
+          occupationEmployerContactPhone: occupationEmployerContactPhone,
+          occupationEmployerContactEmail: occupationEmployerContactEmail
         }
     };
 
@@ -108,20 +157,26 @@ class PatientsPage extends Component {
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
         this.setState(prevState => {
-          const updatedUsers = [...prevState.users];
-          updatedUsers.push({
-            _id: resData.data.createUser._id,
-            email: resData.data.createUser.email,
-            name: resData.data.createUser.name,
-            username: resData.data.createUser.username,
-            description: resData.data.createUser.description,
-            avatar: resData.data.createUser.avatar,
-            dob: resData.data.createUser.dob,
-            phone: resData.data.createUser.phone,
-            address: resData.data.createUser.address,
+          const updatedPatients = [...prevState.patients];
+          updatedPatients.push({
+            _id: resData.data.createPatient._id,
+            name: resData.data.createPatient.name,
+            dob: resData.data.createPatient.dob,
+            address: resData.data.createPatient.address,
+            contactPhone: resData.data.createPatient.contactPhone,
+            contactEmail: resData.data.createPatient.contactEmail,
+            registrationDate: resData.data.createPatient.registrationDate,
+            referringDoctor: resData.data.createPatient.referringDoctor,
+            referringDoctorName: resData.data.createPatient.referringDoctorName,
+            referringDoctorEmail: resData.data.createPatient.referringDoctorEmail,
+            referringDoctorPhone: resData.data.createPatient.referringDoctorPhone,
+            occupationRole: resData.data.createPatient.occupationRole,
+            occupationEmployer: resData.data.createPatient.occupationEmployer,
+            occupationEmployerContactPhone: resData.data.createPatient.occupationEmployerContactPhone,
+            occupationEmployerContactEmail: resData.data.createPatient.occupationEmployerContactEmail
           });
 
-          return { users: updatedUsers };
+          return { patients: updatedPatients };
         });
       })
       .catch(err => {
@@ -130,23 +185,42 @@ class PatientsPage extends Component {
   };
 
   modalCancelHandler = () => {
-    this.setState({ creating: false, selectedUser: null });
+    this.setState({ creating: false, selectedPatient: null });
   };
 
-  fetchUsers() {
-    console.log("'fetch users function' context object... " + JSON.stringify(this.context));
+  fetchPatients() {
+    console.log("'fetch patients function' context object... " + JSON.stringify(this.context));
     const userId = this.context.userId;
 
     this.setState({ isLoading: true });
     const requestBody = {
       query: `
-          query users($userId: ID!) {
-            users(userId: $userId) {
+          query patients($userId: ID!) {
+            patients(userId: $userId) {
               _id
-              email
-              password
               name
-              role
+              address
+              contact{
+                email
+                phone
+              }
+              registrationDate
+              referringDoctor
+              {
+                name
+                email
+                phone
+              }
+              occupation
+              {
+                role
+                employer
+                contact
+                {
+                  email
+                  phone
+                }
+              }
             }
           }
         `,
@@ -170,11 +244,11 @@ class PatientsPage extends Component {
         return res.json();
       })
       .then(resData => {
-        const users = resData.data.users;
-        console.log(users);
+        const patients = resData.data.patients;
+        console.log(patients);
 
         if (this.isActive) {
-          this.setState({ users: users, isLoading: false });
+          this.setState({ patients: patients, isLoading: false });
         }
       })
       .catch(err => {
@@ -186,13 +260,13 @@ class PatientsPage extends Component {
   }
 
 
-  showDetailHandler = userId => {
+  showDetailHandler = patientId => {
 
     this.setState(prevState => {
-      const selectedUser = prevState.users.find(e => e._id === userId);
-      this.context.selectedUserId = selectedUser;
-      console.log("here:  ", selectedUser);
-      return { selectedUser: selectedUser };
+      const selectedPatient = prevState.patients.find(e => e._id === patientId);
+      this.context.selectedPatientId = selectedPatient;
+      console.log("here:  ", selectedPatient);
+      return { selectedPatient: selectedPatient };
     });
   };
 
@@ -207,7 +281,7 @@ class PatientsPage extends Component {
         {(this.state.creating ) && <Backdrop />}
         {this.state.creating && (
           <Modal
-            title="Create Profile"
+            title="New Patient"
             canCancel
             canConfirm
             onCancel={this.modalCancelHandler}
@@ -218,39 +292,27 @@ class PatientsPage extends Component {
                 <label htmlFor="email">Email</label>
                 <input type="text" id="title" ref={this.emailElRef} />
               </div>
-              <div className="form-control">
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" ref={this.passwordElRef} />
-              </div>
-              <div className="form-control">
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" ref={this.nameElRef} />
-              </div>
-              <div className="form-control">
-                <label htmlFor="role">Role</label>
-                <input type="text" id="role" ref={this.roleElRef} />
-              </div>
             </form>
           </Modal>
         )}
         {this.state.isLoading === false &&
-          (<UserDetail
+          (<PatientDetail
             authUserId={this.context.userId}
-            user={this.context.selectedUserId}
+            patient={this.context.selectedPatientId}
         />)}
         {this.context.token &&
           (<div className="users-control">
-            <p>Create a Profile!</p>
+            <p>Add New Patient</p>
             <button className="btn" onClick={this.startCreateUserHandler}>
-              Sign-Up
+              Submit
             </button>
           </div>
         )}
         {this.state.isLoading ? (
           <Spinner />
         ) : (
-          <UserList
-            users={this.state.users}
+          <PatientList
+            patients={this.state.patients}
             authUserId={this.context.userId}
             onViewDetail={this.showDetailHandler}
           />
@@ -260,4 +322,4 @@ class PatientsPage extends Component {
   }
 }
 
-export default UsersPage;
+export default PatientsPage;
