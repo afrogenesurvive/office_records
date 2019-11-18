@@ -304,7 +304,7 @@ class PatientsPage extends Component {
           (<div className="users-control">
             <p>Add New Patient</p>
             <button className="btn" onClick={this.startCreateUserHandler}>
-              Submit
+              +
             </button>
           </div>
         )}
