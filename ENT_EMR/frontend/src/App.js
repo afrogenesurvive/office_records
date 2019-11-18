@@ -34,9 +34,9 @@ class App extends Component {
   // const sessionStorageAuth = sessionStorage.getItem('login info');
   // console.log("sessionStorageAuth:  ", JSON.stringify(sessionStorageAuth));
   componentDidMount() {
-    const sessionStorageAuth = sessionStorage.getItem('login info');
-    this.sessionStorageAuth = sessionStorageAuth;
-    console.log("sessionStorageAuth:  ", this.sessionStorageAuth);
+    const sessionStorageToken = sessionStorage.getItem('sessionStorageToken');
+    this.sessionStorageToken = sessionStorageToken;
+    console.log("sessionStorageToken:  ", JSON.stringify(this.sessionStorageToken));
   }
 
   render() {
@@ -59,13 +59,13 @@ class App extends Component {
               <Switch>
 
                 { // logged in -> pages
-                this.state.token && <Redirect from="/" to="/users" exact />}
+                this.sessionStorageToken && <Redirect from="/" to="/users" exact />}
                 {this.state.token && (<Route path="/users" component={UsersPage} />)}
                 {this.state.token && (<Route path="/patients" component={PatientsPage} />)}
                 {this.state.token && (<Route path="/profile" component={ThisUserPage} />)}
 
                 { // logged in -> users page from login page
-                  this.state.token && (<Redirect from="/auth" to="/users" exact />)}
+                  this.sessionStorageToken && (<Redirect from="/auth" to="/users" exact />)}
 
                 { //if not logged in -> go to login page
                   !this.state.token && (<Route path="/auth" component={AuthPage} />)}

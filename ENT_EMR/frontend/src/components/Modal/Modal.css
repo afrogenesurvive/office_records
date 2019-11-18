@@ -1,11 +1,11 @@
 .modal {
-  width: 90%;
+  width: 20rem;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   position: fixed;
-  top: 20vh;
-  left: 5%;
-  z-index: 100;
+  top: 5rem;
+  left: 5rem;
+  z-index: 10;
 }
 
 .modal__header {
@@ -27,11 +27,4 @@
   display: flex;
   justify-content: flex-end;
   padding: 1rem;
-}
-
-@media (min-width: 768px) {
-  .modal {
-    width: 30rem;
-    left: calc((100% - 30rem) / 2);
-  }
 }

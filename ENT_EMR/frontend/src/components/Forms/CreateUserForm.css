@@ -1,0 +1,9 @@
+.CreateFormContainer {
+  height: 50vh;
+  width: 60vw;
+  background-color: grey;
+  position: fixed;
+  top: 5rem;
+  left: 5rem;
+  z-index: 15;
+}

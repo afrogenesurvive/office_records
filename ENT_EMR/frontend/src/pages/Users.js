@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 import Modal from '../components/Modal/Modal';
 import Backdrop from '../components/Backdrop/Backdrop';
@@ -6,6 +8,8 @@ import UserList from '../components/Users/UserList/UserList';
 import UserDetail from '../components/Users/UserDetail';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
+
+import CreateUserForm from '../components/Forms/CreateUserForm';
 import './Users.css';
 
 class UsersPage extends Component {
@@ -185,45 +189,32 @@ class UsersPage extends Component {
   render() {
     return (
       <React.Fragment>
-        {(this.state.creating ) && <Backdrop />}
         {this.state.creating && (
-          <Modal
-            title="Create Profile"
-            canCancel
+
+
+          <CreateUserForm
+          canCancel
             canConfirm
             onCancel={this.modalCancelHandler}
             onConfirm={this.modalConfirmHandler}
-            confirmText="Confirm">
-            <form>
-              <div className="form-control">
-                <label htmlFor="email">Email</label>
-                <input type="text" id="title" ref={this.emailElRef} />
-              </div>
-              <div className="form-control">
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" ref={this.passwordElRef} />
-              </div>
-              <div className="form-control">
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" ref={this.nameElRef} />
-              </div>
-              <div className="form-control">
-                <label htmlFor="role">Role</label>
-                <input type="text" id="role" ref={this.roleElRef} />
-              </div>
-            </form>
-          </Modal>
+            confirmText="Confirm"
+          />
+
+
+
+
         )}
         {this.state.isLoading === false &&
           (<UserDetail
             authUserId={this.context.userId}
             user={this.context.selectedUserId}
         />)}
+
         {this.context.token &&
           (<div className="users-control">
-            <p>Create a Profile!</p>
+            <p>Add New User</p>
             <button className="btn" onClick={this.startCreateUserHandler}>
-              Sign-Up
+              +
             </button>
           </div>
         )}

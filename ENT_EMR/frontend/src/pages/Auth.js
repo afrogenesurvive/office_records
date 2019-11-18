@@ -74,7 +74,9 @@ class AuthPage extends Component {
             resData.data.login.tokenExpiration
           );
 
-          sessionStorage.setItem('login info', JSON.stringify({token: resData.data.login.token, userId: resData.data.login.userId, tokenExpiration: resData.data.login.tokenExpiration}) )
+          sessionStorage.setItem('sessionStorageToken', resData.data.login.token )
+          sessionStorage.setItem('sessionStorageUserId', resData.data.login.userId )
+          sessionStorage.setItem('sessionStorageTokenExpiration', resData.data.login.tokenExpiration )
 
         }
       })
