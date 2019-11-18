@@ -13,8 +13,14 @@ import './App.css';
 class App extends Component {
   state = {
     token: null,
-    userId: null
+    userId: null,
+    // sessionStorageAuth: null
   };
+
+  constructor(props) {
+    super(props);
+    this.sessionStorageAuth = null;
+  }
 
   login = (token, userId, tokenExpiration) => {
     this.setState({ token: token, userId: userId });
@@ -24,6 +30,14 @@ class App extends Component {
     this.setState({ token: null, userId: null });
     sessionStorage.clear();
   };
+
+  // const sessionStorageAuth = sessionStorage.getItem('login info');
+  // console.log("sessionStorageAuth:  ", JSON.stringify(sessionStorageAuth));
+  componentDidMount() {
+    const sessionStorageAuth = sessionStorage.getItem('login info');
+    this.sessionStorageAuth = sessionStorageAuth;
+    console.log("sessionStorageAuth:  ", this.sessionStorageAuth);
+  }
 
   render() {
     return (

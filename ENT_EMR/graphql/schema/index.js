@@ -196,9 +196,10 @@ type RootMutation {
     deletePatient(userId: ID!, patientId: ID!): Patient
 
     createAppointment(userId: ID!, patientId: ID!, appointmentInput: AppointmentInput!): Appointment
-    updateAppointment(userId: ID!, appointmentId: ID!, appointmentInput: AppointmentInput!): Appointment
+    updateAppointment(userId: ID!, appointmentId: ID!, patientId: ID, appointmentInput: AppointmentInput!): Appointment
     updateAppointmentField(userId: ID!, appointmentId: ID!, field: String!, query: String!): Appointment
     updateAppointmentFieldArray(userId: ID!, appointmentId: ID!, field: String!, query: String!): Appointment
+    updateAppointmentPatient(userId: ID!, appointmentId: ID!, patientId: ID!): Appointment
     deleteAppointment(userId: ID!, appointmentId: ID!): Appointment
 
 }

@@ -91,6 +91,15 @@ module.exports = {
 
     try {
 
+
+      const user = await User.findById(args.userId);
+      userRole = user.role;
+      console.log("userRole:  ", userRole);
+
+      if (userRole !== "test") {
+        throw new Error('Your role does not give access to the data');
+      }
+
       const today = new Date();
       const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -139,6 +148,14 @@ module.exports = {
     }
     try {
 
+      const user = await User.findById(args.userId);
+      userRole = user.role;
+      console.log("userRole:  ", userRole);
+
+      if (userRole !== "test") {
+        throw new Error('Your role does not give access to the data');
+      }
+
         const resolverField = args.field;
         const resolverQuery = args.query;
         const query = {[resolverField]:resolverQuery};
@@ -165,6 +182,15 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
+
+
+      const user = await User.findById(args.userId);
+      userRole = user.role;
+      console.log("userRole:  ", userRole);
+
+      if (userRole !== "test") {
+        throw new Error('Your role does not give access to the data');
+      }
 
         const resolverField = args.field;
         const resolverQuery = args.query;
@@ -193,9 +219,14 @@ module.exports = {
     }
 
     try {
-      // check user role??
-      // }
-      // else {
+
+      const user = await User.findById(args.userId);
+      userRole = user.role;
+      console.log("userRole:  ", userRole);
+
+      if (userRole !== "test") {
+        throw new Error('Your role does not give access to the data');
+      }
 
         const patientAppointment = await Appointment.findById({_id:args.appointmentId});
         const patientAppointmentId = patientAppointment.id
@@ -223,6 +254,14 @@ module.exports = {
     }
 
     try {
+
+      const user = await User.findById(args.userId);
+      userRole = user.role;
+      console.log("userRole:  ", userRole);
+
+      if (userRole !== "test") {
+        throw new Error('Your role does not give access to the data');
+      }
 
       const patient = await Patient.findByIdAndRemove(args.patientId)
       .populate('appointments');
