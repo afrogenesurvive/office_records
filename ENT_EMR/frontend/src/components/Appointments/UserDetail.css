@@ -1,0 +1,8 @@
+.UserDetailBox {
+  max-width: 10vw;
+  max-height: 5vh;
+  position: fixed;
+  z-index: 2;
+  bottom: 10rem;
+  right: 12.5rem;
+}

@@ -1,11 +1,12 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const CreateUserForm = props => (
 
-
+<AuthContext.Consumer>
 <div className="CreateFormContainer">
   <Form>
 <Form.Group controlId="formBasicEmail">
@@ -24,20 +25,22 @@ We'll never share your email with anyone else.
 <Form.Check type="checkbox" label="Check me out" />
 </Form.Group>
 
-{props.canCancel && (
-  <Button variant="primary" onClick={props.onCancel}>
-  Cancel
-  </Button>
-)}
-{props.canConfirm && (
-  <Button variant="secondary" onClick={props.onConfirm}>
-  Submit
-  </Button>
-)}
+{
+//   props.canCancel && (
+//   <Button variant="primary" onClick={props.onCancel}>
+//   Cancel
+//   </Button>
+// )}
+// {props.canConfirm && (
+//   <Button variant="secondary" onClick={props.onConfirm}>
+//   Submit
+//   </Button>
+// )
+}
 </Form>
 </div>
 
-
+</AuthContext.Consumer>
 );
 
 export default CreateUserForm;

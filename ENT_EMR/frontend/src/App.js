@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import AuthPage from './pages/Auth';
 import UsersPage from './pages/Users';
 import PatientsPage from './pages/Patients';
+import AppointmentsPage from './pages/Appointments';
 import ThisUserPage from './pages/thisUser';
 import MainNavigation from './components/Navigation/MainNavigation';
 import AuthContext from './context/auth-context';
@@ -62,6 +63,7 @@ class App extends Component {
                 this.sessionStorageToken && <Redirect from="/" to="/users" exact />}
                 {this.state.token && (<Route path="/users" component={UsersPage} />)}
                 {this.state.token && (<Route path="/patients" component={PatientsPage} />)}
+                {this.state.token && (<Route path="/appointments" component={AppointmentsPage} />)}
                 {this.state.token && (<Route path="/profile" component={ThisUserPage} />)}
 
                 { // logged in -> users page from login page
