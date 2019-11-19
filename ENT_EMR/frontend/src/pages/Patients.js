@@ -6,6 +6,7 @@ import PatientList from '../components/Patients/PatientList/PatientList';
 import PatientDetail from '../components/Patients/PatientDetail';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
+import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import './Patients.css';
 
 class PatientsPage extends Component {
@@ -49,9 +50,11 @@ class PatientsPage extends Component {
   modalConfirmHandler = () => {
     this.setState({ creating: false });
 
+    // not for arrays
+
     const userId = this.context.userId;
 
-    const name = this.nameElRef
+    const name = this.nameElRef.current.value;
     const dob = this.dobElRef.current.value;
     const address = this.addressElRef.current.value;
     const contactPhone = this.contactPhoneElRef.current.value;
@@ -264,7 +267,7 @@ class PatientsPage extends Component {
 
     this.setState(prevState => {
       const selectedPatient = prevState.patients.find(e => e._id === patientId);
-      this.context.selectedPatientId = selectedPatient;
+      this.context.selectedPatient = selectedPatient;
       console.log("here:  ", selectedPatient);
       return { selectedPatient: selectedPatient };
     });
@@ -278,32 +281,25 @@ class PatientsPage extends Component {
   render() {
     return (
       <React.Fragment>
-        {(this.state.creating ) && <Backdrop />}
         {this.state.creating && (
-          <Modal
-            title="New Patient"
-            canCancel
+          <CreatePatientForm
+          canCancel
             canConfirm
             onCancel={this.modalCancelHandler}
             onConfirm={this.modalConfirmHandler}
-            confirmText="Confirm">
-            <form>
-              <div className="form-control">
-                <label htmlFor="email">Email</label>
-                <input type="text" id="title" ref={this.emailElRef} />
-              </div>
-            </form>
-          </Modal>
+            confirmText="Confirm"
+          />
         )}
         {this.state.isLoading === false &&
           (<PatientDetail
             authUserId={this.context.userId}
-            patient={this.context.selectedPatientId}
+            patient={this.context.selectedPatient}
         />)}
+
         {this.context.token &&
-          (<div className="users-control">
+          (<div className="patients-control">
             <p>Add New Patient</p>
-            <button className="btn" onClick={this.startCreateUserHandler}>
+            <button className="btn" onClick={this.startCreatePatientHandler}>
               +
             </button>
           </div>
