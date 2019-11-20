@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Modal from '../components/Modal/Modal';
+// import Modal from '../components/Modal/Modal';
 import Backdrop from '../components/Backdrop/Backdrop';
 import PatientList from '../components/Patients/PatientList/PatientList';
 import PatientDetail from '../components/Patients/PatientDetail';

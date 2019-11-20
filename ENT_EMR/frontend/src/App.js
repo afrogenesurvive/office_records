@@ -15,8 +15,10 @@ class App extends Component {
   state = {
     token: null,
     userId: null,
-    // sessionStorageAuth: null
+    sessionStorageAuth: null
   };
+
+  static contextType = AuthContext;
 
   constructor(props) {
     super(props);
@@ -32,12 +34,18 @@ class App extends Component {
     sessionStorage.clear();
   };
 
-  // const sessionStorageAuth = sessionStorage.getItem('login info');
-  // console.log("sessionStorageAuth:  ", JSON.stringify(sessionStorageAuth));
+
   componentDidMount() {
-    const sessionStorageToken = sessionStorage.getItem('sessionStorageToken');
-    this.sessionStorageToken = sessionStorageToken;
-    console.log("sessionStorageToken:  ", JSON.stringify(this.sessionStorageToken));
+
+
+    // this.state.sessionStorageAuth = sessionStorage.getItem('login info');
+    // console.log("  this.state.sessionStorageAuth:  ", {this.state.sessionStorageAuth);
+
+    // const sessionStorageToken = sessionStorage.getItem('sessionStorageToken');
+    // this.sessionStorageToken = sessionStorageToken;
+    // this.context.token = sessionStorageToken;
+    // console.log("sessionStorageToken:  ", JSON.stringify(this.sessionStorageToken), "  ...  ", JSON.stringify(this.context.token));
+
   }
 
   render() {
@@ -60,14 +68,14 @@ class App extends Component {
               <Switch>
 
                 { // logged in -> pages
-                this.sessionStorageToken && <Redirect from="/" to="/users" exact />}
+                this.state.token && <Redirect from="/" to="/users" exact />}
                 {this.state.token && (<Route path="/users" component={UsersPage} />)}
                 {this.state.token && (<Route path="/patients" component={PatientsPage} />)}
                 {this.state.token && (<Route path="/appointments" component={AppointmentsPage} />)}
                 {this.state.token && (<Route path="/profile" component={ThisUserPage} />)}
 
                 { // logged in -> users page from login page
-                  this.sessionStorageToken && (<Redirect from="/auth" to="/users" exact />)}
+                  this.state.token && (<Redirect from="/auth" to="/users" exact />)}
 
                 { //if not logged in -> go to login page
                   !this.state.token && (<Route path="/auth" component={AuthPage} />)}
