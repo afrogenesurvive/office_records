@@ -75,7 +75,7 @@ class App extends Component {
                 {this.state.token && (<Route path="/profile" component={ThisUserPage} />)}
 
                 { // logged in -> users page from login page
-                  this.state.token && (<Redirect from="/auth" to="/users" exact />)}
+                  this.state.token && (<Redirect from="/auth" to="/profile" exact />)}
 
                 { //if not logged in -> go to login page
                   !this.state.token && (<Route path="/auth" component={AuthPage} />)}

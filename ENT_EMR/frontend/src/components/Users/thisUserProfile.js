@@ -10,12 +10,17 @@ const thisUserProfile = (props) => {
   return (
     <Card style={{ width: '18rem' }}>
     <Card.Body>
-      <Card.Title>{user.username}</Card.Title>
+      <Card.Title>Your Profile</Card.Title>
       <p>ID: {user._id}</p>
       <Card.Text>
-        Bio: {user.description}
+        Nmae: {user.name}
       </Card.Text>
-      <Button variant="primary">Go somewhere</Button>
+      <Card.Text>
+        Email: {user.email}
+      </Card.Text>
+      <Card.Text>
+        Role: {user.role}
+      </Card.Text>
     </Card.Body>
   </Card>
   );

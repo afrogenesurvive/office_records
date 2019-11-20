@@ -125,15 +125,27 @@ class UsersPage extends Component {
   };
 
 
-  modalConfirmUpdateHandler = () => {
+  modalConfirmUpdateHandler = (event) => {
 
+    let userId = this.context.userId;
+    const selectedUserId = this.state.selectedUser._id;
+    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+
+      console.log("Not the creator or Admin! No edit permission!!");
+      selectedUserId = null;
+    }
+
+    // console.log("UpdateUserFormData:  ", event);
+    console.log("UpdateUserFormData:  ", event.target.formGridEmail.value);
 
 
     this.setState({ updating: false });
-    const email = this.emailElRef.current.value;
-    const password = this.passwordElRef.current.value;
-    const name = this.nameElRef.current.value;
-    const role = this.roleElRef.current.value;
+    let email = event.target.formGridEmail.value;
+    let password = event.target.formGridPassword.value;
+    let name = event.target.formGridName.value;
+    let role = event.target.formGridRole.value;
+
+
 
     if (
       email.trim().length === 0 ||
@@ -141,16 +153,26 @@ class UsersPage extends Component {
       name.trim().length === 0 ||
       role.trim().length === 0
     ) {
-      return;
+      console.log("blank feilds detected!!...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
+
+      email = this.state.selectedUser.email;
+      password = this.state.selectedUser.password;
+      name = this.state.selectedUser.name;
+      role = this.state.selectedUser.role;
+      console.log("inputting previous data...", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
+
+      // return;
     }
+
+
 
     const user = { email, password, name, role };
     console.log("updating user.. " + JSON.stringify(user));
 
     const requestBody = {
       query: `
-          mutation UpdateUser($email: String!, $password: String!, $name: String!, $role: String!) {
-            updateUser(userInput: {email: $email, password: $password, name: $name, role: $role}) {
+          mutation UpdateUser($userId: ID!, $selectedUserId: ID!, $email: String!, $password: String!, $name: String!, $role: String!) {
+            updateUser(userId: $userId, selectedUserId: $selectedUserId, userInput: {email: $email, password: $password, name: $name, role: $role}) {
               _id
               email
               password
@@ -160,6 +182,8 @@ class UsersPage extends Component {
           }
         `,
         variables: {
+          userId: userId,
+          selectedUserId: selectedUserId,
           email: email,
           password: password,
           name: name,
@@ -186,26 +210,40 @@ class UsersPage extends Component {
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
 
-
         const updatedUserId = resData.data.updateUser._id;
-        const updatedUser = this.prevState.users.find(e => e._id === updatedUserId);
-
-        // delete updated user from state users array!!!!!!!!!!
-        const updatedUserPos = this.prevState.users.indexOf(updatedUser);
-        const slicedArray = this.prevState.users.splice(updatedUserPos, 1);
+        const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+        const updatedUserPos = this.state.users.indexOf(updatedUser);
+        const slicedArray = this.state.users.splice(updatedUserPos, 1);
         console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
 
-        this.setState(prevState => {
-          const updatedUsers = [...prevState.users];
-          updatedUsers.push({
-            _id: resData.data.updateUser._id,
-            email: resData.data.updateUser.email,
-            name: resData.data.updateUser.name,
-            role: resData.data.updateUser.role
-          });
+        this.state.users.push(
+          {
+              _id: resData.data.updateUser._id,
+              email: resData.data.updateUser.email,
+              name: resData.data.updateUser.name,
+              role: resData.data.updateUser.role
+            }
+        );
 
-          return { users: updatedUsers };
-        });
+        // this.setState(prevState => {
+        //   const updatedUsers = [...prevState.users];
+        //
+        //   const updatedUserId = resData.data.updateUser._id;
+        //   const updatedUser = updatedUsers.find(e => e._id === updatedUserId);
+        //   const updatedUserPos = updatedUsers.indexOf(updatedUser);
+        //   const slicedArray = updatedUsers.splice(updatedUserPos, 1);
+        //   console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+        //
+        //   updatedUsers.push({
+        //     _id: resData.data.updateUser._id,
+        //     email: resData.data.updateUser.email,
+        //     name: resData.data.updateUser.name,
+        //     role: resData.data.updateUser.role
+        //   });
+        //
+        //   return { users: updatedUsers };
+        // });
+        this.fetchUsers();
       })
       .catch(err => {
         console.log(err);
@@ -274,7 +312,8 @@ class UsersPage extends Component {
     this.setState(prevState => {
       const selectedUser = prevState.users.find(e => e._id === userId);
       this.context.selectedUser = selectedUser;
-      console.log("here:  ", selectedUser);
+      this.state.selectedUser = selectedUser;
+      console.log("User selected  :  ", selectedUser);
       return { selectedUser: selectedUser };
     });
   };
@@ -312,7 +351,8 @@ class UsersPage extends Component {
         {this.state.isLoading === false &&
           (<UserDetail
             authUserId={this.context.userId}
-            user={this.context.selectedUser}
+            user={this.state.selectedUser}
+            onEdit={this.startUpdateUserHandler}
         />)}
 
         {this.context.token &&
@@ -320,10 +360,6 @@ class UsersPage extends Component {
             <p>Add New User</p>
             <button className="btn" onClick={this.startCreateUserHandler}>
               +
-            </button>
-            <p>Update Existing User</p>
-            <button className="btn" onClick={this.startUpdateUserHandler}>
-              + +
             </button>
           </div>
         )}

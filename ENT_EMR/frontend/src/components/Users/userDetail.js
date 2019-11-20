@@ -7,7 +7,7 @@ import './UserDetail.css';
 const UserDetail = (props) => {
   const {...user} = props.user;
   const authUserId = props.authUserId;
-  console.log("props.authUserId:  ",authUserId, "props.user:  ", {...user});
+  console.log("UserDetail.props.authUserId:  ",authUserId, "  UserDetail.props.user:  ", {...user});
   return (
     <div className={"UserDetailBox"}>
     <Card style={{ width: '18rem' }}>
@@ -17,7 +17,7 @@ const UserDetail = (props) => {
       <Card.Text>
         2. {user.role}
       </Card.Text>
-      <Button variant="primary">Edit</Button>
+      <Button variant="primary" onClick={props.onEdit}>Edit</Button>
     </Card.Body>
   </Card>
     </div>

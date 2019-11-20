@@ -142,6 +142,7 @@ class UsersPage extends Component {
 
           this.context.user = thisUser;
           console.log("thisUser context, user object.name ..." + this.context.user.name);
+          console.log("thisUser context, user object.role ..." + this.context.user.role);
 
           sessionStorage.setItem('thisUser', JSON.stringify(thisUser));
 
