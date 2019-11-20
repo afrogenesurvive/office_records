@@ -184,9 +184,9 @@ type RootQuery {
 type RootMutation {
 
     createUser(userInput: UserInput!): User
-    updateUser(userId: ID!, userInput: UserInput!): User
-    updateUserField(userId: ID!, field: String!, query: String!): User
-    deleteUser(userId: ID!): User
+    updateUser(userId: ID!, selectedUserId: ID!, userInput: UserInput!): User
+    updateUserField(userId: ID!, selectedUserId: ID!, field: String!, query: String!): User
+    deleteUser(userId: ID!, selectedUserId: ID!): User
 
     createPatient(userId: ID!, patientInput: PatientInput!): Patient
     updatePatient(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient

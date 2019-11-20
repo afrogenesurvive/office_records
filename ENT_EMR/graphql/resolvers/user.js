@@ -108,16 +108,14 @@ module.exports = {
     }
     try {
 
-      const owner = await User.findById({_id:args.userId});
-      console.log("request user... " + pocketVariables.userId);
-      console.log("owner... " + owner._id)
-      if (owner._id != pocketVariables.userId ) {
-        throw new Error('Not the creator! No edit permission');
-      }
-      else {
+
+      // if (args.selectedUserId != args.userId ) {
+      //   throw new Error('Not the creator! No edit permission');
+      // }
+      // else {
 
       const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
-      const user = await User.findOneAndUpdate({_id:args.userId},{
+      const user = await User.findOneAndUpdate({_id:args.selectedUserId},{
         email: args.userInput.email,
         password: hashedPassword,
         name: args.userInput.name,
@@ -130,7 +128,7 @@ module.exports = {
           name: user.name,
           role: user.role
         };
-      }
+      // }
     } catch (err) {
       throw err;
     }
@@ -144,13 +142,10 @@ module.exports = {
     }
     try {
 
-      const owner = await User.findById({_id:args.userId});
-      console.log("request user... " + pocketVariables.userId);
-      console.log("owner... " + owner._id)
-      if (owner._id != pocketVariables.userId ) {
-        throw new Error('Not the creator! No edit permission');
-      }
-      else {
+      // if (args.selectedUserId != args.userId ) {
+      //   throw new Error('Not the creator! No edit permission');
+      // }
+      // else {
 
       const resolverField = args.field;
       const resolverQuery = args.query;
@@ -158,7 +153,7 @@ module.exports = {
 
       console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
 
-        const user = await User.findOneAndUpdate({_id:args.userId},query,{new: true})
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},query,{new: true})
 
         return {
             ...user._doc,
@@ -167,7 +162,7 @@ module.exports = {
             name: user.name,
             role: user.role
         };
-      }
+      // }
     } catch (err) {
       throw err;
     }
@@ -181,15 +176,12 @@ module.exports = {
     }
     try {
 
-      const owner = await User.findById({_id:args.userId});
-      console.log("request user... " + pocketVariables.userId);
-      console.log("owner... " + owner._id)
-      if (owner._id != pocketVariables.userId ) {
-        throw new Error('Not the creator! No edit permission');
-      }
-      else {
+      // if (args.selectedUserId != args.userId) {
+      //   throw new Error('Not the creator! No edit permission');
+      // }
+      // else {
 
-      const user = await User.findByIdAndRemove(args.userId);
+      const user = await User.findByIdAndRemove(args.selectedUserId);
         return {
           ...user._doc,
           _id: user.id,
@@ -197,7 +189,7 @@ module.exports = {
           name: user.name,
           role: user.role
         };
-      }
+      // }
     } catch (err) {
       throw err;
     }

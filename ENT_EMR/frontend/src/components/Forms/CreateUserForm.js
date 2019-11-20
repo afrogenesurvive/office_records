@@ -8,7 +8,7 @@ import './CreateUserForm.css';
 
 const CreateUserForm = (props) => {
 
-  console.log({...props});
+  // console.log({...props});
 
 return (
 <div className="CreateFormContainer">
@@ -35,29 +35,6 @@ return (
   <Form.Control placeholder="role" />
 </Form.Group>
 
-<Form.Row>
-  <Form.Group as={Col} controlId="formGridCity">
-    <Form.Label>City</Form.Label>
-    <Form.Control />
-  </Form.Group>
-
-  <Form.Group as={Col} controlId="formGridState">
-    <Form.Label>State</Form.Label>
-    <Form.Control as="select">
-      <option>Choose...</option>
-      <option>...</option>
-    </Form.Control>
-  </Form.Group>
-
-  <Form.Group as={Col} controlId="formGridZip">
-    <Form.Label>Zip</Form.Label>
-    <Form.Control />
-  </Form.Group>
-</Form.Row>
-
-<Form.Group id="formGridCheckbox">
-  <Form.Check type="checkbox" label="Check me out" />
-</Form.Group>
 
 {props.canCancel && (
   <Button variant="primary" onClick={props.onCancel}>
@@ -73,10 +50,6 @@ return (
 
 </Form>
 {
-  // <Button variant="secondary" type="submit" onSubmit={props.onConfirm.bind(this, event)}>
-  // Submit
-  // </Button>
-
   // <AuthContext.Consumer>
 // </AuthContext.Consumer>
 }
