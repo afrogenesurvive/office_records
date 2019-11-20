@@ -66,7 +66,7 @@ class AuthPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("your data... " + JSON.stringify(resData));
+        console.log("your data... " + JSON.stringify(resData.data));
         if (resData.data.login.token) {
           this.context.login(
             resData.data.login.token,
@@ -74,9 +74,14 @@ class AuthPage extends Component {
             resData.data.login.tokenExpiration
           );
 
-          sessionStorage.setItem('sessionStorageToken', resData.data.login.token )
-          sessionStorage.setItem('sessionStorageUserId', resData.data.login.userId )
-          sessionStorage.setItem('sessionStorageTokenExpiration', resData.data.login.tokenExpiration )
+          // const sessionStorageLoginInfo = {
+          //   token: resData.data.login.token,
+          //   userId: resData.data.login.userId,
+          //   tokenExpiration: resData.data.login.tokenExpiration
+          // };
+
+          // sessionStorage.setItem('login info', sessionStorageLoginInfo);
+          // sessionStorage.setItem('login info', JSON.stringify(sessionStorageLoginInfo));
 
         }
       })

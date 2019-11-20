@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+// import Form from 'react-bootstrap/Form';
+// import Button from 'react-bootstrap/Button';
 
-import Modal from '../components/Modal/Modal';
-import Backdrop from '../components/Backdrop/Backdrop';
+// import Modal from '../components/Modal/Modal';
+// import Backdrop from '../components/Backdrop/Backdrop';
 import UserList from '../components/Users/UserList/UserList';
 import UserDetail from '../components/Users/UserDetail';
 import Spinner from '../components/Spinner/Spinner';
@@ -40,17 +40,22 @@ class UsersPage extends Component {
 
   startCreateUserHandler = () => {
     this.setState({ creating: true });
+    console.log("CreateUserForm...");
   };
   startUpdateUserHandler = () => {
     this.setState({ updating: true });
+    console.log("UpdateUserForm...");
   };
 
-  modalConfirmHandler = () => {
+  modalConfirmHandler = (event) => {
+
+    console.log("CreateUserFormData:  ", event.target.formGridEmail.value);
+
     this.setState({ creating: false });
-    const email = this.emailElRef.current.value;
-    const password = this.passwordElRef.current.value;
-    const name = this.nameElRef.current.value;
-    const role = this.roleElRef.current.value;
+    const email = event.target.formGridEmail.value;
+    const password = event.target.formGridPassword.value;
+    const name = event.target.formGridName.value;
+    const role = event.target.formGridRole.value;
 
     if (
       email.trim().length === 0 ||
@@ -121,6 +126,9 @@ class UsersPage extends Component {
 
 
   modalConfirmUpdateHandler = () => {
+
+
+
     this.setState({ updating: false });
     const email = this.emailElRef.current.value;
     const password = this.passwordElRef.current.value;
@@ -183,8 +191,9 @@ class UsersPage extends Component {
         const updatedUser = this.prevState.users.find(e => e._id === updatedUserId);
 
         // delete updated user from state users array!!!!!!!!!!
-          // return position of element: const updateUserPos = this.state.users.indexOf(updatedUser)
-          // then splice at that position: myArray.splice(updatedUserPos, 1)
+        const updatedUserPos = this.prevState.users.indexOf(updatedUser);
+        const slicedArray = this.prevState.users.splice(updatedUserPos, 1);
+        console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
 
         this.setState(prevState => {
           const updatedUsers = [...prevState.users];
@@ -278,15 +287,18 @@ class UsersPage extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.creating && (
+        {
+          this.state.creating && (
           <CreateUserForm
           canCancel
             canConfirm
             onCancel={this.modalCancelHandler}
             onConfirm={this.modalConfirmHandler}
+            onSubmit={this.modalConfirmHandler}
             confirmText="Confirm"
           />
-        )}
+        )
+      }
         {this.state.updating && (
           <UpdateUserForm
           canCancel

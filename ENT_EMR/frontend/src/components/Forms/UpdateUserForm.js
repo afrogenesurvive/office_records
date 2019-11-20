@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import AuthContext from '../../context/auth-context';
+// import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const UpdateUserForm = (props) => {
@@ -26,26 +26,21 @@ return (
 <Form.Check type="checkbox" label="Check me out" />
 </Form.Group>
 
+
 {
-
-// <AuthContext.Consumer>
+  // <AuthContext.Consumer>
 // </AuthContext.Consumer>
-
-
-// populate feilds with user object fields
-
-
-//   props.canCancel && (
-//   <Button variant="primary" onClick={props.onCancel}>
-//   Cancel
-//   </Button>
-// )}
-// {props.canConfirm && (
-//   <Button variant="secondary" onClick={props.onConfirm}>
-//   Submit
-//   </Button>
-// )
 }
+{props.canCancel && (
+  <Button variant="primary" onClick={props.onCancel}>
+  Cancel
+  </Button>
+)}
+{props.canConfirm && (
+  <Button variant="secondary" onClick={props.onConfirm}>
+  Submit
+  </Button>
+)}
 </Form>
 </div>
 
