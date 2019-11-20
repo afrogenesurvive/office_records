@@ -3,12 +3,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import FormCheck from 'react-bootstrap/FormCheck'
-// import AuthContext from '../../context/auth-context';
+import { NavLink } from 'react-router-dom';
+import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const CreateUserForm = (props) => {
 
   // console.log({...props});
+  console.log("CreateUserForm:  ", AuthContext.token);
 
 return (
 <div className="CreateFormContainer">
@@ -47,6 +49,7 @@ return (
   Submit
   </Button>
 )}
+<p>{props.successText}</p>
 
 </Form>
 {

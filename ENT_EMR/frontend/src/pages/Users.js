@@ -224,25 +224,6 @@ class UsersPage extends Component {
               role: resData.data.updateUser.role
             }
         );
-
-        // this.setState(prevState => {
-        //   const updatedUsers = [...prevState.users];
-        //
-        //   const updatedUserId = resData.data.updateUser._id;
-        //   const updatedUser = updatedUsers.find(e => e._id === updatedUserId);
-        //   const updatedUserPos = updatedUsers.indexOf(updatedUser);
-        //   const slicedArray = updatedUsers.splice(updatedUserPos, 1);
-        //   console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-        //
-        //   updatedUsers.push({
-        //     _id: resData.data.updateUser._id,
-        //     email: resData.data.updateUser.email,
-        //     name: resData.data.updateUser.name,
-        //     role: resData.data.updateUser.role
-        //   });
-        //
-        //   return { users: updatedUsers };
-        // });
         this.fetchUsers();
       })
       .catch(err => {

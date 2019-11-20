@@ -6,3 +6,11 @@
   width: 30rem;
   max-width: 80%;
 }
+
+.signupToLoginButton {
+  height: 2rem;
+  width: 4rem;
+  position: fixed;
+  bottom: 10rem;
+  left: 5rem;
+}
