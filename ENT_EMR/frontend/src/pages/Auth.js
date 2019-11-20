@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import { NavLink } from 'react-router-dom';
 
 import './Auth.css';
 import AuthContext from '../context/auth-context';
@@ -102,8 +104,12 @@ class AuthPage extends Component {
           <input type="password" id="password" ref={this.passwordEl} />
         </div>
         <div className="form-actions">
-          <button type="submit">Submit</button>
+          <button type="submit">Login</button>
         </div>
+        <Button variant="secondary" type="button">
+          <NavLink to="/signup">Signup</NavLink>
+        </Button>
+
       </form>
     );
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 import AuthPage from './pages/Auth';
+import SignupPage from './pages/Signup';
 import UsersPage from './pages/Users';
 import PatientsPage from './pages/Patients';
 import AppointmentsPage from './pages/Appointments';
@@ -79,6 +80,7 @@ class App extends Component {
 
                 { //if not logged in -> go to login page
                   !this.state.token && (<Route path="/auth" component={AuthPage} />)}
+                  {!this.state.token && (<Route path="/signup" component={SignupPage} />)}
                 {!this.state.token && <Redirect to="/auth" exact />}
               </Switch>
             </main>
