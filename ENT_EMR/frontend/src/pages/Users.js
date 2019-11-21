@@ -128,7 +128,7 @@ class UsersPage extends Component {
   modalConfirmUpdateHandler = (event) => {
 
     let userId = this.context.userId;
-    const selectedUserId = this.state.selectedUser._id;
+    let selectedUserId = this.state.selectedUser._id;
     if(userId !== selectedUserId && this.context.user.role !== 'admin') {
 
       console.log("Not the creator or Admin! No edit permission!!");
@@ -159,7 +159,7 @@ class UsersPage extends Component {
       password = this.state.selectedUser.password;
       name = this.state.selectedUser.name;
       role = this.state.selectedUser.role;
-      console.log("inputting previous data...", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
+      console.log("inputting previous data...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
 
       // return;
     }
@@ -293,7 +293,7 @@ class UsersPage extends Component {
     this.setState(prevState => {
       const selectedUser = prevState.users.find(e => e._id === userId);
       this.context.selectedUser = selectedUser;
-      this.state.selectedUser = selectedUser;
+      this.setState({selectedUser: selectedUser});
       console.log("User selected  :  ", selectedUser);
       return { selectedUser: selectedUser };
     });

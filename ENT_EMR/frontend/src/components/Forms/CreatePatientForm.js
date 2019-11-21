@@ -1,46 +1,56 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import FormCheck from 'react-bootstrap/FormCheck'
+import { NavLink } from 'react-router-dom';
 import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
-const CreatePatientForm = props => (
+const CreatePatientForm = (props) => {
 
-<AuthContext.Consumer>
+  // console.log({...props});
+  // console.log("CreatePatientForm:  ", AuthContext.token);
+
+return (
 <div className="CreateFormContainer">
-  <Form>
-<Form.Group controlId="formBasicEmail">
-<Form.Label>Email address</Form.Label>
-<Form.Control type="email" placeholder="Enter email" />
-<Form.Text className="text-muted">
-We'll never share your email with anyone else.
-</Form.Text>
+<Form onSubmit={props.onConfirm}>
+<Form.Row>
+  <Form.Group as={Col} controlId="formGridName">
+    <Form.Label>name</Form.Label>
+    <Form.Control type="text" placeholder="Enter name"/>
+  </Form.Group>
+
+  <Form.Group as={Col} controlId="formGridAddress">
+    <Form.Label>Address</Form.Label>
+    <Form.Control type="text" placeholder="Address"/>
+  </Form.Group>
+</Form.Row>
+
+<Form.Group controlId="formGridDob">
+  <Form.Label>D.O.B</Form.Label>
+  <Form.Control type="date" placeholder="D.O.B" />
 </Form.Group>
 
-<Form.Group controlId="formBasicPassword">
-<Form.Label>Password</Form.Label>
-<Form.Control type="password" placeholder="Password" />
-</Form.Group>
-<Form.Group controlId="formBasicCheckbox">
-<Form.Check type="checkbox" label="Check me out" />
-</Form.Group>
+{props.canCancel && (
+  <Button variant="primary" onClick={props.onCancel}>
+  Cancel
+  </Button>
+)}
 
-{
-//   props.canCancel && (
-//   <Button variant="primary" onClick={props.onCancel}>
-//   Cancel
-//   </Button>
-// )}
-// {props.canConfirm && (
-//   <Button variant="secondary" onClick={props.onConfirm}>
-//   Submit
-//   </Button>
-// )
-}
+{props.canConfirm && (
+  <Button variant="secondary" type="submit" >
+  Submit
+  </Button>
+)}
+
 </Form>
+{
+  // <AuthContext.Consumer>
+// </AuthContext.Consumer>
+}
 </div>
 
-</AuthContext.Consumer>
-);
+)};
 
 export default CreatePatientForm;
