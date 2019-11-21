@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { Redirect } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+// import Button from 'react-bootstrap/Button';
+// import { Redirect } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -112,7 +112,7 @@ class SignupPage extends Component {
           />
         )
       }
-      
+
       </React.Fragment>
     );
   }
