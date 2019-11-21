@@ -6,9 +6,9 @@ import './thisUserProfile.css';
 
 const thisUserProfile = (props) => {
   const {...user} = props.user;
-  console.log("should be user object id..." + user._id);
+  console.log("thisUserProfile.props.user:  " + {...user});
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: '18rem' }} className="profileCard">
     <Card.Body>
       <Card.Title>Your Profile</Card.Title>
       <p>ID: {user._id}</p>
@@ -21,6 +21,7 @@ const thisUserProfile = (props) => {
       <Card.Text>
         Role: {user.role}
       </Card.Text>
+      <Button variant="primary" onClick={props.onEdit}>Edit</Button>
     </Card.Body>
   </Card>
   );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import UpdateUserForm from '../components/Forms/UpdateUserForm';
 
 import Modal from '../components/Modal/Modal';
 import Backdrop from '../components/Backdrop/Backdrop';
@@ -10,6 +11,7 @@ import './Users.css';
 class UsersPage extends Component {
   state = {
     user: null,
+    updating: false,
     isLoading: false
   };
   isActive = true;
@@ -29,17 +31,27 @@ class UsersPage extends Component {
     this.getThisUser();
   }
 
-
-  startCreateUserHandler = () => {
-    this.setState({ creating: true });
+  startUpdateUserHandler = () => {
+    this.setState({ updating: true });
+    console.log("UpdateUserForm...");
   };
 
-  modalConfirmHandler = () => {
-    this.setState({ creating: false });
-    const email = this.emailElRef.current.value;
-    const password = this.passwordElRef.current.value;
-    const name = this.nameElRef.current.value;
-    const role = this.roleElRef.current.value;
+
+  modalConfirmUpdateHandler = (event) => {
+
+    let userId = this.context.userId;
+
+    // console.log("UpdateUserFormData:  ", event);
+    console.log("UpdateUserFormData:  ", event.target.formGridEmail.value);
+
+
+    this.setState({ updating: false });
+    let email = event.target.formGridEmail.value;
+    let password = event.target.formGridPassword.value;
+    let name = event.target.formGridName.value;
+    let role = event.target.formGridRole.value;
+
+
 
     if (
       email.trim().length === 0 ||
@@ -47,16 +59,26 @@ class UsersPage extends Component {
       name.trim().length === 0 ||
       role.trim().length === 0
     ) {
-      return;
+      console.log("blank feilds detected!!...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
+
+      email = this.state.selectedUser.email;
+      password = this.state.selectedUser.password;
+      name = this.state.selectedUser.name;
+      role = this.state.selectedUser.role;
+      console.log("inputting previous data...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
+
+      // return;
     }
 
+
+
     const user = { email, password, name, role };
-    console.log("updating user... " + JSON.stringify(user));
+    console.log("updating user.. " + JSON.stringify(user));
 
     const requestBody = {
       query: `
-          mutation UpdateUser($email: String!, $password: String!, $name: String!, $role: String!) {
-            updateUser(userInput: {email: $email, password: $password, name: $name, role: $role}) {
+          mutation UpdateUser($userId: ID!, $selectedUserId: ID!, $email: String!, $password: String!, $name: String!, $role: String!) {
+            updateUser(userId: $userId, selectedUserId: $selectedUserId, userInput: {email: $email, password: $password, name: $name, role: $role}) {
               _id
               email
               password
@@ -66,6 +88,8 @@ class UsersPage extends Component {
           }
         `,
         variables: {
+          userId: userId,
+          selectedUserId: userId,
           email: email,
           password: password,
           name: name,
@@ -90,7 +114,14 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData));
+        console.log("response data... " + JSON.stringify(resData.data));
+        this.setState({ user: {
+          _id: resData.data.updateUser._id,
+          email: resData.data.updateUser.email,
+          name: resData.data.updateUser.name,
+          role: resData.data.updateUser.role
+        }
+      });
 
       })
       .catch(err => {
@@ -98,9 +129,6 @@ class UsersPage extends Component {
       });
   };
 
-  modalCancelHandler = () => {
-    this.setState({ creating: false });
-  };
 
   getThisUser() {
 
@@ -164,51 +192,24 @@ class UsersPage extends Component {
   render() {
     return (
       <React.Fragment>
-        {(this.state.creating || this.state.selectedUser) && <Backdrop />}
-        {this.state.creating && (
-          <Modal
-            title="Update Profile"
-            canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmHandler}
-            confirmText="Confirm"
-          >
-          <form>
-            <div className="form-control">
-              <label htmlFor="email">Email</label>
-              <input type="text" id="title" ref={this.emailElRef} />
-            </div>
-            <div className="form-control">
-              <label htmlFor="password">Password</label>
-              <input type="password" id="password" ref={this.passwordElRef} />
-            </div>
-            <div className="form-control">
-              <label htmlFor="name">Name</label>
-              <input type="text" id="name" ref={this.nameElRef} />
-            </div>
-            <div className="form-control">
-              <label htmlFor="role">Role</label>
-              <input type="text" id="role" ref={this.roleElRef} />
-            </div>
-          </form>
-          </Modal>
-        )}
+      {this.state.updating && (
+        <UpdateUserForm
+        canCancel
+          canConfirm
+          onCancel={this.modalCancelHandler}
+          onConfirm={this.modalConfirmUpdateHandler}
+          confirmText="Confirm"
+          user={this.state.user}
+        />
+      )}
 
-        {this.context.token && (
-          <div className="users-control">
-            <p>Update Your Profile!</p>
-            <button className="btn" onClick={this.startCreateUserHandler}>
-              Update
-            </button>
-          </div>
-        )}
         {this.state.isLoading ? (
           <Spinner />
         ) : (
           <ThisUserProfile
             user={this.state.user}
             authUserId={this.context.userId}
+            onEdit={this.startUpdateUserHandler}
           />
         )}
       </React.Fragment>
