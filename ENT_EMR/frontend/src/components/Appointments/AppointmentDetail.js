@@ -5,19 +5,24 @@ import Button from 'react-bootstrap/Button';
 import './UserDetail.css';
 
 const AppointmentDetail = (props) => {
-  const {...user} = props.user;
+  const {...appointment} = props.appointment;
   const authUserId = props.authUserId;
-  console.log("props.authUserId:  ",authUserId, "props.user:  ", {...user});
+  console.log("AppointmentDetail.props.authUserId:  ",authUserId, "AppointmentDetail.props.appointment:  ", {...appointment});
   return (
     <div className={"UserDetailBox"}>
     <Card style={{ width: '18rem' }}>
     <Card.Body>
-      <Card.Title>Details</Card.Title>
-      <p>1. {user._id}</p>
+      <Card.Title>Appointment Details</Card.Title>
       <Card.Text>
-        2. {user.role}
+        ID: {appointment._id}
       </Card.Text>
-      <Button variant="primary">Edit</Button>
+      <Card.Text>
+        Title: {appointment.title}
+      </Card.Text>
+      <Card.Text>
+        Type: {appointment.type}
+      </Card.Text>
+      <Button variant="primary" onClick={props.onEdit}>Edit</Button>
     </Card.Body>
   </Card>
     </div>

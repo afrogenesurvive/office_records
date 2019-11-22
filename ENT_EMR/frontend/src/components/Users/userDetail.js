@@ -12,10 +12,15 @@ const UserDetail = (props) => {
     <div className={"UserDetailBox"}>
     <Card style={{ width: '18rem' }}>
     <Card.Body>
-      <Card.Title>Details</Card.Title>
-      <p>1. {user._id}</p>
+      <Card.Title>User Details</Card.Title>
       <Card.Text>
-        2. {user.role}
+        ID: {user._id}
+      </Card.Text>
+      <Card.Text>
+        Name: {user.name}
+      </Card.Text>
+      <Card.Text>
+        Role: {user.role}
       </Card.Text>
       <Button variant="primary" onClick={props.onEdit}>Edit</Button>
     </Card.Body>

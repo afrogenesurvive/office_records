@@ -97,28 +97,39 @@ module.exports = {
       const dateTime = date+' '+time;
 
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{
-        name: args.patientInput.name,
-        dob: args.patientInput.dob,
-        address: args.patientInput.address,
-        contact: {
-          phone: args.patientInput.contactPhone,
-          email: args.patientInput.contactEmail
-        },
-        registrationDate: dateTime,
-        referringDoctor: {
-          name: args.patientInput.referringDoctorName,
-          email: args.patientInput.referringDoctorEmail,
-          phone: args.patientInput.referringDoctorPhone
-        },
-        occupation: {
-          role: args.patientInput.occupationRole,
-          employer: args.patientInput.occupationEmployer,
-          contact:{
-            phone: args.patientInput.occupationEmployerContactPhone,
-            email: args.patientInput.occupationEmployerContactEmail
+          name: args.patientInput.name,
+          dob: args.patientInput.dob,
+          address: args.patientInput.address,
+          contact: {
+            phone: args.patientInput.contactPhone,
+            email: args.patientInput.contactEmail
+          },
+          registrationDate: dateTime,
+          referringDoctor: {
+            name: args.patientInput.referringDoctorName,
+            email: args.patientInput.referringDoctorEmail,
+            phone: args.patientInput.referringDoctorPhone
+          },
+          occupation: {
+            role: args.patientInput.occupationRole,
+            employer: args.patientInput.occupationEmployer,
+            contact:{
+              phone: args.patientInput.occupationEmployerContactPhone,
+              email: args.patientInput.occupationEmployerContactEmail
+            }
+          },
+        insurance: {
+          company: args.patientInput.insuranceCompany,
+          number: args.patientInput.insuranceNumber,
+          description: args.patientInput.insuranceDescription,
+          expiry: args.patientInput.insuranceExpiry,
+          subscriber: {
+            company: args.patientInput.insuranceSubscriberCompany,
+            description: args.patientInput.insuranceSubscriberDescription
           }
         }
-      },{new: true})
+      }
+      ,{new: true})
       .populate('appointments');
 
         return {
@@ -255,7 +266,8 @@ module.exports = {
       const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       const dateTime = date+' '+time;
 
-      const patient = new Patient({
+      const patient = new Patient(
+        {
         name: args.patientInput.name,
         dob: args.patientInput.dob,
         address: args.patientInput.address,
@@ -276,28 +288,9 @@ module.exports = {
             phone: args.patientInput.occupationEmployerContactPhone,
             email: args.patientInput.occupationEmployerContactEmail
           }
-        },
-      nextOfKin: {
-          name: args.patientInput.nextOfKinName,
-          phone: args.patientInput.nextOfKinPhone,
-          email: args.patientInput.nextOfKinEmail
-      },
-      insurance: {
-        company: args.patientInput.insuranceCompany,
-        number: args.patientInput.insuranceNumber,
-        description: args.patientInput.insuranceDescription,
-        expiry: args.patientInput.insuranceExpiry,
-        subscriber: {
-          company: args.patientInput.insuranceSubscriberCompany,
-          description: args.patientInput.insuranceSubscriberDescription
         }
-      },
-      complaint: {
-        date: args.patientInput.complaintDate,
-        title: args.patientInput.complaintTitle,
-        description: args.patientInput.complaintDescription
       }
-    });
+  );
 
       const result = await patient.save();
 
@@ -324,11 +317,6 @@ module.exports = {
             email: result.occupation.contact.email
           }
         },
-        nextOfKin: {
-            name: result.nextOfKinName,
-            phone: result.nextOfKinPhone,
-            email: result.nextOfKinEmail
-        },
         insurance: {
           company: result.insuranceCompany,
           number: result.insuranceNumber,
@@ -339,11 +327,6 @@ module.exports = {
             description: result.insuranceSubscriberDescription
           }
         },
-        complaint: {
-          date: result.complaintDate,
-          title: result.complaintTitle,
-          description: result.complaintDescription
-        }
       };
     } catch (err) {
       throw err;

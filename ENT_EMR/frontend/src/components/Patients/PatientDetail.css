@@ -3,6 +3,14 @@
   max-height: 5vh;
   position: fixed;
   z-index: 2;
-  bottom: 10rem;
+  bottom: 15rem;
+  right: 12.5rem;
+}
+.PatientDetailBox2 {
+  max-width: 10vw;
+  max-height: 5vh;
+  position: fixed;
+  z-index: 2;
+  bottom: 30rem;
   right: 12.5rem;
 }

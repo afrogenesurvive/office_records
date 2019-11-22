@@ -7,7 +7,6 @@ const patientItem = props => (
   <li key={props.patientId} className="users__list-item">
     <div>
       <h1>{props.name}</h1>
-
     </div>
     <div>
     <button className="btn" onClick={props.onDetail.bind(this, props._id)}>

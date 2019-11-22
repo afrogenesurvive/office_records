@@ -40,6 +40,18 @@ class PatientsPage extends Component {
     this.occupationEmployerElRef = React.createRef();
     this.occupationEmployerContactPhoneElRef = React.createRef();
     this.occupationEmployerContactEmailElRef = React.createRef();
+    this.nextOfKinNameELRef = React.createRef();
+    this.nextOfKinPhoneELRef = React.createRef();
+    this.nextOfKinEmailELRef = React.createRef();
+    this.insuranceCompanyELRef = React.createRef();
+    this.insuranceNumberELRef = React.createRef();
+    this.insuranceDescriptionELRef = React.createRef();
+    this.insuranceExpiryELRef = React.createRef();
+    this.insuranceSubscriberCompanyELRef = React.createRef();
+    this.insuranceSubscriberDescriptionELRef = React.createRef();
+    this.complaintDateELRef = React.createRef();
+    this.complaintTitleELRef = React.createRef();
+    this.complaintDescriptionELRef = React.createRef();
   }
 
   componentDidMount() {
@@ -63,19 +75,25 @@ class PatientsPage extends Component {
     this.setState({ creating: false });
     const userId = this.context.userId;
 
-    const name = event.target.formGridName.value;
-    const dob = event.target.formGridDob.value;
-    const address = event.target.formGridAddress.value;
-    const contactPhone = 'test';
-    const contactEmail = 'test';
-    const registrationDate = 'test';
-    const referringDoctorName = 'test';
-    const referringDoctorEmail = 'test';
-    const referringDoctorPhone = 'test';
-    const occupationRole = 'test';
-    const occupationEmployer = 'test';
-    const occupationEmployerContactPhone = 'test';
-    const occupationEmployerContactEmail = 'test';
+    let name = event.target.formGridName.value;
+    let dob = event.target.formGridDob.value;
+    let address = event.target.formGridAddress.value;
+    let contactPhone = event.target.formGridContactPhone.value;
+    let contactEmail = event.target.formGridContactEmail.value;
+    let registrationDate = event.target.formGridRegistrationDate.value;
+    let referringDoctorName = event.target.formGridReferringDoctorName.value;
+    let referringDoctorEmail = event.target.formGridReferringDoctorEmail.value;
+    let referringDoctorPhone = event.target.formGridReferringDoctorPhone.value;
+    let occupationRole = event.target.formGridOccupationRole.value;
+    let occupationEmployer = event.target.formGridOccupationEmployer.value;
+    let occupationEmployerContactPhone = event.target.formGridOccupationEmployerContactPhone.value;
+    let occupationEmployerContactEmail = event.target.formGridOccupationEmployerContactEmail.value;
+    let insuranceCompany = event.target.formGridInsuranceCompany.value;
+    let insuranceNumber = event.target.formGridInsuranceNumber.value;
+    let insuranceDescription = event.target.formGridInsuranceDescription.value;
+    let insuranceExpiry = event.target.formGridInsuranceExpiry.value;
+    let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany.value;
+    let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
 
     if (
       name.trim().length === 0 ||
@@ -90,18 +108,26 @@ class PatientsPage extends Component {
       occupationRole.trim().length === 0 ||
       occupationEmployer.trim().length === 0 ||
       occupationEmployerContactPhone.trim().length === 0 ||
-      occupationEmployerContactEmail.trim().length === 0
+      occupationEmployerContactEmail.trim().length === 0 ||
+      insuranceCompany.trim().length === 0 ||
+      insuranceNumber.trim().length === 0 ||
+      insuranceDescription.trim().length === 0 ||
+      insuranceExpiry.trim().length === 0 ||
+      insuranceSubscriberCompany.trim().length === 0 ||
+      insuranceSubscriberDescription.trim().length === 0
+
     ) {
+      console.log("blank fields detected!!!...Please try again...");
       return;
     }
 
-    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
+    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail, insuranceCompany, insuranceNumber, insuranceDescription, insuranceExpiry, insuranceSubscriberCompany, insuranceSubscriberDescription };
     console.log("creating patient.. " + JSON.stringify(patient));
 
     const requestBody = {
       query: `
-          mutation CreatePatient($userId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!) {
-            createPatient(userId: $userId, patientInput: { name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail}) {
+          mutation CreatePatient($userId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!, $insuranceCompany: String!, $insuranceNumber: String!, $insuranceDescription: String!, $insuranceExpiry: String!, $insuranceSubscriberCompany: String!, $insuranceSubscriberDescription: String!) {
+            createPatient(userId: $userId, patientInput: { name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail, insuranceCompany: $insuranceCompany, insuranceNumber: $insuranceNumber, insuranceDescription: $insuranceDescription, insuranceExpiry: $insuranceExpiry, insuranceSubscriberCompany: $insuranceSubscriberCompany, insuranceSubscriberDescription: $insuranceSubscriberDescription, }) {
               _id
               name
               address
@@ -126,6 +152,30 @@ class PatientsPage extends Component {
                   phone
                 }
               }
+              nextOfKin
+              {
+                name
+                phone
+                email
+              }
+              insurance
+              {
+                company
+                number
+                description
+                expiry
+                subscriber
+                {
+                    company
+                    description
+                }
+              }
+              complaints
+              {
+                date
+                title
+                description
+              }
             }
           }
         `,
@@ -143,7 +193,13 @@ class PatientsPage extends Component {
           occupationRole: occupationRole,
           occupationEmployer: occupationEmployer,
           occupationEmployerContactPhone: occupationEmployerContactPhone,
-          occupationEmployerContactEmail: occupationEmployerContactEmail
+          occupationEmployerContactEmail: occupationEmployerContactEmail,
+          insuranceCompany: insuranceCompany,
+          insuranceNumber: insuranceNumber,
+          insuranceDescription: insuranceDescription,
+          insuranceExpiry: insuranceExpiry,
+          insuranceSubscriberCompany: insuranceSubscriberCompany,
+          insuranceSubscriberDescription: insuranceSubscriberDescription,
         }
     };
 
@@ -191,7 +247,17 @@ class PatientsPage extends Component {
                 phone: resData.data.createPatient.occupationEmployerContactPhone,
                 email: resData.data.createPatient.occupationEmployerContactEmail
               }
-            }
+            },
+            insurance: {
+              company: resData.data.createPatient.insuranceCompany,
+              number: resData.data.createPatient.insuranceNumber,
+              description: resData.data.createPatient.insuranceDescription,
+              expiry:  resData.data.createPatient.insuranceExpiry,
+              subscriber: {
+                company: resData.data.createPatient.insuranceSubscriberCompany,
+                description: resData.data.createPatient.insuranceSubscriberDescription
+              }
+            },
           }
         );
 
@@ -227,17 +293,22 @@ class PatientsPage extends Component {
     let name = event.target.formGridName.value;
     let dob = event.target.formGridDob.value;
     let address = event.target.formGridAddress.value;
-    let contactPhone = 'test';
-    let contactEmail = 'test';
-    let registrationDate = 'test';
-    let referringDoctorName = 'test';
-    let referringDoctorEmail = 'test';
-    let referringDoctorPhone = 'test';
-    let occupationRole = 'test';
-    let occupationEmployer = 'test';
-    let occupationEmployerContactPhone = 'test';
-    let occupationEmployerContactEmail = 'test';
-
+    let contactPhone = event.target.formGridContactPhone.value;
+    let contactEmail = event.target.formGridContactEmail.value;
+    let registrationDate = event.target.formGridRegistrationDate.value;
+    let referringDoctorName = event.target.formGridReferringDoctorName.value;
+    let referringDoctorEmail = event.target.formGridReferringDoctorEmail.value;
+    let referringDoctorPhone = event.target.formGridReferringDoctorPhone.value;
+    let occupationRole = event.target.formGridOccupationRole.value;
+    let occupationEmployer = event.target.formGridOccupationEmployer.value;
+    let occupationEmployerContactPhone = event.target.formGridOccupationEmployerContactPhone.value;
+    let occupationEmployerContactEmail = event.target.formGridOccupationEmployerContactEmail.value;
+    let insuranceCompany = event.target.formGridInsuranceCompany.value;
+    let insuranceNumber = event.target.formGridInsuranceNumber.value;
+    let insuranceDescription = event.target.formGridInsuranceDescription.value;
+    let insuranceExpiry = event.target.formGridInsuranceExpiry.value;
+    let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany.value;
+    let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
 
 
     if (
@@ -253,68 +324,89 @@ class PatientsPage extends Component {
       occupationRole.trim().length === 0 ||
       occupationEmployer.trim().length === 0 ||
       occupationEmployerContactPhone.trim().length === 0 ||
-      occupationEmployerContactEmail.trim().length === 0
+      occupationEmployerContactEmail.trim().length === 0 ||
+      insuranceCompany.trim().length === 0 ||
+      insuranceNumber.trim().length === 0 ||
+      insuranceDescription.trim().length === 0 ||
+      insuranceExpiry.trim().length === 0 ||
+      insuranceSubscriberCompany.trim().length === 0 ||
+      insuranceSubscriberDescription.trim().length === 0
     ) {
-      console.log(`
-        blank data fields detected!!...
-        name: ${name}
-        dob: ${dob}
-        address: ${address}
-        contactPhone: ${contactPhone}
-        contactEmail: ${contactEmail}
-        registrationDate: ${registrationDate}
-        referringDoctorName: ${referringDoctorName}
-        referringDoctorEmail: ${referringDoctorEmail}
-        referringDoctorPhone: ${referringDoctorPhone}
-        occupationRole: ${occupationRole}
-        occupationEmployer: ${occupationEmployer}
-        occupationEmployerContactPhone: ${occupationEmployerContactPhone}
-        occupationEmployerContactEmail: ${occupationEmployerContactEmail}
-        `);
+    //   console.log(`
+    //     blank data fields detected!!...
+    //     name: ${name}
+    //     dob: ${dob}
+    //     address: ${address}
+    //     contactPhone: ${contactPhone}
+    //     contactEmail: ${contactEmail}
+    //     registrationDate: ${registrationDate}
+    //     referringDoctorName: ${referringDoctorName}
+    //     referringDoctorEmail: ${referringDoctorEmail}
+    //     referringDoctorPhone: ${referringDoctorPhone}
+    //     occupationRole: ${occupationRole}
+    //     occupationEmployer: ${occupationEmployer}
+    //     occupationEmployerContactPhone: ${occupationEmployerContactPhone}
+    //     occupationEmployerContactEmail: ${occupationEmployerContactEmail}
+    //     `);
 
-      name = this.state.selectedPatient.name;
-      dob = this.state.selectedPatient.dob;
-      address = this.state.selectedPatient.address;
-      contactPhone = this.state.selectedPatient.contactPhone;
-      contactEmail = this.state.selectedPatient.contactEmail;
-      registrationDate = this.state.selectedPatient.registrationDate;
-      referringDoctorName = this.state.selectedPatient.referringDoctorName;
-      referringDoctorEmail = this.state.selectedPatient.referringDoctorEmail;
-      referringDoctorPhone = this.state.selectedPatient.referringDoctorPhone;
-      occupationRole = this.state.selectedPatient.occupationRole;
-      occupationEmployer = this.state.selectedPatient.occupationEmployer;
-      occupationEmployerContactPhone = this.state.selectedPatient.occupationEmployerContactPhone;
-      occupationEmployerContactEmail = this.state.selectedPatient.occupationEmployerContactEmail;
+      // name = this.state.selectedPatient.name;
+      // dob = this.state.selectedPatient.dob;
+      // address = this.state.selectedPatient.address;
+      // contactPhone = this.state.selectedPatient.contactPhone;
+      // contactEmail = this.state.selectedPatient.contactEmail;
+      // registrationDate = this.state.selectedPatient.registrationDate;
+      // referringDoctorName = this.state.selectedPatient.referringDoctorName;
+      // referringDoctorEmail = this.state.selectedPatient.referringDoctorEmail;
+      // referringDoctorPhone = this.state.selectedPatient.referringDoctorPhone;
+      // occupationRole = this.state.selectedPatient.occupationRole;
+      // occupationEmployer = this.state.selectedPatient.occupationEmployer;
+      // occupationEmployerContactPhone = this.state.selectedPatient.occupationEmployerContactPhone;
+      // occupationEmployerContactEmail = this.state.selectedPatient.occupationEmployerContactEmail;
 
-      console.log(`
-        inputting previous data...
-        name: ${name}
-        dob: ${dob}
-        address: ${address}
-        contactPhone: ${contactPhone}
-        contactEmail: ${contactEmail}
-        registrationDate: ${registrationDate}
-        referringDoctorName: ${referringDoctorName}
-        referringDoctorEmail: ${referringDoctorEmail}
-        referringDoctorPhone: ${referringDoctorPhone}
-        occupationRole: ${occupationRole}
-        occupationEmployer: ${occupationEmployer}
-        occupationEmployerContactPhone: ${occupationEmployerContactPhone}
-        occupationEmployerContactEmail: ${occupationEmployerContactEmail}
-        `);
-
-      // return;
+      // name = this.state.selectedPatient.name;
+      // dob = this.state.selectedPatient.dob;
+      // address = this.state.selectedPatient.address;
+      // contactPhone = this.state.selectedPatient.contact.phone;
+      // contactEmail = this.state.selectedPatient.contact.email;
+      // registrationDate = this.state.selectedPatient.registrationDate;
+      // referringDoctorName = this.state.selectedPatient.referringDoctor.name;
+      // referringDoctorEmail = this.state.selectedPatient.referringDoctor.email;
+      // referringDoctorPhone = this.state.selectedPatient.referringDoctor.phone;
+      // occupationRole = this.state.selectedPatient.occupation.role;
+      // occupationEmployer = this.state.selectedPatient.occupation.employer;
+      // occupationEmployerContactPhone = this.state.selectedPatient.occupation.contact.phone;
+      // occupationEmployerContactEmail = this.state.selectedPatient.occupation.contact.email;
+      //
+      // console.log(`
+      //   inputting previous data...
+      //   name: ${name}
+      //   dob: ${dob}
+      //   address: ${address}
+      //   contactPhone: ${contactPhone}
+      //   contactEmail: ${contactEmail}
+      //   registrationDate: ${registrationDate}
+      //   referringDoctorName: ${referringDoctorName}
+      //   referringDoctorEmail: ${referringDoctorEmail}
+      //   referringDoctorPhone: ${referringDoctorPhone}
+      //   occupationRole: ${occupationRole}
+      //   occupationEmployer: ${occupationEmployer}
+      //   occupationEmployerContactPhone: ${occupationEmployerContactPhone}
+      //   occupationEmployerContactEmail: ${occupationEmployerContactEmail}
+      //   `);
+    //
+    console.log("blank fields detected!!!...Please try again...");
+      return;
     }
 
 
 
-    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
+    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail, insuranceCompany, insuranceNumber, insuranceDescription, insuranceExpiry, insuranceSubscriberCompany, insuranceSubscriberDescription };
     console.log("updating patient.. " + JSON.stringify(patient));
 
     const requestBody = {
       query: `
-          mutation UpdatePatient($userId: ID!, $patientId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!) {
-            updatePatient(userId: $userId, patientId: $patientId, patientInput: { name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail }) {
+          mutation UpdatePatient($userId: ID!, $patientId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!, $insuranceCompany: String!, $insuranceNumber: String!, $insuranceDescription: String!, $insuranceExpiry: String!, $insuranceSubscriberCompany: String!, $insuranceSubscriberDescription: String!) {
+            updatePatient(userId: $userId, patientId: $patientId, patientInput: { name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail, insuranceCompany: $insuranceCompany, insuranceNumber: $insuranceNumber, insuranceDescription: $insuranceDescription, insuranceExpiry: $insuranceExpiry, insuranceSubscriberCompany: $insuranceSubscriberCompany, insuranceSubscriberDescription: $insuranceSubscriberDescription }){
               _id
               name
               address
@@ -323,18 +415,45 @@ class PatientsPage extends Component {
                 phone
               }
               registrationDate
-              referringDoctor{
+              referringDoctor
+              {
                 name
                 email
                 phone
               }
-              occupation{
+              occupation
+              {
                 role
                 employer
-                contact{
+                contact
+                {
                   email
                   phone
                 }
+              }
+              nextOfKin
+              {
+                name
+                phone
+                email
+              }
+              insurance
+              {
+                company
+                number
+                description
+                expiry
+                subscriber
+                {
+                    company
+                    description
+                }
+              }
+              complaints
+              {
+                date
+                title
+                description
               }
             }
           }
@@ -354,7 +473,13 @@ class PatientsPage extends Component {
           occupationRole: occupationRole,
           occupationEmployer: occupationEmployer,
           occupationEmployerContactPhone: occupationEmployerContactPhone,
-          occupationEmployerContactEmail: occupationEmployerContactEmail
+          occupationEmployerContactEmail: occupationEmployerContactEmail,
+          insuranceCompany: insuranceCompany,
+          insuranceNumber: insuranceNumber,
+          insuranceDescription: insuranceDescription,
+          insuranceExpiry: insuranceExpiry,
+          insuranceSubscriberCompany: insuranceSubscriberCompany,
+          insuranceSubscriberDescription: insuranceSubscriberDescription
         }
     };
 
@@ -406,6 +531,16 @@ class PatientsPage extends Component {
               phone: resData.data.updatePatient.occupationEmployerContactPhone,
               email: resData.data.updatePatient.occupationEmployerContactEmail
             }
+          },
+          insurance: {
+            company: resData.data.updatePatient.insuranceCompany,
+            number: resData.data.updatePatient.insuranceNumber,
+            description: resData.data.updatePatient.insuranceDescription,
+            expiry:  resData.data.updatePatient.insuranceExpiry,
+            subscriber: {
+              company: resData.data.updatePatient.insuranceSubscriberCompany,
+              description: resData.data.updatePatient.insuranceSubscriberDescription
+            }
           }
         }
         );
@@ -434,27 +569,6 @@ class PatientsPage extends Component {
               _id
               name
               address
-              contact{
-                email
-                phone
-              }
-              registrationDate
-              referringDoctor
-              {
-                name
-                email
-                phone
-              }
-              occupation
-              {
-                role
-                employer
-                contact
-                {
-                  email
-                  phone
-                }
-              }
             }
           }
         `,
@@ -499,6 +613,7 @@ class PatientsPage extends Component {
     this.setState(prevState => {
       const selectedPatient = prevState.patients.find(e => e._id === patientId);
       this.context.selectedPatient = selectedPatient;
+      this.context.selectedPatientId = selectedPatient._id;
       console.log("selectedPatient:  ", selectedPatient);
       return { selectedPatient: selectedPatient };
     });
@@ -536,9 +651,11 @@ class PatientsPage extends Component {
         )}
         {this.state.isLoading === false &&
           (<PatientDetail
+            canEdit
             authUserId={this.context.userId}
             patient={this.state.selectedPatient}
             onEdit={this.startUpdatePatientHandler}
+            className="PatientDetailBox"
         />)}
 
         {this.context.token &&
