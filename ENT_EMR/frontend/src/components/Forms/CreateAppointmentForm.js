@@ -57,6 +57,22 @@ return (
         <option>false</option>
       </Form.Control>
     </Form.Group>
+
+    <Form.Group as={Col} controlId="formGridAttended">
+          <Form.Label>Attended</Form.Label>
+          <Form.Control as="select">
+            <option>true</option>
+            <option>false</option>
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridImportant">
+              <Form.Label>Important</Form.Label>
+              <Form.Control as="select">
+                <option>true</option>
+                <option>false</option>
+              </Form.Control>
+            </Form.Group>
 </Form.Row>
 
 {props.canCancel && (

@@ -27,7 +27,7 @@ type Patient {
   address: String
   registrationDate: String
   referringDoctor: referringDoctor
-  contact: PatientContact
+  contact: Contact
   appointments: [Appointment]
   occupation: PatientOccupation
   nextOfKin: [NextOfKin]
@@ -49,70 +49,66 @@ type referringDoctor {
   email: String
   phone: String
 }
-type PatientContact {
+type Contact {
   email: String
   phone: String
 }
 type PatientOccupation {
   role: String
   employer: String
-  contact: PatientOccupationContact
-}
-type PatientOccupationContact {
-  email: String
-  phone: String
+  contact: Contact
 }
 type NextOfKin {
-  name
-  contact
-  phone
-  email
+  name: String
+  contact: Contact
 }
 type Insurance {
-  company
-  number
-  description
-  expiry
-  subscriber
-  company
-  description
+  company: String
+  number: String
+  description: String
+  expiry: String
+  subscriber: InsuranceSubscriber
+}
+type InsuranceSubscriber {
+  company: String
+  description: String
 }
 type Complaint {
-  date
-  title
-  description
+  date: String
+  title: String
+  description: String
 }
 type History {
-  type
-  date
-  title
-  description
+  type: String
+  date: String
+  title: String
+  description: String
 }
 type Allergy {
-  title
-  description
+  title: String
+  description: String
 }
 type Medication {
-  title
-  description
+  title: String
+  description: String
 }
 type Investigation {
-  date
-  title
-  description
+  date: String
+  title: String
+  description: String
 }
 type Diagnosis {
-  date
-  title
-  description
+  date: String
+  title: String
+  description: String
 }
 type Treatment {
-  date
-  title
-  description
-  dose
-  frequency
-  type
+  date: String
+  title: String
+  description: String
+  dose: String
+  frequency: String
+  type: String
 }
 
 type Billing {
@@ -134,6 +130,8 @@ type Appointment {
   description: String
   patient: Patient
   inProgress: Boolean
+  attended: Boolean
+  important: Boolean
   notes: [String]
 }
 
@@ -212,6 +210,8 @@ input AppointmentInput {
   description: String
   patient: String
   inProgress: Boolean
+  attended: Boolean
+  important: Boolean
   note: String
 }
 

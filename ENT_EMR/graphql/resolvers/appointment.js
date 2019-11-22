@@ -103,6 +103,8 @@ module.exports = {
         location: args.appointmentInput.location,
         description: args.appointmentInput.description,
         inProgress: args.appointmentInput.inProgress,
+        attended: args.appointmentInput.attended,
+        important: args.appointmentInput.important,
         notes: args.appointmentInput.notes
       },{new: true})
       .populate('patient');
@@ -280,6 +282,8 @@ module.exports = {
         description: args.appointmentInput.description,
         patient: appointmentPatient,
         inProgress: args.appointmentInput.inProgress,
+        attended: args.appointmentInput.attended,
+        important: args.appointmentInput.important,
         notes: args.appointmentInput.notes
       });
 
@@ -298,6 +302,8 @@ module.exports = {
         description: result.description,
         patient: result.patient,
         inProgress: result.inProgress,
+        attended: result.attended,
+        important: result.important,
         notes: result.notes
       };
     } catch (err) {

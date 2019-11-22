@@ -35,6 +35,8 @@ class AppointmentsPage extends Component {
     this.descriptionELRef = React.createRef();
     this.patientELRef = React.createRef();
     this.inProgressELRef = React.createRef();
+    this.attendedELRef = React.createRef();
+    this.importantELRef = React.createRef();
     this.notesELRef = React.createRef();
   }
 
@@ -66,6 +68,8 @@ class AppointmentsPage extends Component {
     const location = event.target.formGridLocation.value;
     const description = event.target.formGridDescription.value;
     const inProgress = event.target.formGridInProgress.value;
+    const attended = event.target.formGridAttended.value;
+    const important = event.target.formGridImportant.value;
     const notes = event.target.formGridNotes.value;
     if (
       title.trim().length === 0 ||
@@ -74,19 +78,21 @@ class AppointmentsPage extends Component {
       location.trim().length === 0 ||
       description.trim().length === 0 ||
       inProgress.trim().length === 0 ||
+      attended.trim().length === 0 ||
+      important.trim().length === 0 ||
       notes.trim().length === 0
     ) {
       console.log("blank fields detected!!!...Please try again...");
       return;
     }
 
-    const appointment = { title, type, date, location, description, inProgress, notes };
+    const appointment = { title, type, date, location, description, inProgress, attended, important, notes };
     console.log("creating appointment... " + JSON.stringify(appointment));
 
     const requestBody = {
       query: `
-          mutation CreateAppointment($userId: ID!, $patientId: ID, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $notes: String!) {
-            createAppointment(userId: $userId, patientId: $patientId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, notes: $notes }) {
+          mutation CreateAppointment($userId: ID!, $patientId: ID, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $attended: Boolean!, $important: Boolean!, $notes: String!) {
+            createAppointment(userId: $userId, patientId: $patientId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, attended: $attended, important: $important, notes: $notes }) {
               _id
               title
               type
@@ -100,6 +106,8 @@ class AppointmentsPage extends Component {
                 address
               }
               inProgress
+              attended
+              important
               notes
               }
             }
@@ -114,6 +122,8 @@ class AppointmentsPage extends Component {
           location: location,
           description: description,
           inProgress: inProgress,
+          attended: attended,
+          important: important,
           notes: notes
         }
     };
@@ -149,6 +159,8 @@ class AppointmentsPage extends Component {
             description: resData.data.createAppointment.description,
             patient: resData.data.createAppointment.patient,
             inProgress: resData.data.createAppointment.inProgress,
+            attended: resData.data.createAppointment.attended,
+            important: resData.data.createAppointment.important,
             notes: resData.data.createAppointment.notes
           }
         );
@@ -189,58 +201,23 @@ class AppointmentsPage extends Component {
     let location = event.target.formGridLocation.value;
     let description = event.target.formGridDescription.value;
     let inProgress = event.target.formGridInProgress.value;
+    let attended = event.target.formGridAttended.value;
+    let important = event.target.formGridImportant.value;
     let notes = event.target.formGridNotes.value;
 
+    // if (email.trim().length === 0 ) {
+    //   console.log("blank fields detected!!!...filling w/ previous data...");
+    //   email  = this.context.selectedUser.email;
+    //   // return;
+    // }
 
-    if (
-      title.trim().length === 0 ||
-      type.trim().length === 0 ||
-      date.trim().length === 0 ||
-      location.trim().length === 0 ||
-      description.trim().length === 0 ||
-      inProgress.trim().length === 0 ||
-      notes.trim().length === 0
-    ) {
-      console.log(`
-        blank data fields detected!!...
-        title: ${title}
-        type: ${type}
-        date: ${date}
-        location: ${location}
-        description: ${description}
-        inProgress: ${inProgress}
-        notes: ${notes}
-        `);
-
-      title = this.context.selectedAppointment.title;
-      type = this.context.selectedAppointment.type;
-      date = this.context.selectedAppointment.date;
-      location = this.context.selectedAppointment.location;
-      description = this.context.selectedAppointment.description;
-      inProgress = this.context.selectedAppointment.inProgress;
-      notes = this.context.selectedAppointment.notes;
-
-      console.log(`
-        inputting previous data...
-        title: ${title}
-        type: ${type}
-        date: ${date}
-        location: ${location}
-        description: ${description}
-        inProgress: ${inProgress}
-        notes: ${notes}
-        `);
-
-      // return;
-    }
-
-    const appointment = { title, type, date, location, description, inProgress, notes };
+    const appointment = { title, type, date, location, description, inProgress, attended, important, notes };
     console.log("updating appointment... " + JSON.stringify(appointment));
 
     const requestBody = {
       query: `
-          mutation UpdateAppointment($userId: ID!, $patientId: ID, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $notes: String!) {
-            updateAppointment(userId: $userId, patientId: $patientId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, notes: $notes }) {
+          mutation UpdateAppointment($userId: ID!, $patientId: ID, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $attended: Boolean!, $important: Boolean!, $notes: String!) {
+            updateAppointment(userId: $userId, patientId: $patientId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, attended: $attended, important: $important, notes: $notes }) {
               _id
               title
               type
@@ -254,6 +231,8 @@ class AppointmentsPage extends Component {
                 address
               }
               inProgress
+              attended
+              important
               notes
               }
             }
@@ -269,6 +248,8 @@ class AppointmentsPage extends Component {
           location: location,
           description: description,
           inProgress: inProgress,
+          attended: attended,
+          important: important,
           notes: notes
         }
     };
@@ -308,6 +289,8 @@ class AppointmentsPage extends Component {
           description: resData.data.updateAppointment.description,
           patient: resData.data.updateAppointment.patient,
           inProgress: resData.data.updateAppointment.inProgress,
+          attended: resData.data.updateAppointment.attended,
+          important: resData.data.updateAppointment.important,
           notes: resData.data.updateAppointment.notes
         });
         this.fetchAppointments();
@@ -345,6 +328,8 @@ class AppointmentsPage extends Component {
                 address
               }
               inProgress
+              attended
+              important
               notes
             }
           }
@@ -394,17 +379,6 @@ class AppointmentsPage extends Component {
       return { selecteAppointment: selectedAppointment };
     });
   };
-
-  // showDetailHandler = userId => {
-  //
-  //   this.setState(prevState => {
-  //     const selectedUser = prevState.users.find(e => e._id === userId);
-  //     this.context.selectedUser = selectedUser;
-  //     this.setState({selectedUser: selectedUser});
-  //     console.log("User selected  :  ", selectedUser);
-  //     return { selectedUser: selectedUser };
-  //   });
-  // };
 
 
   componentWillUnmount() {
