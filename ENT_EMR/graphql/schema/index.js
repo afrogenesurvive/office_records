@@ -30,16 +30,16 @@ type Patient {
   contact: PatientContact
   appointments: [Appointment]
   occupation: PatientOccupation
-  nextOfKin: String
-  insurance: String
-  complaint: [String]
-  history: [String]
-  allergies: [String]
-  medication: [String]
-  investigation: [String]
-  diagnosis: [String]
-  management: [String]
-  billing: Billing
+  nextOfKin: [NextOfKin]
+  insurance: Insurance
+  complaints: [Complaint]
+  history: [History]
+  allergies: [Allergy]
+  medication: [Medication]
+  investigation: [Investigation]
+  diagnosis: [Diagnosis]
+  treatment: [Treatment]
+  billing: [Billing]
   notes: [String]
   tags: [String]
 }
@@ -62,6 +62,59 @@ type PatientOccupationContact {
   email: String
   phone: String
 }
+type NextOfKin {
+  name
+  contact
+  phone
+  email
+}
+type Insurance {
+  company
+  number
+  description
+  expiry
+  subscriber
+  company
+  description
+}
+type Complaint {
+  date
+  title
+  description
+}
+type History {
+  type
+  date
+  title
+  description
+}
+type Allergy {
+  title
+  description
+}
+type Medication {
+  title
+  description
+}
+type Investigation {
+  date
+  title
+  description
+}
+type Diagnosis {
+  date
+  title
+  description
+}
+type Treatment {
+  date
+  title
+  description
+  dose
+  frequency
+  type
+}
+
 type Billing {
   date: String
   title: String

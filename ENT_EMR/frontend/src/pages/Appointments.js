@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
+// import Form from 'react-bootstrap/Form';
+// import Button from 'react-bootstrap/Button';
 
 // import Modal from '../components/Modal/Modal';
-import Backdrop from '../components/Backdrop/Backdrop';
+// import Backdrop from '../components/Backdrop/Backdrop';
 import AppointmentList from '../components/Appointments/AppointmentList/AppointmentList';
 import AppointmentDetail from '../components/Appointments/AppointmentDetail';
+import PatientDetail from '../components/Patients/PatientDetail';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
-import CreateAppointmentForm from '../components/Forms/CreateAppointmentForm';
 
-import './Patients.css';
+import CreateAppointmentForm from '../components/Forms/CreateAppointmentForm';
+import UpdateAppointmentForm from '../components/Forms/UpdateAppointmentForm';
+import './Users.css';
 
 class AppointmentsPage extends Component {
   state = {
     creating: false,
+    updating: false,
     appointments: [],
     isLoading: false,
     selectedAppointment: null
@@ -30,7 +35,7 @@ class AppointmentsPage extends Component {
     this.descriptionELRef = React.createRef();
     this.patientELRef = React.createRef();
     this.inProgressELRef = React.createRef();
-    this.noteELRef = React.createRef();
+    this.notesELRef = React.createRef();
   }
 
   componentDidMount() {
@@ -40,65 +45,76 @@ class AppointmentsPage extends Component {
 
   startCreateAppointmentHandler = () => {
     this.setState({ creating: true });
+    console.log("CreateAppointmentForm...");
+  };
+  startUpdateAppointmentHandler = () => {
+    this.setState({ updating: true });
+    console.log("UpdateAppointmentForm...");
   };
 
-  modalConfirmHandler = () => {
+  modalConfirmHandler = (event) => {
+
+    // console.log("CreatePatientFormData:  ", event.target.formGridTitle.value);
+
     this.setState({ creating: false });
-
     const userId = this.context.userId;
+    const patientId = this.context.selectedPatientId;
 
-    const title = this.titleELRef.current.value;
-    const type = this.typeELRef.current.value;
-    const date = this.dateELRef.current.value;
-    const location = this.locationELRef.current.value;
-    const description = this.descriptionELRef.current.value;
-    const patient = this.patientELRef.current.value;
-    const inProgress = this.inProgressELRef.current.value;
-    const note = this.noteELRef.current.value;
-
+    const title = event.target.formGridTitle.value;
+    const type = event.target.formGridType.value;
+    const date = event.target.formGridDate.value;
+    const location = event.target.formGridLocation.value;
+    const description = event.target.formGridDescription.value;
+    const inProgress = event.target.formGridInProgress.value;
+    const notes = event.target.formGridNotes.value;
     if (
       title.trim().length === 0 ||
       type.trim().length === 0 ||
       date.trim().length === 0 ||
       location.trim().length === 0 ||
       description.trim().length === 0 ||
-      patient.trim().length === 0 ||
       inProgress.trim().length === 0 ||
-      note.trim().length === 0
+      notes.trim().length === 0
     ) {
+      console.log("blank fields detected!!!...Please try again...");
       return;
     }
 
-    const appointment = { title, type, date, location, description, patient, inProgress, note };
-    console.log("creating appointment: " + JSON.stringify(appointment));
+    const appointment = { title, type, date, location, description, inProgress, notes };
+    console.log("creating appointment... " + JSON.stringify(appointment));
 
     const requestBody = {
       query: `
-          mutation CreateAppointment($userId: ID!, ) {
-            createAppointment(userId: $userId, appointmentInput: { }) {
+          mutation CreateAppointment($userId: ID!, $patientId: ID, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $notes: String!) {
+            createAppointment(userId: $userId, patientId: $patientId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, notes: $notes }) {
               _id
               title
+              type
               date
-              patient{
-                name
-              }
               location
               description
+              patient
+              {
+                name
+                dob
+                address
+              }
               inProgress
               notes
+              }
             }
           }
         `,
         variables: {
           userId: userId,
+          patientId: patientId,
           title: title,
           type: type,
           date: date,
           location: location,
           description: description,
-          patient: patient,
           inProgress: inProgress,
-          note: note
+          notes: notes
         }
     };
 
@@ -120,9 +136,11 @@ class AppointmentsPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
+
         this.setState(prevState => {
           const updatedAppointments = [...prevState.appointments];
-          updatedAppointments.push({
+          updatedAppointments.push(
+            {
             _id: resData.data.createAppointment._id,
             title: resData.data.createAppointment.title,
             type: resData.data.createAppointment.type,
@@ -132,10 +150,12 @@ class AppointmentsPage extends Component {
             patient: resData.data.createAppointment.patient,
             inProgress: resData.data.createAppointment.inProgress,
             notes: resData.data.createAppointment.notes
-          });
+          }
+        );
 
           return { appointments: updatedAppointments };
         });
+
       })
       .catch(err => {
         console.log(err);
@@ -143,10 +163,167 @@ class AppointmentsPage extends Component {
   };
 
   modalCancelHandler = () => {
-    this.setState({ creating: false, selectedAppointment: null });
+    this.setState({ creating: false, updating: false, selectedAppointment: null });
   };
 
-  fetchPatients() {
+
+  modalConfirmUpdateHandler = (event) => {
+
+    if(this.context.user.role !== 'admin') {
+      console.log("Not the Admin! No edit permission!!");
+
+    }
+
+    const userId = this.context.userId;
+    const appointmentId = this.context.selectedAppointment._id;
+    const patientId = this.context.selectedPatientId;
+
+    // console.log("UpdateUserFormData:  ", event);
+    console.log("UpdateAppointmentFormData:  ", event.target.formGridTitle.value);
+
+
+    this.setState({ updating: false });
+    let title = event.target.formGridTitle.value;
+    let type = event.target.formGridType.value;
+    let date = event.target.formGridDate.value;
+    let location = event.target.formGridLocation.value;
+    let description = event.target.formGridDescription.value;
+    let inProgress = event.target.formGridInProgress.value;
+    let notes = event.target.formGridNotes.value;
+
+
+    if (
+      title.trim().length === 0 ||
+      type.trim().length === 0 ||
+      date.trim().length === 0 ||
+      location.trim().length === 0 ||
+      description.trim().length === 0 ||
+      inProgress.trim().length === 0 ||
+      notes.trim().length === 0
+    ) {
+      console.log(`
+        blank data fields detected!!...
+        title: ${title}
+        type: ${type}
+        date: ${date}
+        location: ${location}
+        description: ${description}
+        inProgress: ${inProgress}
+        notes: ${notes}
+        `);
+
+      title = this.context.selectedAppointment.title;
+      type = this.context.selectedAppointment.type;
+      date = this.context.selectedAppointment.date;
+      location = this.context.selectedAppointment.location;
+      description = this.context.selectedAppointment.description;
+      inProgress = this.context.selectedAppointment.inProgress;
+      notes = this.context.selectedAppointment.notes;
+
+      console.log(`
+        inputting previous data...
+        title: ${title}
+        type: ${type}
+        date: ${date}
+        location: ${location}
+        description: ${description}
+        inProgress: ${inProgress}
+        notes: ${notes}
+        `);
+
+      // return;
+    }
+
+    const appointment = { title, type, date, location, description, inProgress, notes };
+    console.log("updating appointment... " + JSON.stringify(appointment));
+
+    const requestBody = {
+      query: `
+          mutation UpdateAppointment($userId: ID!, $patientId: ID, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $notes: String!) {
+            updateAppointment(userId: $userId, patientId: $patientId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, notes: $notes }) {
+              _id
+              title
+              type
+              date
+              location
+              description
+              patient
+              {
+                name
+                dob
+                address
+              }
+              inProgress
+              notes
+              }
+            }
+          }
+        `,
+        variables: {
+          userId: userId,
+          patientId: patientId,
+          userId: userId,
+          title: title,
+          type: type,
+          date: date,
+          location: location,
+          description: description,
+          inProgress: inProgress,
+          notes: notes
+        }
+    };
+
+    const token = this.context.token;
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData));
+
+        const updatedAppointmentId = resData.data.updateAppointment._id;
+        const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
+        const updatedAppointmentPos = this.state.appointments.indexOf(updatedAppointment);
+        const slicedArray = this.state.appointments.splice(updatedAppointmentPos, 1);
+        console.log("updatedAppointment:  ", JSON.stringify(updatedAppointment),"  updatedPatientPos:  ", updatedAppointmentPos, "  slicedArray:  ", slicedArray);
+
+        this.state.appointments.push(
+          {
+          _id: resData.data.updateAppointment._id,
+          title: resData.data.updateAppointment.title,
+          type: resData.data.updateAppointment.type,
+          date: resData.data.updateAppointment.date,
+          location: resData.data.updateAppointment.location,
+          description: resData.data.updateAppointment.description,
+          patient: resData.data.updateAppointment.patient,
+          inProgress: resData.data.updateAppointment.inProgress,
+          notes: resData.data.updateAppointment.notes
+        });
+        this.fetchAppointments();
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  modalCancelHandler = () => {
+    this.setState({ creating: false, updating: false, selectedAppointment: null });
+  };
+
+
+  fetchAppointments() {
     console.log("'fetch appointments function' context object... " + JSON.stringify(this.context));
     const userId = this.context.userId;
 
@@ -157,12 +334,16 @@ class AppointmentsPage extends Component {
             appointments(userId: $userId) {
               _id
               title
+              type
               date
-              patient{
-                name
-              }
               location
               description
+              patient
+              {
+                name
+                dob
+                address
+              }
               inProgress
               notes
             }
@@ -209,10 +390,21 @@ class AppointmentsPage extends Component {
     this.setState(prevState => {
       const selectedAppointment = prevState.appointments.find(e => e._id === appointmentId);
       this.context.selectedAppointment = selectedAppointment;
-      console.log("here:  ", selectedAppointment);
-      return { selectedAppointment: selectedAppointment };
+      console.log("selectedAppointment:  ", selectedAppointment);
+      return { selecteAppointment: selectedAppointment };
     });
   };
+
+  // showDetailHandler = userId => {
+  //
+  //   this.setState(prevState => {
+  //     const selectedUser = prevState.users.find(e => e._id === userId);
+  //     this.context.selectedUser = selectedUser;
+  //     this.setState({selectedUser: selectedUser});
+  //     console.log("User selected  :  ", selectedUser);
+  //     return { selectedUser: selectedUser };
+  //   });
+  // };
 
 
   componentWillUnmount() {
@@ -222,23 +414,41 @@ class AppointmentsPage extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.creating && (
+        {
+          this.state.creating && (
           <CreateAppointmentForm
           canCancel
             canConfirm
             onCancel={this.modalCancelHandler}
             onConfirm={this.modalConfirmHandler}
+            onSubmit={this.modalConfirmHandler}
             confirmText="Confirm"
+          />
+        )}
+        {this.state.updating && (
+          <UpdateAppointmentForm
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.modalConfirmUpdateHandler}
+            confirmText="Confirm"
+            appointment={this.context.selectedAppointment}
           />
         )}
         {this.state.isLoading === false &&
           (<AppointmentDetail
             authUserId={this.context.userId}
             appointment={this.context.selectedAppointment}
+            onEdit={this.startUpdateAppointmentHandler}
         />)}
-
+        {this.state.isLoading === false &&
+          (<PatientDetail
+            authUserId={this.context.userId}
+            patient={this.context.selectedPatient}
+            className="PatientDetailBox2"
+        />)}
         {this.context.token &&
-          (<div className="appointments-control">
+          (<div className="users-control">
             <p>Add New Appointment</p>
             <button className="btn" onClick={this.startCreateAppointmentHandler}>
               +

@@ -11,6 +11,8 @@ const appointmentList = props => {
         userId={appointment.authUserId}
         _id={appointment._id}
         title={appointment.title}
+        type={appointment.type}
+        onDetail={props.onViewDetail}
       />
     );
   });

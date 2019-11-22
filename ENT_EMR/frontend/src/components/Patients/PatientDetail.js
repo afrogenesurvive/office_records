@@ -10,18 +10,25 @@ const PatientDetail = (props) => {
   console.log("PatientDetail.props.patient:  ", {...patient});
   // console.log("props.authUserId:  ",authUserId, "props.patient:  ", {...patient});
   return (
-    <div className={"PatientDetailBox"}>
+    <div className={props.className}>
     <Card style={{ width: '18rem' }}>
     <Card.Body>
-      <Card.Title>{patient.ame}</Card.Title>
-      <p>ID: {patient._id}</p>
+      <Card.Title>Patient Details:</Card.Title>
+      <Card.Text>
+        ID: {patient._id}
+      </Card.Text>
+      <Card.Text>
+        Name: {patient.name}
+      </Card.Text>
       <Card.Text>
         Address: {patient.address}
       </Card.Text>
       <Card.Text>
         D.O.B: {patient.dob}
       </Card.Text>
-      <Button variant="primary" onClick={props.onEdit}>Edit</Button>
+      {props.canEdit && (
+        <Button variant="primary" onClick={props.onEdit}>Edit</Button>
+      )}
     </Card.Body>
   </Card>
   </div>

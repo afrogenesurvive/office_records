@@ -59,7 +59,7 @@ const patientSchema = new Schema({
       email: String
     }
   }],
-  complaint: [
+  complaints: [
     {
       date: {
         type: Date

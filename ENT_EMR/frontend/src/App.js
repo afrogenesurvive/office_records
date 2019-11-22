@@ -6,6 +6,7 @@ import SignupPage from './pages/Signup';
 import UsersPage from './pages/Users';
 import PatientsPage from './pages/Patients';
 import AppointmentsPage from './pages/Appointments';
+// import SearchPage from './pages/Search';
 import ThisUserPage from './pages/thisUser';
 import MainNavigation from './components/Navigation/MainNavigation';
 import AuthContext from './context/auth-context';
@@ -58,8 +59,12 @@ class App extends Component {
               token: this.state.token,
               userId: this.state.userId,
               user: {},
+              selectedUser: {},
+              selectedPatient: {},
+              selectedAppointment: {},
               patient: {},
               appointment: {},
+              appointmentPatientId: null,
               login: this.login,
               logout: this.logout
             }}

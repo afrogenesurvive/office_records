@@ -6,6 +6,7 @@ export default React.createContext({
     user: {},
     selectedUser: {},
     selectedPatient: {},
+    appointmentPatientId: null,
     selectedAppointment: {},
     patient: {},
     appointment: {},

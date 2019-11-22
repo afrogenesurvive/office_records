@@ -6,7 +6,7 @@ import './UserItem.css';
 const userItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <h1>{props.name
+      <h1> Name: {props.name
         // <p>
         //   {props._id}
         // </p>
@@ -17,6 +17,9 @@ const userItem = props => (
         //   {props.email}
         // </p>
       }</h1>
+      <p>
+        Address: {props.address}
+      </p>
 
     </div>
     <div>

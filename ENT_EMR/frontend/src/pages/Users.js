@@ -63,6 +63,7 @@ class UsersPage extends Component {
       name.trim().length === 0 ||
       role.trim().length === 0
     ) {
+      console.log("blank fields detected!!!...Please try again...");
       return;
     }
 
@@ -146,6 +147,7 @@ class UsersPage extends Component {
     let role = event.target.formGridRole.value;
 
 
+    // trim check function: add vars to array, for each element if trimmed === 0 then var  = selected user.var
 
     if (
       email.trim().length === 0 ||
@@ -153,15 +155,15 @@ class UsersPage extends Component {
       name.trim().length === 0 ||
       role.trim().length === 0
     ) {
-      console.log("blank feilds detected!!...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
-
-      email = this.state.selectedUser.email;
-      password = this.state.selectedUser.password;
-      name = this.state.selectedUser.name;
-      role = this.state.selectedUser.role;
-      console.log("inputting previous data...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
-
-      // return;
+      // console.log("blank feilds detected!!...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
+      //
+      // email = this.state.selectedUser.email;
+      // password = this.state.selectedUser.password;
+      // name = this.state.selectedUser.name;
+      // role = this.state.selectedUser.role;
+      // console.log("inputting previous data...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
+      console.log("blank fields detected!!!...Please try again...");
+      return;
     }
 
 

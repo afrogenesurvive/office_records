@@ -10,7 +10,6 @@ const patientList = props => {
         key={patient._id}
         _id={patient._id}
         name={patient.name}
-        email={patient.contact.email}
         address={patient.address}
         onDetail={props.onViewDetail}
       />

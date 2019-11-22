@@ -140,6 +140,9 @@ module.exports = {
       const appointment = await Appointment.findOneAndUpdate({_id:args.appointmentId},{patient: appointmentPatient},{new: true})
       .populate('patient');
 
+      const patientAppointment = await Patient. findOneAndUpdate({_id: args.patientId},{$addToSet: {appointments: appointment}},{new: true})
+      console.log("patientAppointment:  ", JSON.stringify(patientAppointment));
+
         return {
           ...appointment._doc,
           _id: appointment.id,
@@ -267,6 +270,7 @@ module.exports = {
             throw new Error('Appointment w/ that title exists already.');
           }
 
+
       let appointment = new Appointment({
         _id: args.appointmentInput.id,
         title:args.appointmentInput.title,
@@ -280,6 +284,9 @@ module.exports = {
       });
 
       const result = await appointment.save();
+
+      const patientAppointment = await Patient. findOneAndUpdate({_id: args.patientId},{$addToSet: {appointments: appointment}},{new: true})
+      console.log("patientAppointment:  ", JSON.stringify(patientAppointment));
 
       return {
         ...result._doc,
