@@ -129,16 +129,14 @@ class UsersPage extends Component {
   modalConfirmUpdateHandler = (event) => {
 
     let userId = this.context.userId;
-    let selectedUserId = this.state.selectedUser._id;
+    let selectedUserId = this.context.selectedUser._id;
     if(userId !== selectedUserId && this.context.user.role !== 'admin') {
 
       console.log("Not the creator or Admin! No edit permission!!");
       selectedUserId = null;
     }
 
-    // console.log("UpdateUserFormData:  ", event);
     console.log("UpdateUserFormData:  ", event.target.formGridEmail.value);
-
 
     this.setState({ updating: false });
     let email = event.target.formGridEmail.value;
@@ -146,26 +144,23 @@ class UsersPage extends Component {
     let name = event.target.formGridName.value;
     let role = event.target.formGridRole.value;
 
-
-    // trim check function: add vars to array, for each element if trimmed === 0 then var  = selected user.var
-
-    if (
-      email.trim().length === 0 ||
-      password.trim().length === 0 ||
-      name.trim().length === 0 ||
-      role.trim().length === 0
-    ) {
-      // console.log("blank feilds detected!!...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
-      //
-      // email = this.state.selectedUser.email;
-      // password = this.state.selectedUser.password;
-      // name = this.state.selectedUser.name;
-      // role = this.state.selectedUser.role;
-      // console.log("inputting previous data...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
-      console.log("blank fields detected!!!...Please try again...");
-      return;
+    if (email.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      email  = this.context.selectedUser.email;
+      // return;
     }
-
+    if (password.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      password = this.context.selectedUser.password;
+    }
+    if (name.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      name  = this.context.selectedUser.name;
+    }
+    if (role.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      role  = this.context.selectedUser.role;
+    }
 
 
     const user = { email, password, name, role };
@@ -288,6 +283,8 @@ class UsersPage extends Component {
         }
       });
   }
+
+
 
 
   showDetailHandler = userId => {

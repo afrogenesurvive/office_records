@@ -283,7 +283,7 @@ class PatientsPage extends Component {
     }
 
     const userId = this.context.userId;
-    const patientId = this.state.selectedPatient._id;
+    const patientId = this.context.selectedPatient._id;
 
     // console.log("UpdateUserFormData:  ", event);
     console.log("UpdatePatientFormData:  ", event.target.formGridName.value);
@@ -311,93 +311,11 @@ class PatientsPage extends Component {
     let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
 
 
-    if (
-      name.trim().length === 0 ||
-      dob.trim().length === 0 ||
-      address.trim().length === 0 ||
-      contactPhone.trim().length === 0 ||
-      contactEmail.trim().length === 0 ||
-      registrationDate.trim().length === 0 ||
-      referringDoctorName.trim().length === 0 ||
-      referringDoctorEmail.trim().length === 0 ||
-      referringDoctorPhone.trim().length === 0 ||
-      occupationRole.trim().length === 0 ||
-      occupationEmployer.trim().length === 0 ||
-      occupationEmployerContactPhone.trim().length === 0 ||
-      occupationEmployerContactEmail.trim().length === 0 ||
-      insuranceCompany.trim().length === 0 ||
-      insuranceNumber.trim().length === 0 ||
-      insuranceDescription.trim().length === 0 ||
-      insuranceExpiry.trim().length === 0 ||
-      insuranceSubscriberCompany.trim().length === 0 ||
-      insuranceSubscriberDescription.trim().length === 0
-    ) {
-    //   console.log(`
-    //     blank data fields detected!!...
-    //     name: ${name}
-    //     dob: ${dob}
-    //     address: ${address}
-    //     contactPhone: ${contactPhone}
-    //     contactEmail: ${contactEmail}
-    //     registrationDate: ${registrationDate}
-    //     referringDoctorName: ${referringDoctorName}
-    //     referringDoctorEmail: ${referringDoctorEmail}
-    //     referringDoctorPhone: ${referringDoctorPhone}
-    //     occupationRole: ${occupationRole}
-    //     occupationEmployer: ${occupationEmployer}
-    //     occupationEmployerContactPhone: ${occupationEmployerContactPhone}
-    //     occupationEmployerContactEmail: ${occupationEmployerContactEmail}
-    //     `);
-
-      // name = this.state.selectedPatient.name;
-      // dob = this.state.selectedPatient.dob;
-      // address = this.state.selectedPatient.address;
-      // contactPhone = this.state.selectedPatient.contactPhone;
-      // contactEmail = this.state.selectedPatient.contactEmail;
-      // registrationDate = this.state.selectedPatient.registrationDate;
-      // referringDoctorName = this.state.selectedPatient.referringDoctorName;
-      // referringDoctorEmail = this.state.selectedPatient.referringDoctorEmail;
-      // referringDoctorPhone = this.state.selectedPatient.referringDoctorPhone;
-      // occupationRole = this.state.selectedPatient.occupationRole;
-      // occupationEmployer = this.state.selectedPatient.occupationEmployer;
-      // occupationEmployerContactPhone = this.state.selectedPatient.occupationEmployerContactPhone;
-      // occupationEmployerContactEmail = this.state.selectedPatient.occupationEmployerContactEmail;
-
-      // name = this.state.selectedPatient.name;
-      // dob = this.state.selectedPatient.dob;
-      // address = this.state.selectedPatient.address;
-      // contactPhone = this.state.selectedPatient.contact.phone;
-      // contactEmail = this.state.selectedPatient.contact.email;
-      // registrationDate = this.state.selectedPatient.registrationDate;
-      // referringDoctorName = this.state.selectedPatient.referringDoctor.name;
-      // referringDoctorEmail = this.state.selectedPatient.referringDoctor.email;
-      // referringDoctorPhone = this.state.selectedPatient.referringDoctor.phone;
-      // occupationRole = this.state.selectedPatient.occupation.role;
-      // occupationEmployer = this.state.selectedPatient.occupation.employer;
-      // occupationEmployerContactPhone = this.state.selectedPatient.occupation.contact.phone;
-      // occupationEmployerContactEmail = this.state.selectedPatient.occupation.contact.email;
-      //
-      // console.log(`
-      //   inputting previous data...
-      //   name: ${name}
-      //   dob: ${dob}
-      //   address: ${address}
-      //   contactPhone: ${contactPhone}
-      //   contactEmail: ${contactEmail}
-      //   registrationDate: ${registrationDate}
-      //   referringDoctorName: ${referringDoctorName}
-      //   referringDoctorEmail: ${referringDoctorEmail}
-      //   referringDoctorPhone: ${referringDoctorPhone}
-      //   occupationRole: ${occupationRole}
-      //   occupationEmployer: ${occupationEmployer}
-      //   occupationEmployerContactPhone: ${occupationEmployerContactPhone}
-      //   occupationEmployerContactEmail: ${occupationEmployerContactEmail}
-      //   `);
-    //
-    console.log("blank fields detected!!!...Please try again...");
-      return;
-    }
-
+    // if (email.trim().length === 0 ) {
+    //   console.log("blank fields detected!!!...filling w/ previous data...");
+    //   email  = this.context.selectedUser.email;
+    //   // return;
+    // }
 
 
     const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail, insuranceCompany, insuranceNumber, insuranceDescription, insuranceExpiry, insuranceSubscriberCompany, insuranceSubscriberDescription };

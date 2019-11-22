@@ -31,6 +31,12 @@ const appointmentSchema = new Schema({
   inProgress: {
     type: Boolean
   },
+  attended: {
+    type: Boolean
+  },
+  important: {
+    type: Boolean
+  },
   notes: [String]
 },
   { timestamps: true }
