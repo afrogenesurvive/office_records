@@ -17,6 +17,7 @@ class UsersPage extends Component {
   state = {
     creating: false,
     updating: false,
+    deleting: false,
     users: [],
     isLoading: false,
     selectedUser: null
@@ -46,6 +47,11 @@ class UsersPage extends Component {
     this.setState({ updating: true });
     console.log("UpdateUserForm...");
   };
+  // startUpdateUserHandler = () => {
+  //   this.setState({ deleting: true });
+  //   console.log("UpdateUserForm...");
+  //
+  // };
 
   modalConfirmHandler = (event) => {
 
@@ -229,7 +235,7 @@ class UsersPage extends Component {
   };
 
   modalCancelHandler = () => {
-    this.setState({ creating: false, updating: false, selectedUser: null });
+    this.setState({ creating: false, updating: false, deleting: false, selectedUser: null });
   };
 
   fetchUsers() {
@@ -284,6 +290,73 @@ class UsersPage extends Component {
       });
   }
 
+modalDeleteHandler = () => {
+  console.log("deleting user...selectedUser:  ", this.context.selectedUser);
+
+  const selectedUserId = this.context.selectedUser._id;
+
+  if(this.context.user.role !== 'admin') {
+    console.log("Not the Admin! No edit permission!!");
+  }
+
+  this.setState({deleting: true});
+
+  const requestBody = {
+    query: `
+        mutation DeleteUser($userId: ID!, $selectedUserId: ID!) {
+          deleteUser(userId: $userId, selectedUserId: $selectedUserId) {
+            _id
+            email
+            password
+            name
+            role
+          }
+        }
+      `,
+      variables: {
+        userId: this.context.userId,
+        selectedUserId: selectedUserId
+      }
+  };
+
+  fetch('http://localhost:10000/graphql', {
+    method: 'POST',
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.context.token
+    }
+  })
+    .then(res => {
+      if (res.status !== 200 && res.status !== 201) {
+        throw new Error('Failed!');
+      }
+      return res.json();
+    })
+    .then(resData => {
+      let deletedUser = resData.data.deleteUser;
+      console.log(deletedUser);
+
+      let deletedUserId = deletedUser._id;
+      deletedUser = this.state.users.find(e => e._id === deletedUserId);
+      const deletedUserPos = this.state.users.indexOf(deletedUser);
+      const slicedArray = this.state.users.splice(deletedUserPos, 1);
+      console.log("deletedUser:  ", JSON.stringify(deletedUser),"  deletedUserPos:  ", deletedUserPos, "  slicedArray:  ", slicedArray);
+
+      this.setState({ deleting: false });
+
+      this.fetchUsers();
+
+    })
+    .catch(err => {
+      console.log(err);
+      if (this.isActive) {
+        this.setState({ deleting: false });
+      }
+    });
+
+
+}
 
 
 
@@ -333,6 +406,7 @@ class UsersPage extends Component {
             authUserId={this.context.userId}
             user={this.state.selectedUser}
             onEdit={this.startUpdateUserHandler}
+            onDelete={this.modalDeleteHandler}
         />)}
 
         {this.context.token &&

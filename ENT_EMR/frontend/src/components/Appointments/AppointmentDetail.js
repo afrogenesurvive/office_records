@@ -23,6 +23,9 @@ const AppointmentDetail = (props) => {
         Type: {appointment.type}
       </Card.Text>
       <Button variant="primary" onClick={props.onEdit}>Edit</Button>
+      {props.canDelete && (
+        <Button variant="warning" onClick={props.onDelete}>Delete</Button>
+      )}
     </Card.Body>
   </Card>
     </div>

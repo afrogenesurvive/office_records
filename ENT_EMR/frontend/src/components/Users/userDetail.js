@@ -23,6 +23,8 @@ const UserDetail = (props) => {
         Role: {user.role}
       </Card.Text>
       <Button variant="primary" onClick={props.onEdit}>Edit</Button>
+
+      <Button variant="warning" onClick={props.onDelete}>Delete</Button>
     </Card.Body>
   </Card>
     </div>
