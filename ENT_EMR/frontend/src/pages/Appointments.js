@@ -18,6 +18,7 @@ class AppointmentsPage extends Component {
   state = {
     creating: false,
     updating: false,
+    deleting: false,
     appointments: [],
     isLoading: false,
     selectedAppointment: null
@@ -205,11 +206,45 @@ class AppointmentsPage extends Component {
     let important = event.target.formGridImportant.value;
     let notes = event.target.formGridNotes.value;
 
-    // if (email.trim().length === 0 ) {
-    //   console.log("blank fields detected!!!...filling w/ previous data...");
-    //   email  = this.context.selectedUser.email;
-    //   // return;
-    // }
+    if (title.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      title  = this.context.selectedAppointment.title;
+      // return;
+    }
+    if (type.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      type  = this.context.selectedAppointment.type;
+    }
+    if (date.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      date  = this.context.selectedAppointment.date;
+    }
+    if (location.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      location  = this.context.selectedAppointment.location;
+    }
+    if (description.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      description  = this.context.selectedAppointment.description;
+    }
+    if (inProgress.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      inProgress  = this.context.selectedAppointment.inProgress;
+    }
+    if (attended.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attended  = this.context.selectedAppointment.attended;
+    }
+    if (important.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      important  = this.context.selectedAppointment.important;
+    }
+    if (notes.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      notes  = this.context.selectedAppointment.notes;
+    }
+
+
 
     const appointment = { title, type, date, location, description, inProgress, attended, important, notes };
     console.log("updating appointment... " + JSON.stringify(appointment));
@@ -369,6 +404,88 @@ class AppointmentsPage extends Component {
       });
   }
 
+  modalDeleteHandler = () => {
+    console.log("deleting appointment...selectedAppointment:  ", this.context.selectedAppointment);
+
+    const selectedAppointmentId = this.context.selectedAppointment._id;
+
+    if(this.context.user.role !== 'admin') {
+      console.log("Not the Admin! No edit permission!!");
+    }
+
+    this.setState({deleting: true});
+
+
+    const requestBody = {
+      query: `
+          mutation DeleteAppointment($userId: ID!, $appointmentId: ID!) {
+            deleteAppointment(userId: $userId, appointmentId: $appointmentId) {
+              _id
+              title
+              type
+              date
+              location
+              description
+              patient
+              {
+                name
+                dob
+                address
+              }
+              inProgress
+              attended
+              important
+              notes
+            }
+          }
+        `,
+        variables: {
+          userId: this.context.userId,
+          appointmentId: selectedAppointmentId
+        }
+    };
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.context.token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("resData:  ", resData);
+        // console.log("resData.data.deleteAppointment:  ", resData.data.deleteAppointment);
+        let deletedAppointment = resData.data.deleteAppointment;
+        console.log(deletedAppointment);
+
+        let deletedAppointmentId = deletedAppointment._id;
+        deletedAppointment = this.state.appointments.find(e => e._id === deletedAppointmentId);
+        const deletedAppointmentPos = this.state.appointments.indexOf(deletedAppointment);
+        const slicedArray = this.state.appointments.splice(deletedAppointmentPos, 1);
+        console.log("deletedAppointment:  ", JSON.stringify(deletedAppointment),"  deletedUserPos:  ", deletedAppointmentPos, "  slicedArray:  ", slicedArray);
+
+        this.setState({ deleting: false });
+
+        this.fetchAppointments();
+
+      })
+      .catch(err => {
+        console.log(err);
+        if (this.isActive) {
+          this.setState({ deleting: false });
+        }
+      });
+
+
+  }
+
 
   showDetailHandler = appointmentId => {
 
@@ -411,9 +528,11 @@ class AppointmentsPage extends Component {
         )}
         {this.state.isLoading === false &&
           (<AppointmentDetail
+            canDelete
             authUserId={this.context.userId}
             appointment={this.context.selectedAppointment}
             onEdit={this.startUpdateAppointmentHandler}
+            onDelete={this.modalDeleteHandler}
         />)}
         {this.state.isLoading === false &&
           (<PatientDetail

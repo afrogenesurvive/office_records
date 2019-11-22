@@ -17,6 +17,7 @@ class PatientsPage extends Component {
   state = {
     creating: false,
     updating: false,
+    deleting: false,
     patients: [],
     isLoading: false,
     selectedPatient: null
@@ -311,11 +312,80 @@ class PatientsPage extends Component {
     let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
 
 
-    // if (email.trim().length === 0 ) {
-    //   console.log("blank fields detected!!!...filling w/ previous data...");
-    //   email  = this.context.selectedUser.email;
-    //   // return;
-    // }
+    if (name.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      name  = this.context.selectedUser.name;
+      // return;
+    }
+    if (dob.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      dob  = this.context.selectedUser.dob;
+    }
+    if (address.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      address  = this.context.selectedUser.address;
+    }
+    if (contactPhone.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      contactPhone  = this.context.selectedUser.contactPhone;
+    }
+    if (contactEmail.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      contactEmail  = this.context.selectedUser.contactEmail;
+    }
+    if (registrationDate.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      registrationDate  = this.context.selectedUser.registrationDate;
+    }
+    if (referringDoctorName.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      referringDoctorName  = this.context.selectedUser.referringDoctorName;
+    }
+    if (referringDoctorEmail.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      referringDoctorEmail  = this.context.selectedUser.referringDoctorEmail;
+    }
+    if (referringDoctorPhone.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      referringDoctorPhone  = this.context.selectedUser.referringDoctorPhone;
+    }
+    if (occupationRole.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      occupationRole  = this.context.selectedUser.occupationRole;
+    }
+    if (occupationEmployer.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      occupationEmployer  = this.context.selectedUser.occupationEmployer;
+    }
+    if (occupationEmployerContactEmail.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      occupationEmployerContactEmail  = this.context.selectedUser.occupationEmployerContactEmail;
+    }
+    if (occupationEmployerContactPhone.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      occupationEmployerContactPhone  = this.context.selectedUser.occupationEmployerContactPhone;
+    }
+    if (insuranceCompany.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      insuranceCompany  = this.context.selectedUser.insuranceCompany;
+    }
+    if (insuranceExpiry.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      insuranceExpiry  = this.context.selectedUser.insuranceExpiry;
+    }
+    if (insuranceNumber.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      insuranceNumber  = this.context.selectedUser.insuranceNumber;
+    }
+    if (insuranceSubscriberCompany.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      insuranceSubscriberCompany  = this.context.selectedUser.insuranceSubscriberCompany;
+    }
+    if (insuranceSubscriberDescription.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      insuranceSubscriberDescription  = this.context.selectedUser.insuranceSubscriberDescription;
+    }
+
 
 
     const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail, insuranceCompany, insuranceNumber, insuranceDescription, insuranceExpiry, insuranceSubscriberCompany, insuranceSubscriberDescription };
@@ -487,6 +557,27 @@ class PatientsPage extends Component {
               _id
               name
               address
+              contact{
+                email
+                phone
+              }
+              registrationDate
+              referringDoctor
+              {
+                name
+                email
+                phone
+              }
+              occupation
+              {
+                role
+                employer
+                contact
+                {
+                  email
+                  phone
+                }
+              }
             }
           }
         `,
@@ -523,6 +614,95 @@ class PatientsPage extends Component {
           this.setState({ isLoading: false });
         }
       });
+  }
+
+
+  modalDeleteHandler = () => {
+    console.log("deleting patient...selectedPatient:  ", this.context.selectedPatient);
+
+    const selectedPatientId = this.context.selectedPatient._id;
+
+    if(this.context.user.role !== 'admin') {
+      console.log("Not the Admin! No edit permission!!");
+    }
+
+    this.setState({deleting: true});
+
+
+    const requestBody = {
+      query: `
+          mutation DeletePatient($userId: ID!, $patientId: ID!) {
+            deletePatient(userId: $userId, patientId: $patientId) {
+              _id
+              name
+              address
+              contact{
+                email
+                phone
+              }
+              registrationDate
+              referringDoctor
+              {
+                name
+                email
+                phone
+              }
+              occupation
+              {
+                role
+                employer
+                contact
+                {
+                  email
+                  phone
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          userId: this.context.userId,
+          patientId: selectedPatientId
+        }
+    };
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.context.token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        let deletedPatient = resData.data.deletePatient;
+        console.log(deletedPatient);
+
+        let deletedPatientId = deletedPatient._id;
+        deletedPatient = this.state.patients.find(e => e._id === deletedPatientId);
+        const deletedPatientPos = this.state.patients.indexOf(deletedPatient);
+        const slicedArray = this.state.patients.splice(deletedPatientPos, 1);
+        console.log("deletedPatient:  ", JSON.stringify(deletedPatient),"  deletedUserPos:  ", deletedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.setState({ deleting: false });
+
+        this.fetchPatients();
+
+      })
+      .catch(err => {
+        console.log(err);
+        if (this.isActive) {
+          this.setState({ deleting: false });
+        }
+      });
+
+
   }
 
 
@@ -570,9 +750,11 @@ class PatientsPage extends Component {
         {this.state.isLoading === false &&
           (<PatientDetail
             canEdit
+            canDelete
             authUserId={this.context.userId}
             patient={this.state.selectedPatient}
             onEdit={this.startUpdatePatientHandler}
+            onDelete={this.modalDeleteHandler}
             className="PatientDetailBox"
         />)}
 
