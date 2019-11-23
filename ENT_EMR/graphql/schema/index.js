@@ -118,7 +118,7 @@ type Billing {
   description: String
   amount: Float
   paid: Boolean
-  notes: [String]
+  notes: String
 }
 
 type Appointment {
@@ -198,7 +198,7 @@ input PatientInput {
   billingAmount: Float
   billingPaid: Boolean
   billingNote: String
-  note: String
+  notes: String
   tag: String
 }
 
@@ -243,6 +243,7 @@ type RootMutation {
 
     createPatient(userId: ID!, patientInput: PatientInput!): Patient
     updatePatient(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientArray(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientField(userId: ID!, patientId: ID!, field: String!, query: String!): Patient
     updatePatientFieldArray(userId: ID!, patientId: ID!, field: String!, query: String!): Patient
     updatePatientAppointment(userId: ID!, patientId: ID!, appointmentId: ID!): Patient
