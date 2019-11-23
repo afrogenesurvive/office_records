@@ -141,6 +141,121 @@ module.exports = {
       throw err;
     }
   },
+  updatePatientArray: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientArray...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientNextOfKinObject = {
+        name: args.patientInput.nextOfKinName,
+        phone: args.patientInput.nextOfKinPhone,
+        email: args.patientInput.nextOfKinEmail
+      }
+
+      const patientComplaintObject = {
+        date: args.patientInput.complaintDate,
+        title: args.patientInput.complaintTitle,
+        description: args.patientInput.complaintDescription
+      }
+
+      const patientHistoryObject = {
+        title: args.patientInput.historyTitle,
+        type: args.patientInput.historyType,
+        date: args.patientInput.historyDate,
+        description: args.patientInput.historyDescription
+      }
+
+      const patientAllergiesObject = {
+        title: args.patientInput.allergiesTitle,
+        description: args.patientInput.allergiesDescription
+      }
+
+      const patientMedicationObject = {
+        title: args.patientInput.medicationTitle,
+        description: args.patientInput.medicationDescription
+      }
+
+      const patientInvestigationObject = {
+        date: args.patientInput.investigationDate,
+        title: args.patientInput.investigationTitle,
+        description: args.patientInput.investigationDescription
+      }
+
+      const patientDiagnosisObject = {
+        date: args.patientInput.diagnosisDate,
+        title: args.patientInput.diagnosisTitle,
+        description: args.patientInput.diagnosisDescription
+      }
+
+      const patientTreatmentObject = {
+        date: args.patientInput.treatmentDate,
+        title: args.patientInput.treatmentTitle,
+        type: args.patientInput.treatmentType,
+        description: args.patientInput.treatmentDescription,
+        dose: args.patientInput.treatmentDose,
+        frequency: args.patientInput.treatmentFrequency
+      }
+
+      const patientBillingObject = {
+        date: args.patientInput.billingDate,
+        title: args.patientInput.billingTitle,
+        type: args.patientInput.billingType,
+        description: args.patientInput.billingDescription,
+        amount: args.patientInput.billingAmount,
+        paid: args.patientInput.billingPaid,
+        notes: args.patientInput.billingNotes
+      }
+
+      console.log(`
+        updatePatientArray input objects:
+        nextOfKin: ${patientNextOfKinObject}
+        complaint: ${patientComplaintObject}
+        history: ${patientHistoryObject}
+        allergies: ${patientAllergiesObject}
+        medication: ${patientMedicationObject}
+        investigation: ${patientInvestigationObject}
+        diagnosis: ${patientDiagnosisObject}
+        treatment: ${patientTreatmentObject}
+        billing: ${patientBillingObject}
+        `);
+
+
+      // const today = new Date();
+      // const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      // const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      // const dateTime = date+' '+time;
+
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},
+        {$addToSet:
+          {
+            nextOfKin: patientNextOfKinObject,
+            complaint: patientComplaintObject,
+            history: patientHistoryObject,
+            allergies: patientAllergiesObject,
+            medication: patientMedicationObject,
+            investigation: patientInvestigationObject,
+            diagnosis: patientDiagnosisObject,
+            treatment: patientTreatmentObject,
+            billing: patientBillingObject
+           }
+      }
+      ,{new: true})
+      .populate('appointments');
+
+        return {
+            ...patient._doc,
+            _id: patient.id,
+            name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
   updatePatientField: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
     console.log("updatePatientField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);

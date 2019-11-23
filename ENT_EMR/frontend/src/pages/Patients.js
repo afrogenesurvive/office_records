@@ -11,12 +11,14 @@ import AuthContext from '../context/auth-context';
 
 import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import UpdatePatientForm from '../components/Forms/UpdatePatientForm';
+import UpdatePatientArrayForm from '../components/Forms/UpdatePatientArrayForm';
 import './Users.css';
 
 class PatientsPage extends Component {
   state = {
     creating: false,
     updating: false,
+    updatingArray: false,
     deleting: false,
     patients: [],
     isLoading: false,
@@ -65,7 +67,7 @@ class PatientsPage extends Component {
     console.log("CreatePatientForm...");
   };
   startUpdatePatientHandler = () => {
-    this.setState({ updating: true });
+    this.setState({ updating: true, updatingArray: true });
     console.log("UpdatePatientForm...");
   };
 
@@ -532,13 +534,210 @@ class PatientsPage extends Component {
           }
         }
         );
-        this.fetchPatients();
+
+        if (this.state.updatingArray === false && this.state.updating === false) {
+          console.log("update and updateArray complete...now fetching users");
+
+        }
+        // this.fetchPatients();
 
       })
       .catch(err => {
         console.log(err);
       });
   };
+
+
+modalConfirmUpdateArrayHandler = (event) => {
+
+  if(this.context.user.role !== 'admin') {
+    console.log("Not the Admin! No edit permission!!");
+
+  }
+
+  const userId = this.context.userId;
+  const patientId = this.context.selectedPatient._id;
+
+  console.log("UpdatePatientArrayFormData:  ", event.target);
+
+  this.setState({ updatingArray: false });
+
+
+  let nextOfKinName = event.target.formGridNextOfKinName.value
+  let nextOfKinPhone = event.target.formGridNextOfKinPhone.value
+  let nextOfKinEmail = event.target.formGridNextOfKinEmail.value
+  let complaintDate = event.target.formGridComplaintDate.value
+  let complaintTitle = event.target.formGridComplaintTitle.value
+  let complaintDescription = event.target.formGridComplaintDescription.value
+  let historyTitle = event.target.formGridHistoryTitle.value
+  let historyType = event.target.formGridHistoryType.value
+  let historyDate = event.target.formGridHistoryDate.value
+  let historyDescription = event.target.formGridHistoryDescription.value
+  let allergiesTitle = event.target.formGridAllergiesTitle.value
+  let allergiesDescription = event.target.formGridAllergiesDescription.value
+  let medicationTitle  = event.target.formGridMedicationTitle .value
+  let medicationDescription  = event.target.formGridMedicationDescription .value
+  let investigationDate  = event.target.formGridInvestigationDate .value
+  let investigationTitle  = event.target.formGridInvestigationTitle .value
+  let investigationDescription  = event.target.formGridInvestigationDescription .value
+  let diagnosisDate  = event.target.formGridDiagnosisDate.value
+  let diagnosisTitle  = event.target.formGridDiagnosisTitle.value
+  let diagnosisDescription  = event.target.formGridDiagnosisDescription.value
+  let treatmentDate  = event.target.formGridTreatmentDate.value
+  let treatmentTitle  = event.target.formGridTreatmentTitle.value
+  let treatmentType  = event.target.formGridTreatmentType.value
+  let treatmentDescription  = event.target.formGridTreatmentDescription.value
+  let treatmentDose  = event.target.formGridTreatmentDose.value
+  let treatmentFrequency  = event.target.formGridTreatmentFrequency.value
+  let billingDate  = event.target.formGridBillingDate.value
+  let billingTitle  = event.target.formGridBillingTitle.value
+  let billingType  = event.target.formGridBillingType.value
+  let billingDescription  = event.target.formGridBillingDescription.value
+  let billingAmount  = event.target.formGridBillingAmount.value
+  let billingPaid  = event.target.formGridBillingPaid.value
+  let billingNotes  = event.target.formGridBillingNotes.value
+  // request body args shouldn't be required/non-nullable
+
+  const patientArray = { nextOfKinName, nextOfKinPhone, nextOfKinEmail, complaintDate, complaintTitle, complaintDescription, historyTitle, historyType, historyDate, historyDescription, allergiesTitle, allergiesDescription, medicationTitle, medicationDescription, investigationDate, investigationTitle, investigationDescription, diagnosisDate, diagnosisTitle, diagnosisDescription, treatmentDate, treatmentTitle, treatmentType, treatmentDescription, treatmentDose, treatmentFrequency, billingDate, billingTitle, billingType, billingDescription, billingAmount, billingPaid , billingNotes }
+
+  console.log("updating patientArray.. " + JSON.stringify(patientArray));
+
+  const requestBody = {
+    query: `
+        mutation UpdatePatientArray($userId: ID!, $patientId: ID!, $nextOfKinName: String, $nextOfKinPhone: String, $nextOfKinEmail: String, $complaintDate: String, $complaintTitle: String, $complaintDescription: String, $historyTitle: String, $historyType: String, $historyDate: String, $historyDescription: String, $allergiesTitle: String, $allergiesDescription: String, $medicationTitle: String, $medicationDescription: String, $investigationDate: String, $investigationTitle: String, $investigationDescription: String, $diagnosisDate: String, $diagnosisTitle: String, $diagnosisDescription: String, $treatmentDate: String, $treatmentTitle: String, $treatmentType: String, $treatmentDescription: String, $treatmentDose: String, $treatmentFrequency: String, $billingDate: String, $billingTitle: String, $billingType: String, $billingDescription: String, $billingAmount: Float, $billingPaid: String , $billingNotes: String) {
+          updatePatientArray(userId: $userId, patientId: $patientId, patientInput: { nextOfKinName: $nextOfKinName, nextOfKinPhone: $nextOfKinPhone, nextOfKinEmail: $nextOfKinEmail, complaintDate: $complaintDate, complaintTitle: $complaintTitle, complaintDescription: $complaintDescription, historyTitle: $historyTitle, historyType: $historyType, historyDate: $historyDate, historyDescription: $historyDescription, allergiesTitle: $allergiesTitle, allergiesDescription: $allergiesDescription, medicationTitle: $medicationTitle, medicationDescription: $medicationDescription, investigationDate: $investigationDate, investigationTitle: $investigationTitle, investigationDescription: $investigationDescription, diagnosisDate: $diagnosisDate, diagnosisTitle: $diagnosisTitle, diagnosisDescription: $diagnosisDescription, treatmentDate: $treatmentDate, treatmentTitle: $treatmentTitle, treatmentType: $treatmentType, treatmentDescription: $treatmentDescription, treatmentDose: $treatmentDose, treatmentFrequency: $treatmentFrequency, billingDate: $billingDate, billingTitle: $billingTitle, billingType: $billingType, billingDescription: $billingDescription, billingAmount: $billingAmount, billingPaid: $billingPaid, billingNotes: $billingNotes }){
+            _id
+            name
+            address
+            contact{
+              email
+              phone
+            }
+            registrationDate
+            referringDoctor
+            {
+              name
+              email
+              phone
+            }
+            occupation
+            {
+              role
+              employer
+              contact
+              {
+                email
+                phone
+              }
+            }
+            nextOfKin
+            {
+              name
+              phone
+              email
+            }
+            insurance
+            {
+              company
+              number
+              description
+              expiry
+              subscriber
+              {
+                  company
+                  description
+              }
+            }
+            complaints
+            {
+              date
+              title
+              description
+            }
+          }
+        }
+      `,
+      variables: {
+        userId: userId,
+        patientId: patientId,
+        nextOfKinName: nextOfKinName,
+        nextOfKinPhone: nextOfKinPhone,
+        nextOfKinEmail: nextOfKinEmail,
+        complaintDate: complaintDate,
+        complaintTitle: complaintTitle,
+        complaintDescription: complaintDescription,
+        historyTitle: historyTitle,
+        historyType: historyType,
+        historyDate: historyDate,
+        historyDescription: historyDescription,
+        allergiesTitle: allergiesTitle,
+        allergiesDescription: allergiesDescription,
+        medicationTitle: medicationTitle,
+        medicationDescription: medicationDescription,
+        investigationDate: investigationDate,
+        investigationTitle: investigationTitle,
+        investigationDescription: investigationDescription,
+        diagnosisDate: diagnosisDate,
+        diagnosisTitle: diagnosisTitle,
+        diagnosisDescription: diagnosisDescription,
+        treatmentDate: treatmentDate,
+        treatmentTitle: treatmentTitle,
+        treatmentType: treatmentType,
+        treatmentDescription: treatmentDescription,
+        treatmentDose: treatmentDose,
+        treatmentFrequency: treatmentFrequency,
+        billingDate: billingDate,
+        billingTitle: billingTitle,
+        billingType: billingType,
+        billingDescription: billingDescription,
+        billingAmount: billingAmount,
+        billingPaid: billingPaid,
+        billingNotes: billingNotes
+      }
+  };
+
+  const token = this.context.token;
+
+  fetch('http://localhost:10000/graphql', {
+    method: 'POST',
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      if (res.status !== 200 && res.status !== 201) {
+        throw new Error('Failed!');
+      }
+      return res.json();
+    })
+    .then(resData => {
+      console.log("response data... " + JSON.stringify(resData));
+
+      const updatedPatientArrayId = resData.data.updatePatientArray._id;
+      const updatedPatientArray = this.state.patients.find(e => e._id === updatedPatientArrayId);
+      const updatedPatientArrayPos = this.state.patients.indexOf(updatedPatientArray);
+      const slicedArray = this.state.patients.splice(updatedPatientArrayPos, 1);
+      console.log("updatedPatientArray:  ", JSON.stringify(updatedPatientArray),"  updatedPatientPos:  ", updatedPatientArrayPos, "  slicedArray:  ", slicedArray);
+
+      this.state.patients.push(updatedPatientArray);
+
+      if (this.state.updatingArray === false && this.state.updating === false) {
+        console.log("update and updateArray complete...now fetching users");
+
+      }
+      // this.fetchPatients();
+
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+
+}
+
+
 
   modalCancelHandler = () => {
     this.setState({ creating: false, updating: false, selectedPatient: null });
@@ -743,6 +942,16 @@ class PatientsPage extends Component {
             canConfirm
             onCancel={this.modalCancelHandler}
             onConfirm={this.modalConfirmUpdateHandler}
+            confirmText="Confirm"
+            patient={this.context.selectedPatient}
+          />
+        )}
+        {this.state.updating && (
+          <UpdatePatientArrayForm
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.modalConfirmUpdateArrayHandler}
             confirmText="Confirm"
             patient={this.context.selectedPatient}
           />

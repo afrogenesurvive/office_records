@@ -1,9 +1,19 @@
 .CreateFormContainer, .UpdateFormContainer {
   height: 50vh;
-  width: 60vw;
+  width: 80vw;
   background-color: grey;
   position: fixed;
-  top: 5rem;
+  top: 2rem;
+  left: 5rem;
+  z-index: 15;
+}
+
+.UpdateArrayFormContainer {
+  height: 60vh;
+  width: 90vw;
+  background-color: grey;
+  position: fixed;
+  top: 20rem;
   left: 5rem;
   z-index: 15;
 }
