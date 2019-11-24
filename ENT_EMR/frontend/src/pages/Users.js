@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 // import Form from 'react-bootstrap/Form';
-// import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -134,6 +137,7 @@ class UsersPage extends Component {
 
           return { users: updatedUsers };
         });
+        this.context.users = this.state.users;
       })
       .catch(err => {
         console.log(err);
@@ -236,6 +240,7 @@ class UsersPage extends Component {
               role: resData.data.updateUser.role
             }
         );
+        this.context.users = this.state.users;
         this.fetchUsers();
       })
       .catch(err => {
@@ -363,6 +368,7 @@ class UsersPage extends Component {
         if (this.isActive) {
           this.setState({ users: users, isLoading: false });
         }
+        this.context.users = this.state.users;
       })
       .catch(err => {
         console.log(err);
@@ -460,51 +466,137 @@ modalDeleteHandler = () => {
 
   render() {
     return (
+
+
       <React.Fragment>
-        {
-          this.state.creating && (
-          <CreateUserForm
-          authUserId={this.context.userId}
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmHandler}
-            onSubmit={this.modalConfirmHandler}
-            confirmText="Confirm"
-          />
-        )
-      }
-        {this.state.updating && (
-          <UpdateUserForm
-          authUserId={this.context.userId}
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmUpdateHandler}
-            confirmText="Confirm"
-            user={this.context.selectedUser}
-          />
-        )}
-        {this.state.searching === true &&
-          <SearchUserForm
-          authUserId={this.context.userId}
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmSearchHandler}
-            confirmText="Search"
-            user={this.context.selectedUser}
-          />
-        }
-        {
-          this.state.searchUsers !== [] &&
-          <SearchUserList
-            searchUsers={this.state.searchUsers}
-            authUserId={this.context.userId}
-            onCancel={this.modalCancelHandler}
-              onViewDetail={this.showDetailHandler}
-          />
-        }
+      <Container className="containerCreateuser">
+    <Row className="createUserRowAdd">
+    <Col md={4} className="createUserColAdd">
+      <p>Add New User</p>
+    </Col>
+    <Col md={8}>
+      {this.context.token && (
+          <Button className="btn" onClick={this.startCreateUserHandler}>
+            Add
+          </Button>
+      )}
+    </Col>
+    </Row>
+    <Row className="createUserRowForm">
+    <Col md={10} className="createUserColForm">
+    {
+      this.state.creating && (
+      <CreateUserForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.modalConfirmHandler}
+        onSubmit={this.modalConfirmHandler}
+        confirmText="Confirm"
+      />
+    )
+  }
+  {this.state.updating && (
+    <UpdateUserForm
+    authUserId={this.context.userId}
+    canCancel
+      canConfirm
+      onCancel={this.modalCancelHandler}
+      onConfirm={this.modalConfirmUpdateHandler}
+      confirmText="Confirm"
+      user={this.context.selectedUser}
+    />
+  )}
+    </Col>
+    <Col md={10} className="createUserColForm">
+    {
+      // this.state.searching === true &&
+      // <SearchUserForm
+      // authUserId={this.context.userId}
+      // canCancel
+      //   canConfirm
+      //   onCancel={this.modalCancelHandler}
+      //   onConfirm={this.modalConfirmSearchHandler}
+      //   confirmText="Search"
+      //   user={this.context.selectedUser}
+      // />
+    }
+    </Col>
+    <Col md={10}>
+      even more form stuff
+    </Col>
+    </Row>
+    </Container>
+
+
+
+    <Container className="containerSearchuser">
+  <Row className="createUserRowAdd">
+  <Col md={4} className="createUserColAdd">
+    <p>Search for a User</p>
+  </Col>
+  <Col md={8}>
+    {this.context.token && (
+        <Button className="btn" onClick={this.startSearchUserHandler}>
+          Search
+        </Button>
+    )}
+  </Col>
+  </Row>
+  <Row className="createUserRowForm">
+  <Col md={10} className="createUserColForm">
+  {
+    this.state.searching === true &&
+    <SearchUserForm
+    authUserId={this.context.userId}
+    canCancel
+      canConfirm
+      onCancel={this.modalCancelHandler}
+      onConfirm={this.modalConfirmSearchHandler}
+      confirmText="Search"
+      user={this.context.selectedUser}
+    />
+  }
+  </Col>
+  <Col md={10}>
+
+  </Col>
+  </Row>
+  </Container>
+
+  <Container className="containerSearchuser">
+  <Row className="searchListRow">
+  {
+    this.state.searchUsers !== [] &&
+    <SearchUserList
+      searchUsers={this.state.searchUsers}
+      authUserId={this.context.userId}
+      onCancel={this.modalCancelHandler}
+        onViewDetail={this.showDetailHandler}
+    />
+  }
+  </Row>
+
+  </Container>
+
+  <Container className="containerSearchuser">
+<Row className="searchListRow">
+
+{this.state.isLoading ? (
+  <Spinner />
+) : (
+  <UserList
+    users={this.state.users}
+    authUserId={this.context.userId}
+    onViewDetail={this.showDetailHandler}
+  />
+)}
+
+</Row>
+</Container>
+
+
         {this.state.isLoading === false &&
           (<UserDetail
             authUserId={this.context.userId}
@@ -512,31 +604,8 @@ modalDeleteHandler = () => {
             onEdit={this.startUpdateUserHandler}
             onDelete={this.modalDeleteHandler}
         />)}
-        {this.context.token &&
-          (<div className="users-control">
-            <p>Add New User</p>
-            <button className="btn" onClick={this.startCreateUserHandler}>
-              +
-            </button>
-          </div>
-        )}
-        {this.context.token &&
-          (<div className="users-control">
-            <p>Search Users</p>
-            <button className="btn" onClick={this.startSearchUserHandler}>
-              +
-            </button>
-          </div>
-        )}
-        {this.state.isLoading ? (
-          <Spinner />
-        ) : (
-          <UserList
-            users={this.state.users}
-            authUserId={this.context.userId}
-            onViewDetail={this.showDetailHandler}
-          />
-        )}
+
+        
       </React.Fragment>
     );
   }

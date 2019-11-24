@@ -1,8 +1,8 @@
 .CreateFormContainer, .UpdateFormContainer, .SearchFormContainer {
-  height: 50vh;
-  width: 80vw;
+  height: 100%;
+  width: 100%;
   background-color: grey;
-  position: fixed;
+  /* position: fixed; */
   top: 2rem;
   left: 5rem;
   z-index: 15;

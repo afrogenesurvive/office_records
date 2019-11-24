@@ -21,9 +21,11 @@ const mainNavigation = props => (
                   <NavLink to="/auth">Login</NavLink>
                 </li>
               )}
-              <li>
-                <NavLink to="/signup">Signup</NavLink>
-              </li>
+              {!context.token && (
+                <li>
+                  <NavLink to="/signup">Signup</NavLink>
+                </li>
+              )}
               {context.token && (
                 <React.Fragment>
                   <li>

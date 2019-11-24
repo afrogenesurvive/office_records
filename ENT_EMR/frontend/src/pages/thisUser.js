@@ -8,9 +8,10 @@ import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
 import './Users.css';
 
-class UsersPage extends Component {
+class ThisUserPage extends Component {
   state = {
     user: null,
+    users: [],
     updating: false,
     isLoading: false
   };
@@ -40,10 +41,14 @@ class UsersPage extends Component {
   modalConfirmUpdateHandler = (event) => {
 
     let userId = this.context.userId;
+    let selectedUserId = this.context.selectedUser._id;
+    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
 
-    // console.log("UpdateUserFormData:  ", event);
+      console.log("Not the creator or Admin! No edit permission!!");
+      selectedUserId = null;
+    }
+
     console.log("UpdateUserFormData:  ", event.target.formGridEmail.value);
-
 
     this.setState({ updating: false });
     let email = event.target.formGridEmail.value;
@@ -51,25 +56,23 @@ class UsersPage extends Component {
     let name = event.target.formGridName.value;
     let role = event.target.formGridRole.value;
 
-
-
-    if (
-      email.trim().length === 0 ||
-      password.trim().length === 0 ||
-      name.trim().length === 0 ||
-      role.trim().length === 0
-    ) {
-      console.log("blank feilds detected!!...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
-
-      email = this.state.selectedUser.email;
-      password = this.state.selectedUser.password;
-      name = this.state.selectedUser.name;
-      role = this.state.selectedUser.role;
-      console.log("inputting previous data...email:  ", email, "  password:  ", password, "  name:  ", name, "  role:  ", role);
-
+    if (email.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      email  = this.state.user.email;
       // return;
     }
-
+    if (password.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      password = this.state.user.password;
+    }
+    if (name.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      name  = this.state.user.name;
+    }
+    if (role.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      role  = this.state.user.role;
+    }
 
 
     const user = { email, password, name, role };
@@ -114,15 +117,22 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData.data));
-        this.setState({ user: {
-          _id: resData.data.updateUser._id,
-          email: resData.data.updateUser.email,
-          name: resData.data.updateUser.name,
-          role: resData.data.updateUser.role
-        }
-      });
+        console.log("response data... " + JSON.stringify(resData));
 
+        const updatedUser = resData.data.updateUser;
+        console.log("updatedUser:  ", JSON.stringify(updatedUser));
+
+        this.setState({user: updatedUser})
+        this.state.users.push(
+          {
+              _id: resData.data.updateUser._id,
+              email: resData.data.updateUser.email,
+              name: resData.data.updateUser.name,
+              role: resData.data.updateUser.role
+            }
+        );
+        this.context.users = this.state.users;
+        // this.fetchUsers();
       })
       .catch(err => {
         console.log(err);
@@ -217,4 +227,4 @@ class UsersPage extends Component {
   }
 }
 
-export default UsersPage;
+export default ThisUserPage;
