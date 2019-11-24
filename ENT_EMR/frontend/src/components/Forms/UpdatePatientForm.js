@@ -2,7 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import FormCheck from 'react-bootstrap/FormCheck'
+// import FormCheck from 'react-bootstrap/FormCheck'
 // import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
@@ -20,21 +20,21 @@ return (
     <Form.Group as={Col} controlId="formGridName">
     {
       // <Form.Label>name</Form.Label>
-      <Form.Control type="text" placeholder="Enter name"/>
+      <Form.Control type="text" placeholder={patient.name}/>
     }
     </Form.Group>
 
     <Form.Group as={Col} controlId="formGridAddress">
     {
       // <Form.Label>Address</Form.Label>
-      <Form.Control type="text" placeholder="Address"/>
+      <Form.Control type="text" placeholder={patient.address}/>
     }
     </Form.Group>
 
   <Form.Group as={Col} controlId="formGridDob">
     {
     // <Form.Label>D.O.B</Form.Label>
-    <Form.Control type="date" placeholder="D.O.B" />
+    <Form.Control type="date" placeholder={patient.dob} />
   }
   </Form.Group>
   </Form.Row>
@@ -43,21 +43,21 @@ return (
   <Form.Group as={Col} controlId="formGridContactEmail">
     {
     // <Form.Label>Email</Form.Label>
-    <Form.Control type="email" placeholder="Email" />
+    <Form.Control type="email" placeholder={patient.contact.email} />
   }
   </Form.Group>
 
   <Form.Group as={Col} controlId="formGridContactPhone">
     {
     // <Form.Label>Phone</Form.Label>
-    <Form.Control type="number" placeholder="Phone" />
+    <Form.Control type="number" placeholder={patient.phone} />
   }
   </Form.Group>
 
   <Form.Group as={Col} controlId="formGridRegistrationDate">
     {
     // <Form.Label>RegistrationDate</Form.Label>
-    <Form.Control type="date" placeholder="RegistrationDate" />
+    <Form.Control type="date" placeholder={patient.registrationDate} />
   }
   </Form.Group>
   </Form.Row>
@@ -66,14 +66,14 @@ return (
   <Form.Group as={Col} controlId="formGridReferringDoctorName">
     {
     // <Form.Label>ReferringDoctorName</Form.Label>
-    <Form.Control type="text" placeholder="ReferringDoctorName" />
+    <Form.Control type="text" placeholder={patient.referringDoctor.name} />
   }
   </Form.Group>
 
   <Form.Group as={Col} controlId="formGridReferringDoctorEmail">
     {
     // <Form.Label>ReferringDoctorEmail</Form.Label>
-    <Form.Control type="email" placeholder="ReferringDoctorEmail" />
+    <Form.Control type="email" placeholder={patient.referringDoctor.email} />
   }
   </Form.Group>
 

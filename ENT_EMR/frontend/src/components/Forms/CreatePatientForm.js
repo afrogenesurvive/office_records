@@ -2,9 +2,9 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import FormCheck from 'react-bootstrap/FormCheck'
-import { NavLink } from 'react-router-dom';
-import AuthContext from '../../context/auth-context';
+// import FormCheck from 'react-bootstrap/FormCheck'
+// import { NavLink } from 'react-router-dom';
+// import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const CreatePatientForm = (props) => {

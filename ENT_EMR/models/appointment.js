@@ -37,7 +37,7 @@ const appointmentSchema = new Schema({
   important: {
     type: Boolean
   },
-  notes: [String]
+  notes: String
 },
   { timestamps: true }
 );

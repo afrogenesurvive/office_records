@@ -132,7 +132,7 @@ type Appointment {
   inProgress: Boolean
   attended: Boolean
   important: Boolean
-  notes: [String]
+  notes: String
 }
 
 
@@ -208,11 +208,10 @@ input AppointmentInput {
   date: String
   location: String
   description: String
-  patient: String
   inProgress: Boolean
   attended: Boolean
   important: Boolean
-  note: String
+  notes: String
 }
 
 type RootQuery {
