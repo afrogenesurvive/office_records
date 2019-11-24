@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
+// import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -557,7 +557,7 @@ modalConfirmUpdateArrayHandler = (event) => {
   const userId = this.context.userId;
   const patientId = this.context.selectedPatient._id;
 
-  console.log("UpdatePatientArrayFormData:  ", event.target);
+  console.log("UpdatePatientArrayFormData:  ", event.target.formGridNextOfKinName.value);
 
   this.setState({ updatingArray: false });
 
@@ -574,27 +574,27 @@ modalConfirmUpdateArrayHandler = (event) => {
   let historyDescription = event.target.formGridHistoryDescription.value
   let allergiesTitle = event.target.formGridAllergiesTitle.value
   let allergiesDescription = event.target.formGridAllergiesDescription.value
-  let medicationTitle  = event.target.formGridMedicationTitle .value
-  let medicationDescription  = event.target.formGridMedicationDescription .value
-  let investigationDate  = event.target.formGridInvestigationDate .value
-  let investigationTitle  = event.target.formGridInvestigationTitle .value
-  let investigationDescription  = event.target.formGridInvestigationDescription .value
-  let diagnosisDate  = event.target.formGridDiagnosisDate.value
-  let diagnosisTitle  = event.target.formGridDiagnosisTitle.value
-  let diagnosisDescription  = event.target.formGridDiagnosisDescription.value
-  let treatmentDate  = event.target.formGridTreatmentDate.value
-  let treatmentTitle  = event.target.formGridTreatmentTitle.value
-  let treatmentType  = event.target.formGridTreatmentType.value
-  let treatmentDescription  = event.target.formGridTreatmentDescription.value
-  let treatmentDose  = event.target.formGridTreatmentDose.value
-  let treatmentFrequency  = event.target.formGridTreatmentFrequency.value
-  let billingDate  = event.target.formGridBillingDate.value
-  let billingTitle  = event.target.formGridBillingTitle.value
-  let billingType  = event.target.formGridBillingType.value
-  let billingDescription  = event.target.formGridBillingDescription.value
-  let billingAmount  = event.target.formGridBillingAmount.value
-  let billingPaid  = event.target.formGridBillingPaid.value
-  let billingNotes  = event.target.formGridBillingNotes.value
+  let medicationTitle = event.target.formGridMedicationTitle.value
+  let medicationDescription = event.target.formGridMedicationDescription.value
+  let investigationDate = event.target.formGridInvestigationDate.value
+  let investigationTitle = event.target.formGridInvestigationTitle.value
+  let investigationDescription = event.target.formGridInvestigationDescription.value
+  let diagnosisDate = event.target.formGridDiagnosisDate.value
+  let diagnosisTitle = event.target.formGridDiagnosisTitle.value
+  let diagnosisDescription = event.target.formGridDiagnosisDescription.value
+  let treatmentDate = event.target.formGridTreatmentDate.value
+  let treatmentTitle = event.target.formGridTreatmentTitle.value
+  let treatmentType = event.target.formGridTreatmentType.value
+  let treatmentDescription = event.target.formGridTreatmentDescription.value
+  let treatmentDose = event.target.formGridTreatmentDose.value
+  let treatmentFrequency = event.target.formGridTreatmentFrequency.value
+  let billingDate = event.target.formGridBillingDate.value
+  let billingTitle = event.target.formGridBillingTitle.value
+  let billingType = event.target.formGridBillingType.value
+  let billingDescription = event.target.formGridBillingDescription.value
+  let billingAmount = event.target.formGridBillingAmount.value
+  let billingPaid = event.target.formGridBillingPaid.value
+  let billingNotes = event.target.formGridBillingNotes.value
   // request body args shouldn't be required/non-nullable
 
   const patientArray = { nextOfKinName, nextOfKinPhone, nextOfKinEmail, complaintDate, complaintTitle, complaintDescription, historyTitle, historyType, historyDate, historyDescription, allergiesTitle, allergiesDescription, medicationTitle, medicationDescription, investigationDate, investigationTitle, investigationDescription, diagnosisDate, diagnosisTitle, diagnosisDescription, treatmentDate, treatmentTitle, treatmentType, treatmentDescription, treatmentDose, treatmentFrequency, billingDate, billingTitle, billingType, billingDescription, billingAmount, billingPaid , billingNotes }
@@ -844,7 +844,7 @@ modalConfirmSearchHandler = (event) => {
 
 
   modalCancelHandler = () => {
-    this.setState({ creating: false, updating: false, selectedPatient: null });
+    this.setState({ creating: false, updating: false, searching: false, selectedPatient: null });
   };
 
 
@@ -1127,7 +1127,7 @@ modalConfirmSearchHandler = (event) => {
   <Container className="containerSearchuser">
   <Row className="searchListRow">
   {
-    this.state.searchUsers !== [] &&
+    this.state.searchPatients !== [] &&
     <SearchPatientList
       searchPatients={this.state.searchPatients}
       authUserId={this.context.userId}

@@ -322,7 +322,7 @@ class UsersPage extends Component {
 
 
   modalCancelHandler = () => {
-    this.setState({ creating: false, updating: false, deleting: false, selectedUser: null });
+    this.setState({ creating: false, updating: false, deleting: false, searching: false, selectedUser: null });
   };
 
   fetchUsers() {

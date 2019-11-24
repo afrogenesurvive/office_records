@@ -16,7 +16,7 @@ const { pocketVariables } = require('../../helpers/pocketVars');
 module.exports = {
   appointments: async (args, req) => {
     // console.log("args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables));
+    console.log("appointments...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables));
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -34,7 +34,7 @@ module.exports = {
     }
   },
   getAppointmentId: async (args, req) => {
-    console.log("args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    console.log("getAppointmentId...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -55,7 +55,7 @@ module.exports = {
   },
   getAppointmentField: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("getAppointmentField..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -226,7 +226,7 @@ module.exports = {
   },
   deleteAppointment: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("deleteAppointment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');

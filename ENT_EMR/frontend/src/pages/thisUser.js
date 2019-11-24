@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
 
-import Modal from '../components/Modal/Modal';
-import Backdrop from '../components/Backdrop/Backdrop';
+// import Modal from '../components/Modal/Modal';
+// import Backdrop from '../components/Backdrop/Backdrop';
 import ThisUserProfile from '../components/Users/thisUserProfile';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';

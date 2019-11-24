@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-// import Form from 'react-bootstrap/Form';
-// import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -9,6 +11,8 @@ import AppointmentDetail from '../components/Appointments/AppointmentDetail';
 import PatientDetail from '../components/Patients/PatientDetail';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
+import SearchAppointmentList from '../components/Appointments/AppointmentList/SearchAppointmentList';
+import SearchAppointmentForm from '../components/Forms/SearchAppointmentForm';
 
 import CreateAppointmentForm from '../components/Forms/CreateAppointmentForm';
 import UpdateAppointmentForm from '../components/Forms/UpdateAppointmentForm';
@@ -19,6 +23,8 @@ class AppointmentsPage extends Component {
     creating: false,
     updating: false,
     deleting: false,
+    searching: false,
+    searchAppointments: [],
     appointments: [],
     isLoading: false,
     selectedAppointment: null
@@ -54,14 +60,22 @@ class AppointmentsPage extends Component {
     this.setState({ updating: true });
     console.log("UpdateAppointmentForm...");
   };
+  startSearchAppointmentHandler = () => {
+    this.setState({ searching: true });
+    console.log("SearchAppointmentForm...");
+  };
 
   modalConfirmHandler = (event) => {
 
-    // console.log("CreatePatientFormData:  ", event.target.formGridTitle.value);
+    console.log("CreateAppointmentFormData:  ", event.target.formGridTitle.value);
 
     this.setState({ creating: false });
     const userId = this.context.userId;
-    const patientId = this.context.selectedPatientId;
+    const patientId = this.context.selectedPatient._id;
+    console.log(`
+        userId: ${userId}
+        patientId: ${patientId}
+      `);
 
     const title = event.target.formGridTitle.value;
     const type = event.target.formGridType.value;
@@ -88,11 +102,11 @@ class AppointmentsPage extends Component {
     }
 
     const appointment = { title, type, date, location, description, inProgress, attended, important, notes };
-    console.log("creating appointment... " + JSON.stringify(appointment));
+    console.log("creating appointment... " ,JSON.stringify(appointment));
 
     const requestBody = {
       query: `
-          mutation CreateAppointment($userId: ID!, $patientId: ID, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $attended: Boolean!, $important: Boolean!, $notes: String!) {
+          mutation createAppointment($userId: ID!, $patientId: ID!, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $attended: Boolean!, $important: Boolean!, $notes: String!) {
             createAppointment(userId: $userId, patientId: $patientId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, attended: $attended, important: $important, notes: $notes }) {
               _id
               title
@@ -110,7 +124,6 @@ class AppointmentsPage extends Component {
               attended
               important
               notes
-              }
             }
           }
         `,
@@ -189,7 +202,11 @@ class AppointmentsPage extends Component {
 
     const userId = this.context.userId;
     const appointmentId = this.context.selectedAppointment._id;
-    const patientId = this.context.selectedPatientId;
+    // const patientId = this.context.selectedPatientId;
+    console.log(`
+        userId: ${userId}
+        appointmentd: ${appointmentId}
+      `);
 
     // console.log("UpdateUserFormData:  ", event);
     console.log("UpdateAppointmentFormData:  ", event.target.formGridTitle.value);
@@ -251,32 +268,24 @@ class AppointmentsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation UpdateAppointment($userId: ID!, $patientId: ID, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $attended: Boolean!, $important: Boolean!, $notes: String!) {
-            updateAppointment(userId: $userId, patientId: $patientId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, attended: $attended, important: $important, notes: $notes }) {
+          mutation UpdateAppointment($userId: ID!, $appointmentId: ID, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $attended: Boolean!, $important: Boolean!, $notes: String!) {
+            updateAppointment(userId: $userId, appointmentId: $appointmentId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, attended: $attended, important: $important, notes: $notes }) {
               _id
               title
               type
               date
               location
               description
-              patient
-              {
-                name
-                dob
-                address
-              }
               inProgress
               attended
               important
               notes
-              }
             }
           }
         `,
         variables: {
           userId: userId,
-          patientId: patientId,
-          userId: userId,
+          appointmentId: appointmentId,
           title: title,
           type: type,
           date: date,
@@ -336,8 +345,92 @@ class AppointmentsPage extends Component {
       });
   };
 
+
+  modalConfirmSearchHandler = (event) => {
+    console.log("SearchAppointmentForm:  ");
+
+
+    let userId = this.context.userId;
+
+      console.log("SearchAppointmentFormData:  ", event.target.formBasicField.value);
+      this.setState({ searching: false });
+
+      let field = event.target.formBasicField.value;
+      let query = event.target.formBasicQuery.value;
+
+      if (
+        field.trim().length === 0 ||
+        query.trim().length === 0
+      ) {
+        console.log("blank fields detected!!!...Please try again...");
+        return;
+      }
+
+      const search = { field, query }
+      console.log("Searching for Appointment:  ", JSON.stringify(search));
+
+      const requestBody = {
+        query: `
+          query GetAppointmentField($userId: ID!, $field: String!, $query: String!)
+          {getAppointmentField(userId: $userId, field: $field, query: $query ){
+            _id
+            title
+            type
+            date
+            location
+            description
+            patient{
+              name
+              address
+            }
+            inProgress
+            attended
+            important
+            notes
+          }
+        }
+        `,
+        variables: {
+          userId: userId,
+          field: field,
+          query: query
+        }
+      }
+
+      const token = this.context.token;
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData));
+
+          const searchAppointments = resData.data.getAppointmentField;
+
+          this.setState({ searchAppointments: searchAppointments})
+          console.log("state.searchAppointments:  ", this.state.searchAppointments);
+          // this.fetchAppointments();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  }
+
+
+
   modalCancelHandler = () => {
-    this.setState({ creating: false, updating: false, selectedAppointment: null });
+    this.setState({ creating: false, updating: false, searching: false, selectedAppointment: null });
   };
 
 
@@ -505,8 +598,25 @@ class AppointmentsPage extends Component {
   render() {
     return (
       <React.Fragment>
-        {
-          this.state.creating && (
+
+
+      <Container className="containerCreateuser">
+      <Row className="createUserRowAdd">
+      <Col md={4} className="createUserColAdd">
+        <p>Add New Appointment</p>
+      </Col>
+      <Col md={8}>
+        {this.context.token && (
+            <Button className="btn" onClick={this.startCreateAppointmentHandler}>
+              Add
+            </Button>
+        )}
+      </Col>
+      </Row>
+      <Row className="createUserRowForm">
+      <Col md={12} className="createUserColForm">
+      {
+        this.state.creating && (
           <CreateAppointmentForm
           canCancel
             canConfirm
@@ -515,17 +625,87 @@ class AppointmentsPage extends Component {
             onSubmit={this.modalConfirmHandler}
             confirmText="Confirm"
           />
-        )}
-        {this.state.updating && (
-          <UpdateAppointmentForm
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmUpdateHandler}
-            confirmText="Confirm"
-            appointment={this.context.selectedAppointment}
-          />
-        )}
+      )}
+    {this.state.updating && (
+      <UpdateAppointmentForm
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.modalConfirmUpdateHandler}
+        confirmText="Confirm"
+        appointment={this.context.selectedAppointment}
+      />
+    )}
+      </Col>
+      </Row>
+      </Container>
+
+
+
+      <Container className="containerSearchuser">
+    <Row className="createUserRowAdd">
+    <Col md={4} className="createUserColAdd">
+      <p>Search for an Appointment</p>
+    </Col>
+    <Col md={8}>
+      {this.context.token && (
+          <Button className="btn" onClick={this.startSearchAppointmentHandler}>
+            Search
+          </Button>
+      )}
+    </Col>
+    </Row>
+    <Row className="createUserRowForm">
+    <Col md={10} className="createUserColForm">
+    {
+      this.state.searching === true &&
+      <SearchAppointmentForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.modalConfirmSearchHandler}
+        confirmText="Search"
+        appointment={this.context.selectedAppointment}
+      />
+    }
+    </Col>
+    <Col md={10}>
+
+    </Col>
+    </Row>
+    </Container>
+
+    <Container className="containerSearchuser">
+    <Row className="searchListRow">
+    {
+      this.state.searchAppointments !== [] &&
+      <SearchAppointmentList
+        searchAppointments={this.state.searchAppointments}
+        authUserId={this.context.userId}
+        onCancel={this.modalCancelHandler}
+          onViewDetail={this.showDetailHandler}
+      />
+    }
+    </Row>
+
+    </Container>
+
+    <Container className="containerSearchuser">
+  <Row className="searchListRow">
+
+  {this.state.isLoading ? (
+    <Spinner />
+  ) : (
+    <AppointmentList
+      appointments={this.state.appointments}
+      authUserId={this.context.userId}
+      onViewDetail={this.showDetailHandler}
+    />
+  )}
+
+  </Row>
+  </Container>
         {this.state.isLoading === false &&
           (<AppointmentDetail
             canDelete
@@ -540,23 +720,6 @@ class AppointmentsPage extends Component {
             patient={this.context.selectedPatient}
             className="PatientDetailBox2"
         />)}
-        {this.context.token &&
-          (<div className="users-control">
-            <p>Add New Appointment</p>
-            <button className="btn" onClick={this.startCreateAppointmentHandler}>
-              +
-            </button>
-          </div>
-        )}
-        {this.state.isLoading ? (
-          <Spinner />
-        ) : (
-          <AppointmentList
-            appointments={this.state.appointments}
-            authUserId={this.context.userId}
-            onViewDetail={this.showDetailHandler}
-          />
-        )}
       </React.Fragment>
     );
   }
