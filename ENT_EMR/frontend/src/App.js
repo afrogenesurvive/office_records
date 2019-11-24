@@ -59,6 +59,7 @@ class App extends Component {
               token: this.state.token,
               userId: this.state.userId,
               user: {},
+              users:[],
               selectedUser: {},
               selectedPatient: {},
               selectedAppointment: {},

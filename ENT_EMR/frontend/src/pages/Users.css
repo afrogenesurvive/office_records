@@ -14,3 +14,38 @@
   bottom: 10rem;
   left: 5rem;
 }
+
+
+.containerCreateuser {
+  margin-top: 5rem;
+  width: 95vh;
+}
+.containerSearchuser {
+  margin-top: 5rem;
+  width: 95vh;
+}
+.createUserRowAdd {
+  border: 1.5px solid black;
+  height: 5rem;
+  padding: 1rem 0;
+}
+.createUserRowForm {
+  border: 1.5px solid black;
+  height: 30rem;
+  text-align: center;
+}
+
+.searchListRow {
+  height: 40rem;
+  border: 1px solid green;
+}
+
+.createUserColAdd {
+  height: 100%;
+  text-align: center;
+}
+.createUserColForm {
+  height: 100%;
+  text-align: center;
+  margin: 0 auto;
+}

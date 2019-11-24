@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import Form from 'react-bootstrap/Form';
+import Form from 'react-bootstrap/Form';
 // import Button from 'react-bootstrap/Button';
 
 // import Modal from '../components/Modal/Modal';
@@ -8,6 +8,8 @@ import PatientList from '../components/Patients/PatientList/PatientList';
 import PatientDetail from '../components/Patients/PatientDetail';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
+import SearchPatientList from '../components/Patients/PatientList/SearchPatientList';
+import SearchPatientForm from '../components/Forms/SearchPatientForm';
 
 import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import UpdatePatientForm from '../components/Forms/UpdatePatientForm';
@@ -18,9 +20,11 @@ class PatientsPage extends Component {
   state = {
     creating: false,
     updating: false,
+    searching: false,
     updatingArray: false,
     deleting: false,
     patients: [],
+    searchPatients: [],
     isLoading: false,
     selectedPatient: null
   };
@@ -69,6 +73,10 @@ class PatientsPage extends Component {
   startUpdatePatientHandler = () => {
     this.setState({ updating: true, updatingArray: true });
     console.log("UpdatePatientForm...");
+  };
+  startSearchUserHandler = () => {
+    this.setState({ searching: true });
+    console.log("SearchPatientForm...");
   };
 
   modalConfirmHandler = (event) => {
@@ -956,6 +964,26 @@ modalConfirmUpdateArrayHandler = (event) => {
             patient={this.context.selectedPatient}
           />
         )}
+        {this.state.searching === true &&
+          <SearchPatientForm
+          authUserId={this.context.userId}
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.modalConfirmSearchHandler}
+            confirmText="Search"
+            patient={this.context.selectedPatient}
+          />
+        }
+        {
+          this.state.searchPatients !== [] &&
+          <SearchPatientList
+            searchPatients={this.state.searchPatients}
+            authUserId={this.context.userId}
+            onCancel={this.modalCancelHandler}
+              onViewDetail={this.showDetailHandler}
+          />
+        }
         {this.state.isLoading === false &&
           (<PatientDetail
             canEdit
@@ -966,7 +994,14 @@ modalConfirmUpdateArrayHandler = (event) => {
             onDelete={this.modalDeleteHandler}
             className="PatientDetailBox"
         />)}
-
+        {this.context.token &&
+          (<div className="users-control">
+            <p>Search Patient</p>
+            <button className="btn" onClick={this.startSearchPatientHandler}>
+              +
+            </button>
+          </div>
+        )}
         {this.context.token &&
           (<div className="users-control">
             <p>Add New Patient</p>

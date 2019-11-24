@@ -13,7 +13,7 @@ const thisUserProfile = (props) => {
       <Card.Title>Your Profile</Card.Title>
       <p>ID: {user._id}</p>
       <Card.Text>
-        Nmae: {user.name}
+        Name: {user.name}
       </Card.Text>
       <Card.Text>
         Email: {user.email}
