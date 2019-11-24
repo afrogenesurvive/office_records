@@ -523,9 +523,6 @@ modalDeleteHandler = () => {
       // />
     }
     </Col>
-    <Col md={10}>
-      even more form stuff
-    </Col>
     </Row>
     </Container>
 
@@ -605,7 +602,7 @@ modalDeleteHandler = () => {
             onDelete={this.modalDeleteHandler}
         />)}
 
-        
+
       </React.Fragment>
     );
   }
