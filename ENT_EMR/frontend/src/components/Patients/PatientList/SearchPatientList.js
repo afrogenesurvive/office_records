@@ -1,4 +1,6 @@
 import React from 'react';
+import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
 
 import SearchPatientItem from './PatientItem/SearchPatientItem';
 import './UserList.css';
@@ -6,6 +8,10 @@ import './UserList.css';
 const searchPatientList = props => {
   const searchPatients = props.searchPatients.map(patient => {
     return (
+      <React.Fragment>
+      <Accordion.Toggle as={Button} variant="link" eventKey="1" className="btn" onClick={props.onCancel}>
+      x
+      </Accordion.Toggle>
       <SearchPatientItem
         key={patient._id}
         userId={props.authUserId}
@@ -14,6 +20,7 @@ const searchPatientList = props => {
         address={patient.address}
         onDetail={props.onViewDetail}
       />
+      </React.Fragment>
     );
   });
 

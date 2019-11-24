@@ -1,4 +1,6 @@
 import React from 'react';
+import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
 
 import SearchUserItem from './UserItem/SearchUserItem';
 import './UserList.css';
@@ -6,6 +8,10 @@ import './UserList.css';
 const searchUserList = props => {
   const searchUsers = props.searchUsers.map(user => {
     return (
+      <React.Fragment>
+      <Accordion.Toggle as={Button} variant="link" eventKey="1" className="btn" onClick={props.onCancel}>
+      x
+      </Accordion.Toggle>
       <SearchUserItem
         key={user._id}
         userId={props.authUserId}
@@ -15,9 +21,9 @@ const searchUserList = props => {
         role={user.role}
         onDetail={props.onViewDetail}
       />
+      </React.Fragment>
     );
   });
-
   return <ul className="user__list">{searchUsers}</ul>;
 };
 

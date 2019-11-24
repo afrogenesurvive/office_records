@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -1029,7 +1030,7 @@ modalConfirmSearchHandler = (event) => {
     return (
 
       <React.Fragment>
-
+      <Accordion>
 
     <Container className="containerCreateuser">
     <Row className="createUserRowAdd">
@@ -1038,12 +1039,14 @@ modalConfirmSearchHandler = (event) => {
     </Col>
     <Col md={8}>
       {this.context.token && (
-          <Button className="btn" onClick={this.startCreatePatientHandler}>
-            Add
-          </Button>
+        <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" onClick={this.startCreatePatientHandler}>
+        Add
+        </Accordion.Toggle>
       )}
     </Col>
     </Row>
+
+    <Accordion.Collapse eventKey="2">
     <Row className="createUserRowForm">
     <Col md={12} className="createUserColForm">
     {
@@ -1068,8 +1071,10 @@ modalConfirmSearchHandler = (event) => {
     />
   )}
     </Col>
-
     </Row>
+    </Accordion.Collapse>
+
+    <Accordion.Collapse eventKey="2">
     <Row className="createUserRowForm">
     <Col md={12} className="createUserColForm">
     {
@@ -1086,6 +1091,7 @@ modalConfirmSearchHandler = (event) => {
   }
     </Col>
     </Row>
+    </Accordion.Collapse>
     </Container>
 
 
@@ -1097,12 +1103,14 @@ modalConfirmSearchHandler = (event) => {
   </Col>
   <Col md={8}>
     {this.context.token && (
-        <Button className="btn" onClick={this.startSearchPatientHandler}>
-          Search
-        </Button>
+      <Accordion.Toggle as={Button} variant="link" eventKey="3" className="btn" onClick={this.startSearchPatientHandler}>
+      Add
+      </Accordion.Toggle>
     )}
   </Col>
   </Row>
+
+  <Accordion.Collapse eventKey="3">
   <Row className="createUserRowForm">
   <Col md={10} className="createUserColForm">
   {
@@ -1122,8 +1130,10 @@ modalConfirmSearchHandler = (event) => {
 
   </Col>
   </Row>
+  </Accordion.Collapse>
   </Container>
 
+<Accordion.Collapse eventKey="3">
   <Container className="containerSearchuser">
   <Row className="searchListRow">
   {
@@ -1136,8 +1146,9 @@ modalConfirmSearchHandler = (event) => {
     />
   }
   </Row>
-
   </Container>
+  </Accordion.Collapse>
+
 
   <Container className="containerSearchuser">
 <Row className="searchListRow">
@@ -1154,6 +1165,7 @@ modalConfirmSearchHandler = (event) => {
 
 </Row>
 </Container>
+</Accordion>
 
         {this.state.isLoading === false &&
           (<PatientDetail

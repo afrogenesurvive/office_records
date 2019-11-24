@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 // import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -469,19 +470,23 @@ modalDeleteHandler = () => {
 
 
       <React.Fragment>
+      <Accordion>
       <Container className="containerCreateuser">
+
     <Row className="createUserRowAdd">
     <Col md={4} className="createUserColAdd">
       <p>Add New User</p>
     </Col>
     <Col md={8}>
       {this.context.token && (
-          <Button className="btn" onClick={this.startCreateUserHandler}>
-            Add
-          </Button>
+        <Accordion.Toggle as={Button} variant="link" eventKey="0" className="btn" onClick={this.startCreateUserHandler}>
+        Add
+        </Accordion.Toggle>
       )}
     </Col>
     </Row>
+
+    <Accordion.Collapse eventKey="0">
     <Row className="createUserRowForm">
     <Col md={10} className="createUserColForm">
     {
@@ -510,20 +515,9 @@ modalDeleteHandler = () => {
   )}
     </Col>
     <Col md={10} className="createUserColForm">
-    {
-      // this.state.searching === true &&
-      // <SearchUserForm
-      // authUserId={this.context.userId}
-      // canCancel
-      //   canConfirm
-      //   onCancel={this.modalCancelHandler}
-      //   onConfirm={this.modalConfirmSearchHandler}
-      //   confirmText="Search"
-      //   user={this.context.selectedUser}
-      // />
-    }
     </Col>
     </Row>
+    </Accordion.Collapse>
     </Container>
 
 
@@ -535,12 +529,13 @@ modalDeleteHandler = () => {
   </Col>
   <Col md={8}>
     {this.context.token && (
-        <Button className="btn" onClick={this.startSearchUserHandler}>
-          Search
-        </Button>
+        <Accordion.Toggle as={Button} variant="link" eventKey="1" className="btn" onClick={this.startSearchUserHandler}>
+        Add
+        </Accordion.Toggle>
     )}
   </Col>
   </Row>
+  <Accordion.Collapse eventKey="1">
   <Row className="createUserRowForm">
   <Col md={10} className="createUserColForm">
   {
@@ -560,8 +555,10 @@ modalDeleteHandler = () => {
 
   </Col>
   </Row>
+  </Accordion.Collapse>
   </Container>
 
+  <Accordion.Collapse eventKey="1">
   <Container className="containerSearchuser">
   <Row className="searchListRow">
   {
@@ -576,6 +573,7 @@ modalDeleteHandler = () => {
   </Row>
 
   </Container>
+  </Accordion.Collapse>
 
   <Container className="containerSearchuser">
 <Row className="searchListRow">
@@ -592,6 +590,7 @@ modalDeleteHandler = () => {
 
 </Row>
 </Container>
+</Accordion>
 
 
         {this.state.isLoading === false &&

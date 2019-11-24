@@ -2,6 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Accordion from 'react-bootstrap/Accordion';
 // import FormCheck from 'react-bootstrap/FormCheck'
 // import { NavLink } from 'react-router-dom';
 import AuthContext from '../../context/auth-context';
@@ -76,9 +77,9 @@ return (
 </Form.Row>
 
 {props.canCancel && (
-  <Button variant="primary" onClick={props.onCancel}>
+  <Accordion.Toggle as={Button} variant="link" eventKey="4" className="btn" onClick={props.onCancel}>
   Cancel
-  </Button>
+  </Accordion.Toggle>
 )}
 
 {props.canConfirm && (
