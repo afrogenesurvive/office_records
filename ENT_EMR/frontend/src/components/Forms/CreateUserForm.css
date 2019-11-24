@@ -1,4 +1,4 @@
-.CreateFormContainer, .UpdateFormContainer {
+.CreateFormContainer, .UpdateFormContainer, .SearchFormContainer {
   height: 50vh;
   width: 80vw;
   background-color: grey;

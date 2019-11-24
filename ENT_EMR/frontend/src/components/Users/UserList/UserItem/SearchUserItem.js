@@ -3,7 +3,7 @@ import React from 'react';
 
 import './UserItem.css';
 
-const userItem = props => (
+const searchUserItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
       <h1> Name: {props.name
@@ -18,7 +18,7 @@ const userItem = props => (
         // </p>
       }</h1>
       <p>
-        role: {props.role}
+        Role: {props.role}
       </p>
 
     </div>
@@ -30,4 +30,4 @@ const userItem = props => (
   </li>
 );
 
-export default userItem;
+export default searchUserItem;
