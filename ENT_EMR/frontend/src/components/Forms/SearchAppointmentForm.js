@@ -1,6 +1,8 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
+
 // import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
@@ -21,9 +23,9 @@ return (
 </Form.Group>
 
 {props.canCancel && (
-  <Button variant="primary" onClick={props.onCancel}>
+  <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" onClick={props.onCancel}>
   Cancel
-  </Button>
+  </Accordion.Toggle>
 )}
 
 {props.canConfirm && (

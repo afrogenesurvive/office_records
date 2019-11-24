@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -598,7 +599,7 @@ class AppointmentsPage extends Component {
   render() {
     return (
       <React.Fragment>
-
+      <Accordion>
 
       <Container className="containerCreateuser">
       <Row className="createUserRowAdd">
@@ -607,12 +608,14 @@ class AppointmentsPage extends Component {
       </Col>
       <Col md={8}>
         {this.context.token && (
-            <Button className="btn" onClick={this.startCreateAppointmentHandler}>
-              Add
-            </Button>
+          <Accordion.Toggle as={Button} variant="link" eventKey="4" className="btn" onClick={this.startCreateAppointmentHandler}>
+          Add
+          </Accordion.Toggle>
         )}
       </Col>
       </Row>
+
+      <Accordion.Collapse eventKey="4">
       <Row className="createUserRowForm">
       <Col md={12} className="createUserColForm">
       {
@@ -638,6 +641,7 @@ class AppointmentsPage extends Component {
     )}
       </Col>
       </Row>
+      </Accordion.Collapse>
       </Container>
 
 
@@ -649,12 +653,15 @@ class AppointmentsPage extends Component {
     </Col>
     <Col md={8}>
       {this.context.token && (
-          <Button className="btn" onClick={this.startSearchAppointmentHandler}>
-            Search
-          </Button>
+        <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" onClick={this.startSearchAppointmentHandler}>
+        Add
+        </Accordion.Toggle>
       )}
     </Col>
     </Row>
+
+
+    <Accordion.Collapse eventKey="5">
     <Row className="createUserRowForm">
     <Col md={10} className="createUserColForm">
     {
@@ -674,8 +681,10 @@ class AppointmentsPage extends Component {
 
     </Col>
     </Row>
+    </Accordion.Collapse>
     </Container>
 
+<Accordion.Collapse eventKey="5">
     <Container className="containerSearchuser">
     <Row className="searchListRow">
     {
@@ -690,6 +699,7 @@ class AppointmentsPage extends Component {
     </Row>
 
     </Container>
+    </Accordion.Collapse>
 
     <Container className="containerSearchuser">
   <Row className="searchListRow">
@@ -706,6 +716,8 @@ class AppointmentsPage extends Component {
 
   </Row>
   </Container>
+  </Accordion>
+
         {this.state.isLoading === false &&
           (<AppointmentDetail
             canDelete
