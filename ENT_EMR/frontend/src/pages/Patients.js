@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
-// import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -74,7 +77,7 @@ class PatientsPage extends Component {
     this.setState({ updating: true, updatingArray: true });
     console.log("UpdatePatientForm...");
   };
-  startSearchUserHandler = () => {
+  startSearchPatientHandler = () => {
     this.setState({ searching: true });
     console.log("SearchPatientForm...");
   };
@@ -163,12 +166,6 @@ class PatientsPage extends Component {
                   phone
                 }
               }
-              nextOfKin
-              {
-                name
-                phone
-                email
-              }
               insurance
               {
                 company
@@ -180,12 +177,6 @@ class PatientsPage extends Component {
                     company
                     description
                 }
-              }
-              complaints
-              {
-                date
-                title
-                description
               }
             }
           }
@@ -747,6 +738,111 @@ modalConfirmUpdateArrayHandler = (event) => {
 
 
 
+modalConfirmSearchHandler = (event) => {
+  console.log("SearchPatientForm:  ");
+
+
+  let userId = this.context.userId;
+
+    console.log("SearchPatientFormData:  ", event.target.formBasicField.value);
+    this.setState({ searching: false });
+
+    let field = event.target.formBasicField.value;
+    let query = event.target.formBasicQuery.value;
+
+    if (
+      field.trim().length === 0 ||
+      query.trim().length === 0
+    ) {
+      console.log("blank fields detected!!!...Please try again...");
+      return;
+    }
+
+    const search = { field, query }
+    console.log("Searching for Patient:  ", JSON.stringify(search));
+
+    const requestBody = {
+      query: `
+        query GetPatientField($userId: ID!, $field: String!, $query: String!)
+        {getPatientField(userId: $userId, field: $field, query: $query ){
+          _id
+          name
+          address
+          contact{
+            email
+            phone
+          }
+          registrationDate
+          referringDoctor
+          {
+            name
+            email
+            phone
+          }
+          occupation
+          {
+            role
+            employer
+            contact
+            {
+              email
+              phone
+            }
+          }
+          insurance
+          {
+            company
+            number
+            description
+            expiry
+            subscriber
+            {
+                company
+                description
+            }
+          }
+        }
+      }
+      `,
+      variables: {
+        userId: userId,
+        field: field,
+        query: query
+      }
+    }
+
+    const token = this.context.token;
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData));
+
+        const searchPatients = resData.data.getPatientField;
+
+        this.setState({ searchPatients: searchPatients})
+        console.log("state.searchPatients:  ", this.state.searchPatients);
+        // this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+}
+
+
+
   modalCancelHandler = () => {
     this.setState({ creating: false, updating: false, selectedPatient: null });
   };
@@ -931,59 +1027,134 @@ modalConfirmUpdateArrayHandler = (event) => {
 
   render() {
     return (
+
       <React.Fragment>
-        {
-          this.state.creating && (
-          <CreatePatientForm
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmHandler}
-            onSubmit={this.modalConfirmHandler}
-            confirmText="Confirm"
-          />
-        )
-      }
-        {this.state.updating && (
-          <UpdatePatientForm
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmUpdateHandler}
-            confirmText="Confirm"
-            patient={this.context.selectedPatient}
-          />
-        )}
-        {this.state.updating && (
-          <UpdatePatientArrayForm
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmUpdateArrayHandler}
-            confirmText="Confirm"
-            patient={this.context.selectedPatient}
-          />
-        )}
-        {this.state.searching === true &&
-          <SearchPatientForm
-          authUserId={this.context.userId}
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmSearchHandler}
-            confirmText="Search"
-            patient={this.context.selectedPatient}
-          />
-        }
-        {
-          this.state.searchPatients !== [] &&
-          <SearchPatientList
-            searchPatients={this.state.searchPatients}
-            authUserId={this.context.userId}
-            onCancel={this.modalCancelHandler}
-              onViewDetail={this.showDetailHandler}
-          />
-        }
+
+
+    <Container className="containerCreateuser">
+    <Row className="createUserRowAdd">
+    <Col md={4} className="createUserColAdd">
+      <p>Add New Patient</p>
+    </Col>
+    <Col md={8}>
+      {this.context.token && (
+          <Button className="btn" onClick={this.startCreatePatientHandler}>
+            Add
+          </Button>
+      )}
+    </Col>
+    </Row>
+    <Row className="createUserRowForm">
+    <Col md={12} className="createUserColForm">
+    {
+      this.state.creating && (
+        <CreatePatientForm
+        canCancel
+          canConfirm
+          onCancel={this.modalCancelHandler}
+          onConfirm={this.modalConfirmHandler}
+          onSubmit={this.modalConfirmHandler}
+          confirmText="Confirm"
+        />
+    )}
+  {this.state.updating && (
+    <UpdatePatientForm
+    canCancel
+      canConfirm
+      onCancel={this.modalCancelHandler}
+      onConfirm={this.modalConfirmUpdateHandler}
+      confirmText="Confirm"
+      patient={this.context.selectedPatient}
+    />
+  )}
+    </Col>
+
+    </Row>
+    <Row className="createUserRowForm">
+    <Col md={12} className="createUserColForm">
+    {
+      this.state.updating && (
+      <UpdatePatientArrayForm
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.modalConfirmUpdateArrayHandler}
+        confirmText="Confirm"
+        patient={this.context.selectedPatient}
+      />
+    )
+  }
+    </Col>
+    </Row>
+    </Container>
+
+
+
+    <Container className="containerSearchuser">
+  <Row className="createUserRowAdd">
+  <Col md={4} className="createUserColAdd">
+    <p>Search for a Patient</p>
+  </Col>
+  <Col md={8}>
+    {this.context.token && (
+        <Button className="btn" onClick={this.startSearchPatientHandler}>
+          Search
+        </Button>
+    )}
+  </Col>
+  </Row>
+  <Row className="createUserRowForm">
+  <Col md={10} className="createUserColForm">
+  {
+    this.state.searching === true &&
+    <SearchPatientForm
+    authUserId={this.context.userId}
+    canCancel
+      canConfirm
+      onCancel={this.modalCancelHandler}
+      onConfirm={this.modalConfirmSearchHandler}
+      confirmText="Search"
+      patient={this.context.selectedPatient}
+    />
+  }
+  </Col>
+  <Col md={10}>
+
+  </Col>
+  </Row>
+  </Container>
+
+  <Container className="containerSearchuser">
+  <Row className="searchListRow">
+  {
+    this.state.searchUsers !== [] &&
+    <SearchPatientList
+      searchPatients={this.state.searchPatients}
+      authUserId={this.context.userId}
+      onCancel={this.modalCancelHandler}
+        onViewDetail={this.showDetailHandler}
+    />
+  }
+  </Row>
+
+  </Container>
+
+  <Container className="containerSearchuser">
+<Row className="searchListRow">
+
+{this.state.isLoading ? (
+  <Spinner />
+) : (
+  <PatientList
+    patients={this.state.patients}
+    authUserId={this.context.userId}
+    onViewDetail={this.showDetailHandler}
+  />
+)}
+
+</Row>
+</Container>
+
         {this.state.isLoading === false &&
           (<PatientDetail
             canEdit
@@ -994,31 +1165,6 @@ modalConfirmUpdateArrayHandler = (event) => {
             onDelete={this.modalDeleteHandler}
             className="PatientDetailBox"
         />)}
-        {this.context.token &&
-          (<div className="users-control">
-            <p>Search Patient</p>
-            <button className="btn" onClick={this.startSearchPatientHandler}>
-              +
-            </button>
-          </div>
-        )}
-        {this.context.token &&
-          (<div className="users-control">
-            <p>Add New Patient</p>
-            <button className="btn" onClick={this.startCreatePatientHandler}>
-              +
-            </button>
-          </div>
-        )}
-        {this.state.isLoading ? (
-          <Spinner />
-        ) : (
-          <PatientList
-            patients={this.state.patients}
-            authUserId={this.context.userId}
-            onViewDetail={this.showDetailHandler}
-          />
-        )}
       </React.Fragment>
     );
   }
