@@ -5,12 +5,14 @@ import React, { Component } from 'react';
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
 import UserList from '../components/Users/UserList/UserList';
+import SearchUserList from '../components/Users/UserList/SearchUserList';
 import UserDetail from '../components/Users/UserDetail';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
 
 import CreateUserForm from '../components/Forms/CreateUserForm';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
+import SearchUserForm from '../components/Forms/SearchUserForm';
 import './Users.css';
 
 class UsersPage extends Component {
@@ -18,7 +20,9 @@ class UsersPage extends Component {
     creating: false,
     updating: false,
     deleting: false,
+    searching: false,
     users: [],
+    searchUsers: [],
     isLoading: false,
     selectedUser: null
   };
@@ -52,6 +56,11 @@ class UsersPage extends Component {
   //   console.log("UpdateUserForm...");
   //
   // };
+
+  startSearchUserHandler = () => {
+    this.setState({ searching: true });
+    console.log("SearchUserForm...");
+  };
 
   modalConfirmHandler = (event) => {
 
@@ -234,6 +243,79 @@ class UsersPage extends Component {
       });
   };
 
+
+  modalConfirmSearchHandler = (event) => {
+    console.log("SearchUserForm:  ");
+
+
+    let userId = this.context.userId;
+
+      console.log("SearchUserFormData:  ", event.target.formBasicField.value);
+      this.setState({ searching: false });
+
+      let field = event.target.formBasicField.value;
+      let query = event.target.formBasicQuery.value;
+
+      if (
+        field.trim().length === 0 ||
+        query.trim().length === 0
+      ) {
+        console.log("blank fields detected!!!...Please try again...");
+        return;
+      }
+
+      const search = { field, query }
+      console.log("Searching for User:  ", JSON.stringify(search));
+
+      const requestBody = {
+        query: `
+          query getUserField($userId: ID!, $field: String!, $query: String!)
+          {getUserField(userId: $userId, field: $field, query: $query ){
+            _id
+            name
+            email
+            role
+          }
+        }
+        `,
+        variables: {
+          userId: userId,
+          field: field,
+          query: query
+        }
+      }
+
+      const token = this.context.token;
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData));
+
+          const searchUsers = resData.data.getUserField;
+
+          this.setState({ searchUsers: searchUsers})
+          console.log("state.searchUsers:  ", this.state.searchUsers);
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  }
+
+
   modalCancelHandler = () => {
     this.setState({ creating: false, updating: false, deleting: false, selectedUser: null });
   };
@@ -382,6 +464,7 @@ modalDeleteHandler = () => {
         {
           this.state.creating && (
           <CreateUserForm
+          authUserId={this.context.userId}
           canCancel
             canConfirm
             onCancel={this.modalCancelHandler}
@@ -393,6 +476,7 @@ modalDeleteHandler = () => {
       }
         {this.state.updating && (
           <UpdateUserForm
+          authUserId={this.context.userId}
           canCancel
             canConfirm
             onCancel={this.modalCancelHandler}
@@ -401,6 +485,26 @@ modalDeleteHandler = () => {
             user={this.context.selectedUser}
           />
         )}
+        {this.state.searching === true &&
+          <SearchUserForm
+          authUserId={this.context.userId}
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.modalConfirmSearchHandler}
+            confirmText="Search"
+            user={this.context.selectedUser}
+          />
+        }
+        {
+          this.state.searchUsers !== [] &&
+          <SearchUserList
+            searchUsers={this.state.searchUsers}
+            authUserId={this.context.userId}
+            onCancel={this.modalCancelHandler}
+              onViewDetail={this.showDetailHandler}
+          />
+        }
         {this.state.isLoading === false &&
           (<UserDetail
             authUserId={this.context.userId}
@@ -408,11 +512,18 @@ modalDeleteHandler = () => {
             onEdit={this.startUpdateUserHandler}
             onDelete={this.modalDeleteHandler}
         />)}
-
         {this.context.token &&
           (<div className="users-control">
             <p>Add New User</p>
             <button className="btn" onClick={this.startCreateUserHandler}>
+              +
+            </button>
+          </div>
+        )}
+        {this.context.token &&
+          (<div className="users-control">
+            <p>Search Users</p>
+            <button className="btn" onClick={this.startSearchUserHandler}>
               +
             </button>
           </div>

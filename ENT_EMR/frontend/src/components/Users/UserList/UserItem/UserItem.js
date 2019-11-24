@@ -18,7 +18,7 @@ const userItem = props => (
         // </p>
       }</h1>
       <p>
-        Address: {props.address}
+        role: {props.role}
       </p>
 
     </div>
