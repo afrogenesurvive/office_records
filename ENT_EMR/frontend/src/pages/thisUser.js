@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Accordion from 'react-bootstrap/Accordion';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -195,6 +199,64 @@ class ThisUserPage extends Component {
   }
 
 
+  modalCancelHandler = () => {
+    this.setState({ updating: false  });
+  };
+
+  fetchUsers() {
+    console.log("'fetch users function' context object... " + JSON.stringify(this.context));
+    const userId = this.context.userId;
+
+    this.setState({ isLoading: true });
+    const requestBody = {
+      query: `
+          query users($userId: ID!) {
+            users(userId: $userId) {
+              _id
+              email
+              password
+              name
+              role
+            }
+          }
+        `,
+        variables: {
+          userId: userId
+        }
+    };
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.context.token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        const users = resData.data.users;
+        console.log(users);
+
+        if (this.isActive) {
+          this.setState({ users: users, isLoading: false });
+        }
+        this.context.users = this.state.users;
+      })
+      .catch(err => {
+        console.log(err);
+        if (this.isActive) {
+          this.setState({ isLoading: false });
+        }
+      });
+  }
+
+
   componentWillUnmount() {
     this.isActive = false;
   }
@@ -202,16 +264,28 @@ class ThisUserPage extends Component {
   render() {
     return (
       <React.Fragment>
-      {this.state.updating && (
-        <UpdateUserForm
-        canCancel
-          canConfirm
-          onCancel={this.modalCancelHandler}
-          onConfirm={this.modalConfirmUpdateHandler}
-          confirmText="Confirm"
-          user={this.state.user}
-        />
-      )}
+
+
+{this.state.updating === true && (
+
+  <Container className="containerCreateuser">
+<Row className="createUserRowForm">
+<Col md={12} className="createUserColForm">
+  <UpdateUserForm
+  canCancelProfile
+    canConfirm
+    onCancel={this.modalCancelHandler}
+    onConfirm={this.modalConfirmUpdateHandler}
+    confirmText="Confirm"
+    user={this.state.user}
+  />
+  </Col>
+  </Row>
+  </Container>
+
+)}
+
+
 
         {this.state.isLoading ? (
           <Spinner />

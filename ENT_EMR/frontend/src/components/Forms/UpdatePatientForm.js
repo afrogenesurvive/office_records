@@ -2,6 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Accordion from 'react-bootstrap/Accordion'
 // import FormCheck from 'react-bootstrap/FormCheck'
 // import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
@@ -43,7 +44,7 @@ return (
   <Form.Group as={Col} controlId="formGridContactEmail">
     {
     // <Form.Label>Email</Form.Label>
-    <Form.Control type="email" placeholder={patient.contact.email} />
+    <Form.Control type="email" placeholder='{patient.contact.email}' />
   }
   </Form.Group>
 
@@ -66,14 +67,14 @@ return (
   <Form.Group as={Col} controlId="formGridReferringDoctorName">
     {
     // <Form.Label>ReferringDoctorName</Form.Label>
-    <Form.Control type="text" placeholder={patient.referringDoctor.name} />
+    <Form.Control type="text" placeholder='{patient.referringDoctor.name}' />
   }
   </Form.Group>
 
   <Form.Group as={Col} controlId="formGridReferringDoctorEmail">
     {
     // <Form.Label>ReferringDoctorEmail</Form.Label>
-    <Form.Control type="email" placeholder={patient.referringDoctor.email} />
+    <Form.Control type="email" placeholder='{patient.referringDoctor.email} '/>
   }
   </Form.Group>
 
@@ -163,15 +164,15 @@ return (
 
 
   {props.canCancel && (
-    <Button variant="primary" onClick={props.onCancel}>
+    <Accordion.Toggle as={Button} variant="danger" eventKey="2" className="btn" onClick={props.onCancel}>
     Cancel
-    </Button>
+    </Accordion.Toggle>
   )}
 
   {props.canConfirm && (
-    <Button variant="secondary" type="submit" >
+    <Accordion.Toggle as={Button} variant="success" eventKey="2" className="btn" type="submit">
     Submit
-    </Button>
+    </Accordion.Toggle>
   )}
 
   </Form>

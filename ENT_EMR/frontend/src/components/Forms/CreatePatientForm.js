@@ -66,21 +66,21 @@ return (
 <Form.Group as={Col} controlId="formGridReferringDoctorName">
   {
   // <Form.Label>ReferringDoctorName</Form.Label>
-  <Form.Control type="text" placeholder="ReferringDoctorName" />
+  <Form.Control type="text" placeholder="RefDoctorName" />
 }
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridReferringDoctorEmail">
   {
   // <Form.Label>ReferringDoctorEmail</Form.Label>
-  <Form.Control type="email" placeholder="ReferringDoctorEmail" />
+  <Form.Control type="email" placeholder="RefDoctorEmail" />
 }
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridReferringDoctorPhone">
   {
   // <Form.Label>ReferringDoctorPhone</Form.Label>
-  <Form.Control type="number" placeholder="ReferringDoctorPhone" />
+  <Form.Control type="number" placeholder="RefDoctorPhone" />
 }
 </Form.Group>
 </Form.Row>
@@ -96,14 +96,14 @@ return (
 <Form.Group as={Col} controlId="formGridOccupationEmployer">
   {
   // <Form.Label>OccupationEmployer</Form.Label>
-  <Form.Control type="text" placeholder="OccupationEmployer" />
+  <Form.Control type="text" placeholder="Employer" />
 }
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridOccupationEmployerContactPhone">
   {
   // <Form.Label>OccupationEmployerContactPhone</Form.Label>
-  <Form.Control type="number" placeholder="OccupationEmployerContactPhone" />
+  <Form.Control type="number" placeholder="EmployerPhone" />
 }
 </Form.Group>
 </Form.Row>
@@ -112,7 +112,7 @@ return (
 <Form.Group as={Col} controlId="formGridOccupationEmployerContactEmail">
   {
   // <Form.Label>OccupationEmployerContactEmail</Form.Label>
-  <Form.Control type="email" placeholder="OccupationEmployerContactEmail" />
+  <Form.Control type="email" placeholder="EmployerEmail" />
 }
 </Form.Group>
 
@@ -135,43 +135,43 @@ return (
 <Form.Group as={Col} controlId="formGridInsuranceDescription">
   {
   // <Form.Label>InsuranceDescription</Form.Label>
-  <Form.Control type="text" placeholder="InsuranceDescription" />
+  <Form.Control type="text" placeholder="InsuranceDesc" />
 }
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridInsuranceExpiry">
   {
   // <Form.Label>InsuranceExpiry</Form.Label>
-  <Form.Control type="date" placeholder="InsuranceExpiry" />
+  <Form.Control type="date" placeholder="InsuranceExp" />
 }
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridInsuranceSubscriberCompany">
   {
   // <Form.Label>InsuranceSubscriberCompany</Form.Label>
-  <Form.Control type="text" placeholder="InsuranceSubscriberCompany" />
+  <Form.Control type="text" placeholder="SubscriberCompany" />
 }
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridInsuranceSubscriberDescription">
   {
   // <Form.Label>InsuranceSubscriberDescription</Form.Label>
-  <Form.Control type="text" placeholder="InsuranceSubscriberDescription" />
+  <Form.Control type="text" placeholder="SubscriberDescription" />
 }
 </Form.Group>
 </Form.Row>
 
 
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" onClick={props.onCancel}>
+  <Accordion.Toggle as={Button} variant="danger" eventKey="2" className="btn" onClick={props.onCancel}>
   Cancel
   </Accordion.Toggle>
 )}
 
 {props.canConfirm && (
-  <Button variant="secondary" type="submit" >
+  <Accordion.Toggle as={Button} variant="success" eventKey="2" className="btn" type="submit">
   Submit
-  </Button>
+  </Accordion.Toggle>
 )}
 
 </Form>
