@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 // import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
@@ -483,6 +483,11 @@ modalDeleteHandler = () => {
         Add
         </Accordion.Toggle>
       )}
+      {this.context.token && (
+        <Accordion.Toggle as={Button} variant="link" eventKey="0" className="btn" onClick={this.startUpdateUserHandler}>
+        Edit
+        </Accordion.Toggle>
+      )}
     </Col>
     </Row>
 
@@ -530,7 +535,7 @@ modalDeleteHandler = () => {
   <Col md={8}>
     {this.context.token && (
         <Accordion.Toggle as={Button} variant="link" eventKey="1" className="btn" onClick={this.startSearchUserHandler}>
-        Add
+        Search
         </Accordion.Toggle>
     )}
   </Col>

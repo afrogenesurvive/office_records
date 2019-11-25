@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
 
 import './UserDetail.css';
 
@@ -22,7 +23,9 @@ const UserDetail = (props) => {
       <Card.Text>
         Role: {user.role}
       </Card.Text>
-      <Button variant="primary" onClick={props.onEdit}>Edit</Button>
+      <Accordion.Toggle as={Button} variant="link" eventKey="0" className="btn" onClick={props.onEdit}>
+      Edit
+      </Accordion.Toggle>
 
       <Button variant="warning" onClick={props.onDelete}>Delete</Button>
     </Card.Body>

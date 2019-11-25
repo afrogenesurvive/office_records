@@ -103,44 +103,23 @@ class AppointmentsPage extends Component {
     }
 
     const appointment = { title, type, date, location, description, inProgress, attended, important, notes };
-    console.log("creating appointment... " ,JSON.stringify(appointment));
+    console.log(`creating appointment...
+        title: ${title}
+        type: ${type}
+        date: ${date}
+        location: ${location}
+        description: ${description}
+        inProgress: ${inProgress}
+        attended: ${attended}
+        important: ${important}
+        notes: ${notes}
+      `);
 
     const requestBody = {
       query: `
-          mutation createAppointment($userId: ID!, $patientId: ID!, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $attended: Boolean!, $important: Boolean!, $notes: String!) {
-            createAppointment(userId: $userId, patientId: $patientId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, attended: $attended, important: $important, notes: $notes }) {
-              _id
-              title
-              type
-              date
-              location
-              description
-              patient
-              {
-                name
-                dob
-                address
-              }
-              inProgress
-              attended
-              important
-              notes
-            }
-          }
+          mutation {
+            createAppointment(userId:\"${userId}\", patientId:\"${patientId}\", appointmentInput: {title:\"${title}\",type:\"${type}\",date:\"${date}\",location:\"${location}\",description:\"${description}\",inProgress:${inProgress},attended:${attended},important:${important},notes:\"${notes}\"}){_id,title,date,type,patient{name,dob,address},inProgress,attended,important,notes}}
         `,
-        variables: {
-          userId: userId,
-          patientId: patientId,
-          title: title,
-          type: type,
-          date: date,
-          location: location,
-          description: description,
-          inProgress: inProgress,
-          attended: attended,
-          important: important,
-          notes: notes
-        }
     };
 
     const token = this.context.token;
@@ -150,7 +129,7 @@ class AppointmentsPage extends Component {
       body: JSON.stringify(requestBody),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token
+        Authorization: 'Bearer ' + this.context.token
       }
     })
       .then(res => {
@@ -190,7 +169,7 @@ class AppointmentsPage extends Component {
   };
 
   modalCancelHandler = () => {
-    this.setState({ creating: false, updating: false, selectedAppointment: null });
+    this.setState({ creating: false, updating: false, searching: false, selectedAppointment: null });
   };
 
 
@@ -265,24 +244,22 @@ class AppointmentsPage extends Component {
 
 
     const appointment = { title, type, date, location, description, inProgress, attended, important, notes };
-    console.log("updating appointment... " + JSON.stringify(appointment));
+    console.log(`
+        updating appointment...
+        title: ${title}
+        type: ${type}
+        date: ${date}
+        location: ${location}
+        description: ${description}
+        inProgress: ${inProgress}
+        attended: ${attended}
+        important: ${important}
+        notes: ${notes}
+      `);
 
     const requestBody = {
       query: `
-          mutation UpdateAppointment($userId: ID!, $appointmentId: ID, $title: String!, $type: String!, $date: String!, $location: String!, $description: String!, $inProgress: Boolean!, $attended: Boolean!, $important: Boolean!, $notes: String!) {
-            updateAppointment(userId: $userId, appointmentId: $appointmentId, appointmentInput: { title: $title, type: $type, date: $date, location: $location, description: $description, inProgress: $inProgress, attended: $attended, important: $important, notes: $notes }) {
-              _id
-              title
-              type
-              date
-              location
-              description
-              inProgress
-              attended
-              important
-              notes
-            }
-          }
+          mutation {updateAppointment(userId:\"${userId}\", appointmentId:\"${appointmentId}\", appointmentInput: {title:\"${title}\",type:\"${type}\",date:\"${date}\",location:\"${location}\",description:\"${description}\"}){_id,title,date,patient{name}}}
         `,
         variables: {
           userId: userId,
@@ -612,6 +589,11 @@ class AppointmentsPage extends Component {
           Add
           </Accordion.Toggle>
         )}
+        {this.context.token && (
+          <Accordion.Toggle as={Button} variant="link" eventKey="4" className="btn" onClick={this.startUpdateAppointmentHandler}>
+          Edit
+          </Accordion.Toggle>
+        )}
       </Col>
       </Row>
 
@@ -654,7 +636,7 @@ class AppointmentsPage extends Component {
     <Col md={8}>
       {this.context.token && (
         <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" onClick={this.startSearchAppointmentHandler}>
-        Add
+        Search
         </Accordion.Toggle>
       )}
     </Col>

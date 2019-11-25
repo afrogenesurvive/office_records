@@ -1043,6 +1043,11 @@ modalConfirmSearchHandler = (event) => {
         Add
         </Accordion.Toggle>
       )}
+      {this.context.token && (
+        <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" onClick={this.startUpdatePatientHandler}>
+        Edit
+        </Accordion.Toggle>
+      )}
     </Col>
     </Row>
 
@@ -1104,9 +1109,10 @@ modalConfirmSearchHandler = (event) => {
   <Col md={8}>
     {this.context.token && (
       <Accordion.Toggle as={Button} variant="link" eventKey="3" className="btn" onClick={this.startSearchPatientHandler}>
-      Add
+      Search
       </Accordion.Toggle>
     )}
+
   </Col>
   </Row>
 

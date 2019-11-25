@@ -71,7 +71,7 @@ module.exports = {
       console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
 
       // const patients = await Patient.find(query);
-      const patients = await Patient.find({'address': resolverQuery});
+      const patients = await Patient.find(query);
 
       return patients.map(patient => {
         return transformPatient(patient);
