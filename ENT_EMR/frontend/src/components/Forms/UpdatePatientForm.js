@@ -117,50 +117,8 @@ return (
   }
   </Form.Group>
 
-  <Form.Group as={Col} controlId="formGridInsuranceCompany">
-    {
-    // <Form.Label>InsuranceCompany</Form.Label>
-    <Form.Control type="text" placeholder="InsuranceCompany" />
-  }
-  </Form.Group>
-
-  <Form.Group as={Col} controlId="formGridInsuranceNumber">
-    {
-    // <Form.Label>InsuranceNumber</Form.Label>
-    <Form.Control type="number" placeholder="InsuranceNumber" />
-  }
-  </Form.Group>
   </Form.Row>
 
-  <Form.Row>
-  <Form.Group as={Col} controlId="formGridInsuranceDescription">
-    {
-    // <Form.Label>InsuranceDescription</Form.Label>
-    <Form.Control type="text" placeholder="InsuranceDescription" />
-  }
-  </Form.Group>
-
-  <Form.Group as={Col} controlId="formGridInsuranceExpiry">
-    {
-    // <Form.Label>InsuranceExpiry</Form.Label>
-    <Form.Control type="date" placeholder="InsuranceExpiry" />
-  }
-  </Form.Group>
-
-  <Form.Group as={Col} controlId="formGridInsuranceSubscriberCompany">
-    {
-    // <Form.Label>InsuranceSubscriberCompany</Form.Label>
-    <Form.Control type="text" placeholder="InsuranceSubscriberCompany" />
-  }
-  </Form.Group>
-
-  <Form.Group as={Col} controlId="formGridInsuranceSubscriberDescription">
-    {
-    // <Form.Label>InsuranceSubscriberDescription</Form.Label>
-    <Form.Control type="text" placeholder="InsuranceSubscriberDescription" />
-  }
-  </Form.Group>
-  </Form.Row>
 
 
   {props.canCancel && (

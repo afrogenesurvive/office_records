@@ -103,12 +103,6 @@ class PatientsPage extends Component {
     let occupationEmployer = event.target.formGridOccupationEmployer.value;
     let occupationEmployerContactPhone = event.target.formGridOccupationEmployerContactPhone.value;
     let occupationEmployerContactEmail = event.target.formGridOccupationEmployerContactEmail.value;
-    let insuranceCompany = event.target.formGridInsuranceCompany.value;
-    let insuranceNumber = event.target.formGridInsuranceNumber.value;
-    let insuranceDescription = event.target.formGridInsuranceDescription.value;
-    let insuranceExpiry = event.target.formGridInsuranceExpiry.value;
-    let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany.value;
-    let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
 
     if (
       name.trim().length === 0 ||
@@ -123,26 +117,20 @@ class PatientsPage extends Component {
       occupationRole.trim().length === 0 ||
       occupationEmployer.trim().length === 0 ||
       occupationEmployerContactPhone.trim().length === 0 ||
-      occupationEmployerContactEmail.trim().length === 0 ||
-      insuranceCompany.trim().length === 0 ||
-      insuranceNumber.trim().length === 0 ||
-      insuranceDescription.trim().length === 0 ||
-      insuranceExpiry.trim().length === 0 ||
-      insuranceSubscriberCompany.trim().length === 0 ||
-      insuranceSubscriberDescription.trim().length === 0
+      occupationEmployerContactEmail.trim().length === 0
 
     ) {
       console.log("blank fields detected!!!...Please try again...");
       return;
     }
 
-    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail, insuranceCompany, insuranceNumber, insuranceDescription, insuranceExpiry, insuranceSubscriberCompany, insuranceSubscriberDescription };
+    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
     console.log("creating patient.. " + JSON.stringify(patient));
 
     const requestBody = {
       query: `
-          mutation CreatePatient($userId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!, $insuranceCompany: String!, $insuranceNumber: String!, $insuranceDescription: String!, $insuranceExpiry: String!, $insuranceSubscriberCompany: String!, $insuranceSubscriberDescription: String!) {
-            createPatient(userId: $userId, patientInput: { name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail, insuranceCompany: $insuranceCompany, insuranceNumber: $insuranceNumber, insuranceDescription: $insuranceDescription, insuranceExpiry: $insuranceExpiry, insuranceSubscriberCompany: $insuranceSubscriberCompany, insuranceSubscriberDescription: $insuranceSubscriberDescription, }) {
+          mutation CreatePatient($userId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!) {
+            createPatient(userId: $userId, patientInput: { name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail }) {
               _id
               name
               address
@@ -167,18 +155,6 @@ class PatientsPage extends Component {
                   phone
                 }
               }
-              insurance
-              {
-                company
-                number
-                description
-                expiry
-                subscriber
-                {
-                    company
-                    description
-                }
-              }
             }
           }
         `,
@@ -196,13 +172,7 @@ class PatientsPage extends Component {
           occupationRole: occupationRole,
           occupationEmployer: occupationEmployer,
           occupationEmployerContactPhone: occupationEmployerContactPhone,
-          occupationEmployerContactEmail: occupationEmployerContactEmail,
-          insuranceCompany: insuranceCompany,
-          insuranceNumber: insuranceNumber,
-          insuranceDescription: insuranceDescription,
-          insuranceExpiry: insuranceExpiry,
-          insuranceSubscriberCompany: insuranceSubscriberCompany,
-          insuranceSubscriberDescription: insuranceSubscriberDescription,
+          occupationEmployerContactEmail: occupationEmployerContactEmail
         }
     };
 
@@ -250,17 +220,7 @@ class PatientsPage extends Component {
                 phone: resData.data.createPatient.occupationEmployerContactPhone,
                 email: resData.data.createPatient.occupationEmployerContactEmail
               }
-            },
-            insurance: {
-              company: resData.data.createPatient.insuranceCompany,
-              number: resData.data.createPatient.insuranceNumber,
-              description: resData.data.createPatient.insuranceDescription,
-              expiry:  resData.data.createPatient.insuranceExpiry,
-              subscriber: {
-                company: resData.data.createPatient.insuranceSubscriberCompany,
-                description: resData.data.createPatient.insuranceSubscriberDescription
-              }
-            },
+            }
           }
         );
 
@@ -306,12 +266,6 @@ class PatientsPage extends Component {
     let occupationEmployer = event.target.formGridOccupationEmployer.value;
     let occupationEmployerContactPhone = event.target.formGridOccupationEmployerContactPhone.value;
     let occupationEmployerContactEmail = event.target.formGridOccupationEmployerContactEmail.value;
-    let insuranceCompany = event.target.formGridInsuranceCompany.value;
-    let insuranceNumber = event.target.formGridInsuranceNumber.value;
-    let insuranceDescription = event.target.formGridInsuranceDescription.value;
-    let insuranceExpiry = event.target.formGridInsuranceExpiry.value;
-    let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany.value;
-    let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
 
 
     if (name.trim().length === 0 ) {
@@ -367,36 +321,15 @@ class PatientsPage extends Component {
       console.log("blank fields detected!!!...filling w/ previous data...");
       occupationEmployerContactPhone  = this.context.selectedUser.occupationEmployerContactPhone;
     }
-    if (insuranceCompany.trim().length === 0 ) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      insuranceCompany  = this.context.selectedUser.insuranceCompany;
-    }
-    if (insuranceExpiry.trim().length === 0 ) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      insuranceExpiry  = this.context.selectedUser.insuranceExpiry;
-    }
-    if (insuranceNumber.trim().length === 0 ) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      insuranceNumber  = this.context.selectedUser.insuranceNumber;
-    }
-    if (insuranceSubscriberCompany.trim().length === 0 ) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      insuranceSubscriberCompany  = this.context.selectedUser.insuranceSubscriberCompany;
-    }
-    if (insuranceSubscriberDescription.trim().length === 0 ) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      insuranceSubscriberDescription  = this.context.selectedUser.insuranceSubscriberDescription;
-    }
 
 
-
-    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail, insuranceCompany, insuranceNumber, insuranceDescription, insuranceExpiry, insuranceSubscriberCompany, insuranceSubscriberDescription };
+    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail};
     console.log("updating patient.. " + JSON.stringify(patient));
 
     const requestBody = {
       query: `
-          mutation UpdatePatient($userId: ID!, $patientId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!, $insuranceCompany: String!, $insuranceNumber: String!, $insuranceDescription: String!, $insuranceExpiry: String!, $insuranceSubscriberCompany: String!, $insuranceSubscriberDescription: String!) {
-            updatePatient(userId: $userId, patientId: $patientId, patientInput: { name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail, insuranceCompany: $insuranceCompany, insuranceNumber: $insuranceNumber, insuranceDescription: $insuranceDescription, insuranceExpiry: $insuranceExpiry, insuranceSubscriberCompany: $insuranceSubscriberCompany, insuranceSubscriberDescription: $insuranceSubscriberDescription }){
+          mutation UpdatePatient($userId: ID!, $patientId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!) {
+            updatePatient(userId: $userId, patientId: $patientId, patientInput: { name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail }){
               _id
               name
               address
@@ -427,24 +360,6 @@ class PatientsPage extends Component {
                 phone
                 email
               }
-              insurance
-              {
-                company
-                number
-                description
-                expiry
-                subscriber
-                {
-                    company
-                    description
-                }
-              }
-              complaints
-              {
-                date
-                title
-                description
-              }
             }
           }
         `,
@@ -463,13 +378,7 @@ class PatientsPage extends Component {
           occupationRole: occupationRole,
           occupationEmployer: occupationEmployer,
           occupationEmployerContactPhone: occupationEmployerContactPhone,
-          occupationEmployerContactEmail: occupationEmployerContactEmail,
-          insuranceCompany: insuranceCompany,
-          insuranceNumber: insuranceNumber,
-          insuranceDescription: insuranceDescription,
-          insuranceExpiry: insuranceExpiry,
-          insuranceSubscriberCompany: insuranceSubscriberCompany,
-          insuranceSubscriberDescription: insuranceSubscriberDescription
+          occupationEmployerContactEmail: occupationEmployerContactEmail
         }
     };
 
@@ -521,16 +430,6 @@ class PatientsPage extends Component {
               phone: resData.data.updatePatient.occupationEmployerContactPhone,
               email: resData.data.updatePatient.occupationEmployerContactEmail
             }
-          },
-          insurance: {
-            company: resData.data.updatePatient.insuranceCompany,
-            number: resData.data.updatePatient.insuranceNumber,
-            description: resData.data.updatePatient.insuranceDescription,
-            expiry:  resData.data.updatePatient.insuranceExpiry,
-            subscriber: {
-              company: resData.data.updatePatient.insuranceSubscriberCompany,
-              description: resData.data.updatePatient.insuranceSubscriberDescription
-            }
           }
         }
         );
@@ -563,6 +462,12 @@ modalConfirmUpdateArrayHandler = (event) => {
   this.setState({ updatingArray: false });
 
 
+  let insuranceCompany = event.target.formGridInsuranceCompany
+  let insuranceNumber = event.target.formGridInsuranceNumber
+  let insuranceDescription = event.target.formGridInsuranceDescription
+  let insuranceExpiry = event.target.formGridInsuranceExpiry
+  let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany
+  let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription
   let nextOfKinName = event.target.formGridNextOfKinName.value
   let nextOfKinPhone = event.target.formGridNextOfKinPhone.value
   let nextOfKinEmail = event.target.formGridNextOfKinEmail.value
@@ -598,14 +503,14 @@ modalConfirmUpdateArrayHandler = (event) => {
   let billingNotes = event.target.formGridBillingNotes.value
   // request body args shouldn't be required/non-nullable
 
-  const patientArray = { nextOfKinName, nextOfKinPhone, nextOfKinEmail, complaintDate, complaintTitle, complaintDescription, historyTitle, historyType, historyDate, historyDescription, allergiesTitle, allergiesDescription, medicationTitle, medicationDescription, investigationDate, investigationTitle, investigationDescription, diagnosisDate, diagnosisTitle, diagnosisDescription, treatmentDate, treatmentTitle, treatmentType, treatmentDescription, treatmentDose, treatmentFrequency, billingDate, billingTitle, billingType, billingDescription, billingAmount, billingPaid , billingNotes }
+  const patientArray = { insuranceCompany, insuranceNumber, insuranceDescription, insuranceExpiry, insuranceSubscriberCompany, insuranceSubscriberDescription, nextOfKinName, nextOfKinPhone, nextOfKinEmail, complaintDate, complaintTitle, complaintDescription, historyTitle, historyType, historyDate, historyDescription, allergiesTitle, allergiesDescription, medicationTitle, medicationDescription, investigationDate, investigationTitle, investigationDescription, diagnosisDate, diagnosisTitle, diagnosisDescription, treatmentDate, treatmentTitle, treatmentType, treatmentDescription, treatmentDose, treatmentFrequency, billingDate, billingTitle, billingType, billingDescription, billingAmount, billingPaid , billingNotes }
 
   console.log("updating patientArray.. " + JSON.stringify(patientArray));
 
   const requestBody = {
     query: `
-        mutation UpdatePatientArray($userId: ID!, $patientId: ID!, $nextOfKinName: String, $nextOfKinPhone: String, $nextOfKinEmail: String, $complaintDate: String, $complaintTitle: String, $complaintDescription: String, $historyTitle: String, $historyType: String, $historyDate: String, $historyDescription: String, $allergiesTitle: String, $allergiesDescription: String, $medicationTitle: String, $medicationDescription: String, $investigationDate: String, $investigationTitle: String, $investigationDescription: String, $diagnosisDate: String, $diagnosisTitle: String, $diagnosisDescription: String, $treatmentDate: String, $treatmentTitle: String, $treatmentType: String, $treatmentDescription: String, $treatmentDose: String, $treatmentFrequency: String, $billingDate: String, $billingTitle: String, $billingType: String, $billingDescription: String, $billingAmount: Float, $billingPaid: String , $billingNotes: String) {
-          updatePatientArray(userId: $userId, patientId: $patientId, patientInput: { nextOfKinName: $nextOfKinName, nextOfKinPhone: $nextOfKinPhone, nextOfKinEmail: $nextOfKinEmail, complaintDate: $complaintDate, complaintTitle: $complaintTitle, complaintDescription: $complaintDescription, historyTitle: $historyTitle, historyType: $historyType, historyDate: $historyDate, historyDescription: $historyDescription, allergiesTitle: $allergiesTitle, allergiesDescription: $allergiesDescription, medicationTitle: $medicationTitle, medicationDescription: $medicationDescription, investigationDate: $investigationDate, investigationTitle: $investigationTitle, investigationDescription: $investigationDescription, diagnosisDate: $diagnosisDate, diagnosisTitle: $diagnosisTitle, diagnosisDescription: $diagnosisDescription, treatmentDate: $treatmentDate, treatmentTitle: $treatmentTitle, treatmentType: $treatmentType, treatmentDescription: $treatmentDescription, treatmentDose: $treatmentDose, treatmentFrequency: $treatmentFrequency, billingDate: $billingDate, billingTitle: $billingTitle, billingType: $billingType, billingDescription: $billingDescription, billingAmount: $billingAmount, billingPaid: $billingPaid, billingNotes: $billingNotes }){
+        mutation UpdatePatientArray($insuranceCompany: String, $insuranceNumber: String, $insuranceDescription: String, $insuranceExpiry: String, $insuranceSubscriberCompany: String, $insuranceSubscriberDescription: String, $userId: ID!, $patientId: ID!, $nextOfKinName: String, $nextOfKinPhone: String, $nextOfKinEmail: String, $complaintDate: String, $complaintTitle: String, $complaintDescription: String, $historyTitle: String, $historyType: String, $historyDate: String, $historyDescription: String, $allergiesTitle: String, $allergiesDescription: String, $medicationTitle: String, $medicationDescription: String, $investigationDate: String, $investigationTitle: String, $investigationDescription: String, $diagnosisDate: String, $diagnosisTitle: String, $diagnosisDescription: String, $treatmentDate: String, $treatmentTitle: String, $treatmentType: String, $treatmentDescription: String, $treatmentDose: String, $treatmentFrequency: String, $billingDate: String, $billingTitle: String, $billingType: String, $billingDescription: String, $billingAmount: Float, $billingPaid: String , $billingNotes: String) {
+          updatePatientArray(userId: $userId, patientId: $patientId, patientInput: { insuranceCompany: $insuranceCompany, insuranceNumber: $insuranceNumber, insuranceDescription: $insuranceDescription, insuranceExpiry: $insuranceExpiry, insuranceSubscriberCompany: $insuranceSubscriberCompany, insuranceSubscriberDescription: $insuranceSubscriberDescription, nextOfKinName: $nextOfKinName, nextOfKinPhone: $nextOfKinPhone, nextOfKinEmail: $nextOfKinEmail, complaintDate: $complaintDate, complaintTitle: $complaintTitle, complaintDescription: $complaintDescription, historyTitle: $historyTitle, historyType: $historyType, historyDate: $historyDate, historyDescription: $historyDescription, allergiesTitle: $allergiesTitle, allergiesDescription: $allergiesDescription, medicationTitle: $medicationTitle, medicationDescription: $medicationDescription, investigationDate: $investigationDate, investigationTitle: $investigationTitle, investigationDescription: $investigationDescription, diagnosisDate: $diagnosisDate, diagnosisTitle: $diagnosisTitle, diagnosisDescription: $diagnosisDescription, treatmentDate: $treatmentDate, treatmentTitle: $treatmentTitle, treatmentType: $treatmentType, treatmentDescription: $treatmentDescription, treatmentDose: $treatmentDose, treatmentFrequency: $treatmentFrequency, billingDate: $billingDate, billingTitle: $billingTitle, billingType: $billingType, billingDescription: $billingDescription, billingAmount: $billingAmount, billingPaid: $billingPaid, billingNotes: $billingNotes }){
             _id
             name
             address
@@ -660,6 +565,12 @@ modalConfirmUpdateArrayHandler = (event) => {
       variables: {
         userId: userId,
         patientId: patientId,
+        insuranceCompany: insuranceCompany,
+        insuranceNumber: insuranceNumber,
+        insuranceDescription: insuranceDescription,
+        insuranceExpiry: insuranceExpiry,
+        insuranceSubscriberCompany: insuranceSubscriberCompany,
+        insuranceSubscriberDescription: insuranceSubscriberDescription,
         nextOfKinName: nextOfKinName,
         nextOfKinPhone: nextOfKinPhone,
         nextOfKinEmail: nextOfKinEmail,
@@ -788,18 +699,6 @@ modalConfirmSearchHandler = (event) => {
             {
               email
               phone
-            }
-          }
-          insurance
-          {
-            company
-            number
-            description
-            expiry
-            subscriber
-            {
-                company
-                description
             }
           }
         }

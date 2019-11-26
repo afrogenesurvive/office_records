@@ -11,6 +11,27 @@ type User {
   password: String
   name: String
   role: String
+  employmentDate: String
+  terminationDate: String
+  attachments: [Attachment]
+  attendance: [Attendance]
+  leave: [Leave]
+}
+
+type Attachment {
+  name: String
+  format: String
+  path: String
+}
+type Attendance {
+  date: String
+  status: String
+  description: String
+}
+type Leave {
+  type: String
+  startDate: String
+  endDate: String
 }
 
 type AuthData {
@@ -26,13 +47,16 @@ type Patient {
   dob: String
   address: String
   registrationDate: String
+  referralDate: String
+  expirationDate: String
   referringDoctor: referringDoctor
   contact: Contact
   appointments: [Appointment]
   occupation: PatientOccupation
   nextOfKin: [NextOfKin]
-  insurance: Insurance
+  insurance: [Insurance]
   complaints: [Complaint]
+  examination: [Examination]
   history: [History]
   allergies: [Allergy]
   medication: [Medication]
@@ -77,6 +101,14 @@ type Complaint {
   date: String
   title: String
   description: String
+}
+type Examination {
+  area: String
+  type: String
+  measure: String
+  value: String
+  description: String
+  attachments: [Attachment]
 }
 type History {
   type: String
@@ -141,6 +173,11 @@ input UserInput {
   password: String
   name: String
   role: String
+  employmentDate: String
+  terminationDate: String
+  attachments: [Attachment]
+  attendance: [Attendance]
+  leave: [Leave]
 }
 
 input PatientInput {
@@ -150,6 +187,8 @@ input PatientInput {
   contactPhone: String
   contactEmail: String
   registrationDate: String
+  referralDate: String
+  expirationDate: String
   referringDoctorName: String
   referringDoctorEmail: String
   referringDoctorPhone: String
@@ -171,35 +210,50 @@ input PatientInput {
   complaintDate: String
   complaintTitle: String
   complaintDescription: String
+  complaintAttachment: Attachment
+  examniationArea: String
+  examniationType: String
+  examniationMeasure: String
+  examniationValue: String
+  examniationDescription: String
+  examinationAttachment: Attachment
   historyType: String
   historyDate: String
   historyTitle: String
   historyDescription: String
+  historyAttachment: Attachment
   allergiesTitle: String
   allergiesDescription: String
+  allergiesAttachment: Attachment
   medicationTitle: String
   medicationDescription: String
+  medicationAttachment: Attachment
   investigationDate: String
   investigationTitle: String
   investigationDescription: String
+  investigationAttachment: Attachment
   diagnosisDate: String
   diagnosisTitle: String
   diagnosisDescription: String
+  diagnosisAttachment: Attachment
   treatmentDate: String
   treatmentTitle: String
   treatmentDescription: String
   treatmentDose: String
   treatmentFrequency: String
   treatmentType: String
+  treatmentAttachment: Attachment
   billingDate: String
   billingTitle: String
   billingType: String
   billingDescription: String
   billingAmount: Float
   billingPaid: Boolean
+  billingAttachment: Attachment
   billingNote: String
   notes: String
   tag: String
+  attachment: Attachment
 }
 
 input AppointmentInput {

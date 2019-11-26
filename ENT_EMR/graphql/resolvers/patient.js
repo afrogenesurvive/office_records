@@ -83,13 +83,114 @@ module.exports = {
   },
   updatePatient: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatient...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("updatePatient...args:  ", util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
 
     try {
+
+      // const patientInsuranceObject = {
+      //   company: args.patientInput.insuranceCompany,
+      //   number: args.patientInput.insuranceNumber,
+      //   description: args.patientInput.insuranceDescription,
+      //   expiry: args.patientInput.insuranceExpiry,
+      //   company: args.patientInput.insuranceSubscriberCompany,
+      //   description: args.patientInput.insuranceSubscriberDescription
+      // }
+      // const patientExaminationObject = {
+      //   area: args.patientInput.examniationArea,
+      //   type: args.patientInput.examniationType,
+      //   measure: args.patientInput.examniationMeasure,
+      //   value: args.patientInput.examniationValue,
+      //   description: args.patientInput.examniationDescription,
+      //   attachments: args.patientInput.examinationAttachment
+      // }
+
+      // const patientNextOfKinObject = {
+      //   name: args.patientInput.nextOfKinName,
+      //   phone: args.patientInput.nextOfKinPhone,
+      //   email: args.patientInput.nextOfKinEmail
+      // }
+      //
+      // const patientComplaintObject = {
+      //   date: args.patientInput.complaintDate,
+      //   title: args.patientInput.complaintTitle,
+      //   description: args.patientInput.complaintDescription
+      //   attachments: args.patientInput.complaintAttachment
+      // }
+      //
+      // const patientHistoryObject = {
+      //   title: args.patientInput.historyTitle,
+      //   type: args.patientInput.historyType,
+      //   date: args.patientInput.historyDate,
+      //   description: args.patientInput.historyDescription
+      //   attachments: args.patientInput.historyAttachment
+      // }
+      //
+      // const patientAllergiesObject = {
+      //   title: args.patientInput.allergiesTitle,
+      //   description: args.patientInput.allergiesDescription
+      //   attachments: args.patientInput.allergiesAttachment
+      // }
+      //
+      // const patientMedicationObject = {
+      //   title: args.patientInput.medicationTitle,
+      //   description: args.patientInput.medicationDescription
+      //   attachments: args.patientInput.medicationAttachment
+      // }
+      //
+      // const patientInvestigationObject = {
+      //   date: args.patientInput.investigationDate,
+      //   title: args.patientInput.investigationTitle,
+      //   description: args.patientInput.investigationDescription
+      //   attachments: args.patientInput.investigationAttachment
+      // }
+      //
+      // const patientDiagnosisObject = {
+      //   date: args.patientInput.diagnosisDate,
+      //   title: args.patientInput.diagnosisTitle,
+      //   description: args.patientInput.diagnosisDescription
+      //   attachments: args.patientInput.diagnosisAttachment
+      // }
+      //
+      // const patientTreatmentObject = {
+      //   date: args.patientInput.treatmentDate,
+      //   title: args.patientInput.treatmentTitle,
+      //   type: args.patientInput.treatmentType,
+      //   description: args.patientInput.treatmentDescription,
+      //   dose: args.patientInput.treatmentDose,
+      //   frequency: args.patientInput.treatmentFrequency
+      //   attachments: args.patientInput.treatmentAttachment
+      // }
+      //
+      // const patientBillingObject = {
+      //   date: args.patientInput.billingDate,
+      //   title: args.patientInput.billingTitle,
+      //   type: args.patientInput.billingType,
+      //   description: args.patientInput.billingDescription,
+      //   amount: args.patientInput.billingAmount,
+      //   paid: args.patientInput.billingPaid,
+      //   notes: args.patientInput.billingNotes
+      //   attachments: args.patientInput.billingAttachment
+      // }
+      //
+      // console.log(`
+      //   updatePatientArray input objects:
+        // insurance: ${patientInsuranceObject}
+      //   nextOfKin: ${patientNextOfKinObject}
+      //   complaint: ${patientComplaintObject}
+      // examination: ${patientExaminationObject}
+      //   history: ${patientHistoryObject}
+      //   allergies: ${patientAllergiesObject}
+      //   medication: ${patientMedicationObject}
+      //   investigation: ${patientInvestigationObject}
+      //   diagnosis: ${patientDiagnosisObject}
+      //   treatment: ${patientTreatmentObject}
+      //   billing: ${patientBillingObject}
+      //   `);
+
 
       const today = new Date();
       const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -105,6 +206,8 @@ module.exports = {
             email: args.patientInput.contactEmail
           },
           registrationDate: dateTime,
+          referralDate: args.patientInput.referralDate,
+          expirationDate: args.patientInput.expirationDate,
           referringDoctor: {
             name: args.patientInput.referringDoctorName,
             email: args.patientInput.referringDoctorEmail,
@@ -118,17 +221,97 @@ module.exports = {
               email: args.patientInput.occupationEmployerContactEmail
             }
           },
-        insurance: {
-          company: args.patientInput.insuranceCompany,
-          number: args.patientInput.insuranceNumber,
-          description: args.patientInput.insuranceDescription,
-          expiry: args.patientInput.insuranceExpiry,
-          subscriber: {
-            company: args.patientInput.insuranceSubscriberCompany,
-            description: args.patientInput.insuranceSubscriberDescription
-          }
+          $addToSet: {
+            insurance: {
+              company: args.patientInput.insuranceCompany,
+              number: args.patientInput.insuranceNumber,
+              description: args.patientInput.insuranceDescription,
+              expiry: args.patientInput.insuranceExpiry,
+              company: args.patientInput.insuranceSubscriberCompany,
+              description: args.patientInput.insuranceSubscriberDescription
+            },
+            nextOfKin: {
+              name: args.patientInput.nextOfKinName,
+              phone: args.patientInput.nextOfKinPhone,
+              email: args.patientInput.nextOfKinEmail
+            },
+            complaint: {
+              date: args.patientInput.complaintDate,
+              title: args.patientInput.complaintTitle,
+              description: args.patientInput.complaintDescription,
+              attachments: args.patientInput.complaintAttachment
+            },
+            examination: {
+              area: args.patientInput.examniationArea,
+              type: args.patientInput.examniationType,
+              measure: args.patientInput.examniationMeasure,
+              value: args.patientInput.examniationValue,
+              description: args.patientInput.examniationDescription,
+              attachments: args.patientInput.examinationAttachment
+            },
+            history: {
+              title: args.patientInput.historyTitle,
+              type: args.patientInput.historyType,
+              date: args.patientInput.historyDate,
+              description: args.patientInput.historyDescription,
+              attachments: args.patientInput.historyAttachment
+            },
+            allergies: {
+              title: args.patientInput.allergiesTitle,
+              description: args.patientInput.allergiesDescription,
+              attachments: args.patientInput.allergiesAttachment,
+            },
+            medication: {
+              title: args.patientInput.medicationTitle,
+              description: args.patientInput.medicationDescription,
+              attachments: args.patientInput.medicationAttachment
+            },
+            investigation: {
+              date: args.patientInput.investigationDate,
+              title: args.patientInput.investigationTitle,
+              description: args.patientInput.investigationDescription,
+              attachments: args.patientInput.investigationAttachment
+            },
+            diagnosis: {
+              date: args.patientInput.diagnosisDate,
+              title: args.patientInput.diagnosisTitle,
+              description: args.patientInput.diagnosisDescription,
+              attachments: args.patientInput.diagnosisAttachment
+            },
+            treatment: {
+              date: args.patientInput.treatmentDate,
+              title: args.patientInput.treatmentTitle,
+              type: args.patientInput.treatmentType,
+              description: args.patientInput.treatmentDescription,
+              dose: args.patientInput.treatmentDose,
+              frequency: args.patientInput.treatmentFrequency,
+              attachments: args.patientInput.treatmentAttachment
+            },
+            billing: {
+              date: args.patientInput.billingDate,
+              title: args.patientInput.billingTitle,
+              type: args.patientInput.billingType,
+              description: args.patientInput.billingDescription,
+              amount: args.patientInput.billingAmount,
+              paid: args.patientInput.billingPaid,
+              notes: args.patientInput.billingNotes,
+              attachments: args.patientInput.billingAttachment
+            }
         }
-      }
+        //   $addToSet: {
+        //     insurance: patientInsuranceObject,
+        //         nextOfKin: patientNextOfKinObject,
+        //         complaint: patientComplaintObject,
+        //         examination: patientExaminationObject,
+        //         history: patientHistoryObject,
+        //         allergies: patientAllergiesObject,
+        //         medication: patientMedicationObject,
+        //         investigation: patientInvestigationObject,
+        //         diagnosis: patientDiagnosisObject,
+        //         treatment: patientTreatmentObject,
+        //         billing: patientBillingObject
+        // }
+       }
       ,{new: true})
       .populate('appointments');
 
@@ -151,6 +334,15 @@ module.exports = {
 
     try {
 
+      const patientInsuranceObject = {
+        company: args.patientInput.insuranceCompany,
+        number: args.patientInput.insuranceNumber,
+        description: args.patientInput.insuranceDescription,
+        expiry: args.patientInput.insuranceExpiry,
+        company: args.patientInput.insuranceSubscriberCompany,
+        description: args.patientInput.insuranceSubscriberDescription
+      }
+
       const patientNextOfKinObject = {
         name: args.patientInput.nextOfKinName,
         phone: args.patientInput.nextOfKinPhone,
@@ -161,6 +353,15 @@ module.exports = {
         date: args.patientInput.complaintDate,
         title: args.patientInput.complaintTitle,
         description: args.patientInput.complaintDescription
+      }
+
+      const patientExaminationObject = {
+        area: args.patientInput.examniationArea,
+        type: args.patientInput.examniationType,
+        measure: args.patientInput.examniationMeasure,
+        value: args.patientInput.examniationValue,
+        description: args.patientInput.examniationDescription,
+        attachments: args.patientInput.examinationAttachment
       }
 
       const patientHistoryObject = {
@@ -213,15 +414,16 @@ module.exports = {
 
       console.log(`
         updatePatientArray input objects:
-        nextOfKin: ${patientNextOfKinObject}
-        complaint: ${patientComplaintObject}
-        history: ${patientHistoryObject}
-        allergies: ${patientAllergiesObject}
-        medication: ${patientMedicationObject}
-        investigation: ${patientInvestigationObject}
-        diagnosis: ${patientDiagnosisObject}
-        treatment: ${patientTreatmentObject}
-        billing: ${patientBillingObject}
+        insurance: ${JSON.stringify(patientInsuranceObject)}
+        nextOfKin: ${JSON.stringify(patientNextOfKinObject)}
+        complaint: ${JSON.stringify(patientComplaintObject)}
+        history: ${JSON.stringify(patientHistoryObject)}
+        allergies: ${JSON.stringify(patientAllergiesObject)}
+        medication: ${JSON.stringify(patientMedicationObject)}
+        investigation: ${JSON.stringify(patientInvestigationObject)}
+        diagnosis: ${JSON.stringify(patientDiagnosisObject)}
+        treatment: ${JSON.stringify(patientTreatmentObject)}
+        billing: ${JSON.stringify(patientBillingObject)}
         `);
 
 
@@ -234,15 +436,13 @@ module.exports = {
         {$addToSet:
           {
             nextOfKin: patientNextOfKinObject,
-            complaint: patientComplaintObject,
-            history: patientHistoryObject,
+            complaints: patientComplaintObject,
             allergies: patientAllergiesObject,
             medication: patientMedicationObject,
             investigation: patientInvestigationObject,
             diagnosis: patientDiagnosisObject,
-            treatment: patientTreatmentObject,
-            billing: patientBillingObject
-           }
+            treatment: patientTreatmentObject
+          }
       }
       ,{new: true})
       .populate('appointments');
@@ -431,17 +631,7 @@ module.exports = {
             phone: result.occupation.contact.phone,
             email: result.occupation.contact.email
           }
-        },
-        insurance: {
-          company: result.insuranceCompany,
-          number: result.insuranceNumber,
-          description: result.insuranceDescription,
-          expiry: result.insuranceExpiry,
-          subscriber: {
-            company: result.insuranceSubscriberCompany,
-            description: result.insuranceSubscriberDescription
-          }
-        },
+        }
       };
     } catch (err) {
       throw err;
