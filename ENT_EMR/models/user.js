@@ -15,7 +15,40 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  role: String
+  role: String,
+  employmentDate: {
+    type: Date
+  },
+  terminationDate: {
+    type: Date
+  },
+  attachments: [
+    {
+      name: String,
+      format: String,
+      path: String
+    }
+  ],
+  attendance: [
+    {
+      date: {
+        type: Date
+      },
+      status: String,
+      description: String
+    }
+  ],
+  leave: [
+    {
+      type: String,
+      startDate: {
+        type: Date
+      },
+      endDate: {
+        type: Date
+      }
+    }
+  ]
 },
   { timestamps: true }
 );

@@ -17,6 +17,12 @@ const patientSchema = new Schema({
   registrationDate:{
     type: Date
   },
+  referralDate:{
+    type: Date
+  },
+  expirationDate:{
+    type: Date
+  },
   referringDoctor: {
     name: String,
     email: String,
@@ -34,7 +40,14 @@ const patientSchema = new Schema({
         email: String
       }
   },
-  insurance: {
+  appointments: [
+    {
+      type: Schema.Types.ObjectId,
+          ref: 'Appointment'
+    }
+  ],
+  insurance: [
+    {
     company: String,
     number: String,
     description: String,
@@ -45,29 +58,49 @@ const patientSchema = new Schema({
       company: String,
       description: String
     }
-  },
-  appointments: [
+  }
+],
+  nextOfKin: [
     {
-      type: Schema.Types.ObjectId,
-          ref: 'Appointment'
-    }
-  ],
-  nextOfKin: [{
     name: String,
     contact: {
       phone: String,
       email: String
     }
-  }],
+  }
+],
   complaints: [
     {
       date: {
         type: Date
       },
       title: String,
-      description: String
+      description: String,
+      attachments: [
+        {
+          name: String,
+          format: String,
+          path: String
+        }
+      ]
     }
   ],
+  examination: [
+    {
+    area: String,
+    type: String,
+    measure: String,
+    value: String,
+    description: String,
+    attachments: [
+      {
+        name: String,
+        format: String,
+        path: String
+    }
+  ]
+  }
+],
   history: [
     {
       type: String,
@@ -75,19 +108,40 @@ const patientSchema = new Schema({
         type: Date
       },
       title: String,
-      description: String
+      description: String,
+      attachments: [
+        {
+          name: String,
+          format: String,
+          path: String
+      }
+  ]
     }
   ],
   allergies: [
     {
       title: String,
-      description: String
+      description: String,
+      attachments: [
+        {
+          name: String,
+          format: String,
+          path: String
+        }
+      ]
     }
   ],
   medication: [
     {
       title: String,
-      description: String
+      description: String,
+      attachments: [
+        {
+          name: String,
+          format: String,
+          path: String
+        }
+      ]
     }
   ],
   investigation: [
@@ -96,7 +150,14 @@ const patientSchema = new Schema({
         type: Date
       },
       title: String,
-      description: String
+      description: String,
+      attachments: [
+        {
+          name: String,
+          format: String,
+          path: String
+        }
+      ]
     }
   ],
   diagnosis: [
@@ -105,7 +166,14 @@ const patientSchema = new Schema({
         type: Date
       },
       title: String,
-      description: String
+      description: String,
+      attachments: [
+        {
+          name: String,
+          format: String,
+          path: String
+        }
+      ]
     }
   ],
   treatment: [
@@ -117,10 +185,18 @@ const patientSchema = new Schema({
       description: String,
       dose: String,
       frequency: String,
-      type: String
+      type: String,
+      attachments: [
+        {
+          name: String,
+          format: String,
+          path: String
+        }
+      ]
     }
   ],
-  billing:[{
+  billing:[
+    {
     date: {
       type: Date
     },
@@ -131,8 +207,16 @@ const patientSchema = new Schema({
     paid: {
       type: Boolean
     },
-    notes: [String]
-  }],
+    attachments: [
+      {
+        name: String,
+        format: String,
+        path: String
+      }
+    ],
+    notes: String
+  }
+],
   notes: [String],
   tags: [String]
 },

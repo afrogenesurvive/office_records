@@ -119,14 +119,28 @@ module.exports = {
         email: args.userInput.email,
         password: hashedPassword,
         name: args.userInput.name,
-        role: args.userInput.role
+        role: args.userInput.role,
+        employmentDate: args.userInput.employmentDate,
+        terminationDate: args.userInput.terminationDate,
+        $addToSet:
+          {
+            attachments: args.userInput.attachments,
+            attendance: args.userInput.attendance,
+            leave: args.userInput.leave,
+          }
+
       },{new: true});
         return {
           ...user._doc,
           _id: user.id,
           email: user.email,
           name: user.name,
-          role: user.role
+          role: user.role,
+          employmentDate: user.employmentDate,
+          terminationDate: user.terminationDate,
+          attachments: user.attachments,
+          attendance: user.attendance,
+          leave: user.leave,
         };
       // }
     } catch (err) {
@@ -160,7 +174,12 @@ module.exports = {
             _id: user.id,
             email: user.email,
             name: user.name,
-            role: user.role
+            role: user.role,
+            employmentDate: user.employmentDate,
+            terminationDate: user.terminationDate,
+            attachments: user.attachments,
+            attendance: user.attendance,
+            leave: user.leave,
         };
       // }
     } catch (err) {
@@ -187,7 +206,12 @@ module.exports = {
           _id: user.id,
           email: user.email,
           name: user.name,
-          role: user.role
+          role: user.role,
+          employmentDate: user.employmentDate,
+          terminationDate: user.terminationDate,
+          attachments: user.attachments,
+          attendance: user.attendance,
+          leave: user.leave,
         };
       // }
     } catch (err) {
@@ -211,7 +235,9 @@ module.exports = {
         email: args.userInput.email,
         password: hashedPassword,
         name: args.userInput.name,
-        role: args.userInput.role
+        role: args.userInput.role,
+        employmentDate: args.userInput.employmentDate,
+        terminationDate: args.userInput.terminationDate
       });
 
       const result = await user.save();
@@ -222,7 +248,9 @@ module.exports = {
         _id: result.id,
         email: result.email,
         name: result.name,
-        role: result.role
+        role: result.role,
+        employmentDate: result.employmentDate,
+        terminationDate: result.terminationDate
       };
     } catch (err) {
       throw err;
