@@ -4,6 +4,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
+import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceForm';
+import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentForm';
+import UpdateUserLeaveForm from '../components/Forms/UpdateUserLeaveForm';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -17,7 +21,8 @@ class ThisUserPage extends Component {
     user: null,
     users: [],
     updating: false,
-    isLoading: false
+    isLoading: false,
+    userUpdateField: 'attendance',
   };
   isActive = true;
 
@@ -200,6 +205,7 @@ class ThisUserPage extends Component {
 
           this.context.user = thisUser;
           console.log("thisUser context, user object.name ..." + this.context.user.name);
+          console.log("thisUser context, user object.role ..." + this.context.user.role);
 
           sessionStorage.setItem('thisUser', JSON.stringify(thisUser));
 
@@ -287,6 +293,14 @@ class ThisUserPage extends Component {
       });
   }
 
+  updateUserSpecialProfile (event) {
+
+    console.log("special field to update:  ", event.target.value);
+    const field = event.target.value;
+    this.setState({ userUpdateField: field});
+
+  }
+
 
   componentWillUnmount() {
     this.isActive = false;
@@ -295,47 +309,130 @@ class ThisUserPage extends Component {
   render() {
     return (
       <React.Fragment>
-
-
-{this.state.updating === true && (
-
-  <Container className="containerCreateuser">
-<Row className="createUserRowForm">
-<Col md={12} className="createUserColForm">
-  <UpdateUserForm
-  canCancelProfile
-    canConfirm
-    onCancel={this.modalCancelHandler}
-    onConfirm={this.modalConfirmUpdateHandler}
-    confirmText="Confirm"
-    user={this.state.user}
-    authUserId={this.context.userId}
-  />
-  </Col>
-  </Row>
-  </Container>
-
-)}
-{
-  this.state.user !== null && (
-    <ThisUserProfile
-      user={this.state.user}
-      authUserId={this.context.userId}
-      onEdit={this.startUpdateUserHandler}
-    />
-  )
-}
-        {
-        //   this.state.isLoading ? (
-        //   <Spinner />
-        // ) : (
-        //   <ThisUserProfile
-        //     user={this.state.user}
-        //     authUserId={this.context.userId}
-        //     onEdit={this.startUpdateUserHandler}
-        //   />
-        // )
+      <Accordion>
+      <Container className="containerUserProfile">
+      <Row className="UserProfileRow">
+      <Col md={12} className="UserProfileCol">
+      {
+        this.state.user !== null && (
+          <ThisUserProfile
+            user={this.state.user}
+            authUserId={this.context.userId}
+            onEdit={this.startUpdateUserHandler}
+          />
+        )
       }
+      </Col>
+      </Row>
+
+      {this.state.updating === true && (
+
+
+    <Row className="createUserRowForm">
+    <Col md={12} className="createUserColForm">
+      <UpdateUserForm
+      canCancelProfile
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.modalConfirmUpdateHandler}
+        confirmText="Confirm"
+        user={this.state.user}
+        authUserId={this.context.userId}
+      />
+      </Col>
+      </Row>
+
+    )}
+
+      <Row className="createUserRowAdd">
+      <Col md={3} className="updateUserCol2">
+      <p>Edit Special</p>
+      </Col>
+      <Col md={9} className="updateUserCol2">
+      {this.context.token && (
+        <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" value='attendance' onClick={this.updateUserSpecialProfile.bind(this)}>
+        Attendance
+        </Accordion.Toggle>
+      )}
+      {this.context.token && (
+        <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" value='leave' onClick={this.updateUserSpecialProfile.bind(this)}>
+        Leave
+        </Accordion.Toggle>
+      )}
+      {this.context.token && (
+        <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" value='attachments' onClick={this.updateUserSpecialProfile.bind(this)}>
+        Attachments
+        </Accordion.Toggle>
+      )}
+      </Col>
+      </Row>
+
+      <Accordion.Collapse eventKey="5">
+      <Row className="updateUserRowForm">
+      <Col md={10} className="updateUserColForm">
+      {this.state.userUpdateField === 'attendance' && (
+        <UpdateUserAttendanceForm
+        authUserId={this.context.userId}
+        canCancelProfile
+          canConfirm
+          onCancel={this.modalCancelHandler}
+          onConfirm={this.updateUserAttendanceHandler}
+          confirmText="Confirm"
+          user={this.state.selectedUser}
+        />
+      )}
+      {this.state.userUpdateField === 'leave' && (
+        <UpdateUserLeaveForm
+        authUserId={this.context.userId}
+        canCancelProfile
+          canConfirm
+          onCancel={this.modalCancelHandler}
+          onConfirm={this.updateUserLeaveHandler}
+          confirmText="Confirm"
+          user={this.state.selectedUser}
+        />
+      )}
+      {this.state.userUpdateField === 'attachments' && (
+        <UpdateUserAttachmentForm
+        authUserId={this.context.userId}
+        canCancelProfile
+          canConfirm
+          onCancel={this.modalCancelHandler}
+          onConfirm={this.updateUserAttachmentHandler}
+          confirmText="Confirm"
+          user={this.state.selectedUser}
+        />
+      )}
+      </Col>
+      </Row>
+      </Accordion.Collapse>
+
+
+      </Container>
+
+
+{
+
+//   this.state.updating === true && (
+//
+// <Container className="containerCreateuser">
+// <Row className="createUserRowForm">
+// <Col md={12} className="createUserColForm">
+//   <UpdateUserForm
+//   canCancelProfile
+//     canConfirm
+//     onCancel={this.modalCancelHandler}
+//     onConfirm={this.modalConfirmUpdateHandler}
+//     confirmText="Confirm"
+//     user={this.state.user}
+//     authUserId={this.context.userId}
+//   />
+//   </Col>
+//   </Row>
+//   </Container>
+// )
+}
+</Accordion>
       </React.Fragment>
     );
   }

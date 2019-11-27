@@ -17,7 +17,8 @@ import SearchPatientForm from '../components/Forms/SearchPatientForm';
 
 import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import UpdatePatientForm from '../components/Forms/UpdatePatientForm';
-import UpdatePatientArrayForm from '../components/Forms/UpdatePatientArrayForm';
+import UpdatePatientInsuranceForm from '../components/Forms/UpdatePatientInsuranceForm';
+// import UpdatePatientArrayForm from '../components/Forms/UpdatePatientArrayForm';
 import './Users.css';
 
 class PatientsPage extends Component {
@@ -30,7 +31,8 @@ class PatientsPage extends Component {
     patients: [],
     searchPatients: [],
     isLoading: false,
-    selectedPatient: null
+    selectedPatient: null,
+    patientUpdateField: null,
   };
   isActive = true;
 
@@ -324,12 +326,29 @@ class PatientsPage extends Component {
 
 
     const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail};
-    console.log("updating patient.. " + JSON.stringify(patient));
+    console.log(`
+      updating patient...
+      userId: ${userId},
+      patientId: ${patientId},
+      name: ${name},
+      dob: ${dob},
+      address: ${address},
+      contactPhone: ${contactPhone},
+      contactEmail: ${contactEmail},
+      registrationDate: ${registrationDate},
+      referringDoctorName: ${referringDoctorName},
+      referringDoctorEmail: ${referringDoctorEmail},
+      referringDoctorPhone: ${referringDoctorPhone},
+      occupationRole: ${occupationRole},
+      occupationEmployer: ${occupationEmployer},
+      occupationEmployerContactPhone: ${occupationEmployerContactPhone},
+      occupationEmployerContactEmail: ${occupationEmployerContactEmail},
+      `);
 
     const requestBody = {
       query: `
-          mutation UpdatePatient($userId: ID!, $patientId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!) {
-            updatePatient(userId: $userId, patientId: $patientId, patientInput: { name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail }){
+          mutation {
+            updatePatient(userId:\"${userId}\", patientId: "${patientId}", patientInput: { name: "${name}", dob: "${dob}", address: "${address}", contactPhone: "${contactPhone}", contactEmail: "${contactEmail}", registrationDate: "${registrationDate}", referringDoctorName: "${referringDoctorName}", referringDoctorEmail: "${referringDoctorEmail}", referringDoctorPhone: "${referringDoctorPhone}", occupationRole: "${occupationRole}", occupationEmployer: "${occupationEmployer}", occupationEmployerContactPhone: "${occupationEmployerContactPhone}", occupationEmployerContactEmail: "${occupationEmployerContactEmail}" }){
               _id
               name
               address
@@ -338,48 +357,141 @@ class PatientsPage extends Component {
                 phone
               }
               registrationDate
-              referringDoctor
-              {
+              referralDate
+              expirationDate
+              referringDoctor{
                 name
                 email
                 phone
               }
-              occupation
-              {
-                role
-                employer
-                contact
-                {
-                  email
-                  phone
+                occupation{
+                  role
+                  employer
+                  contact{
+                    email
+                    phone
+                  }
                 }
-              }
-              nextOfKin
-              {
-                name
-                phone
-                email
-              }
+                insurance
+                {
+                  company
+                  number
+                  description
+                  expiry
+                  subscriber{
+                    company
+                    description
+                  }
+                }
+                nextOfKin{
+                  name
+                  contact{
+                    email
+                    phone
+                  }
+                }
+                complaints{
+                  date
+                  title
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                examination{
+                  area
+                  type
+                  measure
+                  value
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                history{
+                  title
+                  type
+                  date
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                allergies{
+                  title
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                medication{
+                  title
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                investigation{
+                  date
+                  title
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                  diagnosis{
+                    date
+                    title
+                    description
+                    attachment{
+                      name
+                      format
+                      path
+                    }
+                  }
+                  treatment{
+                    date
+                    title
+                    type
+                    description
+                    dose
+                    frequency
+                    attachment{
+                      name
+                      format
+                      path
+                    }
+                  }
+                  billing{
+                    date
+                    title
+                    type
+                    description
+                    amount
+                    paid
+                    notes
+                    attachment
+                    {
+                      name
+                      format
+                      path
+                    }
+                  }
             }
           }
-        `,
-        variables: {
-          userId: userId,
-          patientId: patientId,
-          name: name,
-          dob: dob,
-          address: address,
-          contactPhone: contactPhone,
-          contactEmail: contactEmail,
-          registrationDate: registrationDate,
-          referringDoctorName: referringDoctorName,
-          referringDoctorEmail: referringDoctorEmail,
-          referringDoctorPhone: referringDoctorPhone,
-          occupationRole: occupationRole,
-          occupationEmployer: occupationEmployer,
-          occupationEmployerContactPhone: occupationEmployerContactPhone,
-          occupationEmployerContactEmail: occupationEmployerContactEmail
-        }
+        `
     };
 
     const token = this.context.token;
@@ -434,11 +546,11 @@ class PatientsPage extends Component {
         }
         );
 
-        if (this.state.updatingArray === false && this.state.updating === false) {
-          console.log("update and updateArray complete...now fetching users");
-
-        }
-        // this.fetchPatients();
+        // if (this.state.updatingArray === false && this.state.updating === false) {
+        //   console.log("update and updateArray complete...now fetching users");
+        //
+        // }
+        this.fetchPatients();
 
       })
       .catch(err => {
@@ -446,208 +558,81 @@ class PatientsPage extends Component {
       });
   };
 
-
-modalConfirmUpdateArrayHandler = (event) => {
-
-  if(this.context.user.role !== 'admin') {
-    console.log("Not the Admin! No edit permission!!");
-
-  }
-
-  const userId = this.context.userId;
-  const patientId = this.context.selectedPatient._id;
-
-  console.log("UpdatePatientArrayFormData:  ", event.target.formGridNextOfKinName.value);
-
-  this.setState({ updatingArray: false });
-
-
-  let insuranceCompany = event.target.formGridInsuranceCompany
-  let insuranceNumber = event.target.formGridInsuranceNumber
-  let insuranceDescription = event.target.formGridInsuranceDescription
-  let insuranceExpiry = event.target.formGridInsuranceExpiry
-  let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany
-  let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription
-  let nextOfKinName = event.target.formGridNextOfKinName.value
-  let nextOfKinPhone = event.target.formGridNextOfKinPhone.value
-  let nextOfKinEmail = event.target.formGridNextOfKinEmail.value
-  let complaintDate = event.target.formGridComplaintDate.value
-  let complaintTitle = event.target.formGridComplaintTitle.value
-  let complaintDescription = event.target.formGridComplaintDescription.value
-  let historyTitle = event.target.formGridHistoryTitle.value
-  let historyType = event.target.formGridHistoryType.value
-  let historyDate = event.target.formGridHistoryDate.value
-  let historyDescription = event.target.formGridHistoryDescription.value
-  let allergiesTitle = event.target.formGridAllergiesTitle.value
-  let allergiesDescription = event.target.formGridAllergiesDescription.value
-  let medicationTitle = event.target.formGridMedicationTitle.value
-  let medicationDescription = event.target.formGridMedicationDescription.value
-  let investigationDate = event.target.formGridInvestigationDate.value
-  let investigationTitle = event.target.formGridInvestigationTitle.value
-  let investigationDescription = event.target.formGridInvestigationDescription.value
-  let diagnosisDate = event.target.formGridDiagnosisDate.value
-  let diagnosisTitle = event.target.formGridDiagnosisTitle.value
-  let diagnosisDescription = event.target.formGridDiagnosisDescription.value
-  let treatmentDate = event.target.formGridTreatmentDate.value
-  let treatmentTitle = event.target.formGridTreatmentTitle.value
-  let treatmentType = event.target.formGridTreatmentType.value
-  let treatmentDescription = event.target.formGridTreatmentDescription.value
-  let treatmentDose = event.target.formGridTreatmentDose.value
-  let treatmentFrequency = event.target.formGridTreatmentFrequency.value
-  let billingDate = event.target.formGridBillingDate.value
-  let billingTitle = event.target.formGridBillingTitle.value
-  let billingType = event.target.formGridBillingType.value
-  let billingDescription = event.target.formGridBillingDescription.value
-  let billingAmount = event.target.formGridBillingAmount.value
-  let billingPaid = event.target.formGridBillingPaid.value
-  let billingNotes = event.target.formGridBillingNotes.value
-  // request body args shouldn't be required/non-nullable
-
-  const patientArray = { insuranceCompany, insuranceNumber, insuranceDescription, insuranceExpiry, insuranceSubscriberCompany, insuranceSubscriberDescription, nextOfKinName, nextOfKinPhone, nextOfKinEmail, complaintDate, complaintTitle, complaintDescription, historyTitle, historyType, historyDate, historyDescription, allergiesTitle, allergiesDescription, medicationTitle, medicationDescription, investigationDate, investigationTitle, investigationDescription, diagnosisDate, diagnosisTitle, diagnosisDescription, treatmentDate, treatmentTitle, treatmentType, treatmentDescription, treatmentDose, treatmentFrequency, billingDate, billingTitle, billingType, billingDescription, billingAmount, billingPaid , billingNotes }
-
-  console.log("updating patientArray.. " + JSON.stringify(patientArray));
-
-  const requestBody = {
-    query: `
-        mutation UpdatePatientArray($insuranceCompany: String, $insuranceNumber: String, $insuranceDescription: String, $insuranceExpiry: String, $insuranceSubscriberCompany: String, $insuranceSubscriberDescription: String, $userId: ID!, $patientId: ID!, $nextOfKinName: String, $nextOfKinPhone: String, $nextOfKinEmail: String, $complaintDate: String, $complaintTitle: String, $complaintDescription: String, $historyTitle: String, $historyType: String, $historyDate: String, $historyDescription: String, $allergiesTitle: String, $allergiesDescription: String, $medicationTitle: String, $medicationDescription: String, $investigationDate: String, $investigationTitle: String, $investigationDescription: String, $diagnosisDate: String, $diagnosisTitle: String, $diagnosisDescription: String, $treatmentDate: String, $treatmentTitle: String, $treatmentType: String, $treatmentDescription: String, $treatmentDose: String, $treatmentFrequency: String, $billingDate: String, $billingTitle: String, $billingType: String, $billingDescription: String, $billingAmount: Float, $billingPaid: String , $billingNotes: String) {
-          updatePatientArray(userId: $userId, patientId: $patientId, patientInput: { insuranceCompany: $insuranceCompany, insuranceNumber: $insuranceNumber, insuranceDescription: $insuranceDescription, insuranceExpiry: $insuranceExpiry, insuranceSubscriberCompany: $insuranceSubscriberCompany, insuranceSubscriberDescription: $insuranceSubscriberDescription, nextOfKinName: $nextOfKinName, nextOfKinPhone: $nextOfKinPhone, nextOfKinEmail: $nextOfKinEmail, complaintDate: $complaintDate, complaintTitle: $complaintTitle, complaintDescription: $complaintDescription, historyTitle: $historyTitle, historyType: $historyType, historyDate: $historyDate, historyDescription: $historyDescription, allergiesTitle: $allergiesTitle, allergiesDescription: $allergiesDescription, medicationTitle: $medicationTitle, medicationDescription: $medicationDescription, investigationDate: $investigationDate, investigationTitle: $investigationTitle, investigationDescription: $investigationDescription, diagnosisDate: $diagnosisDate, diagnosisTitle: $diagnosisTitle, diagnosisDescription: $diagnosisDescription, treatmentDate: $treatmentDate, treatmentTitle: $treatmentTitle, treatmentType: $treatmentType, treatmentDescription: $treatmentDescription, treatmentDose: $treatmentDose, treatmentFrequency: $treatmentFrequency, billingDate: $billingDate, billingTitle: $billingTitle, billingType: $billingType, billingDescription: $billingDescription, billingAmount: $billingAmount, billingPaid: $billingPaid, billingNotes: $billingNotes }){
-            _id
-            name
-            address
-            contact{
-              email
-              phone
-            }
-            registrationDate
-            referringDoctor
-            {
-              name
-              email
-              phone
-            }
-            occupation
-            {
-              role
-              employer
-              contact
-              {
-                email
-                phone
-              }
-            }
-            nextOfKin
-            {
-              name
-              phone
-              email
-            }
-            insurance
-            {
-              company
-              number
-              description
-              expiry
-              subscriber
-              {
-                  company
-                  description
-              }
-            }
-            complaints
-            {
-              date
-              title
-              description
-            }
-          }
-        }
-      `,
-      variables: {
-        userId: userId,
-        patientId: patientId,
-        insuranceCompany: insuranceCompany,
-        insuranceNumber: insuranceNumber,
-        insuranceDescription: insuranceDescription,
-        insuranceExpiry: insuranceExpiry,
-        insuranceSubscriberCompany: insuranceSubscriberCompany,
-        insuranceSubscriberDescription: insuranceSubscriberDescription,
-        nextOfKinName: nextOfKinName,
-        nextOfKinPhone: nextOfKinPhone,
-        nextOfKinEmail: nextOfKinEmail,
-        complaintDate: complaintDate,
-        complaintTitle: complaintTitle,
-        complaintDescription: complaintDescription,
-        historyTitle: historyTitle,
-        historyType: historyType,
-        historyDate: historyDate,
-        historyDescription: historyDescription,
-        allergiesTitle: allergiesTitle,
-        allergiesDescription: allergiesDescription,
-        medicationTitle: medicationTitle,
-        medicationDescription: medicationDescription,
-        investigationDate: investigationDate,
-        investigationTitle: investigationTitle,
-        investigationDescription: investigationDescription,
-        diagnosisDate: diagnosisDate,
-        diagnosisTitle: diagnosisTitle,
-        diagnosisDescription: diagnosisDescription,
-        treatmentDate: treatmentDate,
-        treatmentTitle: treatmentTitle,
-        treatmentType: treatmentType,
-        treatmentDescription: treatmentDescription,
-        treatmentDose: treatmentDose,
-        treatmentFrequency: treatmentFrequency,
-        billingDate: billingDate,
-        billingTitle: billingTitle,
-        billingType: billingType,
-        billingDescription: billingDescription,
-        billingAmount: billingAmount,
-        billingPaid: billingPaid,
-        billingNotes: billingNotes
-      }
-  };
+updatePatientInsuranceHandler = (event) => {
 
   const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
 
-  fetch('http://localhost:10000/graphql', {
-    method: 'POST',
-    body: JSON.stringify(requestBody),
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
-    }
-  })
-    .then(res => {
-      if (res.status !== 200 && res.status !== 201) {
-        throw new Error('Failed!');
-      }
-      return res.json();
-    })
-    .then(resData => {
-      console.log("response data... " + JSON.stringify(resData));
+  console.log("UpdatePatientInsuranceFormData:  ", event.target.formGridInsuranceCompany.value);
 
-      const updatedPatientArrayId = resData.data.updatePatientArray._id;
-      const updatedPatientArray = this.state.patients.find(e => e._id === updatedPatientArrayId);
-      const updatedPatientArrayPos = this.state.patients.indexOf(updatedPatientArray);
-      const slicedArray = this.state.patients.splice(updatedPatientArrayPos, 1);
-      console.log("updatedPatientArray:  ", JSON.stringify(updatedPatientArray),"  updatedPatientPos:  ", updatedPatientArrayPos, "  slicedArray:  ", slicedArray);
+  this.setState({ updating: false , patientUpdateField: null });
 
-      this.state.patients.push(updatedPatientArray);
+  let insuranceCompany = event.target.formGridInsuranceCompany.value;
+  let insuranceNumber = event.target.formGridInsuranceNumber.value;
+  let insuranceExpiry = event.target.formGridInsuranceExpiry.value;
+  let insuranceDescription = event.target.formGridInsuranceDescription.value;
+  let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany.value;
+  let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
 
-      if (this.state.updatingArray === false && this.state.updating === false) {
-        console.log("update and updateArray complete...now fetching users");
+  const patientInsurance = { insuranceCompany, insuranceNumber, insuranceExpiry, insuranceDescription, insuranceSubscriberCompany, insuranceSubscriberDescription };
+  console.log(`
+    adding patient insurance item...
+    userId: ${userId},
+    selectedPatientId: ${selectedPatientId},
+    insuranceCompany: ${insuranceCompany},
+    insuranceNumber: ${insuranceNumber},
+    insuranceExpiry: ${insuranceExpiry},
+    insuranceDescription: ${insuranceDescription},
+    insuranceSubscriberCompany: ${insuranceSubscriberCompany},
+    insuranceSubscriberDescription: ${insuranceSubscriberDescription},
+    `);
 
-      }
-      // this.fetchPatients();
+    const requestBody = {
+      query:`
+        mutation {updatePatientInsurance(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{insuranceCompany:\"${insuranceCompany}\",insuranceNumber:\"${insuranceNumber}\",insuranceDescription:\"${insuranceDescription}\",insuranceExpiry:\"${insuranceExpiry}\",insuranceSubscriberCompany:\"${insuranceSubscriberCompany}\",insuranceSubscriberDescription:\"${insuranceSubscriberDescription}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    };
 
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData.data));
 
+          const updatedPatientId = resData.data.updatePatientInsurance._id;
+          const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+          const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+          const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+          console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+          this.state.patients.push(updatedPatient);
+          this.context.patients = this.state.patients;
+          this.fetchPatients();
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
 }
-
 
 
 modalConfirmSearchHandler = (event) => {
@@ -685,22 +670,138 @@ modalConfirmSearchHandler = (event) => {
             phone
           }
           registrationDate
-          referringDoctor
-          {
+          referralDate
+          expirationDate
+          referringDoctor{
             name
             email
             phone
           }
-          occupation
-          {
-            role
-            employer
-            contact
-            {
-              email
-              phone
+            occupation{
+              role
+              employer
+              contact{
+                email
+                phone
+              }
             }
-          }
+            insurance
+            {
+              company
+              number
+              description
+              expiry
+              subscriber{
+                company
+                description
+              }
+            }
+            nextOfKin{
+              name
+              contact{
+                email
+                phone
+              }
+            }
+            complaints{
+              date
+              title
+              description
+              attachment{
+                name
+                format
+                path
+              }
+            }
+            examination{
+              area
+              type
+              measure
+              value
+              description
+              attachment{
+                name
+                format
+                path
+              }
+            }
+            history{
+              title
+              type
+              date
+              description
+              attachment{
+                name
+                format
+                path
+              }
+            }
+            allergies{
+              title
+              description
+              attachment{
+                name
+                format
+                path
+              }
+            }
+            medication{
+              title
+              description
+              attachment{
+                name
+                format
+                path
+              }
+            }
+            investigation{
+              date
+              title
+              description
+              attachment{
+                name
+                format
+                path
+              }
+            }
+              diagnosis{
+                date
+                title
+                description
+                attachment{
+                  name
+                  format
+                  path
+                }
+              }
+              treatment{
+                date
+                title
+                type
+                description
+                dose
+                frequency
+                attachment{
+                  name
+                  format
+                  path
+                }
+              }
+              billing{
+                date
+                title
+                type
+                description
+                amount
+                paid
+                notes
+                attachment
+                {
+                  name
+                  format
+                  path
+                }
+              }
         }
       }
       `,
@@ -765,22 +866,138 @@ modalConfirmSearchHandler = (event) => {
                 phone
               }
               registrationDate
-              referringDoctor
-              {
+              referralDate
+              expirationDate
+              referringDoctor{
                 name
                 email
                 phone
               }
-              occupation
-              {
-                role
-                employer
-                contact
-                {
-                  email
-                  phone
+                occupation{
+                  role
+                  employer
+                  contact{
+                    email
+                    phone
+                  }
                 }
-              }
+                insurance
+                {
+                  company
+                  number
+                  description
+                  expiry
+                  subscriber{
+                    company
+                    description
+                  }
+                }
+                nextOfKin{
+                  name
+                  contact{
+                    email
+                    phone
+                  }
+                }
+                complaints{
+                  date
+                  title
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                examination{
+                  area
+                  type
+                  measure
+                  value
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                history{
+                  title
+                  type
+                  date
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                allergies{
+                  title
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                medication{
+                  title
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                investigation{
+                  date
+                  title
+                  description
+                  attachment{
+                    name
+                    format
+                    path
+                  }
+                }
+                  diagnosis{
+                    date
+                    title
+                    description
+                    attachment{
+                      name
+                      format
+                      path
+                    }
+                  }
+                  treatment{
+                    date
+                    title
+                    type
+                    description
+                    dose
+                    frequency
+                    attachment{
+                      name
+                      format
+                      path
+                    }
+                  }
+                  billing{
+                    date
+                    title
+                    type
+                    description
+                    amount
+                    paid
+                    notes
+                    attachment
+                    {
+                      name
+                      format
+                      path
+                    }
+                  }
             }
           }
         `,
@@ -807,9 +1024,11 @@ modalConfirmSearchHandler = (event) => {
         const patients = resData.data.patients;
         console.log(patients);
 
+        this.context.patients = this.state.patients;
         if (this.isActive) {
           this.setState({ patients: patients, isLoading: false });
         }
+
       })
       .catch(err => {
         console.log(err);
@@ -904,7 +1123,14 @@ modalConfirmSearchHandler = (event) => {
           this.setState({ deleting: false });
         }
       });
+  }
 
+
+  updatePatientSpecial (event) {
+
+    console.log("special field to update:  ", event.target.value);
+    const field = event.target.value;
+    this.setState({ patientUpdateField: field});
 
   }
 
@@ -928,8 +1154,40 @@ modalConfirmSearchHandler = (event) => {
   render() {
     return (
 
-      <React.Fragment>
-      <Accordion>
+    <React.Fragment>
+    <Accordion>
+
+    <Container className="containerUserDetail">
+
+    <Row className="createUserRowAdd">
+    <Col md={4} className="createUserColAdd">
+    <p>Patient Detail</p>
+    </Col>
+    <Col md={6} className="createUserColAdd">
+    <Accordion.Toggle as={Button} variant="link" eventKey="6" className="btn">
+    Details
+    </Accordion.Toggle>
+    </Col>
+    </Row>
+
+    <Accordion.Collapse eventKey="6">
+    <Row className="createUserRowForm">
+    <Col md={11} className="createUserColForm">
+    {this.state.isLoading === false &&
+      this.state.selectedPatient !== null
+      &&
+      (<PatientDetail
+        authUserId={this.context.userId}
+        patient={this.state.selectedPatient}
+        onEdit={this.startUpdatePatientHandler}
+        onDelete={this.modalDeleteHandler}
+    />)
+  }
+    </Col>
+    </Row>
+    </Accordion.Collapse>
+
+    </Container>
 
     <Container className="containerCreateuser">
     <Row className="createUserRowAdd">
@@ -938,19 +1196,14 @@ modalConfirmSearchHandler = (event) => {
     </Col>
     <Col md={8}>
       {this.context.token && (
-        <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" onClick={this.startCreatePatientHandler}>
+        <Accordion.Toggle as={Button} variant="link" eventKey="7" className="btn" onClick={this.startCreatePatientHandler}>
         Add
-        </Accordion.Toggle>
-      )}
-      {this.context.token && (
-        <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" onClick={this.startUpdatePatientHandler}>
-        Edit
         </Accordion.Toggle>
       )}
     </Col>
     </Row>
 
-    <Accordion.Collapse eventKey="2">
+    <Accordion.Collapse eventKey="7">
     <Row className="createUserRowForm">
     <Col md={12} className="createUserColForm">
     {
@@ -964,38 +1217,87 @@ modalConfirmSearchHandler = (event) => {
           confirmText="Confirm"
         />
     )}
-  {this.state.updating && (
-    <UpdatePatientForm
-    canCancel
-      canConfirm
-      onCancel={this.modalCancelHandler}
-      onConfirm={this.modalConfirmUpdateHandler}
-      confirmText="Confirm"
-      patient={this.context.selectedPatient}
-    />
-  )}
     </Col>
     </Row>
     </Accordion.Collapse>
 
-    <Accordion.Collapse eventKey="2">
-    <Row className="createUserRowForm">
-    <Col md={12} className="createUserColForm">
-    {
-      this.state.updating && (
-      <UpdatePatientArrayForm
+
+    <Row className="updateUserRowAdd">
+    <Col md={4} className="updateUserCol">
+    <p>Edit Selected Patient</p>
+    </Col>
+    <Col md={4} className="updateUserCol">
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="8" className="btn" onClick={this.startUpdatePatientHandler}>
+      Basic Info & Demographics
+      </Accordion.Toggle>
+    )}
+    </Col>
+    </Row>
+
+    <Row className="createUserRowAdd">
+    <Col md={3} className="updateUserCol2">
+    <p>Edit Selected Patient</p>
+    </Col>
+    <Col md={9} className="updateUserCol2">
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='insurance' onClick={this.updatePatientSpecial.bind(this)}>
+      Insurance
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='nextOfKin' onClick={this.updatePatientSpecial.bind(this)}>
+      Next Of Kin
+      </Accordion.Toggle>
+    )}
+    </Col>
+    </Row>
+
+    <Accordion.Collapse eventKey="8">
+    <Row className="updateUserRowForm">
+    <Col md={10} className="updateUserColForm">
+    {this.state.updating &&
+      this.state.selectedPatient !== null
+      && (
+      <UpdatePatientForm
+      authUserId={this.context.userId}
       canCancel
         canConfirm
         onCancel={this.modalCancelHandler}
-        onConfirm={this.modalConfirmUpdateArrayHandler}
+        onConfirm={this.modalConfirmUpdateHandler}
         confirmText="Confirm"
-        patient={this.context.selectedPatient}
+        patient={this.state.selectedPatient}
       />
-    )
-  }
+    )}
     </Col>
     </Row>
     </Accordion.Collapse>
+
+    <Accordion.Collapse eventKey="9">
+    <Row className="updateUserRowForm">
+    <Col md={10} className="updateUserColForm">
+    {this.state.patientUpdateField === 'insurance' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientInsuranceForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientInsuranceHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'nextOfKin' &&
+    this.state.selectedPatient !== null
+    && (
+      <p>nextOfKin</p>
+    )}
+    </Col>
+    </Row>
+    </Accordion.Collapse>
+
     </Container>
 
 
@@ -1007,7 +1309,7 @@ modalConfirmSearchHandler = (event) => {
   </Col>
   <Col md={8}>
     {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="3" className="btn" onClick={this.startSearchPatientHandler}>
+      <Accordion.Toggle as={Button} variant="link" eventKey="10" className="btn" onClick={this.startSearchPatientHandler}>
       Search
       </Accordion.Toggle>
     )}
@@ -1015,7 +1317,7 @@ modalConfirmSearchHandler = (event) => {
   </Col>
   </Row>
 
-  <Accordion.Collapse eventKey="3">
+  <Accordion.Collapse eventKey="10">
   <Row className="createUserRowForm">
   <Col md={10} className="createUserColForm">
   {
@@ -1038,7 +1340,7 @@ modalConfirmSearchHandler = (event) => {
   </Accordion.Collapse>
   </Container>
 
-<Accordion.Collapse eventKey="3">
+<Accordion.Collapse eventKey="10">
   <Container className="containerSearchuser">
   <Row className="searchListRow">
   {
@@ -1072,16 +1374,6 @@ modalConfirmSearchHandler = (event) => {
 </Container>
 </Accordion>
 
-        {this.state.isLoading === false &&
-          (<PatientDetail
-            canEdit
-            canDelete
-            authUserId={this.context.userId}
-            patient={this.state.selectedPatient}
-            onEdit={this.startUpdatePatientHandler}
-            onDelete={this.modalDeleteHandler}
-            className="PatientDetailBox"
-        />)}
       </React.Fragment>
     );
   }

@@ -1,6 +1,5 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
-
+// import { NavLink } from 'react-router-dom';import UserAttendanceItem from './UserItem/UserAttendanceItem';
 import './UserItem.css';
 
 const userAttendanceItem = props => (

@@ -1,17 +1,21 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
+import PatientInsuranceList from './PatientList/PatientInsuranceList';
+
 
 import './PatientDetail.css';
 
 const PatientDetail = (props) => {
   const {...patient} = props.patient;
   // const authPatientId = props.authUserId;
-  console.log("PatientDetail.props.patient:  ", {...patient});
+  const patientInsurance = patient.insurance;
+  console.log("PatientDetail.props.patient:  ", {...patient}, patientInsurance)
   // console.log("props.authUserId:  ",authUserId, "props.patient:  ", {...patient});
   return (
-    <div className={props.className}>
-    <Card style={{ width: '18rem' }}>
+    <div className="PatientDetailBox">
+    <Card className="PatientDetailCard">
     <Card.Body>
       <Card.Title>Patient Details:</Card.Title>
       <Card.Text>
@@ -26,8 +30,35 @@ const PatientDetail = (props) => {
       <Card.Text>
         D.O.B: {patient.dob}
       </Card.Text>
+      <Card.Text>
+        Reg Date: {patient.registrationDate}
+      </Card.Text>
+      <Card.Text>
+        Ref Date: {patient.referralDate}
+      </Card.Text>
+      <Card.Text>
+        Exp Date: {patient.expirationDate}
+      </Card.Text>
+      <Card.Text>
+        Work Position: {patient.occupation.role}
+      </Card.Text>
+      <Card.Text>
+        Work Employer: {patient.occupation.employer}
+      </Card.Text>
+      <Card.Text>
+        Employer Phone: {patient.occupation.contact.phone}
+      </Card.Text>
+      <Card.Text>
+        Employer Email: {patient.occupation.contact.email}
+      </Card.Text>
+      <PatientInsuranceList
+        patientInsurance={patientInsurance}
+        authUserId={props.authUserId}
+        />
       {props.canEdit && (
-        <Button variant="primary" onClick={props.onEdit}>Edit</Button>
+        <Accordion.Toggle as={Button} variant="link" eventKey="8" className="btn" onClick={props.onEdit}>
+        Edit
+        </Accordion.Toggle>
       )}
       {props.canDelete && (
         <Button variant="warning" onClick={props.onDelete}>Delete</Button>

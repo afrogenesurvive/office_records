@@ -218,7 +218,6 @@ input PatientInput {
   insuranceNumber: String
   insuranceDescription: String
   insuranceExpiry: String
-  insuranceSubscriber: String
   insuranceSubscriberCompany: String
   insuranceSubscriberDescription: String
   complaintDate: String
