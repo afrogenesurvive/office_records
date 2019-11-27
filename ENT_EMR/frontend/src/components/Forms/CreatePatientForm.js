@@ -18,147 +18,98 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridName">
-  {
-    // <Form.Label>name</Form.Label>
-    <Form.Control type="text" placeholder="Enter name"/>
-  }
+    <Form.Label>Name</Form.Label>
+    <Form.Control type="text" placeholder="Patient Name"/>
   </Form.Group>
 
   <Form.Group as={Col} controlId="formGridAddress">
-  {
-    // <Form.Label>Address</Form.Label>
-    <Form.Control type="text" placeholder="Address"/>
-  }
+    <Form.Label>Address</Form.Label>
+    <Form.Control type="text" placeholder="Adress"/>
   </Form.Group>
 
 <Form.Group as={Col} controlId="formGridDob">
-  {
-  // <Form.Label>D.O.B</Form.Label>
-  <Form.Control type="date" placeholder="D.O.B" />
-}
+  <Form.Label>D.O.B</Form.Label>
+  <Form.Control type="date" placeholder="1986-10-18"/>
 </Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridContactEmail">
-  {
-  // <Form.Label>Email</Form.Label>
-  <Form.Control type="email" placeholder="Email" />
-}
+  
+  <Form.Label>Email</Form.Label>
+  <Form.Control type="email" placeholder="Patient Email"/>
+
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridContactPhone">
-  {
-  // <Form.Label>Phone</Form.Label>
-  <Form.Control type="number" placeholder="Phone" />
-}
+  
+  <Form.Label>Phone</Form.Label>
+  <Form.Control type="number" placeholder="Patient Phone"/>
+
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridRegistrationDate">
-  {
-  // <Form.Label>RegistrationDate</Form.Label>
-  <Form.Control type="date" placeholder="RegistrationDate" />
-}
+  
+  <Form.Label>RegistrationDate</Form.Label>
+  <Form.Control type="date" placeholder="Registration Date"/>
+
 </Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridReferringDoctorName">
-  {
-  // <Form.Label>ReferringDoctorName</Form.Label>
-  <Form.Control type="text" placeholder="RefDoctorName" />
-}
+  
+  <Form.Label>ReferringDoctorName</Form.Label>
+  <Form.Control type="text" placeholder='Ref Doctor Name' />
+
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridReferringDoctorEmail">
-  {
-  // <Form.Label>ReferringDoctorEmail</Form.Label>
-  <Form.Control type="email" placeholder="RefDoctorEmail" />
-}
+  
+  <Form.Label>ReferringDoctorEmail</Form.Label>
+  <Form.Control type="email" placeholder='Ref Doctor Email'/>
+
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridReferringDoctorPhone">
-  {
-  // <Form.Label>ReferringDoctorPhone</Form.Label>
-  <Form.Control type="number" placeholder="RefDoctorPhone" />
-}
+  
+  <Form.Label>ReferringDoctorPhone</Form.Label>
+  <Form.Control type="number" placeholder="Ref Doctor Phone"/>
+
 </Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridOccupationRole">
-  {
-  // <Form.Label>OccupationRole</Form.Label>
-  <Form.Control type="text" placeholder="OccupationRole" />
-}
+  
+  <Form.Label>OccupationRole</Form.Label>
+  <Form.Control type="text" placeholder="Job Role"/>
+
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridOccupationEmployer">
-  {
-  // <Form.Label>OccupationEmployer</Form.Label>
-  <Form.Control type="text" placeholder="Employer" />
-}
+  
+  <Form.Label>OccupationEmployer</Form.Label>
+  <Form.Control type="text" placeholder="Employer Name"/>
+
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridOccupationEmployerContactPhone">
-  {
-  // <Form.Label>OccupationEmployerContactPhone</Form.Label>
-  <Form.Control type="number" placeholder="EmployerPhone" />
-}
+  
+  <Form.Label>OccupationEmployerContactPhone</Form.Label>
+  <Form.Control type="number" placeholder="Employer Phone"/>
+
 </Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridOccupationEmployerContactEmail">
-  {
-  // <Form.Label>OccupationEmployerContactEmail</Form.Label>
-  <Form.Control type="email" placeholder="EmployerEmail" />
-}
+  
+  <Form.Label>OccupationEmployerContactEmail</Form.Label>
+  <Form.Control type="email" placeholder="Employer Email" />
+
 </Form.Group>
 
-<Form.Group as={Col} controlId="formGridInsuranceCompany">
-  {
-  // <Form.Label>InsuranceCompany</Form.Label>
-  <Form.Control type="text" placeholder="InsuranceCompany" />
-}
-</Form.Group>
-
-<Form.Group as={Col} controlId="formGridInsuranceNumber">
-  {
-  // <Form.Label>InsuranceNumber</Form.Label>
-  <Form.Control type="number" placeholder="InsuranceNumber" />
-}
-</Form.Group>
-</Form.Row>
-
-<Form.Row>
-<Form.Group as={Col} controlId="formGridInsuranceDescription">
-  {
-  // <Form.Label>InsuranceDescription</Form.Label>
-  <Form.Control type="text" placeholder="InsuranceDesc" />
-}
-</Form.Group>
-
-<Form.Group as={Col} controlId="formGridInsuranceExpiry">
-  {
-  // <Form.Label>InsuranceExpiry</Form.Label>
-  <Form.Control type="date" placeholder="InsuranceExp" />
-}
-</Form.Group>
-
-<Form.Group as={Col} controlId="formGridInsuranceSubscriberCompany">
-  {
-  // <Form.Label>InsuranceSubscriberCompany</Form.Label>
-  <Form.Control type="text" placeholder="SubscriberCompany" />
-}
-</Form.Group>
-
-<Form.Group as={Col} controlId="formGridInsuranceSubscriberDescription">
-  {
-  // <Form.Label>InsuranceSubscriberDescription</Form.Label>
-  <Form.Control type="text" placeholder="SubscriberDescription" />
-}
-</Form.Group>
 </Form.Row>
 
 

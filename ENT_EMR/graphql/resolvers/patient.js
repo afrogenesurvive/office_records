@@ -106,20 +106,20 @@ module.exports = {
       // }
 
       //
-      console.log(`
-        updatePatientArray input objects:
-        // insurance: ${JSON.stringify(patientInsuranceObject)}
-        // nextOfKin: ${JSON.stringify(patientNextOfKinObject)}
-        // complaint: ${JSON.stringify(patientComplaintObject)}
-            examintion: ${JSON.stringify(patientExaminationObject)}
-        // history: ${JSON.stringify(patientHistoryObject)}
-        // allergies: ${JSON.stringify(patientAllergiesObject)}
-        // medication: ${JSON.stringify(patientMedicationObject)}
-        // investigation: ${JSON.stringify(patientInvestigationObject)}
-        // diagnosis: ${JSON.stringify(patientDiagnosisObject)}
-        // treatment: ${JSON.stringify(patientTreatmentObject)}
-        // billing: ${JSON.stringify(patientBillingObject)}
-        // `);
+      // console.log(`
+      //   updatePatientArray input objects:
+      //   // insurance: ${JSON.stringify(patientInsuranceObject)}
+      //   // nextOfKin: ${JSON.stringify(patientNextOfKinObject)}
+      //   // complaint: ${JSON.stringify(patientComplaintObject)}
+      //       examintion: ${JSON.stringify(patientExaminationObject)}
+      //   // history: ${JSON.stringify(patientHistoryObject)}
+      //   // allergies: ${JSON.stringify(patientAllergiesObject)}
+      //   // medication: ${JSON.stringify(patientMedicationObject)}
+      //   // investigation: ${JSON.stringify(patientInvestigationObject)}
+      //   // diagnosis: ${JSON.stringify(patientDiagnosisObject)}
+      //   // treatment: ${JSON.stringify(patientTreatmentObject)}
+      //   // billing: ${JSON.stringify(patientBillingObject)}
+      //   // `);
 
 
       const today = new Date();

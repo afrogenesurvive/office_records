@@ -59,11 +59,6 @@ class UsersPage extends Component {
     this.setState({ updating: true });
     console.log("UpdateUserForm...");
   };
-  // startUpdateUserHandler = () => {
-  //   this.setState({ deleting: true });
-  //   console.log("UpdateUserForm...");
-  //
-  // };
 
   startSearchUserHandler = () => {
     this.setState({ searching: true });
@@ -856,6 +851,8 @@ updateUserSpecial (event) {
     </Row>
     </Accordion.Collapse>
 
+
+
     <Row className="updateUserRowAdd">
     <Col md={4} className="updateUserCol">
     <p>Edit Selected Staff</p>
@@ -868,8 +865,6 @@ updateUserSpecial (event) {
     )}
     </Col>
     </Row>
-
-
 
     <Row className="createUserRowAdd">
     <Col md={3} className="updateUserCol2">
@@ -897,7 +892,9 @@ updateUserSpecial (event) {
     <Accordion.Collapse eventKey="1">
     <Row className="updateUserRowForm">
     <Col md={10} className="updateUserColForm">
-    {this.state.updating && (
+    {this.state.updating &&
+      this.state.selectedUser !== null
+      && (
       <UpdateUserForm
       authUserId={this.context.userId}
       canCancel
@@ -915,7 +912,9 @@ updateUserSpecial (event) {
     <Accordion.Collapse eventKey="2">
     <Row className="updateUserRowForm">
     <Col md={10} className="updateUserColForm">
-    {this.state.userUpdateField === 'attendance' && (
+    {this.state.userUpdateField === 'attendance' &&
+    this.state.selectedUser !== null
+     && (
       <UpdateUserAttendanceForm
       authUserId={this.context.userId}
       canCancel
@@ -926,7 +925,9 @@ updateUserSpecial (event) {
         user={this.state.selectedUser}
       />
     )}
-    {this.state.userUpdateField === 'leave' && (
+    {this.state.userUpdateField === 'leave' &&
+    this.state.selectedUser !== null
+    && (
       <UpdateUserLeaveForm
       authUserId={this.context.userId}
       canCancel
@@ -937,7 +938,9 @@ updateUserSpecial (event) {
         user={this.state.selectedUser}
       />
     )}
-    {this.state.userUpdateField === 'attachments' && (
+    {this.state.userUpdateField === 'attachments' &&
+    this.state.selectedUser !== null
+    && (
       <UpdateUserAttachmentForm
       authUserId={this.context.userId}
       canCancel
@@ -951,6 +954,7 @@ updateUserSpecial (event) {
     </Col>
     </Row>
     </Accordion.Collapse>
+
 
     </Container>
 

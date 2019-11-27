@@ -27,7 +27,7 @@ return (
     <Form.Control type="date" placeholder="Start Date"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridLeaveEndDate">
-    <Form.Label>Start Date</Form.Label>
+    <Form.Label>End Date</Form.Label>
     <Form.Control type="date" placeholder="End Date"/>
   </Form.Group>
 
@@ -35,14 +35,14 @@ return (
 
 
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="0" className="btn" onClick={props.onCancel}>
+  <Accordion.Toggle as={Button} variant="danger" eventKey="2" className="btn" onClick={props.onCancel}>
   Cancel
   </Accordion.Toggle>
 )}
 {props.canCancelProfile && (
-  <Button variant="danger" onClick={props.onCancel} >
+  <Accordion.Toggle as={Button} variant="danger" eventKey="5" className="btn" onClick={props.onCancel}>
   Cancel
-  </Button>
+  </Accordion.Toggle>
 )}
 
 {props.canConfirm && (
