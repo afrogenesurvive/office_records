@@ -16,6 +16,7 @@ import AuthContext from '../context/auth-context';
 
 import CreateUserForm from '../components/Forms/CreateUserForm';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
+import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceForm';
 import SearchUserForm from '../components/Forms/SearchUserForm';
 import './Users.css';
 
@@ -76,41 +77,62 @@ class UsersPage extends Component {
     const password = event.target.formGridPassword.value;
     const name = event.target.formGridName.value;
     const role = event.target.formGridRole.value;
+    const employmentDate = event.target.formGridEmploymentDate.value;
+    const terminationDate = event.target.formGridTerminationDate.value;
 
     if (
       email.trim().length === 0 ||
       password.trim().length === 0 ||
       name.trim().length === 0 ||
-      role.trim().length === 0
+      role.trim().length === 0 ||
+      employmentDate.trim().length === 0 ||
+      terminationDate.trim().length === 0
     ) {
       console.log("blank fields detected!!!...Please try again...");
       return;
     }
 
-    const user = { email, password, name, role };
-    console.log("creating user.. " + JSON.stringify(user));
+    const token = this.context.token;
+    const userId = this.context.userId;
+    const user = { email, password, name, role, employmentDate, terminationDate };
+
+    console.log(`
+      creating user...
+      userId: ${userId}
+      email: ${email},
+      password: ${password},
+      name: ${name},
+      role: ${role},
+      employmentDate: ${employmentDate},
+      terminationDate: ${terminationDate}
+      `);
 
     const requestBody = {
       query: `
-          mutation CreateUser($email: String!, $password: String!, $name: String!, $role: String!) {
-            createUser(userInput: {email: $email, password: $password, name: $name, role: $role}) {
+          mutation {
+            createUser(userInput: {email:"${email}",password:"${password}",name:"${name}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"}) {
               _id
-              email
-              password
               name
+              email
               role
+              employmentDate
+              terminationDate
+              attendance{
+                date
+                status
+                description}
+                attachments{
+                  name
+                  format
+                  path}
+              leave{
+                type
+                startDate
+                endDate}
             }
           }
-        `,
-        variables: {
-          email: email,
-          password: password,
-          name: name,
-          role: role
-        }
+        `
     };
-
-    const token = this.context.token;
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
@@ -127,15 +149,10 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData));
+        console.log("create user response data... " + JSON.stringify(resData.data.createUser));
         this.setState(prevState => {
           const updatedUsers = [...prevState.users];
-          updatedUsers.push({
-            _id: resData.data.createUser._id,
-            email: resData.data.createUser.email,
-            name: resData.data.createUser.name,
-            role: resData.data.createUser.role
-          });
+          updatedUsers.push(resData.data.createUser);
 
           return { users: updatedUsers };
         });
@@ -149,10 +166,10 @@ class UsersPage extends Component {
 
   modalConfirmUpdateHandler = (event) => {
 
-    let userId = this.context.userId;
+    const token = this.context.token;
+    const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
     if(userId !== selectedUserId && this.context.user.role !== 'admin') {
-
       console.log("Not the creator or Admin! No edit permission!!");
       selectedUserId = null;
     }
@@ -164,6 +181,8 @@ class UsersPage extends Component {
     let password = event.target.formGridPassword.value;
     let name = event.target.formGridName.value;
     let role = event.target.formGridRole.value;
+    let employmentDate = event.target.formGridEmploymentDate.value;
+    let terminationDate = event.target.formGridTerminationDate.value;
 
     if (email.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -182,34 +201,53 @@ class UsersPage extends Component {
       console.log("blank fields detected!!!...filling w/ previous data...");
       role  = this.context.selectedUser.role;
     }
+    if (employmentDate.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      employmentDate  = this.context.selectedUser.employmentDate;
+    }
+    if (terminationDate.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      terminationDate  = this.context.selectedUser.terminationDate;
+    }
 
 
-    const user = { email, password, name, role };
-    console.log("updating user.. " + JSON.stringify(user));
+    const user = { email, password, name, role, employmentDate, terminationDate };
+    console.log(`
+      updating user...
+      userId: ${userId},
+      email: ${email},
+      password: ${password},
+      name: ${name},
+      role: ${role},
+      employmentDate: ${employmentDate},
+      terminationDate: ${terminationDate}
+      `);
 
     const requestBody = {
       query: `
-          mutation UpdateUser($userId: ID!, $selectedUserId: ID!, $email: String!, $password: String!, $name: String!, $role: String!) {
-            updateUser(userId: $userId, selectedUserId: $selectedUserId, userInput: {email: $email, password: $password, name: $name, role: $role}) {
-              _id
-              email
-              password
-              name
-              role
+          mutation { updateUser(userId:"${userId}", selectedUserId:"${selectedUserId}", userInput:{email:"${email}", password:"${password}", name:"${name}", role:"${role}", employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"}) {
+            _id
+            name
+            email
+            role
+            employmentDate
+            terminationDate
+            attendance{
+              date
+              status
+              description}
+              attachments{
+                name
+                format
+                path}
+            leave{
+              type
+              startDate
+              endDate}
             }
           }
-        `,
-        variables: {
-          userId: userId,
-          selectedUserId: selectedUserId,
-          email: email,
-          password: password,
-          name: name,
-          role: role
-        }
+        `
     };
-
-    const token = this.context.token;
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
@@ -226,7 +264,7 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData));
+        console.log("response data... " + JSON.stringify(resData.data.updateUser));
 
         const updatedUserId = resData.data.updateUser._id;
         const updatedUser = this.state.users.find(e => e._id === updatedUserId);
@@ -234,14 +272,7 @@ class UsersPage extends Component {
         const slicedArray = this.state.users.splice(updatedUserPos, 1);
         console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
 
-        this.state.users.push(
-          {
-              _id: resData.data.updateUser._id,
-              email: resData.data.updateUser.email,
-              name: resData.data.updateUser.name,
-              role: resData.data.updateUser.role
-            }
-        );
+        this.state.users.push(updatedUser);
         this.context.users = this.state.users;
         this.fetchUsers();
       })
@@ -249,6 +280,87 @@ class UsersPage extends Component {
         console.log(err);
       });
   };
+
+
+  updateUserAttendanceHandler = (event) => {
+
+    const token = this.context.token;
+    const userId = this.context.userId;
+    let selectedUserId = this.context.selectedUser._id;
+    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+      console.log("Not the creator or Admin! No edit permission!!");
+      selectedUserId = null;
+    }
+
+    console.log("UpdateUserAttendanceFormData:  ", event.target.formGridAttendanceDate.value);
+
+    this.setState({ updating: false , userUpdateField: null });
+
+    let attendanceDate = event.target.formGridAttendanceDate.value;
+    let attendanceStatus = event.target.formGridAttendanceStatus.value;
+    let attendanceDescription = event.target.formGridAttendanceDescription.value;
+
+    if (attendanceDate.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attendanceDate = this.context.selectedUser.attendanceDate;
+    }
+    if (attendanceStatus.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attendanceStatus = this.context.selectedUser.attendanceStatus;
+    }
+    if (attendanceDescription.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attendanceDescription = this.context.selectedUser.attendanceDescription;
+    }
+
+    const userAttendance = { attendanceDate, attendanceStatus, attendanceDescription }
+    console.log(`
+      adding user attendance item...
+      userId: ${userId},
+      selectedUserId: ${selectedUserId}
+      attendanceDate: ${attendanceDate},
+      attendanceStatus: ${attendanceStatus},
+      attendanceDescription: ${attendanceDescription}
+      `);
+
+      const requestBody = {
+        query:`
+          mutation {updateUserAttendance(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{attendanceDate:"${attendanceDate}",attendanceStatus:"${attendanceStatus}",attendanceDescription:"${attendanceDescription}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
+        `};
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData.data.updateUserAttendance));
+
+          const updatedUserId = resData.data.updateUserAttendance._id;
+          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+          const updatedUserPos = this.state.users.indexOf(updatedUser);
+          const slicedArray = this.state.users.splice(updatedUserPos, 1);
+          console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+          this.state.users.push(updatedUser);
+          this.context.users = this.state.users;
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+
+  }
 
 
   modalConfirmSearchHandler = (event) => {
@@ -282,8 +394,25 @@ class UsersPage extends Component {
             name
             email
             role
+            employmentDate
+            terminationDate
+            attachments{
+              name
+              format
+              path
+            }
+            attendance{
+              date
+              status
+              description
+            }
+            leave{
+              type
+              startDate
+              endDate
+            }
           }
-        }
+      }
         `,
         variables: {
           userId: userId,
@@ -337,10 +466,26 @@ class UsersPage extends Component {
           query users($userId: ID!) {
             users(userId: $userId) {
               _id
-              email
-              password
               name
+              email
               role
+              employmentDate
+              terminationDate
+              attachments{
+                name
+                format
+                path
+              }
+              attendance{
+                date
+                status
+                description
+              }
+              leave{
+                type
+                startDate
+                endDate
+              }
             }
           }
         `,
@@ -433,7 +578,8 @@ modalDeleteHandler = () => {
       const slicedArray = this.state.users.splice(deletedUserPos, 1);
       console.log("deletedUser:  ", JSON.stringify(deletedUser),"  deletedUserPos:  ", deletedUserPos, "  slicedArray:  ", slicedArray);
 
-      this.setState({ deleting: false });
+      this.setState({ deleting: false, selectedUser: null });
+      this.context.selectedUser = null;
 
       this.fetchUsers();
 
@@ -601,7 +747,15 @@ updateUserSpecial (event) {
     <Row className="updateUserRowForm">
     <Col md={10} className="updateUserColForm">
     {this.state.userUpdateField === 'attendance' && (
-      <p>add attendance form</p>
+      <UpdateUserAttendanceForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updateUserAttendanceHandler}
+        confirmText="Confirm"
+        user={this.state.selectedUser}
+      />
     )}
     {this.state.userUpdateField === 'leave' && (
         <p>add leave form</p>
@@ -686,9 +840,7 @@ updateUserSpecial (event) {
 </Row>
 </Container>
 </Accordion>
-
-
-      </React.Fragment>
+</React.Fragment>
     );
   }
 }

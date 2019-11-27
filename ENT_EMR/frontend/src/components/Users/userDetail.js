@@ -8,6 +8,8 @@ import './UserDetail.css';
 const UserDetail = (props) => {
   const {...user} = props.user;
   const authUserId = props.authUserId;
+  const userAttendance = user.attendance;
+  console.log("user attendance:  ", userAttendance);
   console.log("UserDetail.props.authUserId:  ",authUserId, "  UserDetail.props.user:  ", {...user});
   return (
     <div className={"UserDetailBox1"}>
@@ -22,6 +24,12 @@ const UserDetail = (props) => {
       </Card.Text>
       <Card.Text>
         Role: {user.role}
+      </Card.Text>
+      <Card.Text>
+        Start Date: {user.employmentDate}
+      </Card.Text>
+      <Card.Text>
+        End Date: {user.terminationDate}
       </Card.Text>
       <Accordion.Toggle as={Button} variant="link" eventKey="0" className="btn" onClick={props.onEdit}>
       Edit

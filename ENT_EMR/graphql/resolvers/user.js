@@ -256,26 +256,20 @@ module.exports = {
 
       const userAttendanceObject = {
         date: args.userInput.attendanceDate,
-        status: args.userInputattendanceStatus,
+        status: args.userInput.attendanceStatus,
         description: args.userInput.attendanceDescription,
       }
       console.log(`
-        userAttendanceObject: ${userAttendanceObject}
+        userAttendanceObject: ${util.inspect(userAttendanceObject)}
         `);
 
-        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attendance: userAttendanceObject}},{new: true})
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attendance: userAttendanceObject}},{new: true, useFindAndModify: false})
 
         return {
             ...user._doc,
             _id: user.id,
             email: user.email,
             name: user.name,
-            role: user.role,
-            employmentDate: user.employmentDate,
-            terminationDate: user.terminationDate,
-            attachment: user.attachment,
-            attendance: user.attendance,
-            leave: user.leave,
         };
       // }
     } catch (err) {

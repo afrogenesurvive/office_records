@@ -9,7 +9,7 @@ const searchUserList = props => {
   const searchUsers = props.searchUsers.map(user => {
     return (
       <React.Fragment>
-      <Accordion.Toggle as={Button} variant="link" eventKey="1" className="btn" onClick={props.onCancel}>
+      <Accordion.Toggle as={Button} variant="link" eventKey="3" className="btn" onClick={props.onCancel}>
       x
       </Accordion.Toggle>
       <SearchUserItem
