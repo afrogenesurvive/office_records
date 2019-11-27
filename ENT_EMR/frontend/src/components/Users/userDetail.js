@@ -10,7 +10,7 @@ const UserDetail = (props) => {
   const authUserId = props.authUserId;
   console.log("UserDetail.props.authUserId:  ",authUserId, "  UserDetail.props.user:  ", {...user});
   return (
-    <div className={"UserDetailBox"}>
+    <div className={"UserDetailBox1"}>
     <Card style={{ width: '18rem' }}>
     <Card.Body>
       <Card.Title>User Details</Card.Title>

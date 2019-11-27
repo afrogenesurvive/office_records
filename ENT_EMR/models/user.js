@@ -22,13 +22,11 @@ const userSchema = new Schema({
   terminationDate: {
     type: Date
   },
-  attachments: [
-    {
+  attachments: [{
       name: String,
       format: String,
       path: String
-    }
-  ],
+    }],
   attendance: [
     {
       date: {
@@ -40,7 +38,9 @@ const userSchema = new Schema({
   ],
   leave: [
     {
-      type: String,
+      type: {
+        type: String
+      },
       startDate: {
         type: Date
       },

@@ -4,13 +4,14 @@ export default React.createContext({
     token: null,
     userId: null,
     user: {},
-    users: [],
+    users:[],
     selectedUser: {},
     selectedPatient: {},
-    appointmentPatientId: null,
     selectedAppointment: {},
     patient: {},
     appointment: {},
+    appointmentPatientId: null,
+    patientUpdateField: null,
     login: (token, userId, tokenExpiration) => {},
     logout: () => {}
 });

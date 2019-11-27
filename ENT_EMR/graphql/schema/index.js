@@ -101,6 +101,7 @@ type Complaint {
   date: String
   title: String
   description: String
+  attachment: Attachment
 }
 type Examination {
   area: String
@@ -108,31 +109,36 @@ type Examination {
   measure: String
   value: String
   description: String
-  attachments: [Attachment]
+  attachment: Attachment
 }
 type History {
   type: String
   date: String
   title: String
   description: String
+  attachment: Attachment
 }
 type Allergy {
   title: String
   description: String
+  attachment: Attachment
 }
 type Medication {
   title: String
   description: String
+  attachment: Attachment
 }
 type Investigation {
   date: String
   title: String
   description: String
+  attachment: Attachment
 }
 type Diagnosis {
   date: String
   title: String
   description: String
+  attachment: Attachment
 }
 type Treatment {
   date: String
@@ -141,6 +147,7 @@ type Treatment {
   dose: String
   frequency: String
   type: String
+  attachment: Attachment
 }
 
 type Billing {
@@ -151,6 +158,7 @@ type Billing {
   amount: Float
   paid: Boolean
   notes: String
+  attachment: Attachment
 }
 
 type Appointment {
@@ -175,9 +183,15 @@ input UserInput {
   role: String
   employmentDate: String
   terminationDate: String
-  attachments: [Attachment]
-  attendance: [Attendance]
-  leave: [Leave]
+  attachmentName: String
+  attachmentFormat: String
+  attachmentPath: String
+  attendanceDate: String
+  attendanceStatus: String
+  attendanceDescription: String
+  leaveType: String
+  leaveStartDate: String
+  leaveEndDate: String
 }
 
 input PatientInput {
@@ -210,50 +224,67 @@ input PatientInput {
   complaintDate: String
   complaintTitle: String
   complaintDescription: String
-  complaintAttachment: Attachment
-  examniationArea: String
-  examniationType: String
-  examniationMeasure: String
-  examniationValue: String
-  examniationDescription: String
-  examinationAttachment: Attachment
+  complaintAttachmentName: String
+  complaintAttachmentFormat: String
+  complaintAttachmentPath: String
+  examinationArea: String
+  examinationType: String
+  examinationMeasure: String
+  examinationValue: String
+  examinationDescription: String
+  examinationAttachmentName: String
+  examinationAttachmentFormat: String
+  examinationAttachmentPath: String
   historyType: String
   historyDate: String
   historyTitle: String
   historyDescription: String
-  historyAttachment: Attachment
+  historyAttachmentName: String
+  historyAttachmentFormat: String
+  historyAttachmentPath: String
   allergiesTitle: String
   allergiesDescription: String
-  allergiesAttachment: Attachment
+  allergiesAttachmentName: String
+  allergiesAttachmentFormat: String
+  allergiesAttachmentPath: String
   medicationTitle: String
   medicationDescription: String
-  medicationAttachment: Attachment
+  medicationAttachmentName: String
+  medicationAttachmentFormat: String
+  medicationAttachmentPath: String
   investigationDate: String
   investigationTitle: String
   investigationDescription: String
-  investigationAttachment: Attachment
+  investigationAttachmentName: String
+  investigationAttachmentFormat: String
+  investigationAttachmentPath: String
   diagnosisDate: String
   diagnosisTitle: String
   diagnosisDescription: String
-  diagnosisAttachment: Attachment
+  diagnosisAttachmentName: String
+  diagnosisAttachmentFormat: String
+  diagnosisAttachmentPath: String
   treatmentDate: String
   treatmentTitle: String
   treatmentDescription: String
   treatmentDose: String
   treatmentFrequency: String
   treatmentType: String
-  treatmentAttachment: Attachment
+  treatmentAttachmentName: String
+  treatmentAttachmentFormat: String
+  treatmentAttachmentPath: String
   billingDate: String
   billingTitle: String
   billingType: String
   billingDescription: String
   billingAmount: Float
   billingPaid: Boolean
-  billingAttachment: Attachment
-  billingNote: String
+  billingAttachmentName: String
+  billingAttachmentFormat: String
+  billingAttachmentPath: String
+  billingNotes: String
   notes: String
   tag: String
-  attachment: Attachment
 }
 
 input AppointmentInput {
@@ -291,6 +322,9 @@ type RootMutation {
 
     createUser(userInput: UserInput!): User
     updateUser(userId: ID!, selectedUserId: ID!, userInput: UserInput!): User
+    updateUserAttachment(userId: ID!, selectedUserId: ID!, userInput: UserInput!): User
+    updateUserAttendance(userId: ID!, selectedUserId: ID!, userInput: UserInput!): User
+    updateUserLeave(userId: ID!, selectedUserId: ID!, userInput: UserInput!): User
     updateUserField(userId: ID!, selectedUserId: ID!, field: String!, query: String!): User
     deleteUser(userId: ID!, selectedUserId: ID!): User
 
@@ -298,8 +332,18 @@ type RootMutation {
     updatePatient(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientArray(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientField(userId: ID!, patientId: ID!, field: String!, query: String!): Patient
-    updatePatientFieldArray(userId: ID!, patientId: ID!, field: String!, query: String!): Patient
     updatePatientAppointment(userId: ID!, patientId: ID!, appointmentId: ID!): Patient
+    updatePatientInsurance(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientNextOfKin(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientComplaint(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientExamination(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientHistory(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientAllergies(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientMedication(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientInvestigation(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientDiagnosis(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientTreatment(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientBilling(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     deletePatient(userId: ID!, patientId: ID!): Patient
 
     createAppointment(userId: ID!, patientId: ID!, appointmentInput: AppointmentInput!): Appointment

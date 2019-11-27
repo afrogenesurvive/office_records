@@ -99,97 +99,27 @@ module.exports = {
       //   company: args.patientInput.insuranceSubscriberCompany,
       //   description: args.patientInput.insuranceSubscriberDescription
       // }
-      // const patientExaminationObject = {
-      //   area: args.patientInput.examniationArea,
-      //   type: args.patientInput.examniationType,
-      //   measure: args.patientInput.examniationMeasure,
-      //   value: args.patientInput.examniationValue,
-      //   description: args.patientInput.examniationDescription,
-      //   attachments: args.patientInput.examinationAttachment
-      // }
-
       // const patientNextOfKinObject = {
       //   name: args.patientInput.nextOfKinName,
       //   phone: args.patientInput.nextOfKinPhone,
       //   email: args.patientInput.nextOfKinEmail
       // }
+
       //
-      // const patientComplaintObject = {
-      //   date: args.patientInput.complaintDate,
-      //   title: args.patientInput.complaintTitle,
-      //   description: args.patientInput.complaintDescription
-      //   attachments: args.patientInput.complaintAttachment
-      // }
-      //
-      // const patientHistoryObject = {
-      //   title: args.patientInput.historyTitle,
-      //   type: args.patientInput.historyType,
-      //   date: args.patientInput.historyDate,
-      //   description: args.patientInput.historyDescription
-      //   attachments: args.patientInput.historyAttachment
-      // }
-      //
-      // const patientAllergiesObject = {
-      //   title: args.patientInput.allergiesTitle,
-      //   description: args.patientInput.allergiesDescription
-      //   attachments: args.patientInput.allergiesAttachment
-      // }
-      //
-      // const patientMedicationObject = {
-      //   title: args.patientInput.medicationTitle,
-      //   description: args.patientInput.medicationDescription
-      //   attachments: args.patientInput.medicationAttachment
-      // }
-      //
-      // const patientInvestigationObject = {
-      //   date: args.patientInput.investigationDate,
-      //   title: args.patientInput.investigationTitle,
-      //   description: args.patientInput.investigationDescription
-      //   attachments: args.patientInput.investigationAttachment
-      // }
-      //
-      // const patientDiagnosisObject = {
-      //   date: args.patientInput.diagnosisDate,
-      //   title: args.patientInput.diagnosisTitle,
-      //   description: args.patientInput.diagnosisDescription
-      //   attachments: args.patientInput.diagnosisAttachment
-      // }
-      //
-      // const patientTreatmentObject = {
-      //   date: args.patientInput.treatmentDate,
-      //   title: args.patientInput.treatmentTitle,
-      //   type: args.patientInput.treatmentType,
-      //   description: args.patientInput.treatmentDescription,
-      //   dose: args.patientInput.treatmentDose,
-      //   frequency: args.patientInput.treatmentFrequency
-      //   attachments: args.patientInput.treatmentAttachment
-      // }
-      //
-      // const patientBillingObject = {
-      //   date: args.patientInput.billingDate,
-      //   title: args.patientInput.billingTitle,
-      //   type: args.patientInput.billingType,
-      //   description: args.patientInput.billingDescription,
-      //   amount: args.patientInput.billingAmount,
-      //   paid: args.patientInput.billingPaid,
-      //   notes: args.patientInput.billingNotes
-      //   attachments: args.patientInput.billingAttachment
-      // }
-      //
-      // console.log(`
-      //   updatePatientArray input objects:
-        // insurance: ${patientInsuranceObject}
-      //   nextOfKin: ${patientNextOfKinObject}
-      //   complaint: ${patientComplaintObject}
-      // examination: ${patientExaminationObject}
-      //   history: ${patientHistoryObject}
-      //   allergies: ${patientAllergiesObject}
-      //   medication: ${patientMedicationObject}
-      //   investigation: ${patientInvestigationObject}
-      //   diagnosis: ${patientDiagnosisObject}
-      //   treatment: ${patientTreatmentObject}
-      //   billing: ${patientBillingObject}
-      //   `);
+      console.log(`
+        updatePatientArray input objects:
+        // insurance: ${JSON.stringify(patientInsuranceObject)}
+        // nextOfKin: ${JSON.stringify(patientNextOfKinObject)}
+        // complaint: ${JSON.stringify(patientComplaintObject)}
+            examintion: ${JSON.stringify(patientExaminationObject)}
+        // history: ${JSON.stringify(patientHistoryObject)}
+        // allergies: ${JSON.stringify(patientAllergiesObject)}
+        // medication: ${JSON.stringify(patientMedicationObject)}
+        // investigation: ${JSON.stringify(patientInvestigationObject)}
+        // diagnosis: ${JSON.stringify(patientDiagnosisObject)}
+        // treatment: ${JSON.stringify(patientTreatmentObject)}
+        // billing: ${JSON.stringify(patientBillingObject)}
+        // `);
 
 
       const today = new Date();
@@ -221,83 +151,123 @@ module.exports = {
               email: args.patientInput.occupationEmployerContactEmail
             }
           },
-          $addToSet: {
-            insurance: {
-              company: args.patientInput.insuranceCompany,
-              number: args.patientInput.insuranceNumber,
-              description: args.patientInput.insuranceDescription,
-              expiry: args.patientInput.insuranceExpiry,
-              company: args.patientInput.insuranceSubscriberCompany,
-              description: args.patientInput.insuranceSubscriberDescription
-            },
-            nextOfKin: {
-              name: args.patientInput.nextOfKinName,
-              phone: args.patientInput.nextOfKinPhone,
-              email: args.patientInput.nextOfKinEmail
-            },
-            complaint: {
-              date: args.patientInput.complaintDate,
-              title: args.patientInput.complaintTitle,
-              description: args.patientInput.complaintDescription,
-              attachments: args.patientInput.complaintAttachment
-            },
-            examination: {
-              area: args.patientInput.examniationArea,
-              type: args.patientInput.examniationType,
-              measure: args.patientInput.examniationMeasure,
-              value: args.patientInput.examniationValue,
-              description: args.patientInput.examniationDescription,
-              attachments: args.patientInput.examinationAttachment
-            },
-            history: {
-              title: args.patientInput.historyTitle,
-              type: args.patientInput.historyType,
-              date: args.patientInput.historyDate,
-              description: args.patientInput.historyDescription,
-              attachments: args.patientInput.historyAttachment
-            },
-            allergies: {
-              title: args.patientInput.allergiesTitle,
-              description: args.patientInput.allergiesDescription,
-              attachments: args.patientInput.allergiesAttachment,
-            },
-            medication: {
-              title: args.patientInput.medicationTitle,
-              description: args.patientInput.medicationDescription,
-              attachments: args.patientInput.medicationAttachment
-            },
-            investigation: {
-              date: args.patientInput.investigationDate,
-              title: args.patientInput.investigationTitle,
-              description: args.patientInput.investigationDescription,
-              attachments: args.patientInput.investigationAttachment
-            },
-            diagnosis: {
-              date: args.patientInput.diagnosisDate,
-              title: args.patientInput.diagnosisTitle,
-              description: args.patientInput.diagnosisDescription,
-              attachments: args.patientInput.diagnosisAttachment
-            },
-            treatment: {
-              date: args.patientInput.treatmentDate,
-              title: args.patientInput.treatmentTitle,
-              type: args.patientInput.treatmentType,
-              description: args.patientInput.treatmentDescription,
-              dose: args.patientInput.treatmentDose,
-              frequency: args.patientInput.treatmentFrequency,
-              attachments: args.patientInput.treatmentAttachment
-            },
-            billing: {
-              date: args.patientInput.billingDate,
-              title: args.patientInput.billingTitle,
-              type: args.patientInput.billingType,
-              description: args.patientInput.billingDescription,
-              amount: args.patientInput.billingAmount,
-              paid: args.patientInput.billingPaid,
-              notes: args.patientInput.billingNotes,
-              attachments: args.patientInput.billingAttachment
-            }
-        }
+        //   $addToSet: {
+        //     insurance: {
+        //       company: args.patientInput.insuranceCompany,
+        //       number: args.patientInput.insuranceNumber,
+        //       description: args.patientInput.insuranceDescription,
+        //       expiry: args.patientInput.insuranceExpiry,
+        //       subscriber: {
+        //         company: args.patientInput.insuranceSubscriberCompany,
+        //         description: args.patientInput.insuranceSubscriberDescription
+        //       }
+        //     },
+        //     nextOfKin: {
+        //       name: args.patientInput.nextOfKinName,
+        //       contact: {
+        //         email: args.patientInput.nextOfKinEmail,
+        //         phone: args.patientInput.nextOfKinPhone
+        //       }
+        //     },
+        //     complaints: {
+        //       date: args.patientInput.complaintDate,
+        //       title: args.patientInput.complaintTitle,
+        //       description: args.patientInput.complaintDescription,
+        //       attachment: {
+        //         name: args.patientInput.complaintAttachmentName,
+        //         format: args.patientInput.complaintAttachmentFormat,
+        //         path: args.patientInput.complaintAttachmentPath
+        //       }
+        //     },
+        //     examination: {
+        //       area: args.patientInput.examinationArea,
+        //       type: args.patientInput.examinationType,
+        //       measure: args.patientInput.examinationMeasure,
+        //       value: args.patientInput.examinationValue,
+        //       description: args.patientInput.examinationDescription,
+        //       attachment: {
+        //         name: args.patientInput.examinationAttachmentName,
+        //         format: args.patientInput.examinationAttachmentFormat,
+        //         path: args.patientInput.examinationAttachmentPath
+        //       }
+        //     },
+        //     history: {
+        //       title: args.patientInput.historyTitle,
+        //       type: args.patientInput.historyType,
+        //       date: args.patientInput.historyDate,
+        //       description: args.patientInput.historyDescription,
+        //       attachment: {
+        //         name: args.patientInput.historyAttachmentName,
+        //         format: args.patientInput.historyAttachmentFormat,
+        //         path: args.patientInput.historyAttachmentPath
+        //       }
+        //     },
+        //     allergies: {
+        //       title: args.patientInput.allergiesTitle,
+        //       description: args.patientInput.allergiesDescription,
+        //       attachment: {
+        //         name: args.patientInput.allergiesAttachmentName,
+        //         format: args.patientInput.allergiesAttachmentFormat,
+        //         path: args.patientInput.allergiesAttachmentPath
+        //       },
+        //     },
+        //     medication: {
+        //       title: args.patientInput.medicationTitle,
+        //       description: args.patientInput.medicationDescription,
+        //       attachment: {
+        //         name: args.patientInput.medicationAttachmentName,
+        //         format: args.patientInput.medicationAttachmentFormat,
+        //         path: args.patientInput.medicationAttachmentPath
+        //       }
+        //     },
+        //     investigation: {
+        //       date: args.patientInput.investigationDate,
+        //       title: args.patientInput.investigationTitle,
+        //       description: args.patientInput.investigationDescription,
+        //       attachment: {
+        //         name: args.patientInput.investigationAttachmentName,
+        //         format: args.patientInput.investigationAttachmentFormat,
+        //         path: args.patientInput.investigationAttachmentPath
+        //       }
+        //     },
+        //     diagnosis: {
+        //       date: args.patientInput.diagnosisDate,
+        //       title: args.patientInput.diagnosisTitle,
+        //       description: args.patientInput.diagnosisDescription,
+        //       attachment: {
+        //         name: args.patientInput.diagnosisAttachmentName,
+        //         format: args.patientInput.diagnosisAttachmentFormat,
+        //         path: args.patientInput.diagnosisAttachmentPath
+        //       }
+        //     },
+        //     treatment: {
+        //       date: args.patientInput.treatmentDate,
+        //       title: args.patientInput.treatmentTitle,
+        //       type: args.patientInput.treatmentType,
+        //       description: args.patientInput.treatmentDescription,
+        //       dose: args.patientInput.treatmentDose,
+        //       frequency: args.patientInput.treatmentFrequency,
+        //       attachment: {
+        //         name: args.patientInput.treatmentAttachmentName,
+        //         format: args.patientInput.treatmentAttachmentFormat,
+        //         path: args.patientInput.treatmentAttachmentPath
+        //       }
+        //     },
+        //     billing: {
+        //       date: args.patientInput.billingDate,
+        //       title: args.patientInput.billingTitle,
+        //       type: args.patientInput.billingType,
+        //       description: args.patientInput.billingDescription,
+        //       amount: args.patientInput.billingAmount,
+        //       paid: args.patientInput.billingPaid,
+        //       notes: args.patientInput.billingNotes,
+        //       attachment: {
+        //         name: args.patientInput.billingAttachmentName,
+        //         format: args.patientInput.billingAttachmentFormat,
+        //         path: args.patientInput.billingAttachmentPath
+        //       }
+        //     }
+        // }
         //   $addToSet: {
         //     insurance: patientInsuranceObject,
         //         nextOfKin: patientNextOfKinObject,
@@ -312,138 +282,6 @@ module.exports = {
         //         billing: patientBillingObject
         // }
        }
-      ,{new: true})
-      .populate('appointments');
-
-        return {
-            ...patient._doc,
-            _id: patient.id,
-            name: patient.name
-        };
-    } catch (err) {
-      throw err;
-    }
-  },
-  updatePatientArray: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientArray...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
-
-    if (!req.isAuth) {
-      throw new Error('Unauthenticated!');
-    }
-
-    try {
-
-      const patientInsuranceObject = {
-        company: args.patientInput.insuranceCompany,
-        number: args.patientInput.insuranceNumber,
-        description: args.patientInput.insuranceDescription,
-        expiry: args.patientInput.insuranceExpiry,
-        company: args.patientInput.insuranceSubscriberCompany,
-        description: args.patientInput.insuranceSubscriberDescription
-      }
-
-      const patientNextOfKinObject = {
-        name: args.patientInput.nextOfKinName,
-        phone: args.patientInput.nextOfKinPhone,
-        email: args.patientInput.nextOfKinEmail
-      }
-
-      const patientComplaintObject = {
-        date: args.patientInput.complaintDate,
-        title: args.patientInput.complaintTitle,
-        description: args.patientInput.complaintDescription
-      }
-
-      const patientExaminationObject = {
-        area: args.patientInput.examniationArea,
-        type: args.patientInput.examniationType,
-        measure: args.patientInput.examniationMeasure,
-        value: args.patientInput.examniationValue,
-        description: args.patientInput.examniationDescription,
-        attachments: args.patientInput.examinationAttachment
-      }
-
-      const patientHistoryObject = {
-        title: args.patientInput.historyTitle,
-        type: args.patientInput.historyType,
-        date: args.patientInput.historyDate,
-        description: args.patientInput.historyDescription
-      }
-
-      const patientAllergiesObject = {
-        title: args.patientInput.allergiesTitle,
-        description: args.patientInput.allergiesDescription
-      }
-
-      const patientMedicationObject = {
-        title: args.patientInput.medicationTitle,
-        description: args.patientInput.medicationDescription
-      }
-
-      const patientInvestigationObject = {
-        date: args.patientInput.investigationDate,
-        title: args.patientInput.investigationTitle,
-        description: args.patientInput.investigationDescription
-      }
-
-      const patientDiagnosisObject = {
-        date: args.patientInput.diagnosisDate,
-        title: args.patientInput.diagnosisTitle,
-        description: args.patientInput.diagnosisDescription
-      }
-
-      const patientTreatmentObject = {
-        date: args.patientInput.treatmentDate,
-        title: args.patientInput.treatmentTitle,
-        type: args.patientInput.treatmentType,
-        description: args.patientInput.treatmentDescription,
-        dose: args.patientInput.treatmentDose,
-        frequency: args.patientInput.treatmentFrequency
-      }
-
-      const patientBillingObject = {
-        date: args.patientInput.billingDate,
-        title: args.patientInput.billingTitle,
-        type: args.patientInput.billingType,
-        description: args.patientInput.billingDescription,
-        amount: args.patientInput.billingAmount,
-        paid: args.patientInput.billingPaid,
-        notes: args.patientInput.billingNotes
-      }
-
-      console.log(`
-        updatePatientArray input objects:
-        insurance: ${JSON.stringify(patientInsuranceObject)}
-        nextOfKin: ${JSON.stringify(patientNextOfKinObject)}
-        complaint: ${JSON.stringify(patientComplaintObject)}
-        history: ${JSON.stringify(patientHistoryObject)}
-        allergies: ${JSON.stringify(patientAllergiesObject)}
-        medication: ${JSON.stringify(patientMedicationObject)}
-        investigation: ${JSON.stringify(patientInvestigationObject)}
-        diagnosis: ${JSON.stringify(patientDiagnosisObject)}
-        treatment: ${JSON.stringify(patientTreatmentObject)}
-        billing: ${JSON.stringify(patientBillingObject)}
-        `);
-
-
-      // const today = new Date();
-      // const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      // const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      // const dateTime = date+' '+time;
-
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},
-        {$addToSet:
-          {
-            nextOfKin: patientNextOfKinObject,
-            complaints: patientComplaintObject,
-            allergies: patientAllergiesObject,
-            medication: patientMedicationObject,
-            investigation: patientInvestigationObject,
-            diagnosis: patientDiagnosisObject,
-            treatment: patientTreatmentObject
-          }
-      }
       ,{new: true})
       .populate('appointments');
 
@@ -484,33 +322,6 @@ module.exports = {
       throw err;
     }
   },
-  updatePatientFieldArray: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
-
-    if (!req.isAuth) {
-      throw new Error('Unauthenticated!');
-    }
-    try {
-
-        const resolverField = args.field;
-        const resolverQuery = args.query;
-        const query = {[resolverField]:resolverQuery};
-
-        console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: query},{new: true})
-        .populate('appointments');
-
-        return {
-          ...patient._doc,
-          _id: patient.id,
-          name: patient.name
-        };
-    } catch (err) {
-      throw err;
-    }
-  },
   updatePatientAppointment: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
     console.log("updatePatientAppointment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
@@ -527,6 +338,418 @@ module.exports = {
         console.log("patientAppointmentId... " + patientAppointmentId);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {appointments:patientAppointment}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientInsurance: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientInsurance...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientInsuranceObject =  {
+            company: args.patientInput.insuranceCompany,
+            number: args.patientInput.insuranceNumber,
+            description: args.patientInput.insuranceDescription,
+            expiry: args.patientInput.insuranceExpiry,
+            subscriber: {
+              company: args.patientInput.insuranceSubscriberCompany,
+              description: args.patientInput.insuranceSubscriberDescription
+            }
+          }
+
+      console.log(`
+        patientInsuranceObject: ${patientInsuranceObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {insurance:patientInsuranceObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientNextOfKin: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientNextOfKin...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientNextOfKinObject =  {
+            name: args.patientInput.nextOfKinName,
+            contact: {
+              email: args.patientInput.nextOfKinEmail,
+              phone: args.patientInput.nextOfKinPhone
+            }
+          }
+
+      console.log(`
+        patientNextOfKinObject: ${patientNextOfKinObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {nextOfKin:patientNextOfKinObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientComplaint: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientComplaint...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientComplaintObject =  {
+            date: args.patientInput.complaintDate,
+            title: args.patientInput.complaintTitle,
+            description: args.patientInput.complaintDescription,
+            attachment: {
+              name: args.patientInput.complaintAttachmentName,
+              format: args.patientInput.complaintAttachmentFormat,
+              path: args.patientInput.complaintAttachmentPath
+            }
+          }
+
+      console.log(`
+        patientComplaintObject: ${patientComplaintObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {complaints:patientComplaintObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientExamination: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientExamination...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientExaminationObject = {
+            area: args.patientInput.examinationArea,
+            type: args.patientInput.examinationType,
+            measure: args.patientInput.examinationMeasure,
+            value: args.patientInput.examinationValue,
+            description: args.patientInput.examinationDescription,
+            attachment: {
+              name: args.patientInput.examinationAttachmentName,
+              format: args.patientInput.examinationAttachmentFormat,
+              path: args.patientInput.examinationAttachmentPath
+            }
+          }
+
+      console.log(`
+        patientExaminationObject: ${patientExaminationObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {examination:patientExaminationObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientHistory: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientHistory...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientHistoryObject = {
+            title: args.patientInput.historyTitle,
+            type: args.patientInput.historyType,
+            date: args.patientInput.historyDate,
+            description: args.patientInput.historyDescription,
+            attachment: {
+              name: args.patientInput.historyAttachmentName,
+              format: args.patientInput.historyAttachmentFormat,
+              path: args.patientInput.historyAttachmentPath
+            }
+          }
+
+      console.log(`
+        patientHistoryObject: ${patientHistoryObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {history:patientHistoryObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientAllergies: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientAllergies...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientAllergiesObject = {
+            title: args.patientInput.allergiesTitle,
+            description: args.patientInput.allergiesDescription,
+            attachment: {
+              name: args.patientInput.allergiesAttachmentName,
+              format: args.patientInput.allergiesAttachmentFormat,
+              path: args.patientInput.allergiesAttachmentPath
+            },
+          }
+
+      console.log(`
+        patientAllergiesObject: ${patientAllergiesObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {allergies:patientAllergiesObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientMedication: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientMedication...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientMedicationObject = {
+            title: args.patientInput.medicationTitle,
+            description: args.patientInput.medicationDescription,
+            attachment: {
+              name: args.patientInput.medicationAttachmentName,
+              format: args.patientInput.medicationAttachmentFormat,
+              path: args.patientInput.medicationAttachmentPath
+            }
+          }
+
+      console.log(`
+        patientMedicationObject: ${patientMedicationObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {medication:patientMedicationObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientInvestigation: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientInvestigation...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientInvestigationObject = {
+            date: args.patientInput.investigationDate,
+            title: args.patientInput.investigationTitle,
+            description: args.patientInput.investigationDescription,
+            attachment: {
+              name: args.patientInput.investigationAttachmentName,
+              format: args.patientInput.investigationAttachmentFormat,
+              path: args.patientInput.investigationAttachmentPath
+            }
+          }
+
+      console.log(`
+        patientInvestigationObject: ${patientInvestigationObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {investigation:patientInvestigationObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientDiagnosis: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientDiagnosis...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientDiagnosisObject = {
+            date: args.patientInput.diagnosisDate,
+            title: args.patientInput.diagnosisTitle,
+            description: args.patientInput.diagnosisDescription,
+            attachment: {
+              name: args.patientInput.diagnosisAttachmentName,
+              format: args.patientInput.diagnosisAttachmentFormat,
+              path: args.patientInput.diagnosisAttachmentPath
+            }
+          }
+
+      console.log(`
+        patientDiagnosisObject: ${patientDiagnosisObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {diagnosis:patientDiagnosisObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientTreatment: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientTreatment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientTreatmentObject = {
+            date: args.patientInput.treatmentDate,
+            title: args.patientInput.treatmentTitle,
+            type: args.patientInput.treatmentType,
+            description: args.patientInput.treatmentDescription,
+            dose: args.patientInput.treatmentDose,
+            frequency: args.patientInput.treatmentFrequency,
+            attachment: {
+              name: args.patientInput.treatmentAttachmentName,
+              format: args.patientInput.treatmentAttachmentFormat,
+              path: args.patientInput.treatmentAttachmentPath
+            }
+          }
+
+      console.log(`
+        patientTreatmentObject: ${patientTreatmentObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {treatment:patientTreatmentObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientBilling: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientBilling...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patientBillingObject = {
+            date: args.patientInput.billingDate,
+            title: args.patientInput.billingTitle,
+            type: args.patientInput.billingType,
+            description: args.patientInput.billingDescription,
+            amount: args.patientInput.billingAmount,
+            paid: args.patientInput.billingPaid,
+            notes: args.patientInput.billingNotes,
+            attachment: {
+              name: args.patientInput.billingAttachmentName,
+              format: args.patientInput.billingAttachmentFormat,
+              path: args.patientInput.billingAttachmentPath
+            }
+          }
+
+      console.log(`
+        patientBillingObject: ${patientBillingObject}
+        `);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {billing:patientBillingObject}},{new: true})
 
           return {
               ...patient._doc,

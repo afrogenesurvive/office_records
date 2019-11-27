@@ -122,12 +122,24 @@ module.exports = {
         role: args.userInput.role,
         employmentDate: args.userInput.employmentDate,
         terminationDate: args.userInput.terminationDate,
-        $addToSet:
-          {
-            attachments: args.userInput.attachments,
-            attendance: args.userInput.attendance,
-            leave: args.userInput.leave,
-          }
+        // attachment: {
+        //     name: args.userInput.attachmentName,
+        //     format: args.userInput.attachmentFormat,
+        //     path: args.userInput.attachmentPath,
+        // },
+        // $addToSet:
+        //   {
+        //     attendance: {
+        //       date: args.userInput.attendanceDate,
+        //       status: args.userInput.attendanceStatus,
+        //       description: args.userInput.attendanceDescription
+        //     },
+        //     leave: {
+        //       type: args.userInput.leaveType,
+        //       startDate: args.userInput.leaveStartDate,
+        //       endDate: args.userInput.leaveEndDate
+        //     }
+        //   }
 
       },{new: true});
         return {
@@ -138,7 +150,7 @@ module.exports = {
           role: user.role,
           employmentDate: user.employmentDate,
           terminationDate: user.terminationDate,
-          attachments: user.attachments,
+          attachment: user.attachment,
           attendance: user.attendance,
           leave: user.leave,
         };
@@ -177,7 +189,133 @@ module.exports = {
             role: user.role,
             employmentDate: user.employmentDate,
             terminationDate: user.terminationDate,
-            attachments: user.attachments,
+            attachment: user.attachment,
+            attendance: user.attendance,
+            leave: user.leave,
+        };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updateUserAttachment: async (args, req) => {
+    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    console.log("updateUserAttachment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+
+      // if (args.selectedUserId != args.userId ) {
+      //   throw new Error('Not the creator! No edit permission');
+      // }
+      // else {
+
+      const userAttachmentObject = {
+        name: args.userInput.attachmentName,
+        format: args.userInput.attachmentFormat,
+        path: args.userInput.attachmentPath
+      }
+      console.log(`
+        userAttachmentObject: ${userAttachmentObject}
+        `);
+
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attachments: userAttachmentObject}},{new: true})
+
+        return {
+            ...user._doc,
+            _id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            employmentDate: user.employmentDate,
+            terminationDate: user.terminationDate,
+            attachment: user.attachment,
+            attendance: user.attendance,
+            leave: user.leave,
+        };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updateUserAttendance: async (args, req) => {
+    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    console.log("updateUserAttendance...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+
+      // if (args.selectedUserId != args.userId ) {
+      //   throw new Error('Not the creator! No edit permission');
+      // }
+      // else {
+
+      const userAttendanceObject = {
+        date: args.userInput.attendanceDate,
+        status: args.userInputattendanceStatus,
+        description: args.userInput.attendanceDescription,
+      }
+      console.log(`
+        userAttendanceObject: ${userAttendanceObject}
+        `);
+
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attendance: userAttendanceObject}},{new: true})
+
+        return {
+            ...user._doc,
+            _id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            employmentDate: user.employmentDate,
+            terminationDate: user.terminationDate,
+            attachment: user.attachment,
+            attendance: user.attendance,
+            leave: user.leave,
+        };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updateUserLeave: async (args, req) => {
+    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    console.log("updateUserLeave...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+
+      // if (args.selectedUserId != args.userId ) {
+      //   throw new Error('Not the creator! No edit permission');
+      // }
+      // else {
+
+      const userLeaveObject = {
+        type: args.userInput.leaveType,
+        startDate: args.userInput.leaveStartDate,
+        endDate: args.userInput.leaveEndDate,
+      }
+      console.log(`
+        userLeaveObject: ${JSON.stringify(userLeaveObject)}
+        `);
+
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { leave: userLeaveObject}},{new: true})
+
+        return {
+            ...user._doc,
+            _id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            employmentDate: user.employmentDate,
+            terminationDate: user.terminationDate,
+            attachment: user.attachment,
             attendance: user.attendance,
             leave: user.leave,
         };
@@ -209,7 +347,7 @@ module.exports = {
           role: user.role,
           employmentDate: user.employmentDate,
           terminationDate: user.terminationDate,
-          attachments: user.attachments,
+          attachment: user.attachment,
           attendance: user.attendance,
           leave: user.leave,
         };
@@ -250,7 +388,7 @@ module.exports = {
         name: result.name,
         role: result.role,
         employmentDate: result.employmentDate,
-        terminationDate: result.terminationDate
+        terminationDate: result.terminationDate,
       };
     } catch (err) {
       throw err;
