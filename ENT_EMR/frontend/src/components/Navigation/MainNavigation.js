@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import AuthContext from '../../context/auth-context';
 import './MainNavigation.css';
 
-// call createAction on logout???
 
 const mainNavigation = props => (
   <AuthContext.Consumer>
@@ -12,7 +11,7 @@ const mainNavigation = props => (
       return (
         <header className="main-navigation">
           <div className="main-navigation__logo">
-            <h1>ENT EMR 0.0.1</h1>
+            <h1>ENT EMR 0.0.2</h1>
           </div>
           <nav className="main-navigation__items">
             <ul>

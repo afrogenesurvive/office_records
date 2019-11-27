@@ -16,20 +16,25 @@
 }
 
 
-.containerCreateuser {
+.containerCreateUpdate {
   margin-top: 5rem;
   width: 95vh;
 }
 .containerSearchuser {
   margin-top: 5rem;
   width: 95vh;
+  padding: 2rem;
 }
-.createUserRowAdd {
+.containerUserDetail {
+  margin-top: 5rem;
+  width: 95vh;
+}
+.createUserRowAdd, .updateUserRowAdd, .searchUserRowAdd {
   border: 1.5px solid black;
   height: 5rem;
   padding: 1rem 0;
 }
-.createUserRowForm {
+.createUserRowForm, .updateUserRowForm, .searchUserRowForm {
   border: 1.5px solid black;
   height: 35rem;
   text-align: center;

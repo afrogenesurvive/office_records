@@ -18,7 +18,7 @@ const userList = props => {
     );
   });
 
-  return <ul className="user__list">{users}</ul>;
+  return <ul className="user__list1">{users}</ul>;
 };
 
 export default userList;

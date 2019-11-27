@@ -76,72 +76,66 @@ const patientSchema = new Schema({
       },
       title: String,
       description: String,
-      attachments: [
-        {
+      attachment: {
           name: String,
           format: String,
           path: String
         }
-      ]
     }
   ],
   examination: [
     {
     area: String,
-    type: String,
+    type: {
+      type:String,
+    },
     measure: String,
     value: String,
     description: String,
-    attachments: [
-      {
+    attachment: {
         name: String,
         format: String,
         path: String
     }
-  ]
   }
 ],
   history: [
     {
-      type: String,
+      type: {
+        type: String,
+      },
       date: {
         type: Date
       },
       title: String,
       description: String,
-      attachments: [
-        {
+      attachment: {
           name: String,
           format: String,
           path: String
       }
-  ]
     }
   ],
   allergies: [
     {
       title: String,
       description: String,
-      attachments: [
-        {
+      attachment: {
           name: String,
           format: String,
           path: String
         }
-      ]
     }
   ],
   medication: [
     {
       title: String,
       description: String,
-      attachments: [
-        {
+      attachment: {
           name: String,
           format: String,
           path: String
         }
-      ]
     }
   ],
   investigation: [
@@ -151,13 +145,11 @@ const patientSchema = new Schema({
       },
       title: String,
       description: String,
-      attachments: [
-        {
+      attachment: {
           name: String,
           format: String,
           path: String
         }
-      ]
     }
   ],
   diagnosis: [
@@ -167,13 +159,11 @@ const patientSchema = new Schema({
       },
       title: String,
       description: String,
-      attachments: [
-        {
+      attachment: {
           name: String,
           format: String,
           path: String
         }
-      ]
     }
   ],
   treatment: [
@@ -185,14 +175,14 @@ const patientSchema = new Schema({
       description: String,
       dose: String,
       frequency: String,
-      type: String,
-      attachments: [
-        {
+      type: {
+        type: String,
+      },
+      attachment: {
           name: String,
           format: String,
           path: String
         }
-      ]
     }
   ],
   billing:[
@@ -201,19 +191,19 @@ const patientSchema = new Schema({
       type: Date
     },
     title: String,
-    type: String,
+    type: {
+      type: String,
+    },
     description: String,
     amount: Number,
     paid: {
       type: Boolean
     },
-    attachments: [
-      {
+    attachment:{
         name: String,
         format: String,
         path: String
-      }
-    ],
+      },
     notes: String
   }
 ],
