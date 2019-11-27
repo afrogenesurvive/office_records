@@ -10,6 +10,7 @@ const userAttendanceList = props => {
       <UserAttendanceItem
         key={attendance.date}
         userId={props.authUserId}
+        date={attendance.date}
         status={attendance.status}
         description={attendance.description}
       />

@@ -152,10 +152,26 @@ class ThisUserPage extends Component {
           query {
             getThisUser {
               _id
-              email
-              password
               name
+              email
               role
+              employmentDate
+              terminationDate
+              attachments{
+                name
+                format
+                path
+              }
+              attendance{
+                date
+                status
+                description
+              }
+              leave{
+                type
+                startDate
+                endDate
+              }
             }
           }
         `
@@ -184,7 +200,6 @@ class ThisUserPage extends Component {
 
           this.context.user = thisUser;
           console.log("thisUser context, user object.name ..." + this.context.user.name);
-          console.log("thisUser context, user object.role ..." + this.context.user.role);
 
           sessionStorage.setItem('thisUser', JSON.stringify(thisUser));
 
@@ -213,10 +228,26 @@ class ThisUserPage extends Component {
           query users($userId: ID!) {
             users(userId: $userId) {
               _id
-              email
-              password
               name
+              email
               role
+              employmentDate
+              terminationDate
+              attachments{
+                name
+                format
+                path
+              }
+              attendance{
+                date
+                status
+                description
+              }
+              leave{
+                type
+                startDate
+                endDate
+              }
             }
           }
         `,
@@ -278,24 +309,33 @@ class ThisUserPage extends Component {
     onConfirm={this.modalConfirmUpdateHandler}
     confirmText="Confirm"
     user={this.state.user}
+    authUserId={this.context.userId}
   />
   </Col>
   </Row>
   </Container>
 
 )}
-
-
-
-        {this.state.isLoading ? (
-          <Spinner />
-        ) : (
-          <ThisUserProfile
-            user={this.state.user}
-            authUserId={this.context.userId}
-            onEdit={this.startUpdateUserHandler}
-          />
-        )}
+{
+  this.state.user !== null && (
+    <ThisUserProfile
+      user={this.state.user}
+      authUserId={this.context.userId}
+      onEdit={this.startUpdateUserHandler}
+    />
+  )
+}
+        {
+        //   this.state.isLoading ? (
+        //   <Spinner />
+        // ) : (
+        //   <ThisUserProfile
+        //     user={this.state.user}
+        //     authUserId={this.context.userId}
+        //     onEdit={this.startUpdateUserHandler}
+        //   />
+        // )
+      }
       </React.Fragment>
     );
   }

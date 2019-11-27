@@ -17,6 +17,8 @@ import AuthContext from '../context/auth-context';
 import CreateUserForm from '../components/Forms/CreateUserForm';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
 import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceForm';
+import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentForm';
+import UpdateUserLeaveForm from '../components/Forms/UpdateUserLeaveForm';
 import SearchUserForm from '../components/Forms/SearchUserForm';
 import './Users.css';
 
@@ -362,6 +364,170 @@ class UsersPage extends Component {
 
   }
 
+  updateUserAttachmentHandler = (event) => {
+
+    const token = this.context.token;
+    const userId = this.context.userId;
+    let selectedUserId = this.context.selectedUser._id;
+    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+      console.log("Not the creator or Admin! No edit permission!!");
+      selectedUserId = null;
+    }
+
+    console.log("UpdateUserAttachmentFormData:  ", event.target.formGridAttachmentName.value);
+
+    this.setState({ updating: false , userUpdateField: null });
+
+    let attachmentName = event.target.formGridAttachmentName.value;
+    let attachmentFormat = event.target.formGridAttachmentFormat.value;
+    let attachmentPath = event.target.formGridAttachmentPath.value;
+
+
+    if (attachmentName.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attachmentName = this.context.selectedUser.attachmentName;
+    }
+    if (attachmentFormat.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attachmentFormat = this.context.selectedUser.attachmentFormat;
+    }
+    if (attachmentPath.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attachmentPath = this.context.selectedUser.attachmentPath;
+    }
+
+    const userAttachment = { attachmentName, attachmentFormat, attachmentPath }
+    console.log(`
+      adding user attendance item...
+      userId: ${userId},
+      selectedUserId: ${selectedUserId}
+      attachmentName: ${attachmentName},
+      attachmentFormat: ${attachmentFormat},
+      attachmentPath: ${attachmentPath}
+      `);
+
+      const requestBody = {
+        query:`
+          mutation {updateUserAttachment(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentPath}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
+        `};
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData.data.updateUserAttachment));
+
+          const updatedUserId = resData.data.updateUserAttachment._id;
+          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+          const updatedUserPos = this.state.users.indexOf(updatedUser);
+          const slicedArray = this.state.users.splice(updatedUserPos, 1);
+          console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+          this.state.users.push(updatedUser);
+          this.context.users = this.state.users;
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+
+  }
+
+
+  updateUserLeaveHandler = (event) => {
+
+    const token = this.context.token;
+    const userId = this.context.userId;
+    let selectedUserId = this.context.selectedUser._id;
+    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+      console.log("Not the creator or Admin! No edit permission!!");
+      selectedUserId = null;
+    }
+
+    console.log("UpdateUserLeaveFormData:  ", event.target.formGridLeaveType.value);
+
+    this.setState({ updating: false , userUpdateField: null });
+
+    let leaveType = event.target.formGridLeaveType.value;
+    let leaveStartDate = event.target.formGridLeaveStartDate.value;
+    let leaveEndDate = event.target.formGridLeaveEndDate.value;
+
+    if (leaveType.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      leaveType = this.context.selectedUser.leaveType;
+    }
+    if (leaveStartDate.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      leaveStartDate = this.context.selectedUser.leaveStartDate;
+    }
+    if (leaveEndDate.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      leaveEndDate = this.context.selectedUser.leaveEndDate;
+    }
+
+    const userLeave = { leaveType, leaveStartDate, leaveEndDate }
+    console.log(`
+      adding user attendance item...
+      userId: ${userId},
+      selectedUserId: ${selectedUserId}
+      leave: {
+        type: ${leaveType},
+        startDate: ${leaveStartDate},
+        endDate: ${leaveEndDate}
+      }
+      `);
+
+      const requestBody = {
+        query:`
+          mutation {updateUserLeave(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{leaveType:"${leaveType}",leaveStartDate:"${leaveStartDate}",leaveEndDate:"${leaveEndDate}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,startDate,endDate}}}
+        `};
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData.data));
+
+          const updatedUserId = resData.data.updateUserLeave._id;
+          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+          const updatedUserPos = this.state.users.indexOf(updatedUser);
+          const slicedArray = this.state.users.splice(updatedUserPos, 1);
+          console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+          this.state.users.push(updatedUser);
+          this.context.users = this.state.users;
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+
+  }
+
 
   modalConfirmSearchHandler = (event) => {
     console.log("SearchUserForm:  ");
@@ -633,7 +799,7 @@ updateUserSpecial (event) {
     </Col>
     <Col md={6} className="createUserColAdd">
     <Accordion.Toggle as={Button} variant="link" eventKey="4" className="btn">
-    Examine
+    Details
     </Accordion.Toggle>
     </Col>
     </Row>
@@ -642,6 +808,8 @@ updateUserSpecial (event) {
     <Row className="createUserRowForm">
     <Col md={11} className="createUserColForm">
     {this.state.isLoading === false &&
+      this.state.selectedUser !== null
+      &&
       (<UserDetail
         authUserId={this.context.userId}
         AuthContext={this.context}
@@ -759,10 +927,26 @@ updateUserSpecial (event) {
       />
     )}
     {this.state.userUpdateField === 'leave' && (
-        <p>add leave form</p>
+      <UpdateUserLeaveForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updateUserLeaveHandler}
+        confirmText="Confirm"
+        user={this.state.selectedUser}
+      />
     )}
     {this.state.userUpdateField === 'attachments' && (
-        <p>add attachments form</p>
+      <UpdateUserAttachmentForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updateUserAttachmentHandler}
+        confirmText="Confirm"
+        user={this.state.selectedUser}
+      />
     )}
     </Col>
     </Row>

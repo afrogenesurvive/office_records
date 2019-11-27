@@ -17,6 +17,7 @@ console.log("UpdateUserAttendanceForm.props.user:  ", {...user});
 return (
 <div className="UpdateFormContainer">
 <Form onSubmit={props.onConfirm}>
+
 <Form.Row>
   <Form.Group as={Col} controlId="formGridAttendanceDate">
     <Form.Label>Date</Form.Label>
@@ -30,9 +31,7 @@ return (
     <Form.Label>Description</Form.Label>
     <Form.Control type="textarea" placeholder="Attendance Description"/>
   </Form.Group>
-
 </Form.Row>
-
 
 {props.canCancel && (
   <Accordion.Toggle as={Button} variant="danger" eventKey="0" className="btn" onClick={props.onCancel}>
