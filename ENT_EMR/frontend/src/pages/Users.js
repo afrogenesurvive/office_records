@@ -453,7 +453,7 @@ class UsersPage extends Component {
 
 
   modalCancelHandler = () => {
-    this.setState({ creating: false, updating: false, deleting: false, searching: false, selectedUser: null });
+    this.setState({ creating: false, updating: false, deleting: false, searching: false});
   };
 
   fetchUsers() {
@@ -644,6 +644,7 @@ updateUserSpecial (event) {
     {this.state.isLoading === false &&
       (<UserDetail
         authUserId={this.context.userId}
+        AuthContext={this.context}
         user={this.state.selectedUser}
         onEdit={this.startUpdateUserHandler}
         onDelete={this.modalDeleteHandler}

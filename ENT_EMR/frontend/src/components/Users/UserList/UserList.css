@@ -8,3 +8,9 @@
     padding: 0;
     overflow: scroll;
   }
+
+.userAttendanceList {
+  width: 90%;
+  list-style: none;
+  overflow: scroll;
+}

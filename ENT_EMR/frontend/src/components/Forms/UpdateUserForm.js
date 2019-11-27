@@ -55,7 +55,7 @@ return (
 
 
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="0" className="btn" onClick={props.onCancel}>
+  <Accordion.Toggle as={Button} variant="danger" eventKey="1" className="btn" onClick={props.onCancel}>
   Cancel
   </Accordion.Toggle>
 )}
