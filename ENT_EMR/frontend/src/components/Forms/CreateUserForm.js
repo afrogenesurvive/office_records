@@ -28,15 +28,29 @@ return (
   </Form.Group>
 </Form.Row>
 
-<Form.Group controlId="formGridName">
+<Form.Row>
+<Form.Group as={Col} controlId="formGridName">
   <Form.Label>Name</Form.Label>
   <Form.Control type="text" placeholder="Name" />
 </Form.Group>
 
-<Form.Group controlId="formGridRole">
+<Form.Group as={Col} controlId="formGridRole">
   <Form.Label>Role</Form.Label>
-  <Form.Control placeholder="role" />
+  <Form.Control type="text" placeholder="role" />
 </Form.Group>
+</Form.Row>
+
+<Form.Row>
+<Form.Group as={Col} controlId="formGridEmploymentDate">
+  <Form.Label>Employment Date</Form.Label>
+  <Form.Control type="date" placeholder="employmentDate" />
+</Form.Group>
+
+<Form.Group as={Col} controlId="formGridTerminationDate">
+  <Form.Label>Termination Date</Form.Label>
+  <Form.Control type="date" placeholder="terminationDate" />
+</Form.Group>
+</Form.Row>
 
 
 {props.canCancel && (
