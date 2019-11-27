@@ -1,8 +1,14 @@
 .UserDetailBox1 {
-  max-width: 10vw;
-  max-height: 5vh;
+  max-width: 90%;
+  max-height: 90%;
+  margin: 2rem auto;
   /* position: fixed;
   z-index: 2;
   bottom: 15rem;
   right: 12.5rem; */
+}
+
+.UserDetailCard {
+  width: 100%;
+
 }

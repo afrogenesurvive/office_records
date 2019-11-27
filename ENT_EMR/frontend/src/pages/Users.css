@@ -38,6 +38,7 @@
   border: 1.5px solid black;
   height: 35rem;
   text-align: center;
+  overflow: scroll;
 }
 
 .searchListRow {

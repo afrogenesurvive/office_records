@@ -3,6 +3,8 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import UserAttendanceList from './UserList/UserAttendanceList';
+import UserLeaveList from './UserList/UserLeaveList';
+import UserAttachmentList from './UserList/UserAttachmentList';
 import AuthContext from '../../context/auth-context';
 
 import './UserDetail.css';
@@ -12,15 +14,17 @@ const UserDetail = (props) => {
   const {...user} = props.user;
   const authUserId = props.authUserId;
   const userAttendance = user.attendance;
+  const userLeave = user.leave;
+  const userAttachment = user.attachments;
   const authSelectedUser = JSON.stringify(props.AuthContext.selectedUser);
 
-  console.log("user attendance:  ", userAttendance, authSelectedUser.slice(0,5) === '{"_id' , authSelectedUser.slice(0,5));
+  // console.log("user attendance:  ", userAttendance, authSelectedUser.slice(0,5) === '{"_id' , authSelectedUser.slice(0,5));
   console.log("UserDetail.props.authUserId:  ",authUserId, "  UserDetail.props.user:  ", {...user});
 
   return (
     <div className={"UserDetailBox1"}>
 
-    <Card style={{ width: '18rem' }}>
+    <Card className="UserDetailCard">
     <Card.Body>
       <Card.Title>User Details</Card.Title>
       <Card.Text>
@@ -28,6 +32,9 @@ const UserDetail = (props) => {
       </Card.Text>
       <Card.Text>
         Name: {user.name}
+      </Card.Text>
+      <Card.Text>
+        Email: {user.email}
       </Card.Text>
       <Card.Text>
         Role: {user.role}
@@ -41,15 +48,18 @@ const UserDetail = (props) => {
       <Card.Text>
         Attendance:
       </Card.Text>
-      {
-        authSelectedUser.slice(0,5) === '{"_id'
-         && (
-           <UserAttendanceList
-             userAttendance={userAttendance}
-             authUserId={props.AuthContext.userId}
-           />
-      )
-    }
+      <UserAttendanceList
+          userAttendance={userAttendance}
+          authUserId={props.AuthContext.userId}
+        />
+      <UserLeaveList
+          userLeave={userLeave}
+          authUserId={props.AuthContext.userId}
+        />
+      <UserAttachmentList
+          userAttachment={userAttachment}
+          authUserId={props.AuthContext.userId}
+        />
       <Accordion.Toggle as={Button} variant="link" eventKey="1" className="btn" onClick={props.onEdit}>
       Edit
       </Accordion.Toggle>
