@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import PatientInsuranceList from './PatientList/PatientInsuranceList';
+import PatientNextOfKinList from './PatientList/PatientNextOfKinList';
 
 
 import './PatientDetail.css';
@@ -11,7 +12,8 @@ const PatientDetail = (props) => {
   const {...patient} = props.patient;
   // const authPatientId = props.authUserId;
   const patientInsurance = patient.insurance;
-  console.log("PatientDetail.props.patient:  ", {...patient}, patientInsurance)
+  const patientNextOfKin = patient.nextOfKin;
+  console.log("PatientDetail.props.patient:  ", {...patient}, patientNextOfKin)
   // console.log("props.authUserId:  ",authUserId, "props.patient:  ", {...patient});
   return (
     <div className="PatientDetailBox">
@@ -53,6 +55,10 @@ const PatientDetail = (props) => {
       </Card.Text>
       <PatientInsuranceList
         patientInsurance={patientInsurance}
+        authUserId={props.authUserId}
+        />
+      <PatientNextOfKinList
+        patientNextOfKin={patientNextOfKin}
         authUserId={props.authUserId}
         />
       {props.canEdit && (

@@ -8,7 +8,7 @@ const patientInsuranceList = props => {
   const patientInsurance = props.patientInsurance.map(insurance => {
     return (
       <PatientInsuranceItem
-        key={insurance.date}
+        key={insurance.number}
         userId={props.authUserId}
         company={insurance.company}
         number={insurance.number}
