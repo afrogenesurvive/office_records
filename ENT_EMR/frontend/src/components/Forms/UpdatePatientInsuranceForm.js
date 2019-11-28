@@ -9,9 +9,9 @@ import './CreateUserForm.css';
 
 const UpdatePatientInsuranceForm = (props) => {
 
-console.log("UpdatePatientLeaveForm.props:  ", {...props});
+console.log("UpdatePatientInsuranceForm.props:  ", {...props});
 const {...patient} = props.patient;
-console.log("UpdatePatientLeaveForm.props.patient:  ", {...patient});
+console.log("UpdatePatientInsuranceForm.props.patient:  ", {...patient});
 
 
 return (

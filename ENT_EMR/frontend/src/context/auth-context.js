@@ -11,7 +11,9 @@ export default React.createContext({
     patient: {},
     appointment: {},
     appointmentPatientId: null,
+    userUpdateField: null,
     patientUpdateField: null,
+    appointmentUpdateField: null,
     login: (token, userId, tokenExpiration) => {},
     logout: () => {}
 });

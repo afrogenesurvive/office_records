@@ -18,6 +18,7 @@ import SearchPatientForm from '../components/Forms/SearchPatientForm';
 import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import UpdatePatientForm from '../components/Forms/UpdatePatientForm';
 import UpdatePatientInsuranceForm from '../components/Forms/UpdatePatientInsuranceForm';
+import UpdatePatientNextOfKinForm from '../components/Forms/UpdatePatientNextOfKinForm';
 // import UpdatePatientArrayForm from '../components/Forms/UpdatePatientArrayForm';
 import './Users.css';
 
@@ -619,6 +620,75 @@ updatePatientInsuranceHandler = (event) => {
           console.log("response data... " + JSON.stringify(resData.data));
 
           const updatedPatientId = resData.data.updatePatientInsurance._id;
+          const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+          const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+          const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+          console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+          this.state.patients.push(updatedPatient);
+          this.context.patients = this.state.patients;
+          this.fetchPatients();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+}
+
+updatePatientNextOfKinHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientNextOfKinFormData:  ", event.target.formGridNextOfKinName.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+  let nextOfKinName = event.target.formGridNextOfKinName.value;
+  let nextOfKinPhone = event.target.formGridNextOfKinPhone.value;
+  let nextOfKinEmail = event.target.formGridNextOfKinEmail.value;
+
+  const patientNextOfKin = { nextOfKinName, nextOfKinPhone, nextOfKinEmail };
+  console.log(`
+    adding patient nextOfKin item...
+    userId: ${userId},
+    selectedPatientId: ${selectedPatientId},
+    nextOfKinName: ${nextOfKinName},
+    nextOfKinPhone: ${nextOfKinPhone},
+    nextOfKinEmail: ${nextOfKinEmail},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientNextOfKin(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{nextOfKinName:\"${nextOfKinName}\",nextOfKinEmail:\"granny@kin.mail\",nextOfKinPhone:\"1234566\"}){_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    };
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData.data));
+
+          const updatedPatientId = resData.data.updatePatientNextOfKin._id;
           const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
           const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
           const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
@@ -1292,7 +1362,15 @@ modalConfirmSearchHandler = (event) => {
     {this.state.patientUpdateField === 'nextOfKin' &&
     this.state.selectedPatient !== null
     && (
-      <p>nextOfKin</p>
+      <UpdatePatientNextOfKinForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientNextOfKinHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
     )}
     </Col>
     </Row>
