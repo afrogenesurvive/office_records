@@ -78,6 +78,37 @@ module.exports = {
       throw err;
     }
   },
+  getAppointmentToday: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    // console.log("getAppointmentField..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const today = new Date().toISOString();
+      const tomorrow = new Date() - 1000 * 3600 * 24 * 3;
+      // const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      // const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      // const dateTime = date+' '+time;
+
+
+      console.log("Today:  ", today);
+      console.log("tomorrow:  ", tomorrow);
+      console.log("y:  ", y);
+
+      // const appointments = await Appointment.find({date: { $gte :  }})
+      // .populate('patient');
+      //
+      //   return appointments.map(appointment => {
+      //     return transformAppointment(appointment);
+      //   });
+    } catch (err) {
+      throw err;
+    }
+  },
   updateAppointment: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
     console.log("updateAppointment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
