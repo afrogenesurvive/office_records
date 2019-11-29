@@ -19,6 +19,15 @@ import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import UpdatePatientForm from '../components/Forms/UpdatePatientForm';
 import UpdatePatientInsuranceForm from '../components/Forms/UpdatePatientInsuranceForm';
 import UpdatePatientNextOfKinForm from '../components/Forms/UpdatePatientNextOfKinForm';
+import UpdatePatientComplaintForm from '../components/Forms/UpdatePatientComplaintForm';
+import UpdatePatientExaminationForm from '../components/Forms/UpdatePatientExaminationForm';
+import UpdatePatientHistoryForm from '../components/Forms/UpdatePatientHistoryForm';
+import UpdatePatientAllergiesForm from '../components/Forms/UpdatePatientAllergiesForm';
+import UpdatePatientMedicationForm from '../components/Forms/UpdatePatientMedicationForm';
+import UpdatePatientInvestigationForm from '../components/Forms/UpdatePatientInvestigationForm';
+import UpdatePatientDiagnosisForm from '../components/Forms/UpdatePatientDiagnosisForm';
+import UpdatePatientTreatmentForm from '../components/Forms/UpdatePatientTreatmentForm';
+import UpdatePatientBillingForm from '../components/Forms/UpdatePatientBillingForm';
 // import UpdatePatientArrayForm from '../components/Forms/UpdatePatientArrayForm';
 import './Users.css';
 
@@ -701,8 +710,181 @@ updatePatientNextOfKinHandler = (event) => {
         .catch(err => {
           console.log(err);
         });
+}
+
+
+updatePatientComplaintHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientComplaintFormData:  ", event.target.formGridComplaintTitle.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
 
 }
+
+
+updatePatientExaminationHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientExaminationFormData:  ", event.target.formGridExaminationArea.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+}
+
+
+updatePatientHistoryHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientHistoryFormData:  ", event.target.formGridHistoryTitle.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+}
+
+
+updatePatientAllergiesHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientAllergiesFormData:  ", event.target.formGridAllergiesTitle.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+}
+
+
+updatePatientMedicationHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientMedicationFormData:  ", event.target.formGridMedicationTitle.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+}
+
+
+updatePatientInvestigationHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientInvestigationFormData:  ", event.target.formGridInvestigationTitle.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+}
+
+
+updatePatientDiagnosisHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientDiagnosisFormData:  ", event.target.formGridDiagnosisTitle.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+}
+
+
+updatePatientTreatmentHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientTreatmentFormData:  ", event.target.formGridTreatmentTitle.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+}
+
+
+
+updatePatientBillingHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientBillingFormData:  ", event.target.formGridBillingTitle.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+}
+
+
 
 
 modalConfirmSearchHandler = (event) => {
@@ -1262,9 +1444,9 @@ modalConfirmSearchHandler = (event) => {
     <Container className="containerCreateuser">
     <Row className="createUserRowAdd">
     <Col md={4} className="createUserColAdd">
-      <p>Add New Patient</p>
+      <p>Add Patient</p>
     </Col>
-    <Col md={8}>
+    <Col md={4}>
       {this.context.token && (
         <Accordion.Toggle as={Button} variant="link" eventKey="7" className="btn" onClick={this.startCreatePatientHandler}>
         Add
@@ -1293,8 +1475,8 @@ modalConfirmSearchHandler = (event) => {
 
 
     <Row className="updateUserRowAdd">
-    <Col md={4} className="updateUserCol">
-    <p>Edit Selected Patient</p>
+    <Col md={2} className="updateUserCol">
+    <p>Edit Patient</p>
     </Col>
     <Col md={4} className="updateUserCol">
     {this.context.token && (
@@ -1303,13 +1485,21 @@ modalConfirmSearchHandler = (event) => {
       </Accordion.Toggle>
     )}
     </Col>
+    <Col md={2}>
+      <p>Patient</p>
+    </Col>
+    <Col md={4}>
+      {this.context.selectedPatient && (
+        <p>{this.context.selectedPatient.name}</p>
+      )}
+    </Col>
     </Row>
 
     <Row className="createUserRowAdd">
-    <Col md={3} className="updateUserCol2">
-    <p>Edit Selected Patient</p>
+    <Col md={1} className="updateUserCol2">
+    <p>Edit Patient</p>
     </Col>
-    <Col md={9} className="updateUserCol2">
+    <Col md={11} className="updateUserCol2">
     {this.context.token && (
       <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='insurance' onClick={this.updatePatientSpecial.bind(this)}>
       Insurance
@@ -1318,6 +1508,51 @@ modalConfirmSearchHandler = (event) => {
     {this.context.token && (
       <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='nextOfKin' onClick={this.updatePatientSpecial.bind(this)}>
       Next Of Kin
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='complaint' onClick={this.updatePatientSpecial.bind(this)}>
+      Complaint
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='examination' onClick={this.updatePatientSpecial.bind(this)}>
+      Examination
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='history' onClick={this.updatePatientSpecial.bind(this)}>
+      History
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='allergies' onClick={this.updatePatientSpecial.bind(this)}>
+      Allergies
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='medication' onClick={this.updatePatientSpecial.bind(this)}>
+      Medication
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='investigation' onClick={this.updatePatientSpecial.bind(this)}>
+      Investigation
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='diagnosis' onClick={this.updatePatientSpecial.bind(this)}>
+      Diagnosis
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='treatment' onClick={this.updatePatientSpecial.bind(this)}>
+      Treatment
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='billing' onClick={this.updatePatientSpecial.bind(this)}>
+      Billing
       </Accordion.Toggle>
     )}
     </Col>
@@ -1368,6 +1603,123 @@ modalConfirmSearchHandler = (event) => {
         canConfirm
         onCancel={this.modalCancelHandler}
         onConfirm={this.updatePatientNextOfKinHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'complaint' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientComplaintForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientComplaintHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'examination' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientExaminationForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientExaminationHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'history' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientHistoryForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientHistoryHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'allergies' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientAllergiesForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientAllergiesHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'medication' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientMedicationForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientMedicationHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'investigation' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientInvestigationForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientInvestigationHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'diagnosis' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientDiagnosisForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientDiagnosisHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'treatment' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientTreatmentForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientTreatmentHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'billing' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientBillingForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientBillingHandler}
         confirmText="Confirm"
         patient={this.state.selectedPatient}
       />

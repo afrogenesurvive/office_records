@@ -1,0 +1,22 @@
+.PatientDetailBox {
+  max-width: 90%;
+  max-height: 90%;
+  margin: 2rem auto;
+  /* max-width: 10vw;
+  max-height: 5vh;
+  position: fixed;
+  z-index: 2;
+  bottom: 15rem;
+  right: 12.5rem; */
+}
+.PatientDetailCard {
+  width: 100%;
+}
+.PatientDetailBox2 {
+  max-width: 10vw;
+  max-height: 5vh;
+  position: fixed;
+  z-index: 2;
+  bottom: 30rem;
+  right: 12.5rem;
+}

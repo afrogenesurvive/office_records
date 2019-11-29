@@ -118,6 +118,31 @@ module.exports = {
       throw err;
     }
   },
+  updateAppointmentNotes: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updateAppointmentNotes...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const appointmentNote = args.appointmentInput.notes;
+      console.log("appointmentNote:  ", appointmentNote);
+
+      const appointment = await Appointment.findOneAndUpdate({_id:args.appointmentId},{$addToSet: {notes: appointmentNote}},{new: true})
+      .populate('patient');
+
+        return {
+          ...appointment._doc,
+          _id: appointment.id,
+          title: appointment.title
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
   updateAppointmentPatient: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
     console.log("updateAppointmentPatient...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);

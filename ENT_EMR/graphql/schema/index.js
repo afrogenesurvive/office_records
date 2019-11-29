@@ -172,7 +172,7 @@ type Appointment {
   inProgress: Boolean
   attended: Boolean
   important: Boolean
-  notes: String
+  notes: [String]
 }
 
 
@@ -347,6 +347,7 @@ type RootMutation {
 
     createAppointment(userId: ID!, patientId: ID!, appointmentInput: AppointmentInput!): Appointment
     updateAppointment(userId: ID!, appointmentId: ID!, patientId: ID, appointmentInput: AppointmentInput!): Appointment
+    updateAppointmentNotes(userId: ID!, appointmentId: ID!, patientId: ID, appointmentInput: AppointmentInput!): Appointment
     updateAppointmentField(userId: ID!, appointmentId: ID!, field: String!, query: String!): Appointment
     updateAppointmentFieldArray(userId: ID!, appointmentId: ID!, field: String!, query: String!): Appointment
     updateAppointmentPatient(userId: ID!, appointmentId: ID!, patientId: ID!): Appointment
