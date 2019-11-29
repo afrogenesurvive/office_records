@@ -7,10 +7,10 @@ const userLeaveItem = props => (
     <div>
       <p> Type: {props.type}</p>
       <p>
-        From: {new Date(props.startDate).toLocaleDateString()}
+        From: {props.startDate}
       </p>
       <p>
-        To: {new Date(props.endDate).toLocaleDateString()}
+        To: {props.endDate}
       </p>
     </div>
   </li>

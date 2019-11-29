@@ -13,7 +13,7 @@ const patientTreatmentItem = props => (
         Type: {props.type}
       </p>
       <p>
-        Date: {new Date(props.date).toLocaleDateString()}
+        Date: {props.date}
       </p>
       <p>
         Description: {props.description}

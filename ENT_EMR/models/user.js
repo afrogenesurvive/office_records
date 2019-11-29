@@ -15,6 +15,12 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  address: {
+    type: String
+  },
+  phone: {
+    type: Number
+  },
   role: String,
   employmentDate: {
     type: Date

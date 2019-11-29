@@ -5,12 +5,15 @@ import './UserList.css';
 
 const userAttendanceList = props => {
   console.log("user attendance list props", props.userAttendance);
+
   const userAttendance = props.userAttendance.map(attendance => {
+    const userAttendanceDate = new Date(attendance.date*1000).toUTCString();
+
     return (
       <UserAttendanceItem
         key={attendance.date}
         userId={props.authUserId}
-        date={attendance.date}
+        date={userAttendanceDate}
         status={attendance.status}
         description={attendance.description}
       />

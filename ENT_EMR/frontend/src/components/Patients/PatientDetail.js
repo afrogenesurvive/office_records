@@ -2,6 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
+import PatientAppointmentList from './PatientList/PatientAppointmentList';
 import PatientInsuranceList from './PatientList/PatientInsuranceList';
 import PatientNextOfKinList from './PatientList/PatientNextOfKinList';
 import PatientComplaintList from './PatientList/PatientComplaintList';
@@ -20,6 +21,7 @@ import './PatientDetail.css';
 const PatientDetail = (props) => {
   const {...patient} = props.patient;
   // const authPatientId = props.authUserId;
+  const patientAppointment = patient.appointments;
   const patientInsurance = patient.insurance;
   const patientNextOfKin = patient.nextOfKin;
   const patientComplaint = patient.complaints;
@@ -31,7 +33,12 @@ const PatientDetail = (props) => {
   const patientDiagnosis = patient.diagnosis;
   const patientTreatment = patient.treatment;
   const patientBilling = patient.billing;
-  console.log("PatientDetail.props.patient:  ", {...patient}, patientNextOfKin);
+  const patientRegistrationDate = new Date(patient.registrationDate*1000).toUTCString();
+  const patientDob = new Date(patient.dob*1000).toUTCString();
+  const patientReferralDate = new Date(patient.referralDate*1000).toUTCString();
+  const patientExpirationDate = new Date(patient.expirationDate*1000).toUTCString();
+
+  console.log("PatientDetail.props.patient:  ", {...patient});
 
   return (
     <div className="PatientDetailBox">
@@ -48,16 +55,16 @@ const PatientDetail = (props) => {
         Address: {patient.address}
       </Card.Text>
       <Card.Text>
-        D.O.B: {new Date(patient.dob).toLocaleDateString()}
+        D.O.B: {patientDob}
       </Card.Text>
       <Card.Text>
-        Reg Date: {new Date(patient.registrationDate).toLocaleDateString()}
+        Reg Date: {patientRegistrationDate}
       </Card.Text>
       <Card.Text>
-        Ref Date: {new Date(patient.referralDate).toLocaleDateString()}
+        Ref Date: {patientReferralDate}
       </Card.Text>
       <Card.Text>
-        Exp Date: {new Date(patient.expirationDate).toLocaleDateString()}
+        Exp Date: {patientExpirationDate}
       </Card.Text>
       <Card.Text>
         Work Position: {patient.occupation.role}
@@ -71,6 +78,15 @@ const PatientDetail = (props) => {
       <Card.Text>
         Employer Email: {patient.occupation.contact.email}
       </Card.Text>
+      <Card.Text>
+        Appointments:
+      </Card.Text>
+      
+        <PatientAppointmentList
+        patientAppointment={patientAppointment}
+        authUserId={props.authUserId}
+        />
+      
       <Card.Text>
       Insurance:
       </Card.Text>

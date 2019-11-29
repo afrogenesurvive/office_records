@@ -104,12 +104,13 @@ class PatientsPage extends Component {
 
     let name = event.target.formGridName.value;
     let dob = event.target.formGridDob.value;
+    // ???change dob to utc string here!!!??????.toUTCString()
     let address = event.target.formGridAddress.value;
     let contactPhone = event.target.formGridContactPhone.value;
     let contactEmail = event.target.formGridContactEmail.value;
     let registrationDate = event.target.formGridRegistrationDate.value;
     let referralDate = event.target.formGridReferralDate.value;
-    let expirationDate = event.target.formGridExpirationlDate.value;
+    let expirationDate = event.target.formGridExpirationDate.value;
     let referringDoctorName = event.target.formGridReferringDoctorName.value;
     let referringDoctorEmail = event.target.formGridReferringDoctorEmail.value;
     let referringDoctorPhone = event.target.formGridReferringDoctorPhone.value;
@@ -1632,6 +1633,12 @@ modalConfirmSearchHandler = (event) => {
               registrationDate
               referralDate
               expirationDate
+              appointments{
+                title
+                date
+                type
+                location
+              }
               referringDoctor{
                 name
                 email

@@ -10,6 +10,9 @@ const patientSchema = new Schema({
   dob:{
     type: Date
   },
+  age: {
+    type: Number
+  },
   address: {
     type: String,
     required: true
@@ -46,6 +49,10 @@ const patientSchema = new Schema({
           ref: 'Appointment'
     }
   ],
+  consultant: {
+    type: Schema.Types.ObjectId,
+      ref: 'User'
+  },
   insurance: [
     {
     company: String,
@@ -70,6 +77,20 @@ const patientSchema = new Schema({
   }
 ],
   complaints: [
+    {
+      date: {
+        type: Date
+      },
+      title: String,
+      description: String,
+      attachment: {
+          name: String,
+          format: String,
+          path: String
+        }
+    }
+  ],
+  surveys: [
     {
       date: {
         type: Date

@@ -56,10 +56,16 @@ return (
   </Form.Group>
 
   <Form.Group as={Col} controlId="formGridRegistrationDate">
-
     <Form.Label>RegistrationDate</Form.Label>
     <Form.Control type="date" placeholder={patient.registrationDate} />
-
+  </Form.Group>
+  <Form.Group as={Col} controlId="formGridReferralDate">
+    <Form.Label>ReferralDate</Form.Label>
+    <Form.Control type="date" placeholder={patient.referralDate} />
+  </Form.Group>
+  <Form.Group as={Col} controlId="formGridExpirationDate">
+    <Form.Label>ExpirationDate</Form.Label>
+    <Form.Control type="date" placeholder={patient.expirationDate} />
   </Form.Group>
   </Form.Row>
 

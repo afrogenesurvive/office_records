@@ -91,6 +91,10 @@ class App extends Component {
                 {!this.state.token && <Redirect to="/auth" exact />}
               </Switch>
             </main>
+            {this.state.token && (
+              <h4>Sidebar</h4>
+            )}
+
           </AuthContext.Provider>
         </React.Fragment>
       </BrowserRouter>

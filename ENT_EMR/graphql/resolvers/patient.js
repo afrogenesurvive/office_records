@@ -813,7 +813,9 @@ module.exports = {
           phone: args.patientInput.contactPhone,
           email: args.patientInput.contactEmail
         },
-        registrationDate: dateTime,
+        registrationDate: args.patientInput.registrationDate,
+        referralDate: args.patientInput.referralDate,
+        expirationDate: args.patientInput.expirationDate,
         referringDoctor: {
           name: args.patientInput.referringDoctorName,
           email: args.patientInput.referringDoctorEmail,
@@ -842,6 +844,8 @@ module.exports = {
           email: result.contact.email
         },
         registrationDate: result.registrationDate,
+        referralDate: result.referralDate,
+        expirationDate: result.expirationDate,
         referringDoctor: {
           name: result.referringDoctor.name,
           email: result.referringDoctor.email,

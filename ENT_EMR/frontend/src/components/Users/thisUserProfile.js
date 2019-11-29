@@ -19,6 +19,8 @@ const thisUserProfile = (props) => {
   console.log("Profile: userLeave", userLeave);
   const userAttachment = user.attachments;
   console.log("Profile: userAttachment", userAttachment);
+  const userEmploymentDate = new Date(user.employmentDate*1000).toUTCString();
+  const userTerminationDate = new Date(user.terminationDate*1000).toUTCString();
   // const authSelectedUser = JSON.stringify(props.AuthContext.selectedUser);
   // console.log(props.user.slice(0,5) === '{"_id' , props.user.slice(0,5));
 
@@ -36,10 +38,10 @@ const thisUserProfile = (props) => {
         Role: {user.role}
       </Card.Text>
       <Card.Text>
-        Start Date: {new Date(user.employmentDate).toLocaleDateString()}
+        Start Date: {userEmploymentDate}
       </Card.Text>
       <Card.Text>
-        End Date: {new Date(user.terminationDate).toLocaleDateString()}
+        End Date: {userTerminationDate}
       </Card.Text>
       <Card.Text>
         Attendance:
