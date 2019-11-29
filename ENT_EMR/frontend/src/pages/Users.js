@@ -824,7 +824,7 @@ updateUserSpecial (event) {
     <Col md={4} className="createUserColAdd">
     <p>Add New Staff</p>
     </Col>
-    <Col md={8}>
+    <Col md={4}>
     {this.context.token && (
       <Accordion.Toggle as={Button} variant="link" eventKey="0" className="btn" onClick={this.startCreateUserHandler}>
       Add
@@ -854,7 +854,7 @@ updateUserSpecial (event) {
 
 
     <Row className="updateUserRowAdd">
-    <Col md={4} className="updateUserCol">
+    <Col md={2} className="updateUserCol">
     <p>Edit Selected Staff</p>
     </Col>
     <Col md={4} className="updateUserCol">
@@ -863,6 +863,14 @@ updateUserSpecial (event) {
       Basic Info & Demographics
       </Accordion.Toggle>
     )}
+    </Col>
+    <Col md={2}>
+      <p>Staff</p>
+    </Col>
+    <Col md={4}>
+      {this.context.selectedUser && (
+        <p>{this.context.selectedUser.name}</p>
+      )}
     </Col>
     </Row>
 

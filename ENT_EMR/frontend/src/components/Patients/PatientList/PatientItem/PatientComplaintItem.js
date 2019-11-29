@@ -4,19 +4,19 @@ import React from 'react';
 import './UserItem.css';
 
 
-const patientNextOfKinItem = props => (
+const patientComplaintItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p> Name: {props.name}</p>
+      <p> Date: {props.date}</p>
       <p>
-        Email: {props.email}
+        Tile: {props.title}
       </p>
       <p>
-        Phone: {props.phone}
+        Description: {props.description}
       </p>
 
     </div>
   </li>
 );
 
-export default patientNextOfKinItem;
+export default patientComplaintItem;

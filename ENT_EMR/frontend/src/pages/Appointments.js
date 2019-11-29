@@ -163,6 +163,8 @@ class AppointmentsPage extends Component {
           return { appointments: updatedAppointments };
         });
 
+        this.fetchAppointments();
+
       })
       .catch(err => {
         console.log(err);
@@ -330,6 +332,7 @@ class AppointmentsPage extends Component {
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedAppointmentId = this.context.selectedAppointment._id;
+    let selectedPatientId = this.context.selectedPatient._id;
     if(
       this.context.user.role !== 'admin'
     ) {
@@ -337,9 +340,53 @@ class AppointmentsPage extends Component {
       return;
     }
 
-    console.log("UpdatePatientNextOfKinFormData:  ", event.target.formGridNextOfKinName.value);
-
     this.setState({ updating: false , patientUpdateField: null });
+
+    console.log(`
+      updating appointment patient...
+      userId: ${userId},
+      appointmentId: ${selectedAppointmentId},
+      patientId: ${selectedPatientId},
+      `);
+
+      const requestBody = {
+        query:`
+        mutation {updateAppointmentPatient(userId:\"${userId}\",appointmentId:\"${selectedAppointmentId}\",patientId:\"${selectedPatientId}\")
+        {_id,title,date,patient{_id,name,address,contact{phone,email},registrationDate,referralDate,expirationDate,insurance{company,number,expiry}},notes,inProgress,attended,important}}
+        `
+      }
+
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData));
+
+          const updatedAppointmentId = resData.data.updateAppointmentPatient._id;
+          const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
+          const updatedAppointmentPos = this.state.appointments.indexOf(updatedAppointment);
+          const slicedArray = this.state.appointments.splice(updatedAppointmentPos, 1);
+          console.log("updatedAppointment:  ", JSON.stringify(updatedAppointment),"  updatedPatientPos:  ", updatedAppointmentPos, "  slicedArray:  ", slicedArray);
+
+          this.state.appointments.push(updatedAppointment);
+          this.fetchAppointments();
+
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
 
   }
@@ -484,6 +531,7 @@ class AppointmentsPage extends Component {
         const appointments = resData.data.appointments;
         console.log(appointments);
 
+        this.context.appointments = this.state.appointments;
         if (this.isActive) {
           this.setState({ appointments: appointments, isLoading: false });
         }
@@ -591,6 +639,7 @@ class AppointmentsPage extends Component {
 
     this.setState(prevState => {
       const selectedAppointment = prevState.appointments.find(e => e._id === appointmentId);
+      this.setState({selectedAppointment: selectedAppointment});
       this.context.selectedAppointment = selectedAppointment;
       console.log("selectedAppointment:  ", selectedAppointment);
       return { selecteAppointment: selectedAppointment };
@@ -624,15 +673,18 @@ class AppointmentsPage extends Component {
       <Accordion.Collapse eventKey="10">
       <Row className="createUserRowForm">
       <Col md={11} className="createUserColForm">
-      {this.state.isLoading === false &&
+      {
+        this.state.isLoading === false &&
         this.state.selectedAppointment !== null
         &&
-        (<AppointmentDetail
+        (
+          <AppointmentDetail
           authUserId={this.context.userId}
           appointment={this.state.selectedAppointment}
           onEdit={this.startUpdateAppointmentHandler}
           onDelete={this.modalDeleteHandler}
-      />)
+      />
+    )
     }
       </Col>
       </Row>
@@ -642,14 +694,22 @@ class AppointmentsPage extends Component {
 
       <Container className="containerCreateuser">
       <Row className="createUserRowAdd">
-      <Col md={4} className="createUserColAdd">
+      <Col md={2} className="createUserColAdd">
         <p>Add New Appointment</p>
       </Col>
-      <Col md={8}>
+      <Col md={4}>
         {this.context.token && (
           <Accordion.Toggle as={Button} variant="link" eventKey="11" className="btn" onClick={this.startCreateAppointmentHandler}>
           Add
           </Accordion.Toggle>
+        )}
+      </Col>
+      <Col md={2}>
+        <p>Patient</p>
+      </Col>
+      <Col md={4}>
+        {this.context.selectedPatient && (
+          <p>{this.context.selectedPatient.name}</p>
         )}
       </Col>
       </Row>
@@ -674,7 +734,7 @@ class AppointmentsPage extends Component {
 
 
       <Row className="updateUserRowAdd">
-      <Col md={4} className="updateUserCol">
+      <Col md={2} className="updateUserCol">
       <p>Edit Selected Appointment</p>
       </Col>
       <Col md={4} className="updateUserCol">
@@ -683,6 +743,14 @@ class AppointmentsPage extends Component {
         Basic Info & Demographics
         </Accordion.Toggle>
       )}
+      </Col>
+      <Col md={2}>
+        <p>Appointment</p>
+      </Col>
+      <Col md={4}>
+        {this.context.selectedAppointment && (
+          <p>{this.context.selectedAppointment.title}</p>
+        )}
       </Col>
       </Row>
 
@@ -738,9 +806,17 @@ class AppointmentsPage extends Component {
       // )
     }
       {this.state.appointmentUpdateField === 'patient' &&
-      this.state.selectedAppointment !== null
-      && (
-        <p>Add Patient Form</p>
+      this.state.selectedAppointment !== null &&
+      this.context.selectedPatient !== null && (
+        <Row>
+        <Col md={8} className="updateUserColAdd">
+        <p>Add Patient: {this.context.selectedPatient.name}</p>
+        <p> To Appointment: {this.state.selectedAppointment.title} ??</p>
+        <Accordion.Toggle as={Button} variant="link" eventKey="13" className="btn" onClick={this.updateAppointmentPatientHandler}>
+        Yes
+        </Accordion.Toggle>
+        </Col>
+        </Row>
       )}
       </Col>
       </Row>
