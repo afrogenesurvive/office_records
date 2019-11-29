@@ -16,7 +16,7 @@ const patientInsuranceItem = props => (
         Description: {props.description}
       </p>
       <p>
-        Expiry: {new Date(props.expiry).toLocaleDateString()}
+        Expiry: {props.expiry}
       </p>
       <p>
         Subscriber Company: {props.subscriber.company}

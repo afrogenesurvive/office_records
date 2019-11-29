@@ -17,6 +17,8 @@ const UserDetail = (props) => {
   const userLeave = user.leave;
   const userAttachment = user.attachments;
   const authSelectedUser = JSON.stringify(props.AuthContext.selectedUser);
+  const userEmploymentDate = new Date(user.employmentDate*1000).toUTCString();
+  const userTerminationDate = new Date(user.terminationDate*1000).toUTCString();
 
   // console.log("user attendance:  ", userAttendance, authSelectedUser.slice(0,5) === '{"_id' , authSelectedUser.slice(0,5));
   console.log("UserDetail.props.authUserId:  ",authUserId, "  UserDetail.props.user:  ", {...user});
@@ -40,10 +42,10 @@ const UserDetail = (props) => {
         Role: {user.role}
       </Card.Text>
       <Card.Text>
-        Start Date: {new Date(user.employmentDate).toLocaleDateString()}
+        Start Date: {userEmploymentDate}
       </Card.Text>
       <Card.Text>
-        End Date: {new Date(user.terminationDate).toLocaleDateString()}
+        End Date: {userTerminationDate}
       </Card.Text>
       <Card.Text>
         Attendance:

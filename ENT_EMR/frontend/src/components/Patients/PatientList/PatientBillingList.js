@@ -6,11 +6,12 @@ import './UserList.css';
 const patientBillingList = props => {
   console.log("patient billing list props", props.patientBilling);
   const patientBilling = props.patientBilling.map(billing => {
+    const patientBillingDate = new Date(billing.date*1000).toUTCString();
     return (
       <PatientBillingItem
         key={billing.date}
         userId={props.authUserId}
-        date={billing.date}
+        date={patientBillingDate}
         title={billing.title}
         description={billing.description}
         amount={billing.amount}
