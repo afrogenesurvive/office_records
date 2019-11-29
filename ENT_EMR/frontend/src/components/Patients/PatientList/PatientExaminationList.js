@@ -14,6 +14,7 @@ const patientExaminationList = props => {
         type={examination.type}
         measure={examination.measure}
         value={examination.value}
+        attachment={examination.attachment}
       />
     );
   });

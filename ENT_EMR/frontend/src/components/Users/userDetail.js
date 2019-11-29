@@ -40,10 +40,10 @@ const UserDetail = (props) => {
         Role: {user.role}
       </Card.Text>
       <Card.Text>
-        Start Date: {user.employmentDate}
+        Start Date: {new Date(user.employmentDate).toLocaleDateString()}
       </Card.Text>
       <Card.Text>
-        End Date: {user.terminationDate}
+        End Date: {new Date(user.terminationDate).toLocaleDateString()}
       </Card.Text>
       <Card.Text>
         Attendance:

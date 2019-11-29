@@ -1,5 +1,4 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
 
 import './UserItem.css';
 
@@ -7,7 +6,9 @@ import './UserItem.css';
 const patientExaminationItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p> Area: {props.area}</p>
+      <p>
+      Area: {props.area}
+      </p>
       <p>
         Type: {props.type}
       </p>
@@ -17,7 +18,15 @@ const patientExaminationItem = props => (
       <p>
         Value: {props.value}
       </p>
-
+      <p>
+        Attachment : {props.attachment.name}
+      </p>
+      <p>
+        Attachment Format: {props.attachment.format}
+      </p>
+      <p>
+        Attachment Path: {props.attachment.path}
+      </p>
     </div>
   </li>
 );

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
 
 import './UserItem.css';
 
@@ -11,13 +10,19 @@ const patientInvestigationItem = props => (
         Title: {props.title}
       </p>
       <p>
-        Date: {props.date}
+        Date: {new Date(props.date).toLocaleDateString()}
       </p>
       <p>
         Description: {props.description}
       </p>
       <p>
-        Attachment: {props.attachment.name}
+        Attachment : {props.attachment.name}
+      </p>
+      <p>
+        Attachment Format: {props.attachment.format}
+      </p>
+      <p>
+        Attachment Path: {props.attachment.path}
       </p>
     </div>
   </li>

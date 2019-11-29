@@ -108,6 +108,8 @@ class PatientsPage extends Component {
     let contactPhone = event.target.formGridContactPhone.value;
     let contactEmail = event.target.formGridContactEmail.value;
     let registrationDate = event.target.formGridRegistrationDate.value;
+    let referralDate = event.target.formGridReferralDate.value;
+    let expirationDate = event.target.formGridExpirationlDate.value;
     let referringDoctorName = event.target.formGridReferringDoctorName.value;
     let referringDoctorEmail = event.target.formGridReferringDoctorEmail.value;
     let referringDoctorPhone = event.target.formGridReferringDoctorPhone.value;
@@ -123,6 +125,8 @@ class PatientsPage extends Component {
       contactPhone.trim().length === 0 ||
       contactEmail.trim().length === 0 ||
       registrationDate.trim().length === 0 ||
+      referralDate.trim().length === 0 ||
+      expirationDate.trim().length === 0 ||
       referringDoctorName.trim().length === 0 ||
       referringDoctorEmail.trim().length === 0 ||
       referringDoctorPhone.trim().length === 0 ||
@@ -141,51 +145,9 @@ class PatientsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation CreatePatient($userId: ID!, $name: String!, $dob: String!, $address: String!, $contactPhone: String!, $contactEmail: String!, $registrationDate: String!, $referringDoctorName: String!, $referringDoctorEmail: String!, $referringDoctorPhone: String!, $occupationRole: String!, $occupationEmployer: String!, $occupationEmployerContactPhone: String!, $occupationEmployerContactEmail: String!) {
-            createPatient(userId: $userId, patientInput: { name: $name, dob: $dob, address: $address, contactPhone: $contactPhone, contactEmail: $contactEmail, registrationDate: $registrationDate, referringDoctorName: $referringDoctorName, referringDoctorEmail: $referringDoctorEmail, referringDoctorPhone: $referringDoctorPhone, occupationRole: $occupationRole, occupationEmployer: $occupationEmployer, occupationEmployerContactPhone: $occupationEmployerContactPhone, occupationEmployerContactEmail: $occupationEmployerContactEmail }) {
-              _id
-              name
-              address
-              contact{
-                email
-                phone
-              }
-              registrationDate
-              referringDoctor
-              {
-                name
-                email
-                phone
-              }
-              occupation
-              {
-                role
-                employer
-                contact
-                {
-                  email
-                  phone
-                }
-              }
-            }
-          }
-        `,
-        variables: {
-          userId: userId,
-          name: name,
-          dob: dob,
-          address: address,
-          contactPhone: contactPhone,
-          contactEmail: contactEmail,
-          registrationDate: registrationDate,
-          referringDoctorName: referringDoctorName,
-          referringDoctorEmail: referringDoctorEmail,
-          referringDoctorPhone: referringDoctorPhone,
-          occupationRole: occupationRole,
-          occupationEmployer: occupationEmployer,
-          occupationEmployerContactPhone: occupationEmployerContactPhone,
-          occupationEmployerContactEmail: occupationEmployerContactEmail
-        }
+          mutation {createPatient(userId:\"${userId}\",patientInput: {name:\"${name}\",dob:\"${dob}\",address:\"${address}\",contactEmail:\"${contactEmail}\",contactPhone:\"${contactPhone}\",referringDoctorName:\"${referringDoctorName}\",referringDoctorEmail:\"${referringDoctorEmail}\",referringDoctorPhone:\"${referringDoctorPhone}\",occupationRole:\"${occupationRole}\",occupationEmployer:\"${occupationEmployer}\",occupationEmployerContactPhone:\"${occupationEmployerContactPhone}\",occupationEmployerContactEmail:\"${occupationEmployerContactEmail}\",registrationDate:\"${registrationDate}\",referralDate:\"${referralDate}\",expirationDate:\"${expirationDate}\"})
+          {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}}}}
+        `
     };
 
     const token = this.context.token;
@@ -220,6 +182,8 @@ class PatientsPage extends Component {
               email: resData.data.createPatient.contactEmail
             },
             registrationDate: resData.data.createPatient.registrationDate,
+            referralDate: resData.data.createPatient.referralDate,
+            expirationDate: resData.data.createPatient.expirationDate,
             referringDoctor: {
               name: resData.data.createPatient.referringDoctorName,
               email: resData.data.createPatient.referringDoctorEmail,
@@ -2013,7 +1977,6 @@ modalConfirmSearchHandler = (event) => {
           canConfirm
           onCancel={this.modalCancelHandler}
           onConfirm={this.modalConfirmHandler}
-          onSubmit={this.modalConfirmHandler}
           confirmText="Confirm"
         />
     )}

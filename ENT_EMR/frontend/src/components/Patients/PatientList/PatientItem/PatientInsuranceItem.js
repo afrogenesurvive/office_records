@@ -1,5 +1,4 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
 
 import './UserItem.css';
 
@@ -7,14 +6,24 @@ import './UserItem.css';
 const patientInsuranceItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p> Company: {props.company}</p>
+      <p>
+      Company: {props.company}
+      </p>
       <p>
         Number: {props.number}
       </p>
       <p>
         Description: {props.description}
       </p>
-
+      <p>
+        Expiry: {new Date(props.expiry).toLocaleDateString()}
+      </p>
+      <p>
+        Subscriber Company: {props.subscriber.company}
+      </p>
+      <p>
+        Subscriber Description: {props.subscriber.description}
+      </p>
     </div>
   </li>
 );

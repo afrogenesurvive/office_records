@@ -44,12 +44,12 @@ return (
 <Form.Row>
 <Form.Group as={Col} controlId="formGridDescription">
   <Form.Label>Description</Form.Label>
-  <Form.Control type="text" placeholder={appointment.description} />
+  <Form.Control as="textarea" rows="2" placeholder={appointment.description} />
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridNotes">
   <Form.Label>Notes</Form.Label>
-  <Form.Control type="textarea" placeholder={appointment.notes} />
+  <Form.Control as="textarea" rows="4" placeholder={appointment.notes} />
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridInProgress">

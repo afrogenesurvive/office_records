@@ -14,6 +14,7 @@ const patientHistoryList = props => {
         date={history.date}
         title={history.title}
         description={history.description}
+        attachment={history.attachment}
       />
     );
   });

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
 
 import './UserItem.css';
 
@@ -14,7 +13,7 @@ const patientTreatmentItem = props => (
         Type: {props.type}
       </p>
       <p>
-        Date: {props.date}
+        Date: {new Date(props.date).toLocaleDateString()}
       </p>
       <p>
         Description: {props.description}

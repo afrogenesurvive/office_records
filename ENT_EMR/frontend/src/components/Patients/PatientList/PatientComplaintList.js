@@ -13,6 +13,7 @@ const patientComplaintList = props => {
         date={complaint.date}
         title={complaint.title}
         description={complaint.description}
+        attachment={complaint.attachment}
       />
     );
   });

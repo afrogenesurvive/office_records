@@ -29,7 +29,7 @@ return (
   </Form.Group>
   <Form.Group as={Col} controlId="formGridAttendanceDescription">
     <Form.Label>Description</Form.Label>
-    <Form.Control type="textarea" placeholder="Attendance Description"/>
+    <Form.Control as="textarea" rows="3" placeholder="Attendance Description"/>
   </Form.Group>
 </Form.Row>
 

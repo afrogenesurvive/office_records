@@ -36,10 +36,10 @@ const thisUserProfile = (props) => {
         Role: {user.role}
       </Card.Text>
       <Card.Text>
-        Start Date: {user.employmentDate}
+        Start Date: {new Date(user.employmentDate).toLocaleDateString()}
       </Card.Text>
       <Card.Text>
-        End Date: {user.terminationDate}
+        End Date: {new Date(user.terminationDate).toLocaleDateString()}
       </Card.Text>
       <Card.Text>
         Attendance:
@@ -56,23 +56,6 @@ const thisUserProfile = (props) => {
           userAttachment={userAttachment}
           authUserId={props.authUserId}
         />
-      {
-      //   props.user !== {}
-      //    && (<UserAttendanceList
-      //        userAttendance={userAttendance}
-      //        authUserId={props.authUserId}
-      //      />)}
-      // {props.user !== {}
-      //    && (<UserLeaveList
-      //        userLeave={userLeave}
-      //        authUserId={props.authUserId}
-      //      />)}
-      // {props.user !== {}
-      //    && (<UserAttachmentList
-      //        userAttachment={userAttachment}
-      //        authUserId={props.authUserId}
-      //      />)
-         }
       <Button variant="link" className="btn" onClick={props.onEdit}>
       Edit
       </Button>

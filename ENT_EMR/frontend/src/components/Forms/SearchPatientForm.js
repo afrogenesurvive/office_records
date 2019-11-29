@@ -18,7 +18,7 @@ return (
 
 <Form.Group controlId="formBasicQuery">
 <Form.Label>Query</Form.Label>
-<Form.Control type="textarea" placeholder="Query" />
+<Form.Control as="textarea" rows="5" placeholder="Query" />
 </Form.Group>
 
 {props.canCancel && (

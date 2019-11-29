@@ -1,5 +1,4 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
 
 import './UserItem.css';
 
@@ -7,14 +6,13 @@ import './UserItem.css';
 const patientComplaintItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p> Date: {props.date}</p>
+      <p> Date: {new Date(props.date).toLocaleDateString()}</p>
       <p>
         Tile: {props.title}
       </p>
       <p>
         Description: {props.description}
       </p>
-
     </div>
   </li>
 );

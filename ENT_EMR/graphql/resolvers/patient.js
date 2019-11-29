@@ -135,7 +135,7 @@ module.exports = {
             phone: args.patientInput.contactPhone,
             email: args.patientInput.contactEmail
           },
-          registrationDate: dateTime,
+          registrationDate: args.patientInput.registrationDate,
           referralDate: args.patientInput.referralDate,
           expirationDate: args.patientInput.expirationDate,
           referringDoctor: {
