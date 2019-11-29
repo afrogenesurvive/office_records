@@ -32,7 +32,7 @@ return (
   </Form.Group>
   <Form.Group as={Col} controlId="formGridHistoryDescription">
     <Form.Label>HistoryDescription</Form.Label>
-    <Form.Control type="text" placeholder="HistoryDescription"/>
+    <Form.Control as="textarea" rows="3" placeholder="HistoryDescription"/>
   </Form.Group>
   </Form.Row>
 

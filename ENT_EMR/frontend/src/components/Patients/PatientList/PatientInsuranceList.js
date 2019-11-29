@@ -13,6 +13,7 @@ const patientInsuranceList = props => {
         company={insurance.company}
         number={insurance.number}
         description={insurance.description}
+        subscriber={insurance.subscriber}
       />
     );
   });

@@ -92,10 +92,26 @@ class ThisUserPage extends Component {
           mutation UpdateUser($userId: ID!, $selectedUserId: ID!, $email: String!, $password: String!, $name: String!, $role: String!) {
             updateUser(userId: $userId, selectedUserId: $selectedUserId, userInput: {email: $email, password: $password, name: $name, role: $role}) {
               _id
-              email
-              password
               name
+              email
               role
+              employmentDate
+              terminationDate
+              attachments{
+                name
+                format
+                path
+              }
+              attendance{
+                date
+                status
+                description
+              }
+              leave{
+                type
+                startDate
+                endDate
+              }
             }
           }
         `,
@@ -147,6 +163,169 @@ class ThisUserPage extends Component {
         console.log(err);
       });
   };
+
+
+  updateUserAttendanceHandler = (event) => {
+
+    const token = this.context.token;
+    const userId = this.state.user._id;
+    // let selectedUserId = this.context.selectedUser._id;
+    // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+    //   console.log("Not the creator or Admin! No edit permission!!");
+    //   selectedUserId = null;
+    // }
+
+    console.log("UpdateUserAttendanceFormData:  ", event.target.formGridAttendanceDate.value);
+
+    this.setState({ updating: false , userUpdateField: null });
+
+    let attendanceDate = event.target.formGridAttendanceDate.value;
+    let attendanceStatus = event.target.formGridAttendanceStatus.value;
+    let attendanceDescription = event.target.formGridAttendanceDescription.value;
+
+    if (attendanceDate.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attendanceDate = this.context.selectedUser.attendanceDate;
+    }
+    if (attendanceStatus.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attendanceStatus = this.context.selectedUser.attendanceStatus;
+    }
+    if (attendanceDescription.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attendanceDescription = this.context.selectedUser.attendanceDescription;
+    }
+
+    const userAttendance = { attendanceDate, attendanceStatus, attendanceDescription }
+    console.log(`
+      adding user attendance item...
+      userId: ${userId},
+      attendanceDate: ${attendanceDate},
+      attendanceStatus: ${attendanceStatus},
+      attendanceDescription: ${attendanceDescription}
+      `);
+
+      const requestBody = {
+        query:`
+          mutation {updateUserAttendance(userId:"${userId}", selectedUserId:"${userId}",userInput:{attendanceDate:"${attendanceDate}",attendanceStatus:"${attendanceStatus}",attendanceDescription:"${attendanceDescription}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
+        `};
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData.data.updateUserAttendance));
+
+          const updatedUserId = resData.data.updateUserAttendance._id;
+          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+          const updatedUserPos = this.state.users.indexOf(updatedUser);
+          const slicedArray = this.state.users.splice(updatedUserPos, 1);
+          console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+          this.state.users.push(updatedUser);
+          this.context.users = this.state.users;
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+
+  }
+
+
+  updateUserLeaveHandler = (event) => {
+
+    const token = this.context.token;
+    const userId = this.context.userId;
+    let selectedUserId = this.context.selectedUser._id;
+    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+      console.log("Not the creator or Admin! No edit permission!!");
+      selectedUserId = null;
+    }
+
+    console.log("UpdateUserLeaveFormData:  ", event.target.formGridLeaveType.value);
+
+    this.setState({ updating: false , userUpdateField: null });
+
+    let leaveType = event.target.formGridLeaveType.value;
+    let leaveStartDate = event.target.formGridLeaveStartDate.value;
+    let leaveEndDate = event.target.formGridLeaveEndDate.value;
+
+    if (leaveType.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      leaveType = this.context.selectedUser.leaveType;
+    }
+    if (leaveStartDate.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      leaveStartDate = this.context.selectedUser.leaveStartDate;
+    }
+    if (leaveEndDate.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      leaveEndDate = this.context.selectedUser.leaveEndDate;
+    }
+
+    const userLeave = { leaveType, leaveStartDate, leaveEndDate }
+    console.log(`
+      adding user attendance item...
+      userId: ${userId},
+      selectedUserId: ${selectedUserId}
+      leave: {
+        type: ${leaveType},
+        startDate: ${leaveStartDate},
+        endDate: ${leaveEndDate}
+      }
+      `);
+
+      const requestBody = {
+        query:`
+          mutation {updateUserLeave(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{leaveType:"${leaveType}",leaveStartDate:"${leaveStartDate}",leaveEndDate:"${leaveEndDate}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,startDate,endDate}}}
+        `};
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData.data));
+
+          const updatedUserId = resData.data.updateUserLeave._id;
+          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+          const updatedUserPos = this.state.users.indexOf(updatedUser);
+          const slicedArray = this.state.users.splice(updatedUserPos, 1);
+          console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+          this.state.users.push(updatedUser);
+          this.context.users = this.state.users;
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+
+  }
 
 
   getThisUser() {

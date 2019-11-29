@@ -29,50 +29,56 @@ return (
 
 <Form.Group as={Col} controlId="formGridDob">
   <Form.Label>D.O.B</Form.Label>
-  <Form.Control type="date" placeholder="1986-10-18"/>
+  <Form.Control type="date" placeholder="Date of Birth"/>
 </Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridContactEmail">
-  
+
   <Form.Label>Email</Form.Label>
   <Form.Control type="email" placeholder="Patient Email"/>
 
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridContactPhone">
-  
+
   <Form.Label>Phone</Form.Label>
   <Form.Control type="number" placeholder="Patient Phone"/>
 
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridRegistrationDate">
-  
   <Form.Label>RegistrationDate</Form.Label>
   <Form.Control type="date" placeholder="Registration Date"/>
-
+</Form.Group>
+<Form.Group as={Col} controlId="formGridReferralDate">
+  <Form.Label>ReferralDate</Form.Label>
+  <Form.Control type="date" placeholder="Referral Date"/>
+</Form.Group>
+<Form.Group as={Col} controlId="formGridExpirationDate">
+  <Form.Label>ExpirationDate</Form.Label>
+  <Form.Control type="date" placeholder="Expiration Date"/>
 </Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridReferringDoctorName">
-  
+
   <Form.Label>ReferringDoctorName</Form.Label>
   <Form.Control type="text" placeholder='Ref Doctor Name' />
 
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridReferringDoctorEmail">
-  
+
   <Form.Label>ReferringDoctorEmail</Form.Label>
   <Form.Control type="email" placeholder='Ref Doctor Email'/>
 
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridReferringDoctorPhone">
-  
+
   <Form.Label>ReferringDoctorPhone</Form.Label>
   <Form.Control type="number" placeholder="Ref Doctor Phone"/>
 
@@ -81,21 +87,21 @@ return (
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridOccupationRole">
-  
+
   <Form.Label>OccupationRole</Form.Label>
   <Form.Control type="text" placeholder="Job Role"/>
 
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridOccupationEmployer">
-  
+
   <Form.Label>OccupationEmployer</Form.Label>
   <Form.Control type="text" placeholder="Employer Name"/>
 
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridOccupationEmployerContactPhone">
-  
+
   <Form.Label>OccupationEmployerContactPhone</Form.Label>
   <Form.Control type="number" placeholder="Employer Phone"/>
 
@@ -104,7 +110,7 @@ return (
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridOccupationEmployerContactEmail">
-  
+
   <Form.Label>OccupationEmployerContactEmail</Form.Label>
   <Form.Control type="email" placeholder="Employer Email" />
 

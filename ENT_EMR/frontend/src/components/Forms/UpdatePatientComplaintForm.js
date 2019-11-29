@@ -28,7 +28,7 @@ return (
   </Form.Group>
   <Form.Group as={Col} controlId="formGridComplaintDescription">
     <Form.Label>ComplaintDescription</Form.Label>
-    <Form.Control type="text" placeholder="ComplaintDescription"/>
+    <Form.Control as="textarea" rows="3" placeholder="ComplaintDescription"/>
   </Form.Group>
   </Form.Row>
 

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
 
 import './UserItem.css';
 
@@ -8,12 +7,11 @@ const userLeaveItem = props => (
     <div>
       <p> Type: {props.type}</p>
       <p>
-        From: {props.startDate}
+        From: {new Date(props.startDate).toLocaleDateString()}
       </p>
       <p>
-        To: {props.endDate}
+        To: {new Date(props.endDate).toLocaleDateString()}
       </p>
-
     </div>
   </li>
 );

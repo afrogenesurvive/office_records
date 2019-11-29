@@ -45,7 +45,7 @@ return (
 </Form.Group>
 <Form.Group as={Col} controlId="formGridInsuranceSubscriberDescription">
   <Form.Label>insuranceSubscriberDescription</Form.Label>
-  <Form.Control type="text" placeholder="insuranceSubscriberDescription"/>
+  <Form.Control tas="textarea" rows="3" placeholder="insuranceSubscriberDescription"/>
 </Form.Group>
 
 </Form.Row>

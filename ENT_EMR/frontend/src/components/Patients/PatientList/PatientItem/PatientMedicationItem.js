@@ -1,8 +1,6 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
 
 import './UserItem.css';
-
 
 const patientMedicationItem = props => (
   <li key={props.userId} className="users__list-item">

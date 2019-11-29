@@ -31,8 +31,8 @@ const PatientDetail = (props) => {
   const patientDiagnosis = patient.diagnosis;
   const patientTreatment = patient.treatment;
   const patientBilling = patient.billing;
-  console.log("PatientDetail.props.patient:  ", {...patient}, patientNextOfKin)
-  // console.log("props.authUserId:  ",authUserId, "props.patient:  ", {...patient});
+  console.log("PatientDetail.props.patient:  ", {...patient}, patientNextOfKin);
+
   return (
     <div className="PatientDetailBox">
     <Card className="PatientDetailCard">
@@ -48,16 +48,16 @@ const PatientDetail = (props) => {
         Address: {patient.address}
       </Card.Text>
       <Card.Text>
-        D.O.B: {patient.dob}
+        D.O.B: {new Date(patient.dob).toLocaleDateString()}
       </Card.Text>
       <Card.Text>
-        Reg Date: {patient.registrationDate}
+        Reg Date: {new Date(patient.registrationDate).toLocaleDateString()}
       </Card.Text>
       <Card.Text>
-        Ref Date: {patient.referralDate}
+        Ref Date: {new Date(patient.referralDate).toLocaleDateString()}
       </Card.Text>
       <Card.Text>
-        Exp Date: {patient.expirationDate}
+        Exp Date: {new Date(patient.expirationDate).toLocaleDateString()}
       </Card.Text>
       <Card.Text>
         Work Position: {patient.occupation.role}

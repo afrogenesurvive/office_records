@@ -32,7 +32,7 @@ return (
   </Form.Group>
   <Form.Group as={Col} controlId="formGridBillingDescription">
     <Form.Label>BillingDescription</Form.Label>
-    <Form.Control type="text" placeholder="BillingDescription"/>
+    <Form.Control as="textarea" rows="3" placeholder="BillingDescription"/>
   </Form.Group>
   </Form.Row>
 
@@ -50,7 +50,7 @@ return (
       </Form.Group>
       <Form.Group as={Col} controlId="formGridBillingNotes">
         <Form.Label>BillingNotes</Form.Label>
-        <Form.Control type="text" placeholder="BillingNotes"/>
+        <Form.Control as="textarea" rows="3" placeholder="BillingNotes"/>
       </Form.Group>
 
   </Form.Row>
