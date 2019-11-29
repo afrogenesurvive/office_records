@@ -34,6 +34,10 @@ return (
     <Form.Label>ExaminationValue</Form.Label>
     <Form.Control type="text" placeholder="ExaminationValue"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridExaminationDescription">
+    <Form.Label>ExaminationDescription</Form.Label>
+    <Form.Control type="text" placeholder="ExaminationDescription"/>
+  </Form.Group>
   </Form.Row>
 
   <Form.Row>

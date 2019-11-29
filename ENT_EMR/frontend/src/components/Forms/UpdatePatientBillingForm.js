@@ -48,21 +48,25 @@ return (
           <option>false</option>
         </Form.Control>
       </Form.Group>
+      <Form.Group as={Col} controlId="formGridBillingNotes">
+        <Form.Label>BillingNotes</Form.Label>
+        <Form.Control type="text" placeholder="BillingNotes"/>
+      </Form.Group>
 
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridTreatmentAttachmentName">
-    <Form.Label>TreatmentAttachmentName</Form.Label>
-    <Form.Control type="text" placeholder="DiagnosisAttachmentName"/>
+  <Form.Group as={Col} controlId="formGridBillingAttachmentName">
+    <Form.Label>BillingAttachmentName</Form.Label>
+    <Form.Control type="text" placeholder="BillingAttachmentName"/>
   </Form.Group>
-  <Form.Group as={Col} controlId="formGridTreatmentAttachmentFormat">
-    <Form.Label>TreatmentAttachmentFormat</Form.Label>
-    <Form.Control type="text" placeholder="TreatmentAttachmentFormat"/>
+  <Form.Group as={Col} controlId="formGridBillingAttachmentFormat">
+    <Form.Label>BillingAttachmentFormat</Form.Label>
+    <Form.Control type="text" placeholder="BillingAttachmentFormat"/>
   </Form.Group>
-  <Form.Group as={Col} controlId="formGridTreatmentAttachmentPath">
-    <Form.Label>TreatmentAttachmentPath</Form.Label>
-    <Form.Control type="text" placeholder="TreatmentAttachmentPath"/>
+  <Form.Group as={Col} controlId="formGridBillingAttachmentPath">
+    <Form.Label>BillingAttachmentPath</Form.Label>
+    <Form.Control type="text" placeholder="BillingAttachmentPath"/>
   </Form.Group>
   </Form.Row>
 
