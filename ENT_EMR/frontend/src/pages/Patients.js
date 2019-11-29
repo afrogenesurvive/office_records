@@ -676,7 +676,8 @@ updatePatientNextOfKinHandler = (event) => {
 
     const requestBody = {
       query:`
-        mutation {updatePatientNextOfKin(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{nextOfKinName:\"${nextOfKinName}\",nextOfKinEmail:\"granny@kin.mail\",nextOfKinPhone:\"1234566\"}){_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        mutation {updatePatientNextOfKin(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{nextOfKinName:\"${nextOfKinName}\",nextOfKinEmail:\"granny@kin.mail\",nextOfKinPhone:\"1234566\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
       `
     };
 
@@ -729,6 +730,64 @@ updatePatientComplaintHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
+  let complaintTitle = event.target.formGridComplaintTitle.value;
+  let complaintDate = event.target.formGridComplaintDate.value;
+  let complaintDescription = event.target.formGridComplaintDescription.value;
+  let complaintAttachmentName = event.target.formGridComplaintAttachmentName.value;
+  let complaintAttachmentFormat = event.target.formGridComplaintAttachmentFormat.value;
+  let complaintAttachmentPath = event.target.formGridComplaintAttachmentPath.value;
+
+  const patientComplaint = { complaintTitle, complaintDate, complaintDescription, complaintAttachmentName, complaintAttachmentFormat, complaintAttachmentPath };
+  console.log(`
+    adding patient complaint...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    complaintTitle: ${complaintTitle},
+    complaintDate: ${complaintDate},
+    complaintDescription: ${complaintDescription},
+    complaintAttachmentName: ${complaintAttachmentName},
+    complaintAttachmentFormat: ${complaintAttachmentFormat},
+    complaintAttachmentPath: ${complaintAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientComplaint(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{complaintDate:\"${complaintDate}\",complaintTitle:\"${complaintTitle}\",complaintDescription:\"${complaintDescription}\",complaintAttachmentName:\"${complaintAttachmentName}\",complaintAttachmentFormat:\"${complaintAttachmentFormat}\",complaintAttachmentPath:\"${complaintAttachmentPath}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientComplaint._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
 }
 
 
@@ -747,6 +806,69 @@ updatePatientExaminationHandler = (event) => {
   console.log("UpdatePatientExaminationFormData:  ", event.target.formGridExaminationArea.value);
 
   this.setState({ updating: false , patientUpdateField: null });
+
+  let examinationArea = event.target.formGridExaminationArea.value;
+  let examinationType = event.target.formGridExaminationType.value;
+  let examinationMeasure = event.target.formGridExaminationMeasure.value;
+  let examinationValue = event.target.formGridExaminationValue.value;
+  let examinationDescription = event.target.formGridExaminationDescription.value;
+  let examinationAttachmentName = event.target.formGridExaminationAttachmentName.value;
+  let examinationAttachmentFormat = event.target.formGridExaminationAttachmentFormat.value;
+  let examinationAttachmentPath = event.target.formGridExaminationAttachmentPath.value;
+
+  const patientExamination = { examinationArea, examinationType, examinationMeasure, examinationValue, examinationAttachmentName, examinationAttachmentFormat, examinationAttachmentPath };
+
+  console.log(`
+    adding patient examination...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    examinationArea: ${examinationArea},
+    examinationType: ${examinationType},
+    examinationMeasure: ${examinationMeasure},
+    examinationValue: ${examinationValue},
+    examinationDescription: ${examinationDescription},
+    examinationAttachmentName: ${examinationAttachmentName},
+    examinationAttachmentFormat: ${examinationAttachmentFormat},
+    examinationAttachmentPath: ${examinationAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientExamination(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{examinationArea:\"${examinationArea}\",examinationType:\"${examinationType}\",examinationMeasure:\"${examinationMeasure}\",examinationValue:\"${examinationValue}\",examinationDescription:\"${examinationDescription}\",examinationAttachmentName:\"${examinationAttachmentName}\",examinationAttachmentFormat:\"${examinationAttachmentFormat}\",examinationAttachmentPath:\"${examinationAttachmentPath}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientExamination._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
 }
 
@@ -767,6 +889,66 @@ updatePatientHistoryHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
+  let historyType = event.target.formGridHistoryType.value;
+  let historyDate = event.target.formGridHistoryDate.value;
+  let historyTitle = event.target.formGridHistoryTitle.value;
+  let historyDescription = event.target.formGridHistoryDescription.value;
+  let historyAttachmentName = event.target.formGridHistoryAttachmentName.value;
+  let historyAttachmentFormat = event.target.formGridHistoryAttachmentFormat.value;
+  let historyAttachmentPath = event.target.formGridHistoryAttachmentPath.value;
+
+  const patientHistory = { historyType, historyDate, historyTitle, historyDescription, historyAttachmentName, historyAttachmentFormat, historyAttachmentPath };
+  console.log(`
+    adding patient history...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    historyType: ${historyType},
+    historyDate: ${historyDate},
+    historyTitle: ${historyTitle},
+    historyDescription: ${historyDescription},
+    historyAttachmentName: ${historyAttachmentName},
+    historyAttachmentFormat: ${historyAttachmentFormat},
+    historyAttachmentPath: ${historyAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientHistory(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{historyTitle:\"${historyTitle}\",historyType:\"${historyType}\",historyDate:\"${historyDate}\",historyDescription:\"${historyDescription}\",historyAttachmentName:\"${historyAttachmentName}\",historyAttachmentFormat:\"${historyAttachmentFormat}\",historyAttachmentPath:\"${historyAttachmentPath}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientHistory._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
 }
 
 
@@ -785,6 +967,64 @@ updatePatientAllergiesHandler = (event) => {
   console.log("UpdatePatientAllergiesFormData:  ", event.target.formGridAllergiesTitle.value);
 
   this.setState({ updating: false , patientUpdateField: null });
+
+  let allergiesTitle = event.target.formGridAllergiesTitle.value;
+  let allergiesDescription = event.target.formGridAllergiesDescription.value;
+  let allergiesAttachmentName = event.target.formGridAllergiesAttachmentName.value;
+  let allergiesAttachmentFormat = event.target.formGridAllergiesAttachmentFormat.value;
+  let allergiesAttachmentPath = event.target.formGridAllergiesAttachmentPath.value;
+
+  const patientAllergies = { allergiesTitle, allergiesDescription, allergiesAttachmentName, allergiesAttachmentFormat, allergiesAttachmentPath };
+
+  console.log(`
+    adding patient allergies...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    allergiesTitle: ${allergiesTitle},
+    allergiesDescription: ${allergiesDescription},
+    allergiesAttachmentName: ${allergiesAttachmentName},
+    allergiesAttachmentFormat: ${allergiesAttachmentFormat},
+    allergiesAttachmentPath: ${allergiesAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientAllergies(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{allergiesTitle:\"${allergiesTitle}\", allergiesDescription:\"${allergiesDescription}\",allergiesAttachmentName:\"${allergiesAttachmentName}\",allergiesAttachmentFormat:\"${allergiesAttachmentFormat}\",allergiesAttachmentPath:\"${allergiesAttachmentPath}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientAllergies._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
 
 }
 
@@ -805,6 +1045,63 @@ updatePatientMedicationHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
+  let medicationTitle = event.target.formGridMedicationTitle.value;
+  let medicationDescription = event.target.formGridMedicationDescription.value;
+  let medicationAttachmentName = event.target.formGridMedicationAttachmentName.value;
+  let medicationAttachmentFormat = event.target.formGridMedicationAttachmentFormat.value;
+  let medicationAttachmentPath = event.target.formGridMedicationAttachmentPath.value;
+
+  const patientMedication = { medicationTitle, medicationDescription, medicationAttachmentName, medicationAttachmentFormat, medicationAttachmentPath };
+
+  console.log(`
+    adding patient medication...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    medicationTitle: ${medicationTitle},
+    medicationDescription: ${medicationDescription},
+    medicationAttachmentName: ${medicationAttachmentName},
+    medicationAttachmentFormat: ${medicationAttachmentFormat},
+    medicationAttachmentPath: ${medicationAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+      mutation {updatePatientMedication(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{medicationTitle:\"${medicationTitle}\", medicationDescription:\"${medicationDescription}\",medicationAttachmentName:\"${medicationAttachmentName}\",medicationAttachmentFormat:\"${medicationAttachmentFormat}\",medicationAttachmentPath:\"${medicationAttachmentPath}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientMedication._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
 }
 
 
@@ -823,6 +1120,65 @@ updatePatientInvestigationHandler = (event) => {
   console.log("UpdatePatientInvestigationFormData:  ", event.target.formGridInvestigationTitle.value);
 
   this.setState({ updating: false , patientUpdateField: null });
+
+  let investigationDate = event.target.formGridInvestigationDate.value;
+  let investigationTitle = event.target.formGridInvestigationTitle.value;
+  let investigationDescription = event.target.formGridInvestigationDescription.value;
+  let investigationAttachmentName = event.target.formGridInvestigationAttachmentName.value;
+  let investigationAttachmentFormat = event.target.formGridInvestigationAttachmentFormat.value;
+  let investigationAttachmentPath = event.target.formGridInvestigationAttachmentPath.value;
+
+  const patientInvestigation = { investigationDate, investigationTitle, investigationDescription, investigationAttachmentName, investigationAttachmentFormat, investigationAttachmentPath };
+
+  console.log(`
+    adding patient investigation...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    investigationDate: ${investigationDate},
+    investigationTitle: ${investigationTitle},
+    investigationDescription: ${investigationDescription},
+    investigationAttachmentName: ${investigationAttachmentName},
+    investigationAttachmentFormat: ${investigationAttachmentFormat},
+    investigationAttachmentPath: ${investigationAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientInvestigation(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{investigationDate:\"${investigationDate}\",investigationTitle:\"${investigationTitle}\",investigationDescription:\"${investigationDescription}\",investigationAttachmentName:\"${investigationAttachmentName}\",investigationAttachmentFormat:\"${investigationAttachmentFormat}\",investigationAttachmentPath:\"${investigationAttachmentPath}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientInvestigation._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
 }
 
@@ -843,6 +1199,65 @@ updatePatientDiagnosisHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
+  let diagnosisDate = event.target.formGridDiagnosisDate.value;
+  let diagnosisTitle = event.target.formGridDiagnosisTitle.value;
+  let diagnosisDescription = event.target.formGridDiagnosisDescription.value;
+  let diagnosisAttachmentName = event.target.formGridDiagnosisAttachmentName.value;
+  let diagnosisAttachmentFormat = event.target.formGridDiagnosisAttachmentFormat.value;
+  let diagnosisAttachmentPath = event.target.formGridDiagnosisAttachmentPath.value;
+
+  const patientDiagnosis = { diagnosisDate, diagnosisTitle, diagnosisDescription, diagnosisAttachmentName, diagnosisAttachmentFormat, diagnosisAttachmentPath };
+
+  console.log(`
+    adding patient diagnosis...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    diagnosisDate: ${diagnosisDate},
+    diagnosisTitle: ${diagnosisTitle},
+    diagnosisDescription: ${diagnosisDescription},
+    diagnosisAttachmentName: ${diagnosisAttachmentName},
+    diagnosisAttachmentFormat: ${diagnosisAttachmentFormat},
+    diagnosisAttachmentPath: ${diagnosisAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientDiagnosis(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{diagnosisDate:\"${diagnosisDate}\",diagnosisTitle:\"${diagnosisTitle}\",diagnosisDescription:\"${diagnosisDescription}\",diagnosisAttachmentName:\"${diagnosisAttachmentName}\",diagnosisAttachmentFormat:\"${diagnosisAttachmentFormat}\",diagnosisAttachmentPath:\"${diagnosisAttachmentPath}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientDiagnosis._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
 }
 
 
@@ -861,6 +1276,71 @@ updatePatientTreatmentHandler = (event) => {
   console.log("UpdatePatientTreatmentFormData:  ", event.target.formGridTreatmentTitle.value);
 
   this.setState({ updating: false , patientUpdateField: null });
+
+  let treatmentDate = event.target.formGridTreatmentDate.value;
+  let treatmentTitle = event.target.formGridTreatmentTitle.value;
+  let treatmentDescription = event.target.formGridTreatmentDescription.value;
+  let treatmentDose = event.target.formGridTreatmentDose.value;
+  let treatmentFrequency = event.target.formGridTreatmentFrequency.value;
+  let treatmentType = event.target.formGridTreatmentType.value;
+  let treatmentAttachmentName = event.target.formGridTreatmentAttachmentName.value;
+  let treatmentAttachmentFormat = event.target.formGridTreatmentAttachmentFormat.value;
+  let treatmentAttachmentPath = event.target.formGridTreatmentAttachmentPath.value;
+
+  const patientTreatment = { treatmentDate, treatmentTitle, treatmentDescription, treatmentDose, treatmentFrequency, treatmentType, treatmentAttachmentName, treatmentAttachmentFormat, treatmentAttachmentPath };
+
+  console.log(`
+    adding patient treatment...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    treatmentDate: ${treatmentDate},
+    treatmentTitle: ${treatmentTitle},
+    treatmentDescription: ${treatmentDescription},
+    treatmentDose: ${treatmentDose},
+    treatmentFrequency: ${treatmentFrequency},
+    treatmentType: ${treatmentType},
+    treatmentAttachmentName: ${treatmentAttachmentName},
+    treatmentAttachmentFormat: ${treatmentAttachmentFormat},
+    treatmentAttachmentPath: ${treatmentAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientTreatment(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{treatmentDate:\"${treatmentDate}\",treatmentTitle:\"${treatmentTitle}\",treatmentType:\"${treatmentType}\",treatmentDescription:\"${treatmentDescription}\",treatmentDose:\"${treatmentDose}\",treatmentFrequency:\"${treatmentFrequency}\",treatmentAttachmentName:\"${treatmentAttachmentName}\",treatmentAttachmentFormat:\"${treatmentAttachmentFormat}\",treatmentAttachmentPath:\"${treatmentAttachmentPath}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientTreatment._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
 }
 
@@ -881,6 +1361,74 @@ updatePatientBillingHandler = (event) => {
   console.log("UpdatePatientBillingFormData:  ", event.target.formGridBillingTitle.value);
 
   this.setState({ updating: false , patientUpdateField: null });
+
+  let billingDate = event.target.formGridBillingDate.value;
+  let billingTitle = event.target.formGridBillingTitle.value;
+  let billingType = event.target.formGridBillingType.value;
+  let billingDescription = event.target.formGridBillingDescription.value;
+  let billingAmount = event.target.formGridBillingAmount.value;
+  let billingPaid = event.target.formGridBillingPaid.value;
+  let billingNotes = event.target.formGridBillingNotes.value;
+  let billingAttachmentName = event.target.formGridBillingAttachmentName.value;
+  let billingAttachmentFormat = event.target.formGridBillingAttachmentFormat.value;
+  let billingAttachmentPath = event.target.formGridBillingAttachmentPath.value;
+
+  const patientBilling = { billingDate, billingTitle, billingType, billingDescription, billingAmount, billingPaid, billingNotes, billingAttachmentName, billingAttachmentFormat, billingAttachmentPath };
+
+  console.log(`
+    adding patient treatment...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    billingDate: ${billingDate},
+    billingTitle: ${billingTitle},
+    billingType: ${billingType},
+    billingDescription: ${billingDescription},
+    billingAmount: ${billingAmount},
+    billingPaid: ${billingPaid},
+    billingNotes: ${billingNotes},
+    billingAttachmentName: ${billingAttachmentName},
+    billingAttachmentFormat: ${billingAttachmentFormat},
+    billingAttachmentPath: ${billingAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientBilling(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{billingDate:\"${billingDate}\",billingTitle:\"${billingTitle}\",billingType:\"${billingType}\",billingDescription:\"${billingDescription}\",billingAmount:${billingAmount},billingPaid:${billingPaid},billingNotes:\"${billingNotes}\",billingAttachmentName:\"${billingAttachmentName}\",billingAttachmentFormat:\"${billingAttachmentFormat}\",billingAttachmentPath:\"${billingAttachmentPath}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientBilling._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
 
 }
 
