@@ -313,6 +313,8 @@ type RootQuery {
     getAppointmentId(appointmentId: ID! userId: ID!): Appointment
     getAppointmentField(userId: ID!, field: String!, query: String!): [Appointment]
     getAppointmentToday(userId: ID!): [Appointment]
+    getAppointmentWeek(userId: ID!): [Appointment]
+    getAppointmentWeekImportant(userId: ID!): [Appointment]
 
     login(email: String!, password: String!): AuthData!
 
