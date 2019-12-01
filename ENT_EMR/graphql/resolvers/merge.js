@@ -109,6 +109,7 @@ const transformAppointment = appointment => {
   return {
     ...appointment._doc,
     _id: appointment.id,
+    date: dateToString(appointment.date)
   };
 };
 

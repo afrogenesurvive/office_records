@@ -80,7 +80,7 @@ module.exports = {
   },
   getAppointmentToday: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    // console.log("getAppointmentField..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log("getAppointmentToday..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -88,23 +88,71 @@ module.exports = {
 
     try {
 
-      const today = new Date().toISOString();
-      const tomorrow = new Date() - 1000 * 3600 * 24 * 3;
-      // const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      // const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      // const dateTime = date+' '+time;
+      let today = new Date();
+      let tomorrow = new Date(Date.now() + 1*24*60*60*1000);
+      let yesterday = new Date(Date.now() - 1*24*60*60*1000);
+      console.log("Yesterday:  ", today);
+      console.log("Tomorrow:  ",tomorrow);
+      console.log("Yesterday:  ",yesterday);
 
+      const appointments = await Appointment.find({'date': {'$gt' : today, '$lt': tomorrow}})
+      .populate('patient');
 
+        return appointments.map(appointment => {
+          return transformAppointment(appointment);
+        });
+    } catch (err) {
+      throw err;
+    }
+  },
+  getAppointmentWeek: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("getAppointmentWeek..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      let today = new Date();
+      let weekLater = new Date(Date.now() + 7*24*60*60*1000);
+      // weekLater = new Date(weekLater).toISOString();
+      // const tomorrow2 = today.setDate(today.getDate() + 1);
       console.log("Today:  ", today);
-      console.log("tomorrow:  ", tomorrow);
-      console.log("y:  ", y);
+      console.log("weekLater:  ",weekLater);
 
-      // const appointments = await Appointment.find({date: { $gte :  }})
-      // .populate('patient');
-      //
-      //   return appointments.map(appointment => {
-      //     return transformAppointment(appointment);
-      //   });
+      const appointments = await Appointment.find({'date': {'$gte' : today, '$lt': weekLater}})
+      .populate('patient');
+
+        return appointments.map(appointment => {
+          return transformAppointment(appointment);
+        });
+    } catch (err) {
+      throw err;
+    }
+  },
+  getAppointmentWeekImportant: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("getAppointmentWeekImportant..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      let today = new Date();
+      let weekLater = new Date(Date.now() + 7*24*60*60*1000);
+      console.log("Today:  ", today);
+      console.log("weekLater:  ",weekLater);
+
+      const appointments = await Appointment.find({'date': {'$gte' : today, '$lt': weekLater},important: true})
+      .populate('patient');
+
+        return appointments.map(appointment => {
+          return transformAppointment(appointment);
+        });
     } catch (err) {
       throw err;
     }
