@@ -46,13 +46,22 @@ const patientSchema = new Schema({
   appointments: [
     {
       type: Schema.Types.ObjectId,
-          ref: 'Appointment'
+          ref: 'Appointment',
+          _id: false
     }
   ],
-  consultant: {
+  consultant: [
+    {
+      date: {
+      type: Date
+    },
+    reference:{
     type: Schema.Types.ObjectId,
       ref: 'User'
   },
+  _id: false
+}
+],
   insurance: [
     {
     company: String,
@@ -64,7 +73,8 @@ const patientSchema = new Schema({
     subscriber: {
       company: String,
       description: String
-    }
+    },
+    _id: false
   }
 ],
   nextOfKin: [
@@ -73,7 +83,8 @@ const patientSchema = new Schema({
     contact: {
       phone: String,
       email: String
-    }
+    },
+    _id: false
   }
 ],
   complaints: [
@@ -87,7 +98,8 @@ const patientSchema = new Schema({
           name: String,
           format: String,
           path: String
-        }
+        },
+        _id: false
     }
   ],
   surveys: [
@@ -101,11 +113,15 @@ const patientSchema = new Schema({
           name: String,
           format: String,
           path: String
-        }
+        },
+        _id: false
     }
   ],
   examination: [
     {
+    date: {
+      type: Date
+    },
     area: String,
     type: {
       type:String,
@@ -117,7 +133,8 @@ const patientSchema = new Schema({
         name: String,
         format: String,
         path: String
-    }
+    },
+    _id: false
   }
 ],
   history: [
@@ -145,7 +162,8 @@ const patientSchema = new Schema({
           name: String,
           format: String,
           path: String
-        }
+        },
+        _id: false
     }
   ],
   medication: [
@@ -156,7 +174,8 @@ const patientSchema = new Schema({
           name: String,
           format: String,
           path: String
-        }
+        },
+        _id: false
     }
   ],
   investigation: [
@@ -170,7 +189,8 @@ const patientSchema = new Schema({
           name: String,
           format: String,
           path: String
-        }
+        },
+        _id: false
     }
   ],
   diagnosis: [
@@ -184,7 +204,8 @@ const patientSchema = new Schema({
           name: String,
           format: String,
           path: String
-        }
+        },
+        _id: false
     }
   ],
   treatment: [
@@ -203,7 +224,8 @@ const patientSchema = new Schema({
           name: String,
           format: String,
           path: String
-        }
+        },
+        _id: false
     }
   ],
   billing:[
@@ -225,7 +247,8 @@ const patientSchema = new Schema({
         format: String,
         path: String
       },
-    notes: String
+    notes: String,
+    _id: false
   }
 ],
   notes: [String],

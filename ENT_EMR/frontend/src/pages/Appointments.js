@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
@@ -56,7 +57,7 @@ class AppointmentsPage extends Component {
 
   startCreateAppointmentHandler = () => {
     this.setState({ creating: true });
-    console.log("CreateAppointmentForm...");
+    console.log("CreateAppointmentForm...", this.context.selectedPatient);
   };
   startUpdateAppointmentHandler = () => {
     this.setState({ updating: true });
@@ -68,6 +69,8 @@ class AppointmentsPage extends Component {
   };
 
   modalConfirmHandler = (event) => {
+    const timeInputValue = ReactDOM.findDOMNode(AppointmentsPage).getElementsByClassName('appointmentTimeInput')
+    console.log("event:  ", event.target.appointmentTimeInput, timeInputValue);
 
     console.log("CreateAppointmentFormData:  ", event.target.formGridTitle.value);
 
@@ -82,16 +85,19 @@ class AppointmentsPage extends Component {
     const title = event.target.formGridTitle.value;
     const type = event.target.formGridType.value;
     const date = event.target.formGridDate.value;
+    const time = event.target.formGridTime.value;
     const location = event.target.formGridLocation.value;
     const description = event.target.formGridDescription.value;
     const inProgress = event.target.formGridInProgress.value;
     const attended = event.target.formGridAttended.value;
     const important = event.target.formGridImportant.value;
     const notes = event.target.formGridNotes.value;
+
     if (
       title.trim().length === 0 ||
       type.trim().length === 0 ||
       date.trim().length === 0 ||
+      time.trim().length === 0 ||
       location.trim().length === 0 ||
       description.trim().length === 0 ||
       inProgress.trim().length === 0 ||
@@ -100,26 +106,27 @@ class AppointmentsPage extends Component {
       notes.trim().length === 0
     ) {
       console.log("blank fields detected!!!...Please try again...");
-      return;
+      // return;
     }
 
     const appointment = { title, type, date, location, description, inProgress, attended, important, notes };
     console.log(`creating appointment...
-        title: ${title}
-        type: ${type}
-        date: ${date}
-        location: ${location}
-        description: ${description}
-        inProgress: ${inProgress}
-        attended: ${attended}
-        important: ${important}
-        notes: ${notes}
+        title: ${title},
+        type: ${type},
+        date: ${date},
+        time: ${time},
+        location: ${location},
+        description: ${description},
+        inProgress: ${inProgress},
+        attended: ${attended},
+        important: ${important},
+        notes: ${notes},
       `);
 
     const requestBody = {
       query: `
           mutation {
-            createAppointment(userId:\"${userId}\", patientId:\"${patientId}\", appointmentInput: {title:\"${title}\",type:\"${type}\",date:\"${date}\",location:\"${location}\",description:\"${description}\",inProgress:${inProgress},attended:${attended},important:${important},notes:\"${notes}\"}){_id,title,date,type,patient{name,dob,address},inProgress,attended,important,notes}}
+            createAppointment(userId:\"${userId}\", patientId:\"${patientId}\", appointmentInput: {title:\"${title}\",type:\"${type}\",date:\"${date}\",time:\"test\",location:\"${location}\",description:\"${description}\",inProgress:${inProgress},attended:${attended},important:${important},notes:\"${notes}\"}){_id,title,date,type,patient{name,dob,address},inProgress,attended,important,notes}}
         `,
     };
 
@@ -150,6 +157,7 @@ class AppointmentsPage extends Component {
             title: resData.data.createAppointment.title,
             type: resData.data.createAppointment.type,
             date: resData.data.createAppointment.date,
+            time: resData.data.createAppointment.time,
             location: resData.data.createAppointment.location,
             description: resData.data.createAppointment.description,
             patient: resData.data.createAppointment.patient,
@@ -188,7 +196,7 @@ class AppointmentsPage extends Component {
     // const patientId = this.context.selectedPatientId;
     console.log(`
         userId: ${userId}
-        appointmentd: ${appointmentId}
+        appointmentd: ${appointmentId},
       `);
 
     // console.log("UpdateUserFormData:  ", event);
@@ -718,7 +726,8 @@ class AppointmentsPage extends Component {
       <Row className="createUserRowForm">
       <Col md={12} className="createUserColForm">
       {
-        this.state.creating && (
+        this.state.creating && this.context.selectedPatient._id
+        && (
           <CreateAppointmentForm
           canCancel
             canConfirm

@@ -17,3 +17,11 @@
   left: 5rem;
   z-index: 15;
 }
+
+.appointmentTimeInput {
+    width: 6rem !important;
+    height: 2.5rem !important;
+    border-radius: 5px;
+    padding-left: 1rem;
+    margin: 2rem auto;
+}

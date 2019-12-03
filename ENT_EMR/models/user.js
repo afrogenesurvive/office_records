@@ -39,7 +39,8 @@ const userSchema = new Schema({
         type: Date
       },
       status: String,
-      description: String
+      description: String,
+      _id: false
     }
   ],
   leave: [
@@ -52,7 +53,8 @@ const userSchema = new Schema({
       },
       endDate: {
         type: Date
-      }
+      },
+      _id: false
     }
   ]
 },

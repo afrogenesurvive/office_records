@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import PatientAppointmentList from './PatientList/PatientAppointmentList';
 import PatientInsuranceList from './PatientList/PatientInsuranceList';
+import PatientConsultantList from './PatientList/PatientConsultantList';
 import PatientNextOfKinList from './PatientList/PatientNextOfKinList';
 import PatientComplaintList from './PatientList/PatientComplaintList';
 import PatientExaminationList from './PatientList/PatientExaminationList';
@@ -23,6 +24,7 @@ const PatientDetail = (props) => {
   // const authPatientId = props.authUserId;
   const patientAppointment = patient.appointments;
   const patientInsurance = patient.insurance;
+  const patientConsultant = patient.consultant;
   const patientNextOfKin = patient.nextOfKin;
   const patientComplaint = patient.complaints;
   const patientExamination = patient.examination;
@@ -58,6 +60,9 @@ const PatientDetail = (props) => {
         D.O.B: {patientDob}
       </Card.Text>
       <Card.Text>
+        Age: {patient.age}
+      </Card.Text>
+      <Card.Text>
         Reg Date: {patientRegistrationDate}
       </Card.Text>
       <Card.Text>
@@ -81,12 +86,17 @@ const PatientDetail = (props) => {
       <Card.Text>
         Appointments:
       </Card.Text>
-      
         <PatientAppointmentList
         patientAppointment={patientAppointment}
         authUserId={props.authUserId}
         />
-      
+      <Card.Text>
+      Consultant:
+      </Card.Text>
+      <PatientConsultantList
+        patientConsultant={patientConsultant}
+        authUserId={props.authUserId}
+        />
       <Card.Text>
       Insurance:
       </Card.Text>

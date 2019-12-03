@@ -78,6 +78,30 @@ module.exports = {
       throw err;
     }
   },
+  // getAppointmentDateRange: async (args, req) => {
+  //   // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+  //   console.log("getAppointmentDateRange..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+  //
+  //   if (!req.isAuth) {
+  //     throw new Error('Unauthenticated!');
+  //   }
+  //
+  //   try {
+  //
+  //     let startDate = new Date(args.startDate);
+  //     let endDate = new Date(args.endDate);
+  //     console.log("startDate:  ", startDate, "endDate:  ", endDate);
+  //
+  //     const appointments = await Appointment.find({'date': {'$gt' : startDate, '$lt': endDate}})
+  //     .populate('patient');
+  //
+  //       return appointments.map(appointment => {
+  //         return transformAppointment(appointment);
+  //       });
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  // },
   getAppointmentToday: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
     console.log("getAppointmentToday..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
@@ -117,8 +141,6 @@ module.exports = {
 
       let today = new Date();
       let weekLater = new Date(Date.now() + 7*24*60*60*1000);
-      // weekLater = new Date(weekLater).toISOString();
-      // const tomorrow2 = today.setDate(today.getDate() + 1);
       console.log("Today:  ", today);
       console.log("weekLater:  ",weekLater);
 
@@ -382,6 +404,7 @@ module.exports = {
         title:args.appointmentInput.title,
         type: args.appointmentInput.type,
         date: args.appointmentInput.date,
+        time: args.appointmentInput.time,
         location: args.appointmentInput.location,
         description: args.appointmentInput.description,
         patient: appointmentPatient,
@@ -402,6 +425,7 @@ module.exports = {
         title: result.title,
         type: result.type,
         date: result.date,
+        time: result.time,
         location: result.location,
         description: result.description,
         patient: result.patient,
