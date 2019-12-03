@@ -38,6 +38,10 @@ return (
     <Form.Control type="date" placeholder={patient.dob} />
 
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridAge">
+    <Form.Label>Age</Form.Label>
+    <Form.Control type="number" placeholder="Age"/>
+  </Form.Group>
   </Form.Row>
 
   <Form.Row>

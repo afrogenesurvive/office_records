@@ -18,6 +18,10 @@ return (
 <div className="UpdateFormContainer">
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
+  <Form.Group as={Col} controlId="formGridExaminationDate">
+    <Form.Label>ExaminationDate</Form.Label>
+    <Form.Control type="date" placeholder="ExaminationDate"/>
+  </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationArea">
     <Form.Label>ExaminationArea</Form.Label>
     <Form.Control type="text" placeholder="ExaminationArea"/>

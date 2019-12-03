@@ -31,6 +31,10 @@ return (
   <Form.Label>D.O.B</Form.Label>
   <Form.Control type="date" placeholder="Date of Birth"/>
 </Form.Group>
+<Form.Group as={Col} controlId="formGridAge">
+  <Form.Label>Age</Form.Label>
+  <Form.Control type="number" placeholder="Age"/>
+</Form.Group>
 </Form.Row>
 
 <Form.Row>

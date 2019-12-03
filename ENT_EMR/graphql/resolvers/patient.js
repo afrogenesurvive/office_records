@@ -130,6 +130,7 @@ module.exports = {
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{
           name: args.patientInput.name,
           dob: args.patientInput.dob,
+          age: args.patientInput.age,
           address: args.patientInput.address,
           contact: {
             phone: args.patientInput.contactPhone,
@@ -349,6 +350,45 @@ module.exports = {
       throw err;
     }
   },
+  updatePatientConsultant: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientConsultant...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const consultantDate = args.patientInput.consultantDate;
+      const consultantReference = args.patientInput.consultantReference;
+      console.log(`
+        consultantDate:${consultantDate},
+        consultantReference:${consultantReference},
+        `);
+
+      const patientConsultant = await User.findById(consultantReference );
+      console.log("patientConsultant:  ", patientConsultant);
+
+      const consultantObject = {
+        date: consultantDate,
+        reference: patientConsultant,
+      }
+
+      console.log(" consultantObject: ", consultantObject);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {consultant:consultantObject}},{new: true})
+        .populate('consultant.reference');
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+    } catch (err) {
+      throw err;
+    }
+  },
   updatePatientInsurance: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
     console.log("updatePatientInsurance...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
@@ -446,6 +486,58 @@ module.exports = {
         `);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {complaints:patientComplaintObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientSurvey: async (args, req) => {
+    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
+    console.log("updatePatientSurvey...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const surveyDate = args.patientInput.surveyDate;
+      const surveyTitle = args.patientInput.surveyTitle;
+      const surveyDescription = args.patientInput.surveyDescription;
+      const surveyAttachmentName = args.patientInput.surveyAttachmentName;
+      const surveyAttachmentFormat = args.patientInput.surveyAttachmentFormat;
+      const surveyAttachmentPath = args.patientInput.surveyAttachmentPath;
+
+      console.log(`
+        surveyDate: ${surveyDate},
+        surveyTitle: ${surveyTitle},
+        surveyDescription: ${surveyDescription},
+        surveyAttachmentName: ${surveyAttachmentName},
+        surveyAttachmentFormat: ${surveyAttachmentFormat},
+        surveyAttachmentPath: ${surveyAttachmentPath},
+        `);
+
+
+      const patientSurvey = {
+        date: surveyDate,
+        title: surveyTitle,
+        description: surveyDescription,
+        attachment: {
+          name: surveyAttachmentName,
+          format: surveyAttachmentFormat,
+          path: surveyAttachmentPath,
+        }
+      }
+
+      console.log(" patientSurvey: ", patientSurvey);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {surveys:patientSurvey}},{new: true})
 
           return {
               ...patient._doc,

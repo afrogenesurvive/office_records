@@ -17,9 +17,11 @@ import SearchPatientForm from '../components/Forms/SearchPatientForm';
 
 import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import UpdatePatientForm from '../components/Forms/UpdatePatientForm';
+import UpdatePatientConsultantForm from '../components/Forms/UpdatePatientConsultantForm';
 import UpdatePatientInsuranceForm from '../components/Forms/UpdatePatientInsuranceForm';
 import UpdatePatientNextOfKinForm from '../components/Forms/UpdatePatientNextOfKinForm';
-import UpdatePatientComplaintForm from '../components/Forms/UpdatePatientComplaintForm';
+import UpdatePatientComplaintForm from '../components/Forms/UpdatePatientSurveyForm';
+import UpdatePatientSurveyForm from '../components/Forms/UpdatePatientComplaintForm';
 import UpdatePatientExaminationForm from '../components/Forms/UpdatePatientExaminationForm';
 import UpdatePatientHistoryForm from '../components/Forms/UpdatePatientHistoryForm';
 import UpdatePatientAllergiesForm from '../components/Forms/UpdatePatientAllergiesForm';
@@ -51,30 +53,6 @@ class PatientsPage extends Component {
   constructor(props) {
     super(props);
     this.nameElRef = React.createRef();
-    this.dobElRef = React.createRef();
-    this.addressElRef = React.createRef();
-    this.contactPhoneElRef = React.createRef();
-    this.contactEmailElRef = React.createRef();
-    this.registrationDateElRef = React.createRef();
-    this.referringDoctorNameElRef = React.createRef();
-    this.referringDoctorEmailElRef = React.createRef();
-    this.referringDoctorPhoneElRef = React.createRef();
-    this.occupationRoleElRef = React.createRef();
-    this.occupationEmployerElRef = React.createRef();
-    this.occupationEmployerContactPhoneElRef = React.createRef();
-    this.occupationEmployerContactEmailElRef = React.createRef();
-    this.nextOfKinNameELRef = React.createRef();
-    this.nextOfKinPhoneELRef = React.createRef();
-    this.nextOfKinEmailELRef = React.createRef();
-    this.insuranceCompanyELRef = React.createRef();
-    this.insuranceNumberELRef = React.createRef();
-    this.insuranceDescriptionELRef = React.createRef();
-    this.insuranceExpiryELRef = React.createRef();
-    this.insuranceSubscriberCompanyELRef = React.createRef();
-    this.insuranceSubscriberDescriptionELRef = React.createRef();
-    this.complaintDateELRef = React.createRef();
-    this.complaintTitleELRef = React.createRef();
-    this.complaintDescriptionELRef = React.createRef();
   }
 
   componentDidMount() {
@@ -104,7 +82,7 @@ class PatientsPage extends Component {
 
     let name = event.target.formGridName.value;
     let dob = event.target.formGridDob.value;
-    // ???change dob to utc string here!!!??????.toUTCString()
+    let age = event.target.formGridAge.value;
     let address = event.target.formGridAddress.value;
     let contactPhone = event.target.formGridContactPhone.value;
     let contactEmail = event.target.formGridContactEmail.value;
@@ -122,6 +100,7 @@ class PatientsPage extends Component {
     if (
       name.trim().length === 0 ||
       dob.trim().length === 0 ||
+      age.trim().length === 0 ||
       address.trim().length === 0 ||
       contactPhone.trim().length === 0 ||
       contactEmail.trim().length === 0 ||
@@ -141,12 +120,12 @@ class PatientsPage extends Component {
       return;
     }
 
-    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
+    const patient = { name, dob, age, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
     console.log("creating patient.. " + JSON.stringify(patient));
 
     const requestBody = {
       query: `
-          mutation {createPatient(userId:\"${userId}\",patientInput: {name:\"${name}\",dob:\"${dob}\",address:\"${address}\",contactEmail:\"${contactEmail}\",contactPhone:\"${contactPhone}\",referringDoctorName:\"${referringDoctorName}\",referringDoctorEmail:\"${referringDoctorEmail}\",referringDoctorPhone:\"${referringDoctorPhone}\",occupationRole:\"${occupationRole}\",occupationEmployer:\"${occupationEmployer}\",occupationEmployerContactPhone:\"${occupationEmployerContactPhone}\",occupationEmployerContactEmail:\"${occupationEmployerContactEmail}\",registrationDate:\"${registrationDate}\",referralDate:\"${referralDate}\",expirationDate:\"${expirationDate}\"})
+          mutation {createPatient(userId:\"${userId}\",patientInput: {name:\"${name}\",dob:\"${dob}\",age:\"${age}\",address:\"${address}\",contactEmail:\"${contactEmail}\",contactPhone:\"${contactPhone}\",referringDoctorName:\"${referringDoctorName}\",referringDoctorEmail:\"${referringDoctorEmail}\",referringDoctorPhone:\"${referringDoctorPhone}\",occupationRole:\"${occupationRole}\",occupationEmployer:\"${occupationEmployer}\",occupationEmployerContactPhone:\"${occupationEmployerContactPhone}\",occupationEmployerContactEmail:\"${occupationEmployerContactEmail}\",registrationDate:\"${registrationDate}\",referralDate:\"${referralDate}\",expirationDate:\"${expirationDate}\"})
           {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}}}}
         `
     };
@@ -177,6 +156,7 @@ class PatientsPage extends Component {
             _id: resData.data.createPatient._id,
             name: resData.data.createPatient.name,
             dob: resData.data.createPatient.dob,
+            age: resData.data.createPatient.age,
             address: resData.data.createPatient.address,
             contact:{
               phone: resData.data.createPatient.contactPhone,
@@ -232,6 +212,7 @@ class PatientsPage extends Component {
     this.setState({ updating: false });
     let name = event.target.formGridName.value;
     let dob = event.target.formGridDob.value;
+    let age = event.target.formGridAge.value;
     let address = event.target.formGridAddress.value;
     let contactPhone = event.target.formGridContactPhone.value;
     let contactEmail = event.target.formGridContactEmail.value;
@@ -253,6 +234,10 @@ class PatientsPage extends Component {
     if (dob.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
       dob  = this.context.selectedUser.dob;
+    }
+    if (age.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      age  = this.context.selectedUser.age;
     }
     if (address.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -300,13 +285,14 @@ class PatientsPage extends Component {
     }
 
 
-    const patient = { name, dob, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail};
+    const patient = { name, dob, age, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail};
     console.log(`
       updating patient...
       userId: ${userId},
       patientId: ${patientId},
       name: ${name},
       dob: ${dob},
+      age: ${age},
       address: ${address},
       contactPhone: ${contactPhone},
       contactEmail: ${contactEmail},
@@ -323,148 +309,8 @@ class PatientsPage extends Component {
     const requestBody = {
       query: `
           mutation {
-            updatePatient(userId:\"${userId}\", patientId: "${patientId}", patientInput: { name: "${name}", dob: "${dob}", address: "${address}", contactPhone: "${contactPhone}", contactEmail: "${contactEmail}", registrationDate: "${registrationDate}", referringDoctorName: "${referringDoctorName}", referringDoctorEmail: "${referringDoctorEmail}", referringDoctorPhone: "${referringDoctorPhone}", occupationRole: "${occupationRole}", occupationEmployer: "${occupationEmployer}", occupationEmployerContactPhone: "${occupationEmployerContactPhone}", occupationEmployerContactEmail: "${occupationEmployerContactEmail}" }){
-              _id
-              name
-              address
-              contact{
-                email
-                phone
-              }
-              registrationDate
-              referralDate
-              expirationDate
-              referringDoctor{
-                name
-                email
-                phone
-              }
-                occupation{
-                  role
-                  employer
-                  contact{
-                    email
-                    phone
-                  }
-                }
-                insurance
-                {
-                  company
-                  number
-                  description
-                  expiry
-                  subscriber{
-                    company
-                    description
-                  }
-                }
-                nextOfKin{
-                  name
-                  contact{
-                    email
-                    phone
-                  }
-                }
-                complaints{
-                  date
-                  title
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                examination{
-                  area
-                  type
-                  measure
-                  value
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                history{
-                  title
-                  type
-                  date
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                allergies{
-                  title
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                medication{
-                  title
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                investigation{
-                  date
-                  title
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                  diagnosis{
-                    date
-                    title
-                    description
-                    attachment{
-                      name
-                      format
-                      path
-                    }
-                  }
-                  treatment{
-                    date
-                    title
-                    type
-                    description
-                    dose
-                    frequency
-                    attachment{
-                      name
-                      format
-                      path
-                    }
-                  }
-                  billing{
-                    date
-                    title
-                    type
-                    description
-                    amount
-                    paid
-                    notes
-                    attachment
-                    {
-                      name
-                      format
-                      path
-                    }
-                  }
-            }
+            updatePatient(userId:\"${userId}\", patientId: "${patientId}", patientInput: { name: "${name}", dob: "${dob}",age: ${age}, address: "${address}", contactPhone: "${contactPhone}", contactEmail: "${contactEmail}", registrationDate: "${registrationDate}", referringDoctorName: "${referringDoctorName}", referringDoctorEmail: "${referringDoctorEmail}", referringDoctorPhone: "${referringDoctorPhone}", occupationRole: "${occupationRole}", occupationEmployer: "${occupationEmployer}", occupationEmployerContactPhone: "${occupationEmployerContactPhone}", occupationEmployerContactEmail: "${occupationEmployerContactEmail}" })
+            {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
           }
         `
     };
@@ -499,6 +345,7 @@ class PatientsPage extends Component {
           _id: resData.data.updatePatient._id,
           name: resData.data.updatePatient.name,
           dob: resData.data.updatePatient.dob,
+          age: resData.data.updatePatient.age,
           address: resData.data.updatePatient.address,
           contact:{
             phone: resData.data.updatePatient.contactPhone,
@@ -533,6 +380,73 @@ class PatientsPage extends Component {
       });
   };
 
+updatePatientConsultantHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  const patientConsultantReference = this.context.selectedUser._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientConsultantFormData:  ", event.target.formGridConsultantDate.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+  let consultantDate = event.target.formGridConsultantDate.value;
+
+  const patientConsultant = { consultantDate, patientConsultantReference };
+  console.log(`
+    adding patient consultant item...
+    userId: ${userId},
+    selectedPatientId: ${selectedPatientId},
+    consultantDate: ${consultantDate},
+    consultantReference: ${patientConsultantReference},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientConsultant(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{})
+        {_id,name,dob,age,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      `
+    };
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData.data));
+
+          const updatedPatientId = resData.data.updatePatientInsurance._id;
+          const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+          const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+          const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+          console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+          this.state.patients.push(updatedPatient);
+          this.context.patients = this.state.patients;
+          this.fetchPatients();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+}
 updatePatientInsuranceHandler = (event) => {
 
   const token = this.context.token;
@@ -572,7 +486,8 @@ updatePatientInsuranceHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientInsurance(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{insuranceCompany:\"${insuranceCompany}\",insuranceNumber:\"${insuranceNumber}\",insuranceDescription:\"${insuranceDescription}\",insuranceExpiry:\"${insuranceExpiry}\",insuranceSubscriberCompany:\"${insuranceSubscriberCompany}\",insuranceSubscriberDescription:\"${insuranceSubscriberDescription}\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
+        }
       `
     };
 
@@ -642,7 +557,8 @@ updatePatientNextOfKinHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientNextOfKin(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{nextOfKinName:\"${nextOfKinName}\",nextOfKinEmail:\"granny@kin.mail\",nextOfKinPhone:\"1234566\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
+        }
       `
     };
 
@@ -718,7 +634,8 @@ updatePatientComplaintHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientComplaint(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{complaintDate:\"${complaintDate}\",complaintTitle:\"${complaintTitle}\",complaintDescription:\"${complaintDescription}\",complaintAttachmentName:\"${complaintAttachmentName}\",complaintAttachmentFormat:\"${complaintAttachmentFormat}\",complaintAttachmentPath:\"${complaintAttachmentPath}\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
+      }
       `
     }
 
@@ -772,6 +689,7 @@ updatePatientExaminationHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
+  let examinationDate = event.target.formGridExaminationDate.value;
   let examinationArea = event.target.formGridExaminationArea.value;
   let examinationType = event.target.formGridExaminationType.value;
   let examinationMeasure = event.target.formGridExaminationMeasure.value;
@@ -787,6 +705,7 @@ updatePatientExaminationHandler = (event) => {
     adding patient examination...
     userId: ${userId},
     patientId: ${selectedPatientId},
+    examinationDate: ${examinationDate},
     examinationArea: ${examinationArea},
     examinationType: ${examinationType},
     examinationMeasure: ${examinationMeasure},
@@ -799,8 +718,9 @@ updatePatientExaminationHandler = (event) => {
 
     const requestBody = {
       query:`
-        mutation {updatePatientExamination(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{examinationArea:\"${examinationArea}\",examinationType:\"${examinationType}\",examinationMeasure:\"${examinationMeasure}\",examinationValue:\"${examinationValue}\",examinationDescription:\"${examinationDescription}\",examinationAttachmentName:\"${examinationAttachmentName}\",examinationAttachmentFormat:\"${examinationAttachmentFormat}\",examinationAttachmentPath:\"${examinationAttachmentPath}\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        mutation {updatePatientExamination(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{examinationDate: ${examinationDate},examinationArea:\"${examinationArea}\",examinationType:\"${examinationType}\",examinationMeasure:\"${examinationMeasure}\",examinationValue:\"${examinationValue}\",examinationDescription:\"${examinationDescription}\",examinationAttachmentName:\"${examinationAttachmentName}\",examinationAttachmentFormat:\"${examinationAttachmentFormat}\",examinationAttachmentPath:\"${examinationAttachmentPath}\"})
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
+        }
       `
     }
 
@@ -879,7 +799,8 @@ updatePatientHistoryHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientHistory(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{historyTitle:\"${historyTitle}\",historyType:\"${historyType}\",historyDate:\"${historyDate}\",historyDescription:\"${historyDescription}\",historyAttachmentName:\"${historyAttachmentName}\",historyAttachmentFormat:\"${historyAttachmentFormat}\",historyAttachmentPath:\"${historyAttachmentPath}\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
+        }
       `
     }
 
@@ -955,7 +876,8 @@ updatePatientAllergiesHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientAllergies(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{allergiesTitle:\"${allergiesTitle}\", allergiesDescription:\"${allergiesDescription}\",allergiesAttachmentName:\"${allergiesAttachmentName}\",allergiesAttachmentFormat:\"${allergiesAttachmentFormat}\",allergiesAttachmentPath:\"${allergiesAttachmentPath}\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
+      }
       `
     }
 
@@ -1032,7 +954,8 @@ updatePatientMedicationHandler = (event) => {
     const requestBody = {
       query:`
       mutation {updatePatientMedication(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{medicationTitle:\"${medicationTitle}\", medicationDescription:\"${medicationDescription}\",medicationAttachmentName:\"${medicationAttachmentName}\",medicationAttachmentFormat:\"${medicationAttachmentFormat}\",medicationAttachmentPath:\"${medicationAttachmentPath}\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+      {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
+        }
       `
     }
 
@@ -1110,7 +1033,8 @@ updatePatientInvestigationHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientInvestigation(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{investigationDate:\"${investigationDate}\",investigationTitle:\"${investigationTitle}\",investigationDescription:\"${investigationDescription}\",investigationAttachmentName:\"${investigationAttachmentName}\",investigationAttachmentFormat:\"${investigationAttachmentFormat}\",investigationAttachmentPath:\"${investigationAttachmentPath}\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
+        }
       `
     }
 
@@ -1188,7 +1112,7 @@ updatePatientDiagnosisHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientDiagnosis(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{diagnosisDate:\"${diagnosisDate}\",diagnosisTitle:\"${diagnosisTitle}\",diagnosisDescription:\"${diagnosisDescription}\",diagnosisAttachmentName:\"${diagnosisAttachmentName}\",diagnosisAttachmentFormat:\"${diagnosisAttachmentFormat}\",diagnosisAttachmentPath:\"${diagnosisAttachmentPath}\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        }
       `
     }
 
@@ -1272,7 +1196,8 @@ updatePatientTreatmentHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientTreatment(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{treatmentDate:\"${treatmentDate}\",treatmentTitle:\"${treatmentTitle}\",treatmentType:\"${treatmentType}\",treatmentDescription:\"${treatmentDescription}\",treatmentDose:\"${treatmentDose}\",treatmentFrequency:\"${treatmentFrequency}\",treatmentAttachmentName:\"${treatmentAttachmentName}\",treatmentAttachmentFormat:\"${treatmentAttachmentFormat}\",treatmentAttachmentPath:\"${treatmentAttachmentPath}\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
+        }
       `
     }
 
@@ -1359,7 +1284,8 @@ updatePatientBillingHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientBilling(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{billingDate:\"${billingDate}\",billingTitle:\"${billingTitle}\",billingType:\"${billingType}\",billingDescription:\"${billingDescription}\",billingAmount:${billingAmount},billingPaid:${billingPaid},billingNotes:\"${billingNotes}\",billingAttachmentName:\"${billingAttachmentName}\",billingAttachmentFormat:\"${billingAttachmentFormat}\",billingAttachmentPath:\"${billingAttachmentPath}\"})
-        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}}
+        {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
+        }
       `
     }
 
@@ -1425,156 +1351,11 @@ modalConfirmSearchHandler = (event) => {
 
     const requestBody = {
       query: `
-        query GetPatientField($userId: ID!, $field: String!, $query: String!)
-        {getPatientField(userId: $userId, field: $field, query: $query ){
-          _id
-          name
-          address
-          contact{
-            email
-            phone
-          }
-          registrationDate
-          referralDate
-          expirationDate
-          referringDoctor{
-            name
-            email
-            phone
-          }
-            occupation{
-              role
-              employer
-              contact{
-                email
-                phone
-              }
-            }
-            insurance
-            {
-              company
-              number
-              description
-              expiry
-              subscriber{
-                company
-                description
-              }
-            }
-            nextOfKin{
-              name
-              contact{
-                email
-                phone
-              }
-            }
-            complaints{
-              date
-              title
-              description
-              attachment{
-                name
-                format
-                path
-              }
-            }
-            examination{
-              area
-              type
-              measure
-              value
-              description
-              attachment{
-                name
-                format
-                path
-              }
-            }
-            history{
-              title
-              type
-              date
-              description
-              attachment{
-                name
-                format
-                path
-              }
-            }
-            allergies{
-              title
-              description
-              attachment{
-                name
-                format
-                path
-              }
-            }
-            medication{
-              title
-              description
-              attachment{
-                name
-                format
-                path
-              }
-            }
-            investigation{
-              date
-              title
-              description
-              attachment{
-                name
-                format
-                path
-              }
-            }
-              diagnosis{
-                date
-                title
-                description
-                attachment{
-                  name
-                  format
-                  path
-                }
-              }
-              treatment{
-                date
-                title
-                type
-                description
-                dose
-                frequency
-                attachment{
-                  name
-                  format
-                  path
-                }
-              }
-              billing{
-                date
-                title
-                type
-                description
-                amount
-                paid
-                notes
-                attachment
-                {
-                  name
-                  format
-                  path
-                }
-              }
-        }
+        query {
+          getPatientField(userId: ${userId}, field: ${field}, query: ${query} )
+          {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
       }
-      `,
-      variables: {
-        userId: userId,
-        field: field,
-        query: query
-      }
+      `
     }
 
     const token = this.context.token;
@@ -1615,166 +1396,15 @@ modalConfirmSearchHandler = (event) => {
 
 
   fetchPatients() {
-    console.log("'fetch patients function' context object... " + JSON.stringify(this.context));
+    console.log("fetch patients function:  ");
     const userId = this.context.userId;
+    const token = this.context.token;
 
     this.setState({ isLoading: true });
     const requestBody = {
       query: `
-          query patients($userId: ID!) {
-            patients(userId: $userId) {
-              _id
-              name
-              address
-              contact{
-                email
-                phone
-              }
-              registrationDate
-              referralDate
-              expirationDate
-              appointments{
-                title
-                date
-                type
-                location
-              }
-              referringDoctor{
-                name
-                email
-                phone
-              }
-                occupation{
-                  role
-                  employer
-                  contact{
-                    email
-                    phone
-                  }
-                }
-                insurance
-                {
-                  company
-                  number
-                  description
-                  expiry
-                  subscriber{
-                    company
-                    description
-                  }
-                }
-                nextOfKin{
-                  name
-                  contact{
-                    email
-                    phone
-                  }
-                }
-                complaints{
-                  date
-                  title
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                examination{
-                  area
-                  type
-                  measure
-                  value
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                history{
-                  title
-                  type
-                  date
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                allergies{
-                  title
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                medication{
-                  title
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                investigation{
-                  date
-                  title
-                  description
-                  attachment{
-                    name
-                    format
-                    path
-                  }
-                }
-                  diagnosis{
-                    date
-                    title
-                    description
-                    attachment{
-                      name
-                      format
-                      path
-                    }
-                  }
-                  treatment{
-                    date
-                    title
-                    type
-                    description
-                    dose
-                    frequency
-                    attachment{
-                      name
-                      format
-                      path
-                    }
-                  }
-                  billing{
-                    date
-                    title
-                    type
-                    description
-                    amount
-                    paid
-                    notes
-                    attachment
-                    {
-                      name
-                      format
-                      path
-                    }
-                  }
-            }
-          }
-        `,
-        variables: {
-          userId: userId
-        }
+          query {patients(userId:\"${userId}\"){_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}}
+        `
     };
 
     fetch('http://localhost:10000/graphql', {
@@ -1782,7 +1412,7 @@ modalConfirmSearchHandler = (event) => {
       body: JSON.stringify(requestBody),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.context.token
+        Authorization: 'Bearer ' + token
       }
     })
       .then(res => {
@@ -1814,6 +1444,7 @@ modalConfirmSearchHandler = (event) => {
     console.log("deleting patient...selectedPatient:  ", this.context.selectedPatient);
 
     const selectedPatientId = this.context.selectedPatient._id;
+    const userId = this.context.selectedUser._id;
 
     if(this.context.user.role !== 'admin') {
       console.log("Not the Admin! No edit permission!!");
@@ -1824,39 +1455,11 @@ modalConfirmSearchHandler = (event) => {
 
     const requestBody = {
       query: `
-          mutation DeletePatient($userId: ID!, $patientId: ID!) {
-            deletePatient(userId: $userId, patientId: $patientId) {
-              _id
-              name
-              address
-              contact{
-                email
-                phone
-              }
-              registrationDate
-              referringDoctor
-              {
-                name
-                email
-                phone
-              }
-              occupation
-              {
-                role
-                employer
-                contact
-                {
-                  email
-                  phone
-                }
-              }
-            }
+          mutation  {
+            deletePatient(userId: ${userId}, patientId: ${selectedPatientId})
+            {_id,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},examination{area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}}}
           }
-        `,
-        variables: {
-          userId: this.context.userId,
-          patientId: selectedPatientId
-        }
+        `
     };
 
     fetch('http://localhost:10000/graphql', {
@@ -1996,19 +1599,27 @@ modalConfirmSearchHandler = (event) => {
     <Col md={2} className="updateUserCol">
     <p>Edit Patient</p>
     </Col>
-    <Col md={4} className="updateUserCol">
+    <Col md={2} className="updateUserCol">
     {this.context.token && (
       <Accordion.Toggle as={Button} variant="link" eventKey="8" className="btn" onClick={this.startUpdatePatientHandler}>
-      Basic Info & Demographics
+      Demographics
       </Accordion.Toggle>
     )}
     </Col>
     <Col md={2}>
       <p>Patient</p>
     </Col>
-    <Col md={4}>
+    <Col md={2}>
       {this.context.selectedPatient && (
         <p>{this.context.selectedPatient.name}</p>
+      )}
+    </Col>
+    <Col md={2}>
+      <p>Staff</p>
+    </Col>
+    <Col md={2}>
+      {this.context.selectedUser && (
+        <p>{this.context.selectedUser.name}</p>
       )}
     </Col>
     </Row>
@@ -2018,6 +1629,11 @@ modalConfirmSearchHandler = (event) => {
     <p>Edit Patient</p>
     </Col>
     <Col md={11} className="updateUserCol2">
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='consultant' onClick={this.updatePatientSpecial.bind(this)}>
+      Consultant
+      </Accordion.Toggle>
+    )}
     {this.context.token && (
       <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='insurance' onClick={this.updatePatientSpecial.bind(this)}>
       Insurance
@@ -2031,6 +1647,11 @@ modalConfirmSearchHandler = (event) => {
     {this.context.token && (
       <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='complaint' onClick={this.updatePatientSpecial.bind(this)}>
       Complaint
+      </Accordion.Toggle>
+    )}
+    {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='survey' onClick={this.updatePatientSpecial.bind(this)}>
+      Survey
       </Accordion.Toggle>
     )}
     {this.context.token && (
@@ -2099,6 +1720,19 @@ modalConfirmSearchHandler = (event) => {
     <Accordion.Collapse eventKey="9">
     <Row className="updateUserRowForm">
     <Col md={10} className="updateUserColForm">
+    {this.state.patientUpdateField === 'consultant' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientConsultantForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientConsultantHandler}
+        confirmText="Confirm"
+        consultant={this.context.selectedUser}
+      />
+    )}
     {this.state.patientUpdateField === 'insurance' &&
     this.state.selectedPatient !== null
     && (
@@ -2129,6 +1763,19 @@ modalConfirmSearchHandler = (event) => {
     this.state.selectedPatient !== null
     && (
       <UpdatePatientComplaintForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.updatePatientSurveyHandler}
+        confirmText="Confirm"
+        patient={this.state.selectedPatient}
+      />
+    )}
+    {this.state.patientUpdateField === 'survey' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientSurveyForm
       authUserId={this.context.userId}
       canCancel
         canConfirm

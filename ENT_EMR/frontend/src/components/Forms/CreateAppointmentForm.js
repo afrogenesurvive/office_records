@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
+import TimeField from 'react-simple-timefield';
 // import FormCheck from 'react-bootstrap/FormCheck'
 // import { NavLink } from 'react-router-dom';
 import AuthContext from '../../context/auth-context';
@@ -32,6 +33,10 @@ return (
 <Form.Group as={Col} controlId="formGridDate">
   <Form.Label>Date</Form.Label>
   <Form.Control type="date" placeholder="Date" />
+</Form.Group>
+<Form.Group as={Col} controlId="formGridTime">
+  <Form.Label>Time</Form.Label>
+  <Form.Control type="time" placeholder="Time" />
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridLocation">

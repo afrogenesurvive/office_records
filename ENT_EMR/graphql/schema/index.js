@@ -45,6 +45,7 @@ type Patient {
   _id: ID!
   name: String
   dob: String
+  age: String
   address: String
   registrationDate: String
   referralDate: String
@@ -52,10 +53,12 @@ type Patient {
   referringDoctor: referringDoctor
   contact: Contact
   appointments: [Appointment]
+  consultant: [Consultant]
   occupation: PatientOccupation
   nextOfKin: [NextOfKin]
   insurance: [Insurance]
   complaints: [Complaint]
+  surveys: [Survey]
   examination: [Examination]
   history: [History]
   allergies: [Allergy]
@@ -68,6 +71,10 @@ type Patient {
   tags: [String]
 }
 
+type Consultant {
+  date: String
+  reference: User
+}
 type referringDoctor {
   name: String
   email: String
@@ -103,7 +110,14 @@ type Complaint {
   description: String
   attachment: Attachment
 }
+type Survey {
+  date: String
+  title: String
+  description: String
+  attachment: Attachment
+}
 type Examination {
+  date: String
   area: String
   type: String
   measure: String
@@ -166,6 +180,7 @@ type Appointment {
   title: String
   type: String
   date: String
+  time: String
   location: String
   description: String
   patient: Patient
@@ -194,9 +209,11 @@ input UserInput {
   leaveEndDate: String
 }
 
+
 input PatientInput {
   name: String
   dob: String
+  age: Int
   address: String
   contactPhone: String
   contactEmail: String
@@ -207,6 +224,8 @@ input PatientInput {
   referringDoctorEmail: String
   referringDoctorPhone: String
   appointment: String
+  consultantDate: String
+  consultantReference: String
   occupationRole: String
   occupationEmployer: String
   occupationEmployerContactPhone: String
@@ -226,6 +245,12 @@ input PatientInput {
   complaintAttachmentName: String
   complaintAttachmentFormat: String
   complaintAttachmentPath: String
+  surveyDate: String
+  surveyTitle: String
+  surveyDescription: String
+  surveyAttachmentName: String
+  surveyAttachmentFormat: String
+  surveyAttachmentPath: String
   examinationArea: String
   examinationType: String
   examinationMeasure: String
@@ -290,6 +315,7 @@ input AppointmentInput {
   title: String
   type: String
   date: String
+  time: String
   location: String
   description: String
   inProgress: Boolean
@@ -312,6 +338,7 @@ type RootQuery {
     appointments(userId: ID!): [Appointment]
     getAppointmentId(appointmentId: ID! userId: ID!): Appointment
     getAppointmentField(userId: ID!, field: String!, query: String!): [Appointment]
+    getAppointmentDateRange(userId: ID!, startDate: String!, endDate: String!): [Appointment]
     getAppointmentToday(userId: ID!): [Appointment]
     getAppointmentWeek(userId: ID!): [Appointment]
     getAppointmentWeekImportant(userId: ID!): [Appointment]
@@ -335,9 +362,11 @@ type RootMutation {
     updatePatientArray(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientField(userId: ID!, patientId: ID!, field: String!, query: String!): Patient
     updatePatientAppointment(userId: ID!, patientId: ID!, appointmentId: ID!): Patient
+    updatePatientConsultant(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientInsurance(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientNextOfKin(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientComplaint(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientSurvey(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientExamination(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientHistory(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientAllergies(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
