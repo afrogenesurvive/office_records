@@ -7,6 +7,7 @@ import UsersPage from './pages/Users';
 import PatientsPage from './pages/Patients';
 import AppointmentsPage from './pages/Appointments';
 import ThisUserPage from './pages/thisUser';
+import SidebarPage from './pages/Sidebar';
 import MainNavigation from './components/Navigation/MainNavigation';
 import AuthContext from './context/auth-context';
 
@@ -37,7 +38,6 @@ class App extends Component {
 
 
   componentDidMount() {
-
 
     // this.state.sessionStorageAuth = sessionStorage.getItem('login info');
     // console.log("  this.state.sessionStorageAuth:  ", {this.state.sessionStorageAuth);
@@ -92,7 +92,7 @@ class App extends Component {
               </Switch>
             </main>
             {this.state.token && (
-              <h4>Sidebar</h4>
+              <SidebarPage />
             )}
 
           </AuthContext.Provider>

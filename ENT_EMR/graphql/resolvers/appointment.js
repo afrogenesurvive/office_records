@@ -401,7 +401,7 @@ module.exports = {
 
       let appointment = new Appointment({
         _id: args.appointmentInput.id,
-        title:args.appointmentInput.title,
+        title: args.appointmentInput.title,
         type: args.appointmentInput.type,
         date: args.appointmentInput.date,
         time: args.appointmentInput.time,

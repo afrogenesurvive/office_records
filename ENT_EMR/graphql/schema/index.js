@@ -316,7 +316,7 @@ input AppointmentInput {
   title: String
   type: String
   date: String
-  time: String
+  time: String 
   location: String
   description: String
   inProgress: Boolean
