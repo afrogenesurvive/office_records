@@ -35,6 +35,8 @@ class UsersPage extends Component {
     isLoading: false,
     selectedUser: null,
     userUpdateField: null,
+    userSearchField: null,
+    userSearchQuery: null,
   };
   isActive = true;
 
@@ -538,6 +540,11 @@ class UsersPage extends Component {
       let field = event.target.formBasicField.value;
       let query = event.target.formBasicQuery.value;
 
+      this.setState({
+        userSearchField: field,
+        userSearchQuery: query,
+      })
+
       if (
         field.trim().length === 0 ||
         query.trim().length === 0
@@ -777,6 +784,12 @@ updateUserSpecial (event) {
   };
 
 
+  userSearchClearlHandler () {
+    console.log("clearing user search results");
+    this.setState({searchUsers: []});
+  }
+
+
   componentWillUnmount() {
     this.isActive = false;
   }
@@ -786,262 +799,261 @@ updateUserSpecial (event) {
 
     <React.Fragment>
 
-      <SidebarPage/>
-
 
 
     <Accordion>
 
-    <Container className="containerUserDetail">
+    <Row>
 
-    <Row className="createUserRowAdd">
-    <Col md={4} className="createUserColAdd">
-    <p>Staff Detail</p>
+    <Col md={2} className="MasterCol1">
+
+    <SidebarPage/>
+
     </Col>
-    <Col md={6} className="createUserColAdd">
-    <Accordion.Toggle as={Button} variant="link" eventKey="4" className="btn">
-    Details
-    </Accordion.Toggle>
+
+    <Col md={7} className="MasterCol2">
+
+        <Container className="containerUserDetail">
+        <Row className="createUserRowAdd">
+          <Col md={4} className="createUserColAdd">
+            <p>Staff Detail</p>
+          </Col>
+          <Col md={6} className="createUserColAdd">
+            <Accordion.Toggle as={Button} variant="link" eventKey="4" className="btn">
+              Details
+            </Accordion.Toggle>
+          </Col>
+        </Row>
+
+        <Accordion.Collapse eventKey="4">
+          <Row className="createUserRowForm">
+            <Col md={11} className="createUserColForm">
+              {this.state.isLoading === false &&
+                this.state.selectedUser !== null
+                && (
+                  <UserDetail
+                  authUserId={this.context.userId}
+                  AuthContext={this.context}
+                  user={this.state.selectedUser}
+                  onEdit={this.startUpdateUserHandler}
+                  onDelete={this.modalDeleteHandler}
+                  />
+                )}
+            </Col>
+          </Row>
+        </Accordion.Collapse>
+        </Container>
+
+        <Container className="containerCreateUpdate">
+          <Row className="createUserRowAdd">
+            <Col md={4} className="createUserColAdd">
+              <p>Add New Staff</p>
+            </Col>
+            <Col md={4}>
+              {this.context.token && (
+                <Accordion.Toggle as={Button} variant="link" eventKey="0" className="btn" onClick={this.startCreateUserHandler}>
+                  Add
+                </Accordion.Toggle>
+              )}
+            </Col>
+          </Row>
+
+          <Accordion.Collapse eventKey="0">
+            <Row className="createUserRowForm">
+              <Col md={11} className="createUserColForm">
+                {this.state.creating && (
+                  <CreateUserForm
+                    authUserId={this.context.userId}
+                    canCancel
+                    canConfirm
+                    onCancel={this.modalCancelHandler}
+                    onConfirm={this.modalConfirmHandler}
+                    onSubmit={this.modalConfirmHandler}
+                    confirmText="Confirm"
+                  />
+                )}
+              </Col>
+            </Row>
+          </Accordion.Collapse>
+
+        <Row className="updateUserRowAdd">
+          <Col md={2} className="updateUserCol">
+            <p>Edit Selected Staff</p>
+          </Col>
+          <Col md={4} className="updateUserCol">
+            {this.context.token && (
+              <Accordion.Toggle as={Button} variant="link" eventKey="1" className="btn" onClick={this.startUpdateUserHandler}>
+                Basic Info & Demographics
+              </Accordion.Toggle>
+            )}
+          </Col>
+          <Col md={2}>
+            <p>Staff</p>
+          </Col>
+          <Col md={4}>
+            {this.context.selectedUser && (
+              <p>{this.context.selectedUser.name}</p>
+            )}
+          </Col>
+        </Row>
+        <Row className="createUserRowAdd">
+          <Col md={3} className="updateUserCol2">
+            <p>Edit Selected Staff</p>
+          </Col>
+          <Col md={9} className="updateUserCol2">
+            {this.context.token && (
+              <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" value='attendance' onClick={this.updateUserSpecial.bind(this)}>
+                Attendance
+              </Accordion.Toggle>
+            )}
+            {this.context.token && (
+              <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" value='leave' onClick={this.updateUserSpecial.bind(this)}>
+                Leave
+              </Accordion.Toggle>
+            )}
+            {this.context.token && (
+              <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" value='attachments' onClick={this.updateUserSpecial.bind(this)}>
+                Attachments
+              </Accordion.Toggle>
+            )}
+          </Col>
+        </Row>
+
+        <Accordion.Collapse eventKey="1">
+          <Row className="updateUserRowForm">
+            <Col md={10} className="updateUserColForm">
+            {this.state.updating &&
+              this.state.selectedUser !== null
+              && (
+              <UpdateUserForm
+                authUserId={this.context.userId}
+                canCancel
+                canConfirm
+                onCancel={this.modalCancelHandler}
+                onConfirm={this.modalConfirmUpdateHandler}
+                confirmText="Confirm"
+                user={this.context.selectedUser}
+              />
+            )}
+            </Col>
+          </Row>
+        </Accordion.Collapse>
+
+        <Accordion.Collapse eventKey="2">
+        <Row className="updateUserRowForm">
+        <Col md={10} className="updateUserColForm">
+        {this.state.userUpdateField === 'attendance' &&
+        this.state.selectedUser !== null
+         && (
+           <UpdateUserAttendanceForm
+          authUserId={this.context.userId}
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.updateUserAttendanceHandler}
+            confirmText="Confirm"
+            user={this.state.selectedUser}
+          />)}
+        {this.state.userUpdateField === 'leave' &&
+        this.state.selectedUser !== null
+        && (<UpdateUserLeaveForm
+          authUserId={this.context.userId}
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.updateUserLeaveHandler}
+            confirmText="Confirm"
+            user={this.state.selectedUser}
+          />)}
+        {this.state.userUpdateField === 'attachments' &&
+        this.state.selectedUser !== null
+        && (<UpdateUserAttachmentForm
+          authUserId={this.context.userId}
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.updateUserAttachmentHandler}
+            confirmText="Confirm"
+            user={this.state.selectedUser}
+          />)}
+        </Col>
+        </Row>
+        </Accordion.Collapse>
+        </Container>
+
+        <Container className="containerUserMasterList">
+        <Row className="searchListRow">
+
+        {this.state.isLoading ? (
+          <Spinner />
+        ) : (
+          <UserList
+            users={this.state.users}
+            authUserId={this.context.userId}
+            onViewDetail={this.showDetailHandler}
+          />)}
+
+        </Row>
+        </Container>
+    </Col>
+
+
+    <Col md={3} className="MasterCol3">
+
+    <Container className="containerSearchuser">
+    <Row className="searchUserRowAdd">
+    <Col md={4} className="searchUserColAdd">
+    <p>Search for a User</p>
+    </Col>
+    <Col md={8}>
+      {this.context.token && (
+      <Accordion.Toggle as={Button} variant="link" eventKey="3" className="btn" onClick={this.startSearchUserHandler}>
+      Search
+      </Accordion.Toggle>)}
     </Col>
     </Row>
 
-    <Accordion.Collapse eventKey="4">
-    <Row className="createUserRowForm">
-    <Col md={11} className="createUserColForm">
-    {this.state.isLoading === false &&
-      this.state.selectedUser !== null
-      &&
-      (<UserDetail
-        authUserId={this.context.userId}
-        AuthContext={this.context}
-        user={this.state.selectedUser}
-        onEdit={this.startUpdateUserHandler}
-        onDelete={this.modalDeleteHandler}
-    />)}
-    </Col>
-    </Row>
-    </Accordion.Collapse>
-
-    </Container>
-
-    <Container className="containerCreateUpdate">
-
-    <Row className="createUserRowAdd">
-    <Col md={4} className="createUserColAdd">
-    <p>Add New Staff</p>
-    </Col>
-    <Col md={4}>
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="0" className="btn" onClick={this.startCreateUserHandler}>
-      Add
-      </Accordion.Toggle>
-    )}
-    </Col>
-    </Row>
-
-    <Accordion.Collapse eventKey="0">
-    <Row className="createUserRowForm">
-    <Col md={11} className="createUserColForm">
-    {this.state.creating && (
-      <CreateUserForm
+    <Accordion.Collapse eventKey="3">
+    <Row className="searchUserRowForm">
+    <Col md={10} className="searchUserColForm">
+    {this.state.searching === true &&
+      <SearchUserForm
       authUserId={this.context.userId}
       canCancel
         canConfirm
         onCancel={this.modalCancelHandler}
-        onConfirm={this.modalConfirmHandler}
-        onSubmit={this.modalConfirmHandler}
-        confirmText="Confirm"
-      />
-    )}
-    </Col>
-    </Row>
-    </Accordion.Collapse>
-
-
-
-    <Row className="updateUserRowAdd">
-    <Col md={2} className="updateUserCol">
-    <p>Edit Selected Staff</p>
-    </Col>
-    <Col md={4} className="updateUserCol">
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="1" className="btn" onClick={this.startUpdateUserHandler}>
-      Basic Info & Demographics
-      </Accordion.Toggle>
-    )}
-    </Col>
-    <Col md={2}>
-      <p>Staff</p>
-    </Col>
-    <Col md={4}>
-      {this.context.selectedUser && (
-        <p>{this.context.selectedUser.name}</p>
-      )}
-    </Col>
-    </Row>
-
-    <Row className="createUserRowAdd">
-    <Col md={3} className="updateUserCol2">
-    <p>Edit Selected Staff</p>
-    </Col>
-    <Col md={9} className="updateUserCol2">
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" value='attendance' onClick={this.updateUserSpecial.bind(this)}>
-      Attendance
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" value='leave' onClick={this.updateUserSpecial.bind(this)}>
-      Leave
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="2" className="btn" value='attachments' onClick={this.updateUserSpecial.bind(this)}>
-      Attachments
-      </Accordion.Toggle>
-    )}
-    </Col>
-    </Row>
-
-    <Accordion.Collapse eventKey="1">
-    <Row className="updateUserRowForm">
-    <Col md={10} className="updateUserColForm">
-    {this.state.updating &&
-      this.state.selectedUser !== null
-      && (
-      <UpdateUserForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.modalConfirmUpdateHandler}
-        confirmText="Confirm"
+        onConfirm={this.modalConfirmSearchHandler}
+        confirmText="Search"
         user={this.context.selectedUser}
-      />
-    )}
+      />}
+    </Col>
+    <Col md={10}>
     </Col>
     </Row>
     </Accordion.Collapse>
-
-    <Accordion.Collapse eventKey="2">
-    <Row className="updateUserRowForm">
-    <Col md={10} className="updateUserColForm">
-    {this.state.userUpdateField === 'attendance' &&
-    this.state.selectedUser !== null
-     && (
-      <UpdateUserAttendanceForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updateUserAttendanceHandler}
-        confirmText="Confirm"
-        user={this.state.selectedUser}
-      />
-    )}
-    {this.state.userUpdateField === 'leave' &&
-    this.state.selectedUser !== null
-    && (
-      <UpdateUserLeaveForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updateUserLeaveHandler}
-        confirmText="Confirm"
-        user={this.state.selectedUser}
-      />
-    )}
-    {this.state.userUpdateField === 'attachments' &&
-    this.state.selectedUser !== null
-    && (
-      <UpdateUserAttachmentForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updateUserAttachmentHandler}
-        confirmText="Confirm"
-        user={this.state.selectedUser}
-      />
-    )}
-    </Col>
-    </Row>
-    </Accordion.Collapse>
-
-
     </Container>
 
 
-
-  <Container className="containerSearchuser">
-  <Row className="searchUserRowAdd">
-  <Col md={4} className="searchUserColAdd">
-  <p>Search for a User</p>
-  </Col>
-  <Col md={8}>
-    {this.context.token && (
-    <Accordion.Toggle as={Button} variant="link" eventKey="3" className="btn" onClick={this.startSearchUserHandler}>
-    Search
-    </Accordion.Toggle>
-    )}
-  </Col>
-  </Row>
-
-  <Accordion.Collapse eventKey="3">
-  <Row className="searchUserRowForm">
-  <Col md={10} className="searchUserColForm">
-  {
-    this.state.searching === true &&
-    <SearchUserForm
-    authUserId={this.context.userId}
-    canCancel
-      canConfirm
-      onCancel={this.modalCancelHandler}
-      onConfirm={this.modalConfirmSearchHandler}
-      confirmText="Search"
-      user={this.context.selectedUser}
-    />
-  }
-  </Col>
-  <Col md={10}>
-
-  </Col>
-  </Row>
-  </Accordion.Collapse>
-  </Container>
-
-  <Accordion.Collapse eventKey="3">
-  <Container className="containerSearchuser">
-  <Row className="searchListRow">
-  {
-    this.state.searchUsers !== [] &&
-    <SearchUserList
-      searchUsers={this.state.searchUsers}
-      authUserId={this.context.userId}
-      onCancel={this.modalCancelHandler}
+    <Container className="containerSearchuser">
+    <Row>
+      <h4>Your Search</h4>
+      <p>Field: {this.state.userSearchField}</p>
+      <p>Query: {this.state.userSearchQuery}</p>
+    </Row>
+    <Row className="searchListRow">
+    {this.state.searchUsers !== [] &&
+      <SearchUserList
+        searchUsers={this.state.searchUsers}
+        authUserId={this.context.userId}
         onViewDetail={this.showDetailHandler}
-    />
-  }
+      />}
+    </Row>
+    </Container>
+
+
+  </Col>
   </Row>
-  </Container>
-  </Accordion.Collapse>
 
-<Container className="containerSearchuser">
-<Row className="searchListRow">
-
-{this.state.isLoading ? (
-  <Spinner />
-) : (
-  <UserList
-    users={this.state.users}
-    authUserId={this.context.userId}
-    onViewDetail={this.showDetailHandler}
-  />
-)}
-
-</Row>
-</Container>
 </Accordion>
 </React.Fragment>
     );

@@ -18,16 +18,21 @@
 
 .containerCreateUpdate {
   margin-top: 5rem;
-  width: 95vh;
+  width: 95%;
 }
 .containerSearchuser {
   margin-top: 5rem;
-  width: 95vh;
+  width: 25vw;
+  padding: 2rem;
+}
+.containerUserMasterList {
+  margin-top: 5rem;
+  width: 95%;
   padding: 2rem;
 }
 .containerUserDetail {
   margin-top: 5rem;
-  width: 95vh;
+  width: 50vw;
 }
 .createUserRowAdd, .updateUserRowAdd, .searchUserRowAdd {
   border: 1.5px solid black;
