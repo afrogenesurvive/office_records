@@ -6,11 +6,12 @@ import './UserList.css';
 const patientExaminationList = props => {
   console.log("patient examination list props", props.patientExamination);
   const patientExamination = props.patientExamination.map(examination => {
+    const patientExaminationDate = new Date(examination.date*1000).toUTCString();
     return (
       <PatientExaminationItem
         key={examination.area}
         userId={props.authUserId}
-        area={examination.area}
+        date={patientExaminationDate}
         type={examination.type}
         measure={examination.measure}
         value={examination.value}

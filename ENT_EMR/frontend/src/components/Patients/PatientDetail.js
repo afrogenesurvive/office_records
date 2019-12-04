@@ -7,6 +7,7 @@ import PatientInsuranceList from './PatientList/PatientInsuranceList';
 import PatientConsultantList from './PatientList/PatientConsultantList';
 import PatientNextOfKinList from './PatientList/PatientNextOfKinList';
 import PatientComplaintList from './PatientList/PatientComplaintList';
+import PatientSurveyList from './PatientList/PatientSurveyList';
 import PatientExaminationList from './PatientList/PatientExaminationList';
 import PatientHistoryList from './PatientList/PatientHistoryList';
 import PatientAllergiesList from './PatientList/PatientAllergiesList';
@@ -27,6 +28,7 @@ const PatientDetail = (props) => {
   const patientConsultant = patient.consultant;
   const patientNextOfKin = patient.nextOfKin;
   const patientComplaint = patient.complaints;
+  const patientSurvey = patient.surveys;
   const patientExamination = patient.examination;
   const patientHistory = patient.history;
   const patientAllergies = patient.allergies;
@@ -116,6 +118,13 @@ const PatientDetail = (props) => {
       </Card.Text>
       <PatientComplaintList
         patientComplaint={patientComplaint}
+        authUserId={props.authUserId}
+        />
+      <Card.Text>
+        Surveys:
+      </Card.Text>
+      <PatientSurveyList
+        patientSurvey={patientSurvey}
         authUserId={props.authUserId}
         />
       <Card.Text>

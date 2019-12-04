@@ -24,7 +24,8 @@ module.exports = {
 
     try {
       const patients = await Patient.find()
-      .populate('appointments');
+      .populate('appointments')
+      .populate('consultant.reference');
 
       return patients.map(patient => {
         return transformPatient(patient);
@@ -560,6 +561,7 @@ module.exports = {
     try {
 
       const patientExaminationObject = {
+            date: args.patientInput.examinationDate,
             area: args.patientInput.examinationArea,
             type: args.patientInput.examinationType,
             measure: args.patientInput.examinationMeasure,
@@ -900,6 +902,7 @@ module.exports = {
         {
         name: args.patientInput.name,
         dob: args.patientInput.dob,
+        age: args.patientInput.age,
         address: args.patientInput.address,
         contact: {
           phone: args.patientInput.contactPhone,
@@ -930,6 +933,7 @@ module.exports = {
         ...result._doc,
         name: result.name,
         dob: result.dob,
+        age: result.age,
         address: result.address,
         contact: {
           phone: result.contact.phone,

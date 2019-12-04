@@ -7,16 +7,16 @@ const patientConsultantItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
       <p>
-        Date: {props.consultant.date}
+        Date: {props.date}
       </p>
       <p>
-      ID: {props.consultant.reference._id}
+      ID: {props.reference._id}
       </p>
       <p>
-        Name: {props.consultant.reference.name}
+        Name: {props.reference.name}
       </p>
       <p>
-        Role: {props.consultant.reference.role}
+        Role: {props.reference.role}
       </p>
     </div>
   </li>
