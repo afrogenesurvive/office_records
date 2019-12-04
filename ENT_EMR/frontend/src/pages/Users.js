@@ -14,6 +14,8 @@ import UserDetail from '../components/Users/UserDetail';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
 
+import SidebarPage from './Sidebar';
+
 import CreateUserForm from '../components/Forms/CreateUserForm';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
 import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceForm';
@@ -783,6 +785,10 @@ updateUserSpecial (event) {
     return (
 
     <React.Fragment>
+
+      <SidebarPage/>
+
+
 
     <Accordion>
 

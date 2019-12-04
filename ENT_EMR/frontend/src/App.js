@@ -17,7 +17,7 @@ class App extends Component {
   state = {
     token: null,
     userId: null,
-    sessionStorageAuth: null
+    context: this.context,
   };
 
   static contextType = AuthContext;
@@ -38,7 +38,7 @@ class App extends Component {
 
 
   componentDidMount() {
-
+    console.log("app component:  ", AuthContext._currentValue);
     // this.state.sessionStorageAuth = sessionStorage.getItem('login info');
     // console.log("  this.state.sessionStorageAuth:  ", {this.state.sessionStorageAuth);
 
@@ -91,9 +91,6 @@ class App extends Component {
                 {!this.state.token && <Redirect to="/auth" exact />}
               </Switch>
             </main>
-            {this.state.token && (
-              <SidebarPage />
-            )}
 
           </AuthContext.Provider>
         </React.Fragment>

@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
+import SidebarPage from './Sidebar';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -1533,6 +1534,8 @@ modalConfirmSearchHandler = (event) => {
     return (
 
     <React.Fragment>
+    <SidebarPage />
+
     <Accordion>
 
     <Container className="containerUserDetail">
