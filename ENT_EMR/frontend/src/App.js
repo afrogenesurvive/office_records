@@ -37,17 +37,9 @@ class App extends Component {
   };
 
 
-  componentDidMount() {
-    console.log("app component:  ", AuthContext._currentValue);
-    // this.state.sessionStorageAuth = sessionStorage.getItem('login info');
-    // console.log("  this.state.sessionStorageAuth:  ", {this.state.sessionStorageAuth);
-
-    // const sessionStorageToken = sessionStorage.getItem('sessionStorageToken');
-    // this.sessionStorageToken = sessionStorageToken;
-    // this.context.token = sessionStorageToken;
-    // console.log("sessionStorageToken:  ", JSON.stringify(this.sessionStorageToken), "  ...  ", JSON.stringify(this.context.token));
-
-  }
+  // componentDidMount() {
+  //
+  // }
 
   render() {
     return (
@@ -67,6 +59,10 @@ class App extends Component {
               appointmentPatientId: null,
               userUpdateField: null,
               patientUpdateField: null,
+              appointmentUpdateField: null,
+              appointmentsToday: null,
+              appointmentsWeekImportant: null,
+              appointmentsInProgress: null,
               login: this.login,
               logout: this.logout
             }}
