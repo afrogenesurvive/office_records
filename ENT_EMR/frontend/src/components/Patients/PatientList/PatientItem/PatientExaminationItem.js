@@ -7,6 +7,9 @@ const patientExaminationItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
       <p>
+      Date: {props.date}
+      </p>
+      <p>
       Area: {props.area}
       </p>
       <p>

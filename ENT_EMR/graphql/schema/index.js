@@ -45,7 +45,7 @@ type Patient {
   _id: ID!
   name: String
   dob: String
-  age: String
+  age: Int
   address: String
   registrationDate: String
   referralDate: String
@@ -251,6 +251,7 @@ input PatientInput {
   surveyAttachmentName: String
   surveyAttachmentFormat: String
   surveyAttachmentPath: String
+  examinationDate: String
   examinationArea: String
   examinationType: String
   examinationMeasure: String

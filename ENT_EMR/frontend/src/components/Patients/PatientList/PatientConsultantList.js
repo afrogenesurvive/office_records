@@ -6,12 +6,13 @@ import './UserList.css';
 const patientConsultantList = props => {
   console.log("patient consultant list props", props.patientConsultant);
   const patientConsultant = props.patientConsultant.map(consultant => {
-    // const patientConsultantExpiry = new Date(insurance.expiry*1000).toUTCString();
+    const consultantDate = new Date(consultant.date*1000).toUTCString();
     return (
       <PatientConsultantItem
         key={consultant.date}
         userId={props.authUserId}
-        consultant={consultant}
+        date={consultantDate}
+        reference={consultant.reference}
       />
     );
   });
