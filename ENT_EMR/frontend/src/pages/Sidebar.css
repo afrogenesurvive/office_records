@@ -1,0 +1,10 @@
+/* css */
+.sidebarContainer {
+  width: 5rem;
+  height: 20rem;
+  margin-left: 1rem;
+  position: fixed;
+  left: 0;
+  top: 3.5rem;
+  border: 1px solid black;
+}

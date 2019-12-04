@@ -69,8 +69,6 @@ class AppointmentsPage extends Component {
   };
 
   modalConfirmHandler = (event) => {
-    const timeInputValue = ReactDOM.findDOMNode(AppointmentsPage).getElementsByClassName('appointmentTimeInput')
-    console.log("event:  ", event.target.appointmentTimeInput, timeInputValue);
 
     console.log("CreateAppointmentFormData:  ", event.target.formGridTitle.value);
 
@@ -109,7 +107,7 @@ class AppointmentsPage extends Component {
       // return;
     }
 
-    const appointment = { title, type, date, location, description, inProgress, attended, important, notes };
+    const appointment = { title, type, date, time, location, description, inProgress, attended, important, notes };
     console.log(`creating appointment...
         title: ${title},
         type: ${type},
@@ -126,7 +124,8 @@ class AppointmentsPage extends Component {
     const requestBody = {
       query: `
           mutation {
-            createAppointment(userId:\"${userId}\", patientId:\"${patientId}\", appointmentInput: {title:\"${title}\",type:\"${type}\",date:\"${date}\",time:\"test\",location:\"${location}\",description:\"${description}\",inProgress:${inProgress},attended:${attended},important:${important},notes:\"${notes}\"}){_id,title,date,type,patient{name,dob,address},inProgress,attended,important,notes}}
+            createAppointment(userId:\"${userId}\", patientId:\"${patientId}\", appointmentInput: {title:\"${title}\",type:\"${type}\",date:\"${date}\",time:\"${time}\",location:\"${location}\",description:\"${description}\",inProgress:${inProgress},attended:${attended},important:${important},notes:\"${notes}\"})
+            {_id,title,date,time,type,patient{name,dob,address},inProgress,attended,important,notes}}
         `,
     };
 
@@ -207,6 +206,7 @@ class AppointmentsPage extends Component {
     let title = event.target.formGridTitle.value;
     let type = event.target.formGridType.value;
     let date = event.target.formGridDate.value;
+    let time = event.target.formGridTime.value;
     let location = event.target.formGridLocation.value;
     let description = event.target.formGridDescription.value;
     let inProgress = event.target.formGridInProgress.value;
@@ -226,6 +226,10 @@ class AppointmentsPage extends Component {
     if (date.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
       date  = this.context.selectedAppointment.date;
+    }
+    if (time.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      time  = this.context.selectedAppointment.time;
     }
     if (location.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -260,6 +264,7 @@ class AppointmentsPage extends Component {
         title: ${title}
         type: ${type}
         date: ${date}
+        time: ${time}
         location: ${location}
         description: ${description}
         inProgress: ${inProgress}
@@ -270,21 +275,10 @@ class AppointmentsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation {updateAppointment(userId:\"${userId}\", appointmentId:\"${appointmentId}\", appointmentInput: {title:\"${title}\",type:\"${type}\",date:\"${date}\",location:\"${location}\",description:\"${description}\"}){_id,title,date,patient{name}}}
-        `,
-        variables: {
-          userId: userId,
-          appointmentId: appointmentId,
-          title: title,
-          type: type,
-          date: date,
-          location: location,
-          description: description,
-          inProgress: inProgress,
-          attended: attended,
-          important: important,
-          notes: notes
+          mutation {updateAppointment(userId:\"${userId}\", appointmentId:\"${appointmentId}\", appointmentInput: {title:\"${title}\",type:\"${type}\",date:\"${date}\",time:\"${time}\",location:\"${location}\",description:\"${description}\"})
+          {_id,title,date,time,type,patient{name,dob,address},inProgress,attended,important,notes}}
         }
+        `
     };
 
     const token = this.context.token;
@@ -318,6 +312,7 @@ class AppointmentsPage extends Component {
           title: resData.data.updateAppointment.title,
           type: resData.data.updateAppointment.type,
           date: resData.data.updateAppointment.date,
+          time: resData.data.updateAppointment.time,
           location: resData.data.updateAppointment.location,
           description: resData.data.updateAppointment.description,
           patient: resData.data.updateAppointment.patient,
@@ -360,7 +355,7 @@ class AppointmentsPage extends Component {
       const requestBody = {
         query:`
         mutation {updateAppointmentPatient(userId:\"${userId}\",appointmentId:\"${selectedAppointmentId}\",patientId:\"${selectedPatientId}\")
-        {_id,title,date,patient{_id,name,address,contact{phone,email},registrationDate,referralDate,expirationDate,insurance{company,number,expiry}},notes,inProgress,attended,important}}
+        {_id,title,date,time,patient{_id,name,address,contact{phone,email},registrationDate,referralDate,expirationDate,insurance{company,number,expiry}},notes,inProgress,attended,important}}
         `
       }
 
@@ -426,11 +421,13 @@ class AppointmentsPage extends Component {
       const requestBody = {
         query: `
           query GetAppointmentField($userId: ID!, $field: String!, $query: String!)
-          {getAppointmentField(userId: $userId, field: $field, query: $query ){
+          {getAppointmentField(userId: $userId, field: $field, query: $query )
+            {
             _id
             title
             type
             date
+            time
             location
             description
             patient{
@@ -496,11 +493,13 @@ class AppointmentsPage extends Component {
     const requestBody = {
       query: `
           query appointments($userId: ID!) {
-            appointments(userId: $userId) {
+            appointments(userId: $userId)
+            {
               _id
               title
               type
               date
+              time
               location
               description
               patient
@@ -572,6 +571,7 @@ class AppointmentsPage extends Component {
               title
               type
               date
+              time
               location
               description
               patient
