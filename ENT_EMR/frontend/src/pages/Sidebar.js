@@ -13,7 +13,9 @@ import AuthContext from '../context/auth-context';
 import './Sidebar.css';
 
 class SidebarPage extends Component {
-  state = {};
+  state = {
+    authContext: AuthContext._currentValue,
+  };
   isActive = true;
 
   static contextType = AuthContext;
@@ -22,10 +24,14 @@ class SidebarPage extends Component {
   //   super(props);
   // }
   //
-  // componentDidMount() {
-  //   this.state = this.context;
-  //   console.log("state:  ", this.state);
-  // }
+
+
+
+  componentDidMount() {
+    console.log("state:  ", this.state.authContext);
+    // console.log("context:  ", AuthContext._currentValue);
+    // run get today appts func and req
+  }
 
 
   componentWillUnmount() {
@@ -39,6 +45,13 @@ class SidebarPage extends Component {
       <Row className="">
       <Col md={8} className="">
       <h2>Sidebar</h2>
+      <h5>You</h5>
+      <p>ID: {this.context.user._id}</p>
+      <p>Name: {this.context.user.name}</p>
+      <h5>Selection</h5>
+      <p>Staff: {this.context.selectedUser.name}</p>
+      <p>Patient: {this.context.selectedPatient.name}</p>
+      <p>Appt: {this.context.selectedAppointment.title}</p>
       </Col>
       </Row>
       </Container>

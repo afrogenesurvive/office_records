@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
+import SidebarPage from './Sidebar';
+
 import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceForm';
 import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentForm';
 import UpdateUserLeaveForm from '../components/Forms/UpdateUserLeaveForm';
@@ -488,6 +490,10 @@ class ThisUserPage extends Component {
   render() {
     return (
       <React.Fragment>
+
+      <SidebarPage
+      you={this.state.user}
+      />
       <Accordion>
       <Container className="containerUserProfile">
       <Row className="UserProfileRow">
