@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
+import AppointmentTodayList from '../components/Appointments/AppointmentList/AppointmentTodayList';
+import AppointmentInProgressList from '../components/Appointments/AppointmentList/AppointmentInProgressList';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -20,10 +22,13 @@ class SidebarPage extends Component {
 
   static contextType = AuthContext;
 
-  // constructor(props) {
-  //   super(props);
-  // }
-  //
+  constructor(props) {
+    super(props);
+    // this.appointmentsToday = this.context.appointmentsToday;
+    // this.appointmentsWeekImportant = this.context.appointmentsWeekImportant;
+    // this.appointmentsInprogress = this.context.appointmentsInprogress;
+  }
+
 
 
 
@@ -52,6 +57,32 @@ class SidebarPage extends Component {
       <p>Staff: {this.context.selectedUser.name}</p>
       <p>Patient: {this.context.selectedPatient.name}</p>
       <p>Appt: {this.context.selectedAppointment.title}</p>
+      </Col>
+      </Row>
+      <Row className="">
+      <Col md={8} className="">
+      <h5>Appointments Today</h5>
+      {this.context.appointmentsToday !== null && (
+
+        <AppointmentTodayList
+          appointmentToday={this.context.appointmentsToday}
+          authUserId={this.context.userId}
+          />
+      )}
+
+      </Col>
+      </Row>
+      <Row className="">
+      <Col md={8} className="">
+      <h5>Appointments InProgress</h5>
+      {this.context.appointmentsInProgress !== null && (
+
+        <AppointmentInProgressList
+          appointmentInProgress={this.context.appointmentsInProgress}
+          authUserId={this.context.userId}
+          />
+      )}
+
       </Col>
       </Row>
       </Container>

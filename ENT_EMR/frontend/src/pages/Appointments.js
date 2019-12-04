@@ -53,6 +53,8 @@ class AppointmentsPage extends Component {
 
   componentDidMount() {
     this.fetchAppointments();
+    this.fetchAppointmentToday();
+    this.fetchAppointmentInProgress();
   }
 
 
@@ -654,6 +656,85 @@ class AppointmentsPage extends Component {
       return { selecteAppointment: selectedAppointment };
     });
   };
+
+
+  fetchAppointmentToday() {
+    console.log("fetching todays appts function:  ");
+
+    const token = this.context.token;
+    const userId = this.context.userId;
+
+    const requestBody = {
+      query: `
+          query {getAppointmentToday(userId:"${userId}")
+          {_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+        `
+    };
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        this.context.appointmentsToday = resData.data.getAppointmentToday;
+        console.log("context today's appts:  ", JSON.stringify(this.context.appointmentsToday));
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+
+  }
+
+
+  fetchAppointmentInProgress() {
+    console.log("fetching inProgress appts function:  ");
+
+    const token = this.context.token;
+    const userId = this.context.userId;
+
+    const requestBody = {
+      query: `
+          query {getAppointmentField(userId:\"${userId}\",field:\"inProgress\",query:\"true\"){_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+        `
+    };
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        this.context.appointmentsInProgress = resData.data.getAppointmentField;
+        console.log("context in progress appts:  ", JSON.stringify(this.context.appointmentsInProgress));
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+
+  }
 
 
   componentWillUnmount() {
