@@ -21,7 +21,7 @@ const searchUserList = props => {
       </React.Fragment>
     );
   });
-  return <ul className="user__list">{searchUsers}</ul>;
+  return <ul className="user__list1">{searchUsers}</ul>;
 };
 
 export default searchUserList;

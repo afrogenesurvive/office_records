@@ -20,7 +20,7 @@ const userAttendanceList = props => {
     );
   });
 
-  return <ul className="userAttendanceList">{userAttendance}</ul>;
+  return <ul className="user__list1">{userAttendance}</ul>;
 };
 
 export default userAttendanceList;

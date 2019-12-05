@@ -20,7 +20,7 @@ const userLeaveList = props => {
     );
   });
 
-  return <ul className="userLeaveList">{userLeave}</ul>;
+  return <ul className="user__list1">{userLeave}</ul>;
 };
 
 export default userLeaveList;

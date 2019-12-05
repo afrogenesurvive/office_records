@@ -521,7 +521,7 @@ class ThisUserPage extends Component {
           </Tab>
 
           <Tab eventKey="Demographics" title="Demographics">
-          <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Demographics</Button>
+          <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Demographics</Button>
           {this.state.updating === true && (
             <UpdateUserForm
             canCancelProfile
@@ -537,7 +537,7 @@ class ThisUserPage extends Component {
           </Tab>
 
           <Tab eventKey="Atttendance" title="Atttendance">
-            <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecialProfile.bind(this)}>Edit Attendance</Button>
+            <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecialProfile.bind(this)}>Attendance</Button>
             {this.state.userUpdateField === 'attendance' && (
               <UpdateUserAttendanceForm
               authUserId={this.context.userId}
@@ -552,7 +552,7 @@ class ThisUserPage extends Component {
           </Tab>
 
           <Tab eventKey="Leave" title="Leave">
-            <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecialProfile.bind(this)}>Edit Leave</Button>
+            <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecialProfile.bind(this)}>Leave</Button>
             {this.state.userUpdateField === 'leave' && (
               <UpdateUserLeaveForm
               authUserId={this.context.userId}
@@ -567,7 +567,7 @@ class ThisUserPage extends Component {
           </Tab>
 
           <Tab eventKey="Attachment" title="Attachment">
-          <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecialProfile.bind(this)}>Edit Attachment</Button>
+          <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecialProfile.bind(this)}>Attachment</Button>
           {this.state.userUpdateField === 'attachments' && (
             <UpdateUserAttachmentForm
             authUserId={this.context.userId}
