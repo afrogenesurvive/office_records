@@ -2,6 +2,9 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+
 import PatientAppointmentList from './PatientList/PatientAppointmentList';
 import PatientInsuranceList from './PatientList/PatientInsuranceList';
 import PatientConsultantList from './PatientList/PatientConsultantList';
@@ -45,9 +48,14 @@ const PatientDetail = (props) => {
   console.log("PatientDetail.props.patient:  ", {...patient});
 
   return (
-    <div className="PatientDetailBox">
-    <Card className="PatientDetailCard">
-    <Card.Body>
+    <div className="PatientDetailBox1">
+
+    <Tabs defaultActiveKey="Demographics" id="uncontrolled-tab-example" className="tab">
+      <Tab eventKey="" title="Details:" disabled>
+      </Tab>
+      <Tab eventKey="Demographics" title="Demographics">
+      <Card className="PatientDetailCard">
+      <Card.Body>
       <Card.Title>Patient Details:</Card.Title>
       <Card.Text>
         ID: {patient._id}
@@ -85,41 +93,56 @@ const PatientDetail = (props) => {
       <Card.Text>
         Employer Email: {patient.occupation.contact.email}
       </Card.Text>
+      </Card.Body>
+      </Card>
+
+      </Tab>
+      <Tab eventKey="Appointments" title="Appointments">
       <Card.Text>
         Appointments:
       </Card.Text>
-        <PatientAppointmentList
-        patientAppointment={patientAppointment}
-        authUserId={props.authUserId}
-        />
+      <PatientAppointmentList
+      patientAppointment={patientAppointment}
+      authUserId={props.authUserId}
+      />
+      </Tab>
+      <Tab eventKey="Consultant" title="Consultant">
       <Card.Text>
-      Consultant:
+        Consultants:
       </Card.Text>
       <PatientConsultantList
         patientConsultant={patientConsultant}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Insurance" title="Insurance">
       <Card.Text>
-      Insurance:
+        Insurance:
       </Card.Text>
       <PatientInsuranceList
         patientInsurance={patientInsurance}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="NextOfKin" title="NextOfKin">
       <Card.Text>
-        Next Of Kin:
+        NextOfKin:
       </Card.Text>
       <PatientNextOfKinList
         patientNextOfKin={patientNextOfKin}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Complaint" title="Complaint">
       <Card.Text>
-        Complaints:
+        Complaint:
       </Card.Text>
       <PatientComplaintList
         patientComplaint={patientComplaint}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Survey" title="Survey">
       <Card.Text>
         Surveys:
       </Card.Text>
@@ -127,6 +150,8 @@ const PatientDetail = (props) => {
         patientSurvey={patientSurvey}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Examination" title="Examination">
       <Card.Text>
         Examination:
       </Card.Text>
@@ -134,6 +159,8 @@ const PatientDetail = (props) => {
         patientExamination={patientExamination}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="History" title="History">
       <Card.Text>
         History:
       </Card.Text>
@@ -141,6 +168,8 @@ const PatientDetail = (props) => {
         patientHistory={patientHistory}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Allergies" title="Allergies">
       <Card.Text>
         Allergies:
       </Card.Text>
@@ -148,6 +177,8 @@ const PatientDetail = (props) => {
         patientAllergies={patientAllergies}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Medication" title="Medication">
       <Card.Text>
         Medication:
       </Card.Text>
@@ -155,6 +186,8 @@ const PatientDetail = (props) => {
         patientMedication={patientMedication}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Investigation" title="Investigation">
       <Card.Text>
         Investigation:
       </Card.Text>
@@ -162,6 +195,8 @@ const PatientDetail = (props) => {
         patientInvestigation={patientInvestigation}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Diagnosis" title="Diagnosis">
       <Card.Text>
         Diagnosis:
       </Card.Text>
@@ -169,6 +204,8 @@ const PatientDetail = (props) => {
         patientDiagnosis={patientDiagnosis}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Treatment" title="Treatment">
       <Card.Text>
         Treatment:
       </Card.Text>
@@ -176,6 +213,8 @@ const PatientDetail = (props) => {
         patientTreatment={patientTreatment}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Billing" title="Billing">
       <Card.Text>
         Billing:
       </Card.Text>
@@ -183,16 +222,8 @@ const PatientDetail = (props) => {
         patientBilling={patientBilling}
         authUserId={props.authUserId}
         />
-      {props.canEdit && (
-        <Accordion.Toggle as={Button} variant="link" eventKey="8" className="btn" onClick={props.onEdit}>
-        Edit
-        </Accordion.Toggle>
-      )}
-      {props.canDelete && (
-        <Button variant="warning" onClick={props.onDelete}>Delete</Button>
-      )}
-    </Card.Body>
-  </Card>
+      </Tab>
+    </Tabs>
   </div>
   );
 }

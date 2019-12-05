@@ -817,7 +817,9 @@ updateUserSpecial (event) {
     <Col md={6} className="MasterCol2">
 
         <Container className="containerCombinedDetail">
-          <Tabs defaultActiveKey="" id="uncontrolled-tab-example">
+          <Tabs defaultActiveKey="userDetail" id="uncontrolled-tab-example">
+          <Tab eventKey="Edit" title="Edit:" disabled>
+          </Tab>
             <Tab eventKey="userDetail" title="Details">
                   {this.state.selectedUser === null && (
                     <Button variant="outline-warning" size="lg">
