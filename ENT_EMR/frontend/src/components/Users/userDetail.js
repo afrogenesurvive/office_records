@@ -2,6 +2,9 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+
 import UserAttendanceList from './UserList/UserAttendanceList';
 import UserLeaveList from './UserList/UserLeaveList';
 import UserAttachmentList from './UserList/UserAttachmentList';
@@ -26,49 +29,51 @@ const UserDetail = (props) => {
   return (
     <div className={"UserDetailBox1"}>
 
-    <Card className="UserDetailCard">
-    <Card.Body>
-      <Card.Title>User Details</Card.Title>
-      <Card.Text>
-        ID: {user._id}
-      </Card.Text>
-      <Card.Text>
-        Name: {user.name}
-      </Card.Text>
-      <Card.Text>
-        Email: {user.email}
-      </Card.Text>
-      <Card.Text>
-        Role: {user.role}
-      </Card.Text>
-      <Card.Text>
-        Start Date: {userEmploymentDate}
-      </Card.Text>
-      <Card.Text>
-        End Date: {userTerminationDate}
-      </Card.Text>
-      <Card.Text>
-        Attendance:
-      </Card.Text>
+    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="tab">
+      <Tab eventKey="Demographics" title="Demographics">
+      <Card className="UserDetailCard">
+      <Card.Body>
+        <Card.Title>User Details</Card.Title>
+        <Card.Text>
+          ID: {user._id}
+        </Card.Text>
+        <Card.Text>
+          Name: {user.name}
+        </Card.Text>
+        <Card.Text>
+          Email: {user.email}
+        </Card.Text>
+        <Card.Text>
+          Role: {user.role}
+        </Card.Text>
+        <Card.Text>
+          Start Date: {userEmploymentDate}
+        </Card.Text>
+        <Card.Text>
+          End Date: {userTerminationDate}
+        </Card.Text>
+      </Card.Body>
+      </Card>
+      </Tab>
+      <Tab eventKey="Attendance" title="Attendance">
       <UserAttendanceList
           userAttendance={userAttendance}
           authUserId={props.AuthContext.userId}
         />
+      </Tab>
+      <Tab eventKey="Leave" title="Leave">
       <UserLeaveList
           userLeave={userLeave}
           authUserId={props.AuthContext.userId}
         />
+      </Tab>
+      <Tab eventKey="Attachments" title="Attachments">
       <UserAttachmentList
           userAttachment={userAttachment}
           authUserId={props.AuthContext.userId}
         />
-      <Accordion.Toggle as={Button} variant="link" eventKey="1" className="btn" onClick={props.onEdit}>
-      Edit
-      </Accordion.Toggle>
-
-      <Button variant="warning" onClick={props.onDelete}>Delete</Button>
-    </Card.Body>
-  </Card>
+      </Tab>
+    </Tabs>
 
     </div>
 

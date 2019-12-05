@@ -24,11 +24,11 @@
     margin: 0;
 }
 
-.userItemHeading {
+.userItemHeading, .itemHeading {
   display: inline-block;
   margin: 0 1rem;
 }
-.userItemText{
+.userItemText, .itemText{
   display: inline-block;
   margin: 0 1rem;
 }
