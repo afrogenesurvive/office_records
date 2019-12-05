@@ -30,6 +30,8 @@ const thisUserProfile = (props) => {
   return (
 
   <Tabs defaultActiveKey="Demographics" id="uncontrolled-tab-example">
+    <Tab eventKey="" title="Details:" disabled>
+    </Tab>
     <Tab eventKey="Demographics" title="Demographics">
     <Card className="UserDetailCard">
     <Card.Body>

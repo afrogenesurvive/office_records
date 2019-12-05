@@ -509,6 +509,8 @@ class ThisUserPage extends Component {
 
         <Tabs defaultActiveKey="Detail" id="uncontrolled-tab-example2">
 
+          <Tab eventKey="" title="Edit:" disabled>
+          </Tab>
           <Tab eventKey="Detail" title="Detail">
           {
             this.state.user !== null && (

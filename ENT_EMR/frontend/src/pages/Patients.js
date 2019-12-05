@@ -6,6 +6,9 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import SidebarPage from './Sidebar';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import Card from 'react-bootstrap/Card';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
@@ -46,6 +49,8 @@ class PatientsPage extends Component {
     isLoading: false,
     selectedPatient: null,
     patientUpdateField: null,
+    patientSearchField: null,
+    patientSearchQuery: null,
   };
   isActive = true;
 
@@ -1349,6 +1354,11 @@ modalConfirmSearchHandler = (event) => {
       return;
     }
 
+    this.setState({
+      patientSearchField: field,
+      patientSearchQuery: query,
+    })
+
     const search = { field, query }
     console.log("Searching for Patient:  ", JSON.stringify(search));
 
@@ -1534,26 +1544,25 @@ modalConfirmSearchHandler = (event) => {
     return (
 
     <React.Fragment>
-    <SidebarPage />
 
     <Accordion>
 
-    <Container className="containerUserDetail">
-
-    <Row className="createUserRowAdd">
-    <Col md={4} className="createUserColAdd">
-    <p>Patient Detail</p>
+    <Row>
+    <Col md={3} className="MasterCol1">
+      <SidebarPage/>
     </Col>
-    <Col md={6} className="createUserColAdd">
-    <Accordion.Toggle as={Button} variant="link" eventKey="6" className="btn">
-    Details
-    </Accordion.Toggle>
-    </Col>
-    </Row>
 
-    <Accordion.Collapse eventKey="6">
-    <Row className="createUserRowForm">
-    <Col md={11} className="createUserColForm">
+    <Col md={6} className="MasterCol2">
+    <Container className="containerCombinedDetail">
+    <Tabs defaultActiveKey="" id="uncontrolled-tab-example">
+    <Tab eventKey="" title="Edit:">
+    </Tab>
+    <Tab eventKey="patientDetail" title="Details">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
     {this.state.isLoading === false &&
       this.state.selectedPatient !== null
       &&
@@ -1562,31 +1571,12 @@ modalConfirmSearchHandler = (event) => {
         patient={this.state.selectedPatient}
         onEdit={this.startUpdatePatientHandler}
         onDelete={this.modalDeleteHandler}
-    />)
-  }
-    </Col>
-    </Row>
-    </Accordion.Collapse>
+        />
+    )}
+    </Tab>
 
-    </Container>
-
-    <Container className="containerCreateuser">
-    <Row className="createUserRowAdd">
-    <Col md={4} className="createUserColAdd">
-      <p>Add Patient</p>
-    </Col>
-    <Col md={4}>
-      {this.context.token && (
-        <Accordion.Toggle as={Button} variant="link" eventKey="7" className="btn" onClick={this.startCreatePatientHandler}>
-        Add
-        </Accordion.Toggle>
-      )}
-    </Col>
-    </Row>
-
-    <Accordion.Collapse eventKey="7">
-    <Row className="createUserRowForm">
-    <Col md={12} className="createUserColForm">
+    <Tab eventKey="patientCreate" title="Create">
+    <Button variant="outline-primary" onClick={this.startCreatePatientHandler} >Create</Button>
     {
       this.state.creating && (
         <CreatePatientForm
@@ -1597,116 +1587,17 @@ modalConfirmSearchHandler = (event) => {
           confirmText="Confirm"
         />
     )}
-    </Col>
-    </Row>
-    </Accordion.Collapse>
+    </Tab>
 
-
-    <Row className="updateUserRowAdd">
-    <Col md={2} className="updateUserCol">
-    <p>Edit Patient</p>
-    </Col>
-    <Col md={2} className="updateUserCol">
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="8" className="btn" onClick={this.startUpdatePatientHandler}>
-      Demographics
-      </Accordion.Toggle>
+    <Tab eventKey="patientEditDemographics" title="Demographics">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
     )}
-    </Col>
-    <Col md={2}>
-      <p>Patient</p>
-    </Col>
-    <Col md={2}>
-      {this.context.selectedPatient && (
-        <p>{this.context.selectedPatient.name}</p>
-      )}
-    </Col>
-    <Col md={2}>
-      <p>Staff</p>
-    </Col>
-    <Col md={2}>
-      {this.context.selectedUser && (
-        <p>{this.context.selectedUser.name}</p>
-      )}
-    </Col>
-    </Row>
-
-    <Row className="createUserRowAdd">
-    <Col md={1} className="updateUserCol2">
-    <p>Edit Patient</p>
-    </Col>
-    <Col md={11} className="updateUserCol2">
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='consultant' onClick={this.updatePatientSpecial.bind(this)}>
-      Consultant
-      </Accordion.Toggle>
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" onClick={this.startUpdatePatientHandler}>Edit Demographics</Button>
     )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='insurance' onClick={this.updatePatientSpecial.bind(this)}>
-      Insurance
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='nextOfKin' onClick={this.updatePatientSpecial.bind(this)}>
-      Next Of Kin
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='complaint' onClick={this.updatePatientSpecial.bind(this)}>
-      Complaint
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='survey' onClick={this.updatePatientSpecial.bind(this)}>
-      Survey
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='examination' onClick={this.updatePatientSpecial.bind(this)}>
-      Examination
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='history' onClick={this.updatePatientSpecial.bind(this)}>
-      History
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='allergies' onClick={this.updatePatientSpecial.bind(this)}>
-      Allergies
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='medication' onClick={this.updatePatientSpecial.bind(this)}>
-      Medication
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='investigation' onClick={this.updatePatientSpecial.bind(this)}>
-      Investigation
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='diagnosis' onClick={this.updatePatientSpecial.bind(this)}>
-      Diagnosis
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='treatment' onClick={this.updatePatientSpecial.bind(this)}>
-      Treatment
-      </Accordion.Toggle>
-    )}
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="9" className="btn" value='billing' onClick={this.updatePatientSpecial.bind(this)}>
-      Billing
-      </Accordion.Toggle>
-    )}
-    </Col>
-    </Row>
-
-    <Accordion.Collapse eventKey="8">
-    <Row className="updateUserRowForm">
-    <Col md={10} className="updateUserColForm">
     {this.state.updating &&
       this.state.selectedPatient !== null
       && (
@@ -1720,13 +1611,17 @@ modalConfirmSearchHandler = (event) => {
         patient={this.state.selectedPatient}
       />
     )}
-    </Col>
-    </Row>
-    </Accordion.Collapse>
+    </Tab>
 
-    <Accordion.Collapse eventKey="9">
-    <Row className="updateUserRowForm">
-    <Col md={10} className="updateUserColForm">
+    <Tab eventKey="patientEditConsultant" title="Consultant">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='consultant' onClick={this.updatePatientSpecial.bind(this)}>Edit Consultant</Button>
+    )}
     {this.state.patientUpdateField === 'consultant' &&
     this.state.selectedPatient !== null
     && (
@@ -1739,6 +1634,16 @@ modalConfirmSearchHandler = (event) => {
         confirmText="Confirm"
         consultant={this.context.selectedUser}
       />
+    )}
+    </Tab>
+    <Tab eventKey="patientEditInsurance" title="Insurance">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='insurance' onClick={this.updatePatientSpecial.bind(this)}>Edit Insurance</Button>
     )}
     {this.state.patientUpdateField === 'insurance' &&
     this.state.selectedPatient !== null
@@ -1753,57 +1658,107 @@ modalConfirmSearchHandler = (event) => {
         patient={this.state.selectedPatient}
       />
     )}
+    </Tab>
+    <Tab eventKey="patientEditNextOfKin" title="NextOfKin">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='nextOfKin' onClick={this.updatePatientSpecial.bind(this)}>Edit NextOfKin</Button>
+    )}
     {this.state.patientUpdateField === 'nextOfKin' &&
     this.state.selectedPatient !== null
     && (
       <UpdatePatientNextOfKinForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updatePatientNextOfKinHandler}
-        confirmText="Confirm"
-        patient={this.state.selectedPatient}
-      />
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientNextOfKinHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+    )}
+    </Tab>
+    <Tab eventKey="patientEditComplaint" title="Complaint">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='complaint' onClick={this.updatePatientSpecial.bind(this)}>Edit Complaint</Button>
     )}
     {this.state.patientUpdateField === 'complaint' &&
     this.state.selectedPatient !== null
     && (
       <UpdatePatientComplaintForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updatePatientSurveyHandler}
-        confirmText="Confirm"
-        patient={this.state.selectedPatient}
-      />
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientSurveyHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+    )}
+    </Tab>
+    <Tab eventKey="patientEditSurvey" title="Survey">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='survey' onClick={this.updatePatientSpecial.bind(this)}>Edit Survey</Button>
     )}
     {this.state.patientUpdateField === 'survey' &&
     this.state.selectedPatient !== null
     && (
       <UpdatePatientSurveyForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updatePatientComplaintHandler}
-        confirmText="Confirm"
-        patient={this.state.selectedPatient}
-      />
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientComplaintHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
     )}
-    {this.state.patientUpdateField === 'examination' &&
+    </Tab>
+    <Tab eventKey="patientEditExamination" title="Examination">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='examintion' onClick={this.updatePatientSpecial.bind(this)}>Edit Examination</Button>
+    )}
+    {this.state.patientUpdateField === 'examintion' &&
     this.state.selectedPatient !== null
     && (
       <UpdatePatientExaminationForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updatePatientExaminationHandler}
-        confirmText="Confirm"
-        patient={this.state.selectedPatient}
-      />
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientExaminationHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+    )}
+    </Tab>
+    <Tab eventKey="patientEditHistory" title="History">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='history' onClick={this.updatePatientSpecial.bind(this)}>Edit History</Button>
     )}
     {this.state.patientUpdateField === 'history' &&
     this.state.selectedPatient !== null
@@ -1818,18 +1773,38 @@ modalConfirmSearchHandler = (event) => {
         patient={this.state.selectedPatient}
       />
     )}
+    </Tab>
+    <Tab eventKey="patientEditAllergies" title="Allergies">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='allergies' onClick={this.updatePatientSpecial.bind(this)}>Edit Allergies</Button>
+    )}
     {this.state.patientUpdateField === 'allergies' &&
     this.state.selectedPatient !== null
     && (
       <UpdatePatientAllergiesForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updatePatientAllergiesHandler}
-        confirmText="Confirm"
-        patient={this.state.selectedPatient}
-      />
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientAllergiesHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+    )}
+    </Tab>
+    <Tab eventKey="patientEditMedication" title="Medication">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='medication' onClick={this.updatePatientSpecial.bind(this)}>Edit Medication</Button>
     )}
     {this.state.patientUpdateField === 'medication' &&
     this.state.selectedPatient !== null
@@ -1844,136 +1819,177 @@ modalConfirmSearchHandler = (event) => {
         patient={this.state.selectedPatient}
       />
     )}
+    </Tab>
+    <Tab eventKey="patientEditInvestigation" title="Investigation">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='investigation' onClick={this.updatePatientSpecial.bind(this)}>Edit Investigation</Button>
+    )}
     {this.state.patientUpdateField === 'investigation' &&
     this.state.selectedPatient !== null
     && (
       <UpdatePatientInvestigationForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updatePatientInvestigationHandler}
-        confirmText="Confirm"
-        patient={this.state.selectedPatient}
-      />
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientInvestigationHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+    )}
+    </Tab>
+    <Tab eventKey="patientEditDiagnosis" title="Diagnosis">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='diagnosis' onClick={this.updatePatientSpecial.bind(this)}>Edit Diagnosis</Button>
     )}
     {this.state.patientUpdateField === 'diagnosis' &&
     this.state.selectedPatient !== null
     && (
       <UpdatePatientDiagnosisForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updatePatientDiagnosisHandler}
-        confirmText="Confirm"
-        patient={this.state.selectedPatient}
-      />
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientDiagnosisHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+    )}
+    </Tab>
+    <Tab eventKey="patientEditTreatment" title="Treatment">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='treatment' onClick={this.updatePatientSpecial.bind(this)}>Edit Treatment</Button>
     )}
     {this.state.patientUpdateField === 'treatment' &&
     this.state.selectedPatient !== null
     && (
       <UpdatePatientTreatmentForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.updatePatientTreatmentHandler}
-        confirmText="Confirm"
-        patient={this.state.selectedPatient}
-      />
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientTreatmentHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+    )}
+    </Tab>
+    <Tab eventKey="patientEditBilling" title="Billing">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='billing' onClick={this.updatePatientSpecial.bind(this)}>Edit Billing</Button>
     )}
     {this.state.patientUpdateField === 'billing' &&
     this.state.selectedPatient !== null
     && (
       <UpdatePatientBillingForm
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientBillingHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+    )}
+    </Tab>
+    </Tabs>
+    </Container>
+    <Container className="containerUserMasterList">
+    <Row className="searchListRow">
+    {this.state.isLoading ? (
+      <Spinner />
+    ) : (
+      <PatientList
+        patients={this.state.patients}
+        authUserId={this.context.userId}
+        onViewDetail={this.showDetailHandler}
+      />
+    )}
+    </Row>
+    </Container>
+
+    </Col>
+
+    <Col md={3} className="MasterCol3">
+
+    <Container className="containerSearchUserInput">
+    <Row className="searchUserRowAdd">
+      {this.context.token && (
+      <Accordion.Toggle as={Button} variant="primary" eventKey="10" onClick={this.startSearchPatientHandler}>
+      Search
+      </Accordion.Toggle>)}
+    </Row>
+
+    <Accordion.Collapse eventKey="10">
+    <Row className="searchUserRowForm">
+    <Col md={10} className="searchUserColForm">
+    {
+      this.state.searching === true &&
+      <SearchPatientForm
       authUserId={this.context.userId}
       canCancel
         canConfirm
         onCancel={this.modalCancelHandler}
-        onConfirm={this.updatePatientBillingHandler}
-        confirmText="Confirm"
-        patient={this.state.selectedPatient}
+        onConfirm={this.modalConfirmSearchHandler}
+        confirmText="Search"
+        patient={this.context.selectedPatient}
       />
-    )}
+    }
     </Col>
     </Row>
     </Accordion.Collapse>
-
     </Container>
 
+    <Container className="containerSearchUserResults">
+    <Row>
+      <Card className="searchCard">
+        <Card.Body className="searchCardBody">
+          <Card.Title>Your Search</Card.Title>
+          <Card.Text>
+            Field: {this.state.patientSearchField}
+          </Card.Text>
+          <Card.Text>
+            Query: {this.state.patientSearchQuery}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </Row>
+    <Row className="searchListRow">
+    {
+      this.state.searchPatients !== [] &&
+      <SearchPatientList
+        searchPatients={this.state.searchPatients}
+        authUserId={this.context.userId}
+        onCancel={this.modalCancelHandler}
+          onViewDetail={this.showDetailHandler}
+      />
+    }
+    </Row>
+    </Container>
 
+    </Col>
+    </Row>
 
-    <Container className="containerSearchuser">
-  <Row className="createUserRowAdd">
-  <Col md={4} className="createUserColAdd">
-    <p>Search for a Patient</p>
-  </Col>
-  <Col md={8}>
-    {this.context.token && (
-      <Accordion.Toggle as={Button} variant="link" eventKey="10" className="btn" onClick={this.startSearchPatientHandler}>
-      Search
-      </Accordion.Toggle>
-    )}
-
-  </Col>
-  </Row>
-
-  <Accordion.Collapse eventKey="10">
-  <Row className="createUserRowForm">
-  <Col md={10} className="createUserColForm">
-  {
-    this.state.searching === true &&
-    <SearchPatientForm
-    authUserId={this.context.userId}
-    canCancel
-      canConfirm
-      onCancel={this.modalCancelHandler}
-      onConfirm={this.modalConfirmSearchHandler}
-      confirmText="Search"
-      patient={this.context.selectedPatient}
-    />
-  }
-  </Col>
-  <Col md={10}>
-
-  </Col>
-  </Row>
-  </Accordion.Collapse>
-  </Container>
-
-<Accordion.Collapse eventKey="10">
-  <Container className="containerSearchuser">
-  <Row className="searchListRow">
-  {
-    this.state.searchPatients !== [] &&
-    <SearchPatientList
-      searchPatients={this.state.searchPatients}
-      authUserId={this.context.userId}
-      onCancel={this.modalCancelHandler}
-        onViewDetail={this.showDetailHandler}
-    />
-  }
-  </Row>
-  </Container>
-  </Accordion.Collapse>
-
-
-  <Container className="containerSearchuser">
-<Row className="searchListRow">
-
-{this.state.isLoading ? (
-  <Spinner />
-) : (
-  <PatientList
-    patients={this.state.patients}
-    authUserId={this.context.userId}
-    onViewDetail={this.showDetailHandler}
-  />
-)}
-
-</Row>
-</Container>
 </Accordion>
 
       </React.Fragment>

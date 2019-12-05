@@ -30,6 +30,8 @@ const UserDetail = (props) => {
     <div className={"UserDetailBox1"}>
 
     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="tab">
+      <Tab eventKey="" title="Details:" disabled>
+      </Tab>
       <Tab eventKey="Demographics" title="Demographics">
       <Card className="UserDetailCard">
       <Card.Body>
