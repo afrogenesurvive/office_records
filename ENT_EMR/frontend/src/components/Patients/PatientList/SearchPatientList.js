@@ -9,9 +9,6 @@ const searchPatientList = props => {
   const searchPatients = props.searchPatients.map(patient => {
     return (
       <React.Fragment>
-      <Accordion.Toggle as={Button} variant="link" eventKey="1" className="btn" onClick={props.onCancel}>
-      x
-      </Accordion.Toggle>
       <SearchPatientItem
         key={patient._id}
         userId={props.authUserId}
@@ -24,7 +21,7 @@ const searchPatientList = props => {
     );
   });
 
-  return <ul className="user__list">{searchPatients}</ul>;
+  return <ul className="user__list1">{searchPatients}</ul>;
 };
 
 export default searchPatientList;

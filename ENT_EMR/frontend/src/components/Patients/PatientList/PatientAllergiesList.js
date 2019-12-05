@@ -6,7 +6,7 @@ import './UserList.css';
 const patientAllergiesList = props => {
   console.log("patient allergies list props", props.patientAllergies);
   const patientAllergies = props.patientAllergies.map(allergies => {
-    
+
     return (
       <PatientAllergiesItem
         key={allergies.title}
@@ -18,7 +18,7 @@ const patientAllergiesList = props => {
     );
   });
 
-  return <ul className="userAttendanceList">{patientAllergies}</ul>;
+  return <ul className="user__list1">{patientAllergies}</ul>;
 };
 
 export default patientAllergiesList;

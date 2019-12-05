@@ -1009,12 +1009,13 @@ updateUserSpecial (event) {
       </Card>
     </Row>
     <Row className="searchListRow">
-    {this.state.searchUsers !== [] &&
+    {this.state.searchUsers !== [] && (
       <SearchUserList
         searchUsers={this.state.searchUsers}
         authUserId={this.context.userId}
         onViewDetail={this.showDetailHandler}
-      />}
+      />
+    )}
     </Row>
     </Container>
 

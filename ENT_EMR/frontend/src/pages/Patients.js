@@ -1346,6 +1346,11 @@ modalConfirmSearchHandler = (event) => {
     let field = event.target.formBasicField.value;
     let query = event.target.formBasicQuery.value;
 
+    this.setState({
+      patientSearchField: field,
+      patientSearchQuery: query,
+    })
+
     if (
       field.trim().length === 0 ||
       query.trim().length === 0
@@ -1354,10 +1359,7 @@ modalConfirmSearchHandler = (event) => {
       return;
     }
 
-    this.setState({
-      patientSearchField: field,
-      patientSearchQuery: query,
-    })
+
 
     const search = { field, query }
     console.log("Searching for Patient:  ", JSON.stringify(search));
@@ -1365,7 +1367,7 @@ modalConfirmSearchHandler = (event) => {
     const requestBody = {
       query: `
         query {
-          getPatientField(userId: ${userId}, field: ${field}, query: ${query} )
+          getPatientField(userId: "${userId}", field: "${field}", query: "${query}" )
           {_id,name,address,dob,age,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},appointments{date,title,type},consultant{date,reference{name,role}},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},examination{date,area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}
       }
       `
@@ -1555,7 +1557,7 @@ modalConfirmSearchHandler = (event) => {
     <Col md={6} className="MasterCol2">
     <Container className="containerCombinedDetail">
     <Tabs defaultActiveKey="" id="uncontrolled-tab-example">
-    <Tab eventKey="" title="Edit:">
+    <Tab eventKey="" title="Edit:" disabled>
     </Tab>
     <Tab eventKey="patientDetail" title="Details">
     {this.state.selectedPatient === null && (

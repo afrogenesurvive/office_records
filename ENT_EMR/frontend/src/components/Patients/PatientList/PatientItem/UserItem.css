@@ -22,3 +22,12 @@
 .users__list-item p {
     margin: 0;
 }
+
+.userItemHeading, .itemHeading {
+  display: inline-block;
+  margin: 0 1rem;
+}
+.userItemText, .itemText{
+  display: inline-block;
+  margin: 0 1rem;
+}

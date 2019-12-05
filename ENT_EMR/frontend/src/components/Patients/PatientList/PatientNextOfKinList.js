@@ -17,7 +17,7 @@ const patientNextOfKinList = props => {
     );
   });
 
-  return <ul className="userAttendanceList">{patientNextOfKin}</ul>;
+  return <ul className="user__list1">{patientNextOfKin}</ul>;
 };
 
 export default patientNextOfKinList;

@@ -16,7 +16,7 @@ const patientList = props => {
     );
   });
 
-  return <ul className="user__list">{patients}</ul>;
+  return <ul className="user__list1">{patients}</ul>;
 };
 
 export default patientList;

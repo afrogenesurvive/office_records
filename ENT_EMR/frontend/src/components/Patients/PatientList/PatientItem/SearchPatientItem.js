@@ -1,20 +1,25 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 import './UserItem.css';
 
 const searchPatientItem = props => (
   <li key={props.patientId} className="users__list-item">
-    <div>
-      <h1> Name: {props.name}</h1>
-      <p>
-        Adress: {props.address}
-      </p>
-    </div>
-    <div>
-    <button className="btn" onClick={props.onDetail.bind(this, props._id)}>
-          View Details
-        </button>
-    </div>
+  <div>
+    <h5 className="userItemHeading"> Name:</h5>
+    <p className="userItemText">
+      {props.name}
+    </p>
+    <h5 className="userItemHeading"> Address:</h5>
+    <p className="userItemText">
+      {props.address}
+    </p>
+  </div>
+  <div>
+  <Button variant="primary" onClick={props.onDetail.bind(this, props._id)}>
+        Details
+      </Button>
+  </div>
   </li>
 );
 
