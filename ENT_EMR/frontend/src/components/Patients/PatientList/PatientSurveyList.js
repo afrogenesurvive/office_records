@@ -19,7 +19,7 @@ const patientSurveyList = props => {
     );
   });
 
-  return <ul className="userAttendanceList">{patientSurvey}</ul>;
+  return <ul className="user__list1">{patientSurvey}</ul>;
 };
 
 export default patientSurveyList;
