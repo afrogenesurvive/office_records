@@ -4,3 +4,12 @@
   margin: 5rem auto;
 }
 
+.loginButton {
+  margin: 1rem 2rem 0 0;
+}
+
+.signupRow {
+  margin: 10rem auto;
+    height: 30vh;
+    width: 70vw;
+}

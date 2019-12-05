@@ -5,6 +5,9 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+
+
 import AppointmentTodayList from '../components/Appointments/AppointmentList/AppointmentTodayList';
 import AppointmentInProgressList from '../components/Appointments/AppointmentList/AppointmentInProgressList';
 
@@ -48,20 +51,53 @@ class SidebarPage extends Component {
       <React.Fragment>
       <Container className="sidebarContainer">
       <Row className="">
-      <Col md={8} className="">
-      <h2>Sidebar</h2>
-      <h5>You</h5>
-      <p>ID: {this.context.user._id}</p>
-      <p>Name: {this.context.user.name}</p>
-      <h5>Selection</h5>
-      <p>Staff: {this.context.selectedUser.name}</p>
-      <p>Patient: {this.context.selectedPatient.name}</p>
-      <p>Appt: {this.context.selectedAppointment.title}</p>
+      <Col md={12} className="">
+
+      <Card border="primary" className="sidebarCard">
+      <Card.Body>
+        <Card.Title>You</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">ID:</Card.Subtitle>
+        <Card.Text>
+          {this.context.user._id}
+        </Card.Text>
+        <Card.Subtitle className="mb-2 text-muted">Name:</Card.Subtitle>
+        <Card.Text>
+          {this.context.user.name}
+        </Card.Text>
+        <Card.Subtitle className="mb-2 text-muted">Role:</Card.Subtitle>
+        <Card.Text>
+          {this.context.user.role}
+        </Card.Text>
+      </Card.Body>
+      </Card>
+
+      <Card border="secondary" className="sidebarCard">
+      <Card.Body>
+        <Card.Title>Selection</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">Staff:</Card.Subtitle>
+        <Card.Text>
+          {this.context.selectedUser.name}
+        </Card.Text>
+        <Card.Subtitle className="mb-2 text-muted">Patient:</Card.Subtitle>
+        <Card.Text>
+          {this.context.selectedPatient.name}
+        </Card.Text>
+        <Card.Subtitle className="mb-2 text-muted">Appointment:</Card.Subtitle>
+        <Card.Text>
+          {this.context.selectedAppointment.title}
+        </Card.Text>
+      </Card.Body>
+      </Card>
       </Col>
       </Row>
       <Row className="">
-      <Col md={8} className="">
-      <h5>Appointments Today</h5>
+      <Col md={12} className="">
+      <p>Appointments Today</p>
+      {this.context.appointmentsToday === null && (
+        <Button variant="outline-warning">
+          Check the Appointments page to load
+        </Button>
+      )}
       {this.context.appointmentsToday !== null && (
 
         <AppointmentTodayList
@@ -73,8 +109,13 @@ class SidebarPage extends Component {
       </Col>
       </Row>
       <Row className="">
-      <Col md={8} className="">
-      <h5>Appointments InProgress</h5>
+      <Col md={12} className="">
+      <p>Appointments InProgress</p>
+      {this.context.appointmentsToday === null && (
+        <Button variant="outline-warning">
+          Check the Appointments page to load
+        </Button>
+      )}
       {this.context.appointmentsInProgress !== null && (
 
         <AppointmentInProgressList

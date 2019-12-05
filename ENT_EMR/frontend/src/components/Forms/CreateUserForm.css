@@ -1,17 +1,18 @@
 .CreateFormContainer, .UpdateFormContainer, .SearchFormContainer {
   height: 100%;
   width: 100%;
-  background-color: grey;
+  background-color: white;
   /* position: fixed; */
   top: 2rem;
   left: 5rem;
   /* z-index: 15; */
+  margin-top: 1rem;
 }
 
 .UpdateArrayFormContainer {
   height: 100%;
   width: 100%;
-  background-color: grey;
+  background-color: white;
   /* position: fixed; */
   top: 2rem;
   left: 5rem;

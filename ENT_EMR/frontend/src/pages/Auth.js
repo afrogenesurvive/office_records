@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import { NavLink } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
 
 import './Auth.css';
 import AuthContext from '../context/auth-context';
@@ -30,8 +31,8 @@ class AuthPage extends Component {
   submitHandler = event => {
     console.log("login function...");
     event.preventDefault();
-    const email = this.emailEl.current.value;
-    const password = this.passwordEl.current.value;
+    const email = event.target.formBasicEmail.value;
+    const password = event.target.formBasicPassword.value;
 
     if (email.trim().length === 0 || password.trim().length === 0) {
       return;
@@ -94,23 +95,27 @@ class AuthPage extends Component {
 
   render() {
     return (
-      <form className="auth-form" onSubmit={this.submitHandler}>
-        <div className="form-control">
-          <label htmlFor="email">E-Mail</label>
-          <input type="email" id="email" ref={this.emailEl} />
-        </div>
-        <div className="form-control">
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" ref={this.passwordEl} />
-        </div>
-        <div className="form-actions">
-          <button type="submit">Login</button>
-        </div>
-        <Button variant="secondary" type="button">
-          <NavLink to="/signup">Signup</NavLink>
-        </Button>
+      <Form className="auth-form" onSubmit={this.submitHandler}>
+      <Form.Group controlId="formBasicEmail">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email"/>
+        <Form.Text className="text-muted">
+          We'll never share your email with anyone else.
+        </Form.Text>
+      </Form.Group>
 
-      </form>
+      <Form.Group controlId="formBasicPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="Password" />
+      </Form.Group>
+      <Button variant="outline-success" type="submit" className="loginButton" size="lg">
+        Login
+      </Button>
+
+      <Button variant="outline-warning" className="loginButton" size="lg">
+        <NavLink to="/signup">Signup</NavLink>
+      </Button>
+    </Form>
     );
   }
 }

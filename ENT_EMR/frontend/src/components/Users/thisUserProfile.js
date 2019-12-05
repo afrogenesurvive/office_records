@@ -50,19 +50,20 @@ const thisUserProfile = (props) => {
           userAttendance={userAttendance}
           authUserId={props.authUserId}
         />
+        <Card.Text>
+          Leave:
+        </Card.Text>
       <UserLeaveList
           userLeave={userLeave}
           authUserId={props.authUserId}
         />
+        <Card.Text>
+          Attachments:
+        </Card.Text>
       <UserAttachmentList
           userAttachment={userAttachment}
           authUserId={props.authUserId}
         />
-      <Button variant="link" className="btn" onClick={props.onEdit}>
-      Edit
-      </Button>
-
-      <Button variant="warning" onClick={props.onDelete}>Delete</Button>
     </Card.Body>
   </Card>
   );

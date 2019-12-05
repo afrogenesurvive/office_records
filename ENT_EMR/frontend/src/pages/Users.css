@@ -15,40 +15,83 @@
   left: 5rem;
 }
 
+.containerCombinedDetail {
+  height: 50vh;
+  /* width: 50vw; */
+  margin-top: 5rem;
+  width: 100%;
+  overflow: scroll;
+  padding: 0;
+}
+.containerProfile {
+  height: 90vh;
+  /* width: 50vw; */
+  margin-top: 5rem;
+  width: 100%;
+  overflow: scroll;
+  padding: 0;
+}
+
+.detailTab {
+
+}
+
+.searchCard {
+  width: 100%;
+  margin: .5rem 0;
+}
 
 .containerCreateUpdate {
   margin-top: 5rem;
   width: 95%;
 }
-.containerSearchuser {
-  margin-top: 5rem;
-  width: 25vw;
-  padding: 2rem;
+.containerSearchUserInput {
+  margin-top: 10rem;
+  width: 100%;
+  /* padding: 2rem; */
+}
+.containerSearchUserResults {
+  margin-top: 2rem;
+  width: 100%;
+  /* padding: 2rem; */
 }
 .containerUserMasterList {
-  margin-top: 5rem;
-  width: 95%;
-  padding: 2rem;
+  margin-top: 1rem;
+  width: 100%;
+  /* padding: 1rem; */
 }
 .containerUserDetail {
   margin-top: 5rem;
   width: 50vw;
 }
-.createUserRowAdd, .updateUserRowAdd, .searchUserRowAdd {
+.createUserRowAdd, .updateUserRowAdd {
   border: 1.5px solid black;
   height: 5rem;
   padding: 1rem 0;
 }
-.createUserRowForm, .updateUserRowForm, .searchUserRowForm {
+.searchUserRowAdd {
+  /* border: 1.5px solid black; */
+  height: 3rem;
+  /* padding: 1rem 0; */
+}
+.createUserRowForm, .updateUserRowForm {
   border: 1.5px solid black;
   height: 35rem;
+  text-align: center;
+  overflow: scroll;
+}
+.searchUserRowForm {
+  /* border: 1.5px solid blue; */
+  border-radius: 5px;
+  height: 23rem;
   text-align: center;
   overflow: scroll;
 }
 
 .searchListRow {
   height: 40rem;
-  border: 1px solid green;
+  border: 1px solid blue;
+  border-radius: 5px;
   overflow: scroll;
 }
 

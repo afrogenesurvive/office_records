@@ -1,19 +1,24 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 import './UserItem.css';
 
 const userItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <h1> Name: {props.name}</h1>
-      <p>
-        role: {props.role}
+      <h5 className="userItemHeading"> Name:</h5>
+      <p className="userItemText">
+        {props.name}
+      </p>
+      <h5 className="userItemHeading"> Role:</h5>
+      <p className="userItemText">
+        {props.role}
       </p>
     </div>
     <div>
-    <button className="btn" onClick={props.onDetail.bind(this, props._id)}>
-          View Details
-        </button>
+    <Button variant="primary" onClick={props.onDetail.bind(this, props._id)}>
+          Details
+        </Button>
     </div>
   </li>
 );

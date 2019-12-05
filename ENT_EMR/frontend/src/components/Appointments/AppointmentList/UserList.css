@@ -7,3 +7,14 @@
     list-style: none;
     padding: 0;
   }
+
+.appointmentTodayList {
+  max-width: 100%;
+  list-style: none;
+  padding: 0;
+}
+.appointmentInProgressList {
+  max-width: 100%;
+  list-style: none;
+  padding: 0;
+}
