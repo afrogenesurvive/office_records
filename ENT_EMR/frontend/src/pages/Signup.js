@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
-// import Form from 'react-bootstrap/Form';
-// import Button from 'react-bootstrap/Button';
-// import { Redirect } from 'react-router-dom';
-// import { NavLink } from 'react-router-dom';
-
-// import Modal from '../components/Modal/Modal';
-// import Backdrop from '../components/Backdrop/Backdrop';
-// import UserList from '../components/Users/UserList/UserList';
-// import UserDetail from '../components/Users/UserDetail';
-// import Spinner from '../components/Spinner/Spinner';
-// import AuthContext from '../context/auth-context';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 import CreateUserForm from '../components/Forms/CreateUserForm';
-// import UpdateUserForm from '../components/Forms/UpdateUserForm';
-import './Users.css';
+import './Auth.css';
 
 class SignupPage extends Component {
   state = {
@@ -102,16 +96,18 @@ class SignupPage extends Component {
   render() {
     return (
       <React.Fragment>
-        { (
-          <CreateUserForm
-            canConfirm
-            onConfirm={this.modalConfirmHandler}
-            onSubmit={this.modalConfirmHandler}
-            confirmText="Confirm"
-            successText={this.state.success}
-          />
-        )
-      }
+
+      <Row>
+      <Col className="signupRow" md={8}>
+        <CreateUserForm
+          canConfirm
+          onConfirm={this.modalConfirmHandler}
+          onSubmit={this.modalConfirmHandler}
+          confirmText="Confirm"
+          successText={this.state.success}
+        />
+      </Col>
+      </Row>
 
       </React.Fragment>
     );

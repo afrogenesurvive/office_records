@@ -1,7 +1,7 @@
 /* css */
 .sidebarContainer {
   width: 100%;
-  height: 80vh;
+  height: 90vh;
   margin: 5rem .5rem;
   /* position: fixed; */
   /* left: 0; */
@@ -9,4 +9,9 @@
   border: 1px solid black;
   overflow: scroll;
   background-color: white;
+}
+
+.appointmentTodayList, .appointmentInProgressList {
+  height: 15rem;
+  overflow: scroll;
 }

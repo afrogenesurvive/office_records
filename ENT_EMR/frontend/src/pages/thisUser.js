@@ -6,6 +6,8 @@ import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import SidebarPage from './Sidebar';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 
 import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceForm';
 import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentForm';
@@ -24,7 +26,7 @@ class ThisUserPage extends Component {
     users: [],
     updating: false,
     isLoading: false,
-    userUpdateField: 'attendance',
+    userUpdateField: null,
   };
   isActive = true;
 
@@ -491,133 +493,100 @@ class ThisUserPage extends Component {
     return (
       <React.Fragment>
 
+      <Row>
+
+      <Col md={3} className="MasterCol1">
+
       <SidebarPage
-      you={this.state.user}
+        you={this.state.user}
       />
-      <Accordion>
-      <Container className="containerUserProfile">
-      <Row className="UserProfileRow">
-      <Col md={12} className="UserProfileCol">
-      {
-        this.state.user !== null && (
-          <ThisUserProfile
-            user={this.state.user}
+
+      </Col>
+
+      <Col md={9} className="MasterCol2">
+
+        <Container className="containerProfile">
+
+        <Tabs defaultActiveKey="Detail" id="uncontrolled-tab-example2">
+
+          <Tab eventKey="Detail" title="Detail">
+          {
+            this.state.user !== null && (
+              <ThisUserProfile
+                user={this.state.user}
+                authUserId={this.context.userId}
+              />
+            )
+          }
+          </Tab>
+
+          <Tab eventKey="Demographics" title="Demographics">
+          <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Demographics</Button>
+          {this.state.updating === true && (
+            <UpdateUserForm
+            canCancelProfile
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.modalConfirmUpdateHandler}
+              confirmText="Confirm"
+              user={this.state.user}
+              authUserId={this.context.userId}
+            />
+          )}
+
+          </Tab>
+
+          <Tab eventKey="Atttendance" title="Atttendance">
+            <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecialProfile.bind(this)}>Edit Attendance</Button>
+            {this.state.userUpdateField === 'attendance' && (
+              <UpdateUserAttendanceForm
+              authUserId={this.context.userId}
+              canCancelProfile
+                canConfirm
+                onCancel={this.modalCancelHandler}
+                onConfirm={this.updateUserAttendanceHandler}
+                confirmText="Confirm"
+                user={this.state.selectedUser}
+              />
+            )}
+          </Tab>
+
+          <Tab eventKey="Leave" title="Leave">
+            <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecialProfile.bind(this)}>Edit Leave</Button>
+            {this.state.userUpdateField === 'leave' && (
+              <UpdateUserLeaveForm
+              authUserId={this.context.userId}
+              canCancelProfile
+                canConfirm
+                onCancel={this.modalCancelHandler}
+                onConfirm={this.updateUserLeaveHandler}
+                confirmText="Confirm"
+                user={this.state.selectedUser}
+              />
+            )}
+          </Tab>
+
+          <Tab eventKey="Attachment" title="Attachment">
+          <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecialProfile.bind(this)}>Edit Attachment</Button>
+          {this.state.userUpdateField === 'attachments' && (
+            <UpdateUserAttachmentForm
             authUserId={this.context.userId}
-            onEdit={this.startUpdateUserHandler}
-          />
-        )
-      }
+            canCancelProfile
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updateUserAttachmentHandler}
+              confirmText="Confirm"
+              user={this.state.selectedUser}
+            />
+          )}
+          </Tab>
+        </Tabs>
+        </Container>
+
       </Col>
+
       </Row>
 
-      {this.state.updating === true && (
-
-
-    <Row className="createUserRowForm">
-    <Col md={12} className="createUserColForm">
-      <UpdateUserForm
-      canCancelProfile
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.modalConfirmUpdateHandler}
-        confirmText="Confirm"
-        user={this.state.user}
-        authUserId={this.context.userId}
-      />
-      </Col>
-      </Row>
-
-    )}
-
-      <Row className="createUserRowAdd">
-      <Col md={3} className="updateUserCol2">
-      <p>Edit Special</p>
-      </Col>
-      <Col md={9} className="updateUserCol2">
-      {this.context.token && (
-        <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" value='attendance' onClick={this.updateUserSpecialProfile.bind(this)}>
-        Attendance
-        </Accordion.Toggle>
-      )}
-      {this.context.token && (
-        <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" value='leave' onClick={this.updateUserSpecialProfile.bind(this)}>
-        Leave
-        </Accordion.Toggle>
-      )}
-      {this.context.token && (
-        <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" value='attachments' onClick={this.updateUserSpecialProfile.bind(this)}>
-        Attachments
-        </Accordion.Toggle>
-      )}
-      </Col>
-      </Row>
-
-      <Accordion.Collapse eventKey="5">
-      <Row className="updateUserRowForm">
-      <Col md={10} className="updateUserColForm">
-      {this.state.userUpdateField === 'attendance' && (
-        <UpdateUserAttendanceForm
-        authUserId={this.context.userId}
-        canCancelProfile
-          canConfirm
-          onCancel={this.modalCancelHandler}
-          onConfirm={this.updateUserAttendanceHandler}
-          confirmText="Confirm"
-          user={this.state.selectedUser}
-        />
-      )}
-      {this.state.userUpdateField === 'leave' && (
-        <UpdateUserLeaveForm
-        authUserId={this.context.userId}
-        canCancelProfile
-          canConfirm
-          onCancel={this.modalCancelHandler}
-          onConfirm={this.updateUserLeaveHandler}
-          confirmText="Confirm"
-          user={this.state.selectedUser}
-        />
-      )}
-      {this.state.userUpdateField === 'attachments' && (
-        <UpdateUserAttachmentForm
-        authUserId={this.context.userId}
-        canCancelProfile
-          canConfirm
-          onCancel={this.modalCancelHandler}
-          onConfirm={this.updateUserAttachmentHandler}
-          confirmText="Confirm"
-          user={this.state.selectedUser}
-        />
-      )}
-      </Col>
-      </Row>
-      </Accordion.Collapse>
-
-
-      </Container>
-
-
-{
-
-//   this.state.updating === true && (
-//
-// <Container className="containerCreateuser">
-// <Row className="createUserRowForm">
-// <Col md={12} className="createUserColForm">
-//   <UpdateUserForm
-//   canCancelProfile
-//     canConfirm
-//     onCancel={this.modalCancelHandler}
-//     onConfirm={this.modalConfirmUpdateHandler}
-//     confirmText="Confirm"
-//     user={this.state.user}
-//     authUserId={this.context.userId}
-//   />
-//   </Col>
-//   </Row>
-//   </Container>
-// )
-}
-</Accordion>
       </React.Fragment>
     );
   }

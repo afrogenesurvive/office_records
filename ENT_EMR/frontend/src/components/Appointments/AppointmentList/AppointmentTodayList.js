@@ -19,7 +19,7 @@ const appointmentTodayList = props => {
     );
   });
 
-  return <ul className="userAttendanceList">{appointmentToday}</ul>;
+  return <ul className="appointmentTodayList">{appointmentToday}</ul>;
 };
 
 export default appointmentTodayList;
