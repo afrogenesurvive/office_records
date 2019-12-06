@@ -923,7 +923,161 @@ module.exports = {
             phone: args.patientInput.occupationEmployerContactPhone,
             email: args.patientInput.occupationEmployerContactEmail
           }
-        }
+        },
+        appointments: [],
+        consultant: [],
+        insurance: [
+          {
+          company: "",
+          number: 0,
+          description: "",
+          expiry: null,
+          subscriber:{
+            company: "",
+            description: "",
+            }
+          }
+        ],
+        nextOfKin: [
+          {
+            name: "",
+            contact: {
+              phone: 0,
+              email: "",
+            }
+          }
+        ],
+        complaints: [
+          {
+            date: null,
+            title: "",
+            description: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }
+        ],
+        surveys: [
+          {
+            date: null,
+            title: "",
+            description: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }
+        ],
+        examination: [
+          {
+            date: null,
+            area: "",
+            type: "",
+            measure: "",
+            value: "",
+            description: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }
+        ],
+        history: [
+          {
+            type: "",
+            date: null,
+            title: "",
+            description: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }
+        ],
+        allergies: [
+          {
+            title: "",
+            description: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }
+        ],
+        medication: [
+          {
+            title: "",
+            description: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }
+        ],
+        investigation: [
+          {
+            date: null,
+            title: "",
+            description: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }
+        ],
+        diagnosis: [
+          {
+            date: null,
+            title: "",
+            description: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }
+        ],
+        treatment: [
+          {
+            date: null,
+            title: "",
+            description: "",
+            dose: "",
+            frequency: "",
+            type: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }
+        ],
+        billing: [
+          {
+            date: null,
+            title: "",
+            type: "",
+            description: "",
+            amount: 0,
+            paid: null,
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            },
+            notes: "",
+          }
+        ],
+        notes: [""],
+        tags: [""],
       }
   );
 
