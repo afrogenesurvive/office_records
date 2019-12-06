@@ -11,6 +11,8 @@ const AppointmentDetail = (props) => {
   const authUserId = props.authUserId;
   const appointmentDate = new Date(appointment.date*1000).toUTCString();
   const appointmentNote = appointment.notes;
+  const appointmentPatientConsultant = appointment.patient.consultant;
+  console.log("appointmentPatientConsultant:  ", appointmentPatientConsultant);
   console.log("AppointmentDetail.props.appointment:  ", {...appointment}, appointmentNote);
   return (
     <div className="PatientDetailBox">
@@ -72,10 +74,6 @@ const AppointmentDetail = (props) => {
         appointmentNote={appointmentNote}
         authUserId={props.authUserId}
         />
-      <Button variant="primary" onClick={props.onEdit}>Edit</Button>
-      {props.canDelete && (
-        <Button variant="warning" onClick={props.onDelete}>Delete</Button>
-      )}
     </Card.Body>
   </Card>
     </div>

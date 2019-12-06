@@ -34,6 +34,10 @@ return (
   <Form.Label>Date</Form.Label>
   <Form.Control type="date" placeholder={appointment.date} />
 </Form.Group>
+<Form.Group as={Col} controlId="formGridTime">
+  <Form.Label>Time</Form.Label>
+    <Form.Control type="time" placeholder="Time" />
+</Form.Group>
 
 <Form.Group as={Col} controlId="formGridLocation">
   <Form.Label>Location</Form.Label>

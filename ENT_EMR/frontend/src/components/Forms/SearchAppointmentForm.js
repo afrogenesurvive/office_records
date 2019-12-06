@@ -23,15 +23,15 @@ return (
 </Form.Group>
 
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" onClick={props.onCancel}>
+  <Accordion.Toggle as={Button} variant="danger" eventKey="5" className="btn" onClick={props.onCancel}>
   Cancel
   </Accordion.Toggle>
 )}
 
 {props.canConfirm && (
-  <Button variant="secondary" type="submit" >
+  <Accordion.Toggle as={Button} variant="success" eventKey="5" type="submit">
   Submit
-  </Button>
+  </Accordion.Toggle>
 )}
 
 {

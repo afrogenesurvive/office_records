@@ -24,7 +24,8 @@ module.exports = {
 
     try {
       const appointments = await Appointment.find()
-      .populate('patient');
+      .populate('patient')
+      .populate('patient.consultant');
 
       return appointments.map(appointment => {
         return transformAppointment(appointment);

@@ -416,7 +416,7 @@ updatePatientConsultantHandler = (event) => {
 
     const requestBody = {
       query:`
-        mutation {updatePatientConsultant(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{consultantDate: ${consultantDate},consultantReference: ${patientConsultantReference}})
+        mutation {updatePatientConsultant(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{consultantDate:" ${consultantDate}",consultantReference: "${patientConsultantReference}"})
         {_id,name,address,dob,age,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},appointments{date,title,type},consultant{date,reference{name,role}},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},examination{date,area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}
       }
       `
@@ -1622,7 +1622,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='consultant' onClick={this.updatePatientSpecial.bind(this)}>Edit Consultant</Button>
+      <Button variant="outline-primary" value='consultant' onClick={this.updatePatientSpecial.bind(this)}>Add Consultant</Button>
     )}
     {this.state.patientUpdateField === 'consultant' &&
     this.state.selectedPatient !== null
@@ -1637,6 +1637,24 @@ modalConfirmSearchHandler = (event) => {
         consultant={this.context.selectedUser}
       />
     )}
+    {this.state.patientUpdateField === 'consultant' &&
+    this.state.selectedPatient !== null &&
+    (
+      <Row>
+      <p>Add Consultant: {this.context.selectedUser.name}</p>
+      <p> To Paitient: {this.state.selectedPatient.name} ??</p>
+      <hr/>
+      </Row>
+    )}
+    {this.state.patientUpdateField === 'consultant' &&
+    this.state.selectedPatient !== null &&
+    (
+      <Row>
+      <Button variant="outline-warning" size="lg">
+        Select a doctor from the Staff page
+      </Button>
+      </Row>
+    )}
     </Tab>
     <Tab eventKey="patientEditInsurance" title="Insurance">
     {this.state.selectedPatient === null && (
@@ -1645,7 +1663,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='insurance' onClick={this.updatePatientSpecial.bind(this)}>Edit Insurance</Button>
+      <Button variant="outline-primary" value='insurance' onClick={this.updatePatientSpecial.bind(this)}>Add Insurance</Button>
     )}
     {this.state.patientUpdateField === 'insurance' &&
     this.state.selectedPatient !== null
@@ -1668,7 +1686,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='nextOfKin' onClick={this.updatePatientSpecial.bind(this)}>Edit NextOfKin</Button>
+      <Button variant="outline-primary" value='nextOfKin' onClick={this.updatePatientSpecial.bind(this)}>Add NextOfKin</Button>
     )}
     {this.state.patientUpdateField === 'nextOfKin' &&
     this.state.selectedPatient !== null
@@ -1691,7 +1709,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='complaint' onClick={this.updatePatientSpecial.bind(this)}>Edit Complaint</Button>
+      <Button variant="outline-primary" value='complaint' onClick={this.updatePatientSpecial.bind(this)}>Add Complaint</Button>
     )}
     {this.state.patientUpdateField === 'complaint' &&
     this.state.selectedPatient !== null
@@ -1714,7 +1732,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='survey' onClick={this.updatePatientSpecial.bind(this)}>Edit Survey</Button>
+      <Button variant="outline-primary" value='survey' onClick={this.updatePatientSpecial.bind(this)}>Add Survey</Button>
     )}
     {this.state.patientUpdateField === 'survey' &&
     this.state.selectedPatient !== null
@@ -1737,7 +1755,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='examintion' onClick={this.updatePatientSpecial.bind(this)}>Edit Examination</Button>
+      <Button variant="outline-primary" value='examintion' onClick={this.updatePatientSpecial.bind(this)}>Add Examination</Button>
     )}
     {this.state.patientUpdateField === 'examintion' &&
     this.state.selectedPatient !== null
@@ -1760,7 +1778,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='history' onClick={this.updatePatientSpecial.bind(this)}>Edit History</Button>
+      <Button variant="outline-primary" value='history' onClick={this.updatePatientSpecial.bind(this)}>Add History</Button>
     )}
     {this.state.patientUpdateField === 'history' &&
     this.state.selectedPatient !== null
@@ -1783,7 +1801,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='allergies' onClick={this.updatePatientSpecial.bind(this)}>Edit Allergies</Button>
+      <Button variant="outline-primary" value='allergies' onClick={this.updatePatientSpecial.bind(this)}>Add Allergies</Button>
     )}
     {this.state.patientUpdateField === 'allergies' &&
     this.state.selectedPatient !== null
@@ -1806,7 +1824,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='medication' onClick={this.updatePatientSpecial.bind(this)}>Edit Medication</Button>
+      <Button variant="outline-primary" value='medication' onClick={this.updatePatientSpecial.bind(this)}>Add Medication</Button>
     )}
     {this.state.patientUpdateField === 'medication' &&
     this.state.selectedPatient !== null
@@ -1829,7 +1847,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='investigation' onClick={this.updatePatientSpecial.bind(this)}>Edit Investigation</Button>
+      <Button variant="outline-primary" value='investigation' onClick={this.updatePatientSpecial.bind(this)}>Add Investigation</Button>
     )}
     {this.state.patientUpdateField === 'investigation' &&
     this.state.selectedPatient !== null
@@ -1852,7 +1870,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='diagnosis' onClick={this.updatePatientSpecial.bind(this)}>Edit Diagnosis</Button>
+      <Button variant="outline-primary" value='diagnosis' onClick={this.updatePatientSpecial.bind(this)}>Add Diagnosis</Button>
     )}
     {this.state.patientUpdateField === 'diagnosis' &&
     this.state.selectedPatient !== null
@@ -1875,7 +1893,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='treatment' onClick={this.updatePatientSpecial.bind(this)}>Edit Treatment</Button>
+      <Button variant="outline-primary" value='treatment' onClick={this.updatePatientSpecial.bind(this)}>Add Treatment</Button>
     )}
     {this.state.patientUpdateField === 'treatment' &&
     this.state.selectedPatient !== null
@@ -1898,7 +1916,7 @@ modalConfirmSearchHandler = (event) => {
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='billing' onClick={this.updatePatientSpecial.bind(this)}>Edit Billing</Button>
+      <Button variant="outline-primary" value='billing' onClick={this.updatePatientSpecial.bind(this)}>Add Billing</Button>
     )}
     {this.state.patientUpdateField === 'billing' &&
     this.state.selectedPatient !== null

@@ -19,7 +19,7 @@ const appointmentInProgressList = props => {
     );
   });
 
-  return <ul className="appointmentInProgressList">{appointmentInProgress}</ul>;
+  return <ul className="user__list1">{appointmentInProgress}</ul>;
 };
 
 export default appointmentInProgressList;

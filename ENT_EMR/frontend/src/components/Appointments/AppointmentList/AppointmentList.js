@@ -19,7 +19,7 @@ const appointmentList = props => {
     );
   });
 
-  return <ul className="user__list">{appointment}</ul>;
+  return <ul className="user__list1">{appointment}</ul>;
 };
 
 export default appointmentList;

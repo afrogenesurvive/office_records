@@ -1,11 +1,11 @@
-.user__list {
-    width: 40rem;
-    max-width: 90%;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    margin-left: 5rem;
+.user__list1 {
+    width: 95%;
+    max-height: 90%;
+    margin: 2rem auto;
+    /* margin-left: 5rem; */
     list-style: none;
     padding: 0;
+    overflow: scroll;
   }
 
 .appointmentTodayList {

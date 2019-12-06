@@ -886,7 +886,7 @@ updateUserSpecial (event) {
               </Button>
             )}
             {this.state.selectedUser !== null && (
-              <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Edit Attendance</Button>
+              <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance</Button>
             )}
             {this.state.userUpdateField === 'attendance' &&
             this.state.selectedUser !== null
@@ -910,7 +910,7 @@ updateUserSpecial (event) {
               </Button>
             )}
             {this.state.selectedUser !== null && (
-              <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecial.bind(this)}>Edit Leave</Button>
+              <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave</Button>
             )}
             {this.state.userUpdateField === 'leave' &&
             this.state.selectedUser !== null
@@ -931,7 +931,7 @@ updateUserSpecial (event) {
               </Button>
             )}
             {this.state.selectedUser !== null && (
-              <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Edit Attachment</Button>
+              <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment</Button>
             )}
             {this.state.userUpdateField === 'attachments' &&
             this.state.selectedUser !== null
