@@ -515,6 +515,13 @@ class AppointmentsPage extends Component {
                 name
                 dob
                 address
+                consultant{
+                  date
+                  reference{
+                    name
+                    role
+                  }
+                }
               }
               inProgress
               attended
@@ -587,6 +594,10 @@ class AppointmentsPage extends Component {
                 name
                 dob
                 address
+                consultant{
+                  name
+                  role
+                }
               }
               inProgress
               attended
@@ -772,6 +783,18 @@ class AppointmentsPage extends Component {
                       Select an Appointment from the Master List below
                     </Button>
                   )}
+                  {
+                    this.state.isLoading === false &&
+                    this.state.selectedAppointment !== null
+                    &&
+                    (
+                      <AppointmentDetail
+                      authUserId={this.context.userId}
+                      appointment={this.state.selectedAppointment}
+                      onEdit={this.startUpdateAppointmentHandler}
+                      onDelete={this.modalDeleteHandler}
+                  />
+                )}
               </Tab>
 
               <Tab eventKey="appointmentCreate" title="New">
@@ -821,7 +844,7 @@ class AppointmentsPage extends Component {
                 </Button>
               )}
               {this.state.selectedAppointment !== null && (
-                <Button variant="outline-primary" value='patient' onClick={this.updateAppointmentSpecial.bind(this)}>Add Patient:</Button>
+                <Button variant="outline-primary" value='patient' onClick={this.updateAppointmentSpecial.bind(this)}>Change Patient:</Button>
               )}
               {this.state.selectedAppointment !== null &&
               this.context.selectedPatient !== null && (
@@ -829,9 +852,9 @@ class AppointmentsPage extends Component {
                 <Col md={8} className="updateUserColAdd">
                 <p>Add Patient: {this.context.selectedPatient.name}</p>
                 <p> To Appointment: {this.state.selectedAppointment.title} ??</p>
-                <Accordion.Toggle as={Button} variant="link" eventKey="13" className="btn" onClick={this.updateAppointmentPatientHandler}>
-                Yes
-                </Accordion.Toggle>
+                <Button variant="success" onClick={this.updateAppointmentPatientHandler}>
+                  Yes
+                </Button>
                 </Col>
                 </Row>
               )}

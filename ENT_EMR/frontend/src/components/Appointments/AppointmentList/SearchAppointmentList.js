@@ -9,9 +9,6 @@ const searchAppointmentList = props => {
   const searchAppointments = props.searchAppointments.map(appointment => {
     return (
       <React.Fragment>
-      <Accordion.Toggle as={Button} variant="link" eventKey="5" className="btn" onClick={props.onCancel}>
-            x
-        </Accordion.Toggle>
       <SearchAppointmentItem
         key={appointment._id}
         userId={props.authUserId}
@@ -24,7 +21,7 @@ const searchAppointmentList = props => {
     );
   });
 
-  return <ul className="user__list">{searchAppointments}</ul>;
+  return <ul className="user__list1">{searchAppointments}</ul>;
 };
 
 export default searchAppointmentList;

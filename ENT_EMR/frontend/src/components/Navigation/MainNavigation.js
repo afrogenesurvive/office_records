@@ -28,10 +28,10 @@ const mainNavigation = props => (
               {context.token && (
                 <React.Fragment>
                   <li>
-                    <NavLink to="/profile">Profile</NavLink>
+                    <NavLink to="/profile">My Profile</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/users">Users</NavLink>
+                    <NavLink to="/users">Staff</NavLink>
                   </li>
                   <li>
                     <NavLink to="/patients">Patients</NavLink>
