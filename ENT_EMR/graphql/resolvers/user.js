@@ -369,7 +369,28 @@ module.exports = {
         name: args.userInput.name,
         role: args.userInput.role,
         employmentDate: args.userInput.employmentDate,
-        terminationDate: args.userInput.terminationDate
+        terminationDate: args.userInput.terminationDate,
+        attachments: [
+          {
+              name: "",
+              format: "",
+              path: "",
+            }
+        ],
+        attendance: [
+          {
+            date: "",
+            status: "",
+            description: "",
+          }
+        ],
+        leave: [
+          {
+            type: "",
+            startDate: null,
+            endDate: null,
+          }
+        ],
       });
 
       const result = await user.save();

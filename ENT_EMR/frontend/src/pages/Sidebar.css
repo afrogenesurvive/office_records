@@ -15,3 +15,8 @@
   height: 15rem;
   overflow: scroll;
 }
+
+.apptSidebarRow {
+  height: 25rem;
+  overflow: scroll;
+}

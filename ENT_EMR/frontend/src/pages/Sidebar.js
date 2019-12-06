@@ -91,7 +91,7 @@ class SidebarPage extends Component {
       </Col>
       </Row>
       <Row className="">
-      <Col md={12} className="">
+      <Col md={12} className="apptSidebarRow">
       <p>Appointments Today</p>
       {this.context.appointmentsToday === null && (
         <Button variant="outline-warning">
@@ -108,7 +108,7 @@ class SidebarPage extends Component {
 
       </Col>
       </Row>
-      <Row className="">
+      <Row className="apptSidebarRow">
       <Col md={12} className="">
       <p>Appointments InProgress</p>
       {this.context.appointmentsToday === null && (
