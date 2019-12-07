@@ -123,7 +123,7 @@ module.exports = {
       console.log(`
         attendanceDate: ${attendanceDate},
         `);
-      const users = await User.find({'attendance.date': attendanceDate });
+      const users = await User.find({'attendance.date': attendanceDate , 'attendance.status': 'present'});
       return users.map(user => {
         return transformUser(user);
       });
@@ -141,13 +141,14 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const startDate = args.startDate;
-      const endDate = args.endDate;
+
+      const startDate = new Date(args.startDate).toISOString();
+      const endDate = new Date(args.endDate).toISOString();
       console.log(`
         startDate: ${startDate},
         endDate: ${endDate},
         `);
-      const users = await User.find({'leave.date': {'$gt' : startDate , '$lt': endDate }});
+      const users = await User.find({'leave.startDate': {'$gt' : new Date(startDate) , '$lt': new Date(endDate) }, 'leave.endDate': {'$gt' : new Date(startDate) , '$lt': new Date(endDate) }});
       return users.map(user => {
         return transformUser(user);
       });
@@ -396,6 +397,7 @@ module.exports = {
       // else {
       const userLeaveObject = {
         type: args.userInput.leaveType,
+        title: args.userInput.leaveTitle,
         startDate: args.userInput.leaveStartDate,
         endDate: args.userInput.leaveEndDate,
       }
@@ -443,6 +445,86 @@ module.exports = {
         `);
 
         const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { leave: { title: title }}},{new: true})
+        return {
+          ...user._doc,
+          _id: user.id,
+          email: user.email,
+          name: user.name,
+          dob: user.dob,
+          address: user.address,
+          phone: user.phone,
+          role: user.role,
+          employmentDate: user.employmentDate,
+          terminationDate: user.terminationDate,
+          attachments: user.attachments,
+          attendance: user.attendance,
+          leave: user.leave,
+        };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  deleteUserAttendance: async (args, req) => {
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      // if (args.selectedUserId != args.userId ) {
+      //   throw new Error('Not the creator! No edit permission');
+      // }
+      // else {
+      const attendanceDate = new Date(args.attendanceDate).toISOString();
+      console.log(`
+          attendanceDate: ${attendanceDate}
+        `);
+
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { attendance: { date: new Date(attendanceDate) }}},{new: true})
+        return {
+          ...user._doc,
+          _id: user.id,
+          email: user.email,
+          name: user.name,
+          dob: user.dob,
+          address: user.address,
+          phone: user.phone,
+          role: user.role,
+          employmentDate: user.employmentDate,
+          terminationDate: user.terminationDate,
+          attachments: user.attachments,
+          attendance: user.attendance,
+          leave: user.leave,
+        };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  deleteUserAttachment: async (args, req) => {
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      // if (args.selectedUserId != args.userId ) {
+      //   throw new Error('Not the creator! No edit permission');
+      // }
+      // else {
+      const attachmentName = args.attachmentName;
+      console.log(`
+          attachmentName: ${attachmentName}
+        `);
+
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { attachments: { name: attachmentName }}},{new: true})
         return {
           ...user._doc,
           _id: user.id,
