@@ -96,6 +96,7 @@ const patientSchema = new Schema({
         _id: false
     }],
   vitals:[{
+      date: {type: Date},
       pr: {type: Number},
       bp1: {type: Number},
       bp2: {type: Number},

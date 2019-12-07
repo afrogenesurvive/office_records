@@ -92,10 +92,10 @@ const singleAppointment = async appointmentId => {
 
 
 const transformUser = user => {
-  user.attendance.map(i => {
-    console.log("attendance dates to string", user.id, i.date, dateToString(i.date));
-  });
-  console.log("attendance", user.attendance);
+  // user.attendance.map(i => {
+  //   console.log("attendance dates to string", user.id, i.date, dateToString(i.date));
+  // });
+  // console.log("attendance", user.attendance);
   return {
     ...user._doc,
     _id: user.id,
