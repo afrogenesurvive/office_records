@@ -150,6 +150,7 @@ const patientSchema = new Schema({
     }],
   medication: [{
       title: {type: String},
+      type: {type: String},
       description: {type: String},
       attachment: {
           name: {type: String},
@@ -205,15 +206,15 @@ const patientSchema = new Schema({
     description: String,
     amount: Number,
     paid: {type: Boolean},
-    attachments:[{
+    attachment:{
         name: {type: String},
         format: {type: String},
         path: {type: String},
-      }],
+      },
     notes: {type: String},
     _id: false
-  }
-],
+  }],
+  attachments: [{name: String,format: String,path: String}],
   notes: [String],
   tags: [String]
 },

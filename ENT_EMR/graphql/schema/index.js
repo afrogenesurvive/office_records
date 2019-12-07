@@ -10,6 +10,8 @@ type User {
   email: String
   password: String
   name: String
+  address: Address
+  phone: Int
   role: String
   employmentDate: String
   terminationDate: String
@@ -18,6 +20,13 @@ type User {
   leave: [Leave]
 }
 
+type Address {
+  number: Int
+  street: String
+  town: String
+  parish: String
+  postOffice: String
+}
 type Attachment {
   name: String
   format: String
@@ -30,6 +39,7 @@ type Attendance {
 }
 type Leave {
   type: String
+  title: String
   startDate: String
   endDate: String
 }
@@ -43,14 +53,17 @@ type AuthData {
 
 type Patient {
   _id: ID!
+  title: String
   name: String
   dob: String
   age: Int
-  address: String
+  gender: String
+  address: Address
   registrationDate: String
   referralDate: String
   expirationDate: String
-  referringDoctor: referringDoctor
+  attendingPhysician: AttendingPhysician
+  referringDoctor: ReferringDoctor
   contact: Contact
   appointments: [Appointment]
   consultant: [Consultant]
@@ -59,6 +72,7 @@ type Patient {
   insurance: [Insurance]
   complaints: [Complaint]
   surveys: [Survey]
+  vitals: [Vitals]
   examination: [Examination]
   history: [History]
   allergies: [Allergy]
@@ -67,6 +81,7 @@ type Patient {
   diagnosis: [Diagnosis]
   treatment: [Treatment]
   billing: [Billing]
+  attachments: [Attachment]
   notes: [String]
   tags: [String]
 }
@@ -75,7 +90,12 @@ type Consultant {
   date: String
   reference: User
 }
-type referringDoctor {
+type ReferringDoctor {
+  name: String
+  email: String
+  phone: String
+}
+type AttendingPhysician {
   name: String
   email: String
   phone: String
@@ -108,6 +128,7 @@ type Complaint {
   date: String
   title: String
   description: String
+  anamnesis: String
   attachment: Attachment
 }
 type Survey {
@@ -116,13 +137,31 @@ type Survey {
   description: String
   attachment: Attachment
 }
+type Vitals {
+  pr: Float
+  bp1: Float
+  bp2: Float
+  rr: Float
+  temp: Float
+  ps02: Float
+  height: Float
+  weight: Float
+  bmi: Float
+  urine: Urine
+}
+type Urine {
+  type: String
+  value: String
+}
 type Examination {
   date: String
+  general: String
   area: String
   type: String
   measure: String
   value: String
   description: String
+  followUp: Boolean
   attachment: Attachment
 }
 type History {
@@ -133,23 +172,27 @@ type History {
   attachment: Attachment
 }
 type Allergy {
+  type: String
   title: String
   description: String
   attachment: Attachment
 }
 type Medication {
   title: String
+  type: String
   description: String
   attachment: Attachment
 }
 type Investigation {
   date: String
+  type: String
   title: String
   description: String
   attachment: Attachment
 }
 type Diagnosis {
   date: String
+  type: String
   title: String
   description: String
   attachment: Attachment
@@ -157,10 +200,10 @@ type Diagnosis {
 type Treatment {
   date: String
   title: String
+  type: String
   description: String
   dose: String
   frequency: String
-  type: String
   attachment: Attachment
 }
 
@@ -181,6 +224,8 @@ type Appointment {
   type: String
   date: String
   time: String
+  checkinTime: String
+  seenTime: String
   location: String
   description: String
   patient: Patient
@@ -195,6 +240,11 @@ input UserInput {
   email: String
   password: String
   name: String
+  addressNumber: Int
+  addressStreet: String
+  addressTown: String
+  addressParish: String
+  addressPostOffice: String
   role: String
   employmentDate: String
   terminationDate: String
@@ -205,21 +255,31 @@ input UserInput {
   attendanceStatus: String
   attendanceDescription: String
   leaveType: String
+  leaveTitle: String
   leaveStartDate: String
   leaveEndDate: String
 }
 
 
 input PatientInput {
+  title: String
   name: String
   dob: String
   age: Int
-  address: String
+  gender: String
+  addressNumber: String
+  addressStreet: String
+  addressTown: String
+  addressParish: String
+  addressPostOffice: String
   contactPhone: String
   contactEmail: String
   registrationDate: String
   referralDate: String
   expirationDate: String
+  attendingPhysicianName: String
+  attendingPhysicianEmail: String
+  attendingPhysicianPhone: String
   referringDoctorName: String
   referringDoctorEmail: String
   referringDoctorPhone: String
@@ -242,6 +302,7 @@ input PatientInput {
   complaintDate: String
   complaintTitle: String
   complaintDescription: String
+  complaintAnamnesis: String
   complaintAttachmentName: String
   complaintAttachmentFormat: String
   complaintAttachmentPath: String
@@ -251,12 +312,25 @@ input PatientInput {
   surveyAttachmentName: String
   surveyAttachmentFormat: String
   surveyAttachmentPath: String
+  vitalsPr: Float
+  vitalsBp1: Float
+  vitalsBp2: Float
+  vitalsRr: Float
+  vitalsTemp: Float
+  vitalsPs02: Float
+  vitalsHeight: Float
+  vitalsWeight: Float
+  vitalsBmi: Float
+  vitalsUrineType: String
+  vitalsUrineValue: String
   examinationDate: String
+  examinationGeneral: String
   examinationArea: String
   examinationType: String
   examinationMeasure: String
   examinationValue: String
   examinationDescription: String
+  examinationFollowUp: Boolean
   examinationAttachmentName: String
   examinationAttachmentFormat: String
   examinationAttachmentPath: String
@@ -268,6 +342,7 @@ input PatientInput {
   historyAttachmentFormat: String
   historyAttachmentPath: String
   allergiesTitle: String
+  allergiesType: String
   allergiesDescription: String
   allergiesAttachmentName: String
   allergiesAttachmentFormat: String
@@ -279,22 +354,24 @@ input PatientInput {
   medicationAttachmentPath: String
   investigationDate: String
   investigationTitle: String
+  investigationType: String
   investigationDescription: String
   investigationAttachmentName: String
   investigationAttachmentFormat: String
   investigationAttachmentPath: String
   diagnosisDate: String
   diagnosisTitle: String
+  diagnosisType: String
   diagnosisDescription: String
   diagnosisAttachmentName: String
   diagnosisAttachmentFormat: String
   diagnosisAttachmentPath: String
   treatmentDate: String
   treatmentTitle: String
+  treatmentType: String
   treatmentDescription: String
   treatmentDose: String
   treatmentFrequency: String
-  treatmentType: String
   treatmentAttachmentName: String
   treatmentAttachmentFormat: String
   treatmentAttachmentPath: String
@@ -308,6 +385,9 @@ input PatientInput {
   billingAttachmentFormat: String
   billingAttachmentPath: String
   billingNotes: String
+  attachmentName: String
+  attachmentPath: String
+  attachmentFormat: String
   notes: String
   tag: String
 }
@@ -317,6 +397,8 @@ input AppointmentInput {
   type: String
   date: String
   time: String
+  checkinTime: String
+  seenTime: String
   location: String
   description: String
   inProgress: Boolean
@@ -339,6 +421,7 @@ type RootQuery {
     appointments(userId: ID!): [Appointment]
     getAppointmentId(appointmentId: ID! userId: ID!): Appointment
     getAppointmentField(userId: ID!, field: String!, query: String!): [Appointment]
+    getAppointmentDate(userId: ID!, date: String!): [Appointment]
     getAppointmentDateRange(userId: ID!, startDate: String!, endDate: String!): [Appointment]
     getAppointmentToday(userId: ID!): [Appointment]
     getAppointmentWeek(userId: ID!): [Appointment]
@@ -371,6 +454,7 @@ type RootMutation {
     updatePatientNextOfKin(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientComplaint(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientSurvey(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientVitals(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientExamination(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientHistory(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientAllergies(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
@@ -379,6 +463,7 @@ type RootMutation {
     updatePatientDiagnosis(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientTreatment(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientBilling(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientAttachment(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     deletePatient(userId: ID!, patientId: ID!): Patient
 
     createAppointment(userId: ID!, patientId: ID!, appointmentInput: AppointmentInput!): Appointment
