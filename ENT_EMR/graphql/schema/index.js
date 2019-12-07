@@ -316,7 +316,7 @@ input AppointmentInput {
   title: String
   type: String
   date: String
-  time: String 
+  time: String
   location: String
   description: String
   inProgress: Boolean
@@ -357,6 +357,9 @@ type RootMutation {
     updateUserLeave(userId: ID!, selectedUserId: ID!, userInput: UserInput!): User
     updateUserField(userId: ID!, selectedUserId: ID!, field: String!, query: String!): User
     deleteUser(userId: ID!, selectedUserId: ID!): User
+    deleteUserLeave(userId: ID!, selectedUserId: ID!, startDate: String!, endDate: String! ): User
+    deleteUserAttendance(userId: ID!, selectedUserId: ID!, index: Int!): User
+    deleteUserAttachment(userId: ID!, selectedUserId: ID!, index: Int!): User
 
     createPatient(userId: ID!, patientInput: PatientInput!): Patient
     updatePatient(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient

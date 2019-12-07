@@ -3,251 +3,214 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const patientSchema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  dob:{
-    type: Date
-  },
-  age: {
-    type: Number
-  },
+  title: {type: String},
+  name: {type: String,required: true},
+  dob:{type: Date},
+  age: {type: Number},
+  gender: {type: String},
   address: {
-    type: String,
-    required: true
+    number: {type:Number},
+    street: {type:String},
+    town: {type:String},
+    parish: {type:String},
+    postOffice: {type:String},
   },
-  registrationDate:{
-    type: Date
-  },
-  referralDate:{
-    type: Date
-  },
-  expirationDate:{
-    type: Date
+  registrationDate:{type: Date},
+  referralDate:{type: Date},
+  expirationDate:{type: Date},
+  attendingPhysician: {
+    name: {type:String},
+    email: {type:String},
+    phone: {type:String},
   },
   referringDoctor: {
-    name: String,
-    email: String,
-    phone: String
+    name: {type:String},
+    email: {type:String},
+    phone: {type:String}
   },
   contact: {
-    phone: String,
-    email: String
+    phone: {type:String},
+    email: {type:String}
   },
   occupation: {
-      role: String,
-      employer: String,
+      role: {type:String},
+      employer: {type:String},
       contact: {
-        phone: String,
-        email: String
+        phone: {type:String},
+        email: {type:String}
       }
   },
-  appointments: [
-    {
+  appointments: [{
       type: Schema.Types.ObjectId,
           ref: 'Appointment',
           _id: false
-    }
-  ],
-  consultant: [
-    {
-      date: {
-      type: Date
-    },
+    }],
+  consultant: [{
+    date: {type: Date},
     reference:{
     type: Schema.Types.ObjectId,
       ref: 'User'
   },
   _id: false
-}
-],
-  insurance: [
-    {
-    company: String,
-    number: String,
-    description: String,
-    expiry: {
-      type: Date
-    },
+}],
+  insurance: [{
+    company: {type:String},
+    number: {type:String},
+    description: {type:String},
+    expiry: {type: Date},
     subscriber: {
-      company: String,
-      description: String
+      company: {type:String},
+      description: {type:String}
     },
     _id: false
-  }
-],
-  nextOfKin: [
-    {
-    name: String,
+  }],
+  nextOfKin: [{
+    name: {type:String},
     contact: {
-      phone: String,
-      email: String
+      phone: {type:String},
+      email: {type:String}
     },
     _id: false
-  }
-],
-  complaints: [
-    {
-      date: {
-        type: Date
-      },
-      title: String,
-      description: String,
+  }],
+  complaints: [{
+      date: {type: Date},
+      title: {type:String},
+      description: {type:String},
+      anamnesis: {type:String},
       attachment: {
-          name: String,
-          format: String,
-          path: String
+          name: {type:String},
+          format: {type:String},
+          path: {type:String},
         },
         _id: false
-    }
-  ],
-  surveys: [
-    {
-      date: {
-        type: Date
-      },
-      title: String,
-      description: String,
+    }],
+  surveys: [{
+      date: {type: Date},
+      title: {type:String},
+      description: {type:String},
       attachment: {
-          name: String,
-          format: String,
-          path: String
+          name: {type:String},
+          format: {type:String},
+          path: {type:String}
         },
         _id: false
-    }
-  ],
-  examination: [
-    {
-    date: {
-      type: Date
-    },
-    area: String,
-    type: {
-      type:String,
-    },
-    measure: String,
-    value: String,
-    description: String,
-    attachment: {
-        name: String,
-        format: String,
-        path: String
-    },
-    _id: false
-  }
-],
-  history: [
-    {
-      type: {
-        type: String,
-      },
-      date: {
-        type: Date
-      },
-      title: String,
-      description: String,
-      attachment: {
-          name: String,
-          format: String,
-          path: String
+    }],
+  vitals:[{
+      pr: {type: Number},
+      bp1: {type: Number},
+      bp2: {type: Number},
+      rr: {type: Number},
+      temp: {type: Number},
+      ps02: {type: Number},
+      height: {type: Number},
+      weight: {type: Number},
+      bmi: {type: Number},
+      urine:{
+        type: {type: String},
+        value: {type: String},
       }
-    }
-  ],
-  allergies: [
-    {
-      title: String,
-      description: String,
-      attachment: {
-          name: String,
-          format: String,
-          path: String
-        },
-        _id: false
-    }
-  ],
-  medication: [
-    {
-      title: String,
-      description: String,
-      attachment: {
-          name: String,
-          format: String,
-          path: String
-        },
-        _id: false
-    }
-  ],
-  investigation: [
-    {
-      date: {
-        type: Date
-      },
-      title: String,
-      description: String,
-      attachment: {
-          name: String,
-          format: String,
-          path: String
-        },
-        _id: false
-    }
-  ],
-  diagnosis: [
-    {
-      date: {
-        type: Date
-      },
-      title: String,
-      description: String,
-      attachment: {
-          name: String,
-          format: String,
-          path: String
-        },
-        _id: false
-    }
-  ],
-  treatment: [
-    {
-      date: {
-        type: Date
-      },
-      title: String,
-      description: String,
-      dose: String,
-      frequency: String,
-      type: {
-        type: String,
-      },
-      attachment: {
-          name: String,
-          format: String,
-          path: String
-        },
-        _id: false
-    }
-  ],
-  billing:[
-    {
-    date: {
-      type: Date
+    }],
+  examination: [{
+    date: {type: Date},
+    general: {type: String},
+    area: {type:String},
+    type: {type:String,},
+    measure: {type:String},
+    value: {type:String},
+    description: {type:String},
+    followUp: {type:Boolean},
+    attachment: {
+        name: {type:String},
+        format: {type:String},
+        path: {type:String}
     },
+    _id: false
+  }],
+  history: [{
+      type: {type: String},
+      date: {type: Date},
+      title: {type:String},
+      description: String,
+      attachment: {
+          name: {type:String},
+          format: {type:String},
+          path: {type:String},
+      }
+    }],
+  allergies: [{
+      type: {type:String},
+      title: {type:String},
+      description: {type:String},
+      attachment: {
+          name: {type: String},
+          format: {type: String},
+          path: {type: String},
+        },
+        _id: false
+    }],
+  medication: [{
+      title: {type: String},
+      description: {type: String},
+      attachment: {
+          name: {type: String},
+          format: {type: String},
+          path: {type: String},
+        },
+        _id: false
+    }],
+  investigation: [{
+      date: {type: Date},
+      type: {type: String},
+      title: {type: String},
+      description: {type: String},
+      attachment: {
+          name: {type: String},
+          format: {type: String},
+          path: {type: String},
+        },
+        _id: false
+    }],
+  diagnosis: [{
+      date: {type: Date},
+      type: {type: String},
+      title: {type: String},
+      description: {type: String},
+      attachment: {
+          name: {type: String},
+          format: {type: String},
+          path: {type: String},
+        },
+        _id: false
+    }],
+  treatment: [{
+      date: {type: Date},
+      type: {type: String},
+      title: {type: String},
+      description: {type: String},
+      dose: {type: String},
+      frequency: {type: String},
+      type: {type: String},
+      attachment: {
+          name: {type: String},
+          format: {type: String},
+          path: {type: String},
+        },
+        _id: false
+    }
+  ],
+  billing:[{
+    date: {type: Date},
     title: String,
-    type: {
-      type: String,
-    },
+    type: {type: String},
     description: String,
     amount: Number,
-    paid: {
-      type: Boolean
-    },
-    attachment:{
-        name: String,
-        format: String,
-        path: String
-      },
-    notes: String,
+    paid: {type: Boolean},
+    attachments:[{
+        name: {type: String},
+        format: {type: String},
+        path: {type: String},
+      }],
+    notes: {type: String},
     _id: false
   }
 ],

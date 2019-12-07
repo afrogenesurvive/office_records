@@ -1439,6 +1439,7 @@ modalConfirmSearchHandler = (event) => {
         return res.json();
       })
       .then(resData => {
+        console.log("resData", resData);
         const patients = resData.data.patients;
         console.log(patients);
 

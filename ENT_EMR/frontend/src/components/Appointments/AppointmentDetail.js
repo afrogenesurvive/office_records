@@ -9,7 +9,7 @@ import './PatientDetail.css';
 const AppointmentDetail = (props) => {
   const {...appointment} = props.appointment;
   const authUserId = props.authUserId;
-  const appointmentDate = new Date(appointment.date*1000).toUTCString();
+  const appointmentDate = new Date(appointment.date.substr(0,10)*1000).toLocaleString();
   const appointmentNote = appointment.notes;
   const appointmentPatientConsultant = appointment.patient.consultant;
   console.log("appointmentPatientConsultant:  ", appointmentPatientConsultant);

@@ -40,10 +40,11 @@ const PatientDetail = (props) => {
   const patientDiagnosis = patient.diagnosis;
   const patientTreatment = patient.treatment;
   const patientBilling = patient.billing;
-  const patientRegistrationDate = new Date(patient.registrationDate*1000).toUTCString();
-  const patientDob = new Date(patient.dob*1000).toUTCString();
+  const patientRegistrationDate = new Date(patient.registrationDate.substr(0,10)*1000).toLocaleString();
+  const patientDob = new Date(patient.dob.substr(0,10)*1000).toLocaleString();
   const patientReferralDate = new Date(patient.referralDate*1000).toUTCString();
-  const patientExpirationDate = new Date(patient.expirationDate*1000).toUTCString();
+  // const patientReferralDate = new Date(patient.referralDate.substr(0,10)*1000).toLocaleString();
+  const patientExpirationDate = new Date(patient.expirationDate.substr(0,10)*1000).toLocaleString();
 
   console.log("PatientDetail.props.patient:  ", {...patient});
 

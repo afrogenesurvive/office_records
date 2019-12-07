@@ -23,9 +23,10 @@ module.exports = {
     }
 
     try {
+
       const users = await User.find();
       return users.map(user => {
-        return transformUser(user);
+        return transformUser(user,);
       });
     } catch (err) {
       throw err;
@@ -318,6 +319,45 @@ module.exports = {
       throw err;
     }
   },
+  deleteUserLeave: async (args, req) => {
+    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    console.log("deleteUserLeave...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+
+      // if (args.selectedUserId != args.userId ) {
+      //   throw new Error('Not the creator! No edit permission');
+      // }
+      // else {
+
+      const startDate = dateToString(args.startDate);
+      const endDate = dateToString(args.endDate);
+      console.log(`
+        `);
+
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { leave: { title: args.leaveTitle}}},{new: true})
+        // user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { leave: { type: "test3"}}},{new: true})
+
+        return {
+            ...user._doc,
+            _id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            employmentDate: user.employmentDate,
+            terminationDate: user.terminationDate,
+            attachment: user.attachment,
+            attendance: user.attendance,
+            leave: user.leave,
+        };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
   deleteUser: async (args, req) => {
     // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
     console.log("deleteUser...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
@@ -379,7 +419,7 @@ module.exports = {
         ],
         attendance: [
           {
-            date: "",
+            date: 0,
             status: "",
             description: "",
           }
@@ -387,8 +427,8 @@ module.exports = {
         leave: [
           {
             type: "",
-            startDate: null,
-            endDate: null,
+            startDate: 0,
+            endDate: 0,
           }
         ],
       });

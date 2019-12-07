@@ -92,11 +92,15 @@ const singleAppointment = async appointmentId => {
 
 
 const transformUser = user => {
+  user.attendance.map(i => {
+    console.log("attendance dates to string", user.id, i.date, dateToString(i.date));
+  });
+  console.log("attendance", user.attendance);
   return {
     ...user._doc,
     _id: user.id,
     name: user.name,
-    email: user.email
+    email: user.email,
   };
 };
 const transformPatient = patient => {
@@ -109,7 +113,6 @@ const transformAppointment = appointment => {
   return {
     ...appointment._doc,
     _id: appointment.id,
-    date: dateToString(appointment.date)
   };
 };
 

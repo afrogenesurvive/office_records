@@ -294,7 +294,7 @@ class ThisUserPage extends Component {
 
       const requestBody = {
         query:`
-          mutation {updateUserLeave(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{leaveType:"${leaveType}",leaveStartDate:"${leaveStartDate}",leaveEndDate:"${leaveEndDate}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,startDate,endDate}}}
+          mutation {updateUserLeave(userId:"${userId}", selectedUserId:"${userId}",userInput:{leaveType:"${leaveType}",leaveStartDate:"${leaveStartDate}",leaveEndDate:"${leaveEndDate}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,startDate,endDate}}}
         `};
 
       fetch('http://localhost:10000/graphql', {
