@@ -903,7 +903,13 @@ module.exports = {
         name: args.patientInput.name,
         dob: args.patientInput.dob,
         age: args.patientInput.age,
-        address: args.patientInput.address,
+        address: {
+          number: args.patientInput.addressNumber,
+          street: args.patientInput.addressStreet,
+          town: args.patientInput.addressTown,
+          parish: args.patientInput.addressParish,
+          postOffice: args.patientInput.addressPostOffice,
+        },
         contact: {
           phone: args.patientInput.contactPhone,
           email: args.patientInput.contactEmail
@@ -916,6 +922,11 @@ module.exports = {
           email: args.patientInput.referringDoctorEmail,
           phone: args.patientInput.referringDoctorPhone
         },
+        attendingPhysician: {
+          name: args.patientInput.attendingPhysicianName,
+          email: args.patientInput.attendingPhysicianEmail,
+          phone: args.patientInput.attendingPhysicianPhone
+        },
         occupation: {
           role: args.patientInput.occupationRole,
           employer: args.patientInput.occupationEmployer,
@@ -926,8 +937,7 @@ module.exports = {
         },
         appointments: [],
         consultant: [],
-        insurance: [
-          {
+        insurance: [{
           company: "",
           number: 0,
           description: "",
@@ -936,19 +946,26 @@ module.exports = {
             company: "",
             description: "",
             }
-          }
-        ],
-        nextOfKin: [
-          {
+          }],
+        nextOfKin: [{
             name: "",
             contact: {
               phone: 0,
               email: "",
             }
-          }
-        ],
-        complaints: [
-          {
+          }],
+        complaints: [{
+            date: 0,
+            title: "",
+            description: "",
+            anamnesis: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }],
+        surveys: [{
             date: 0,
             title: "",
             description: "",
@@ -957,37 +974,39 @@ module.exports = {
               format: "",
               path: "",
             }
+          }],
+        vitals: [{
+          date: 0,
+          pr: 0,
+          bp1: 0,
+          bp2: 0,
+          rr: 0,
+          temp: 0,
+          ps02: 0,
+          height: 0,
+          weight: 0,
+          bmi: 0,
+          urine: {
+            type: "",
+            value: "",
           }
-        ],
-        surveys: [
-          {
-            date: null,
-            title: "",
-            description: "",
-            attachment:{
-              name: "",
-              format: "",
-              path: "",
-            }
-          }
-        ],
-        examination: [
-          {
+        }],
+        examination: [{
             date: 0,
+            general: "",
             area: "",
             type: "",
             measure: "",
             value: "",
             description: "",
+            followUp: false,
             attachment:{
               name: "",
               format: "",
               path: "",
             }
-          }
-        ],
-        history: [
-          {
+          }],
+        history: [{
             type: "",
             date: 0,
             title: "",
@@ -997,10 +1016,9 @@ module.exports = {
               format: "",
               path: "",
             }
-          }
-        ],
-        allergies: [
-          {
+          }],
+        allergies: [{
+            type: "",
             title: "",
             description: "",
             attachment:{
@@ -1008,22 +1026,20 @@ module.exports = {
               format: "",
               path: "",
             }
-          }
-        ],
-        medication: [
-          {
+          }],
+        medication: [{
             title: "",
+            type: "",
             description: "",
             attachment:{
               name: "",
               format: "",
               path: "",
             }
-          }
-        ],
-        investigation: [
-          {
+          }],
+        investigation: [{
             date: 0,
+            type: "",
             title: "",
             description: "",
             attachment:{
@@ -1031,11 +1047,10 @@ module.exports = {
               format: "",
               path: "",
             }
-          }
-        ],
-        diagnosis: [
-          {
+          }],
+        diagnosis: [{
             date: 0,
+            type: "",
             title: "",
             description: "",
             attachment:{
@@ -1043,11 +1058,10 @@ module.exports = {
               format: "",
               path: "",
             }
-          }
-        ],
-        treatment: [
-          {
+          }],
+        treatment: [{
             date: 0,
+            type: "",
             title: "",
             description: "",
             dose: "",
@@ -1058,10 +1072,8 @@ module.exports = {
               format: "",
               path: "",
             }
-          }
-        ],
-        billing: [
-          {
+          }],
+        billing: [{
             date: 0,
             title: "",
             type: "",
@@ -1074,8 +1086,12 @@ module.exports = {
               path: "",
             },
             notes: "",
-          }
-        ],
+          }],
+        attachments: [{
+          name: "",
+          format: "",
+          path: "",
+        }],
         notes: [""],
         tags: [""],
       }

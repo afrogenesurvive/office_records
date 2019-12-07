@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const DataLoader = require('dataloader');
 
-
 const User = require('../../models/user');
 const Patient = require('../../models/patient');
 const Appointment = require('../../models/appointment');
@@ -15,15 +14,15 @@ const { pocketVariables } = require('../../helpers/pocketVars');
 
 module.exports = {
   users: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("users...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
       const users = await User.find();
       return users.map(user => {
         return transformUser(user,);
@@ -33,34 +32,46 @@ module.exports = {
     }
   },
   getThisUser: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("getThisUser...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      const user = await User.findById(pocketVariables.userId);
+      const user = await User.findById(req.userId);
         return {
           ...user._doc,
           _id: user.id,
           email: user.email,
           name: user.name,
-          role: user.role
+          dob: user.dob,
+          address: user.address,
+          phone: user.phone,
+          role: user.role,
+          employmentDate: user.employmentDate,
+          terminationDate: user.terminationDate,
+          attachments: user.attachments,
+          attendance: user.attendance,
+          leave: user.leave,
         };
     } catch (err) {
       throw err;
     }
   },
   getUserId: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("getUserId...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      const user = await User.findById(args.otherUserId);
+      const user = await User.findById(args.selectedUserId);
         return {
           ...user._doc,
           _id: user.id,
@@ -73,85 +84,121 @@ module.exports = {
     }
   },
   getUserField: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("getUserField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
-    const resolverField = args.field;
-    const resolverQuery = args.query;
-    const query = {[resolverField]:resolverQuery};
-
-    console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
-
     try {
+      const resolverField = args.field;
+      const resolverQuery = args.query;
+      const query = {[resolverField]:resolverQuery};
+      console.log(`
+        resolverField: ${resolverField},
+        resolverQuery: ${resolverQuery},
+        queryObject: ${query},
+        `);
       const users = await User.find(query);
       return users.map(user => {
         return transformUser(user);
-        // ...user._doc,
-        // _id: user.id,
-        // email: user.email,
-        // name: user.name,
-        // role: user.role
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  getUserAttendanceDate: async (args, req) => {
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const attendanceDate = args.attendanceDate;
+      console.log(`
+        attendanceDate: ${attendanceDate},
+        `);
+      const users = await User.find({'attendance.date': attendanceDate });
+      return users.map(user => {
+        return transformUser(user);
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  getUserLeaveDateRange: async (args, req) => {
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const startDate = args.startDate;
+      const endDate = args.endDate;
+      console.log(`
+        startDate: ${startDate},
+        endDate: ${endDate},
+        `);
+      const users = await User.find({'leave.date': {'$gt' : startDate , '$lt': endDate }});
+      return users.map(user => {
+        return transformUser(user);
       });
     } catch (err) {
       throw err;
     }
   },
   updateUser: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("updateUser...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-
-
       // if (args.selectedUserId != args.userId ) {
       //   throw new Error('Not the creator! No edit permission');
       // }
       // else {
-
       const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
       const user = await User.findOneAndUpdate({_id:args.selectedUserId},{
         email: args.userInput.email,
         password: hashedPassword,
         name: args.userInput.name,
+        dob: args.userInput.dob,
+        address: {
+          number: args.userInput.addressNumber,
+          street: args.userInput.addressStreet,
+          town: args.userInput.addressTown,
+          parish: args.userInput.addressParish,
+          postOffice: args.userInput.addressPostOffice,
+        },
+        phone: args.userInput.phone,
         role: args.userInput.role,
         employmentDate: args.userInput.employmentDate,
         terminationDate: args.userInput.terminationDate,
-        // attachment: {
-        //     name: args.userInput.attachmentName,
-        //     format: args.userInput.attachmentFormat,
-        //     path: args.userInput.attachmentPath,
-        // },
-        // $addToSet:
-        //   {
-        //     attendance: {
-        //       date: args.userInput.attendanceDate,
-        //       status: args.userInput.attendanceStatus,
-        //       description: args.userInput.attendanceDescription
-        //     },
-        //     leave: {
-        //       type: args.userInput.leaveType,
-        //       startDate: args.userInput.leaveStartDate,
-        //       endDate: args.userInput.leaveEndDate
-        //     }
-        //   }
-
-      },{new: true});
+        },{new: true});
         return {
           ...user._doc,
           _id: user.id,
           email: user.email,
           name: user.name,
+          dob: user.dob,
+          address: user.address,
+          phone: user.phone,
           role: user.role,
           employmentDate: user.employmentDate,
           terminationDate: user.terminationDate,
-          attachment: user.attachment,
+          attachments: user.attachments,
           attendance: user.attendance,
           leave: user.leave,
         };
@@ -161,58 +208,62 @@ module.exports = {
     }
   },
   updateUserField: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("updateUserField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-
       // if (args.selectedUserId != args.userId ) {
       //   throw new Error('Not the creator! No edit permission');
       // }
       // else {
-
       const resolverField = args.field;
       const resolverQuery = args.query;
       const query = {[resolverField]:resolverQuery};
-
-      console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
-
-        const user = await User.findOneAndUpdate({_id:args.selectedUserId},query,{new: true})
-
-        return {
-            ...user._doc,
-            _id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-            employmentDate: user.employmentDate,
-            terminationDate: user.terminationDate,
-            attachment: user.attachment,
-            attendance: user.attendance,
-            leave: user.leave,
-        };
+      console.log(`
+          resolverField: ${resolverField},
+          resolverQuery: ${resolverQuery},
+          query object: ${query},
+        `);
+      const user = await User.findOneAndUpdate({_id:args.selectedUserId},query,{new: true})
+      return {
+        ...user._doc,
+        _id: user.id,
+        email: user.email,
+        name: user.name,
+        dob: user.dob,
+        address: user.address,
+        phone: user.phone,
+        role: user.role,
+        employmentDate: user.employmentDate,
+        terminationDate: user.terminationDate,
+        attachments: user.attachments,
+        attendance: user.attendance,
+        leave: user.leave,
+      };
       // }
     } catch (err) {
       throw err;
     }
   },
   updateUserAttachment: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("updateUserAttachment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-
       // if (args.selectedUserId != args.userId ) {
       //   throw new Error('Not the creator! No edit permission');
       // }
       // else {
-
       const userAttachmentObject = {
         name: args.userInput.attachmentName,
         format: args.userInput.attachmentFormat,
@@ -221,40 +272,41 @@ module.exports = {
       console.log(`
         userAttachmentObject: ${userAttachmentObject}
         `);
-
-        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attachments: userAttachmentObject}},{new: true})
-
-        return {
-            ...user._doc,
-            _id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-            employmentDate: user.employmentDate,
-            terminationDate: user.terminationDate,
-            attachment: user.attachment,
-            attendance: user.attendance,
-            leave: user.leave,
-        };
+      const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attachments: userAttachmentObject}},{new: true})
+      return {
+        ...user._doc,
+        _id: user.id,
+        email: user.email,
+        name: user.name,
+        dob: user.dob,
+        address: user.address,
+        phone: user.phone,
+        role: user.role,
+        employmentDate: user.employmentDate,
+        terminationDate: user.terminationDate,
+        attachments: user.attachments,
+        attendance: user.attendance,
+        leave: user.leave,
+      };
       // }
     } catch (err) {
       throw err;
     }
   },
   updateUserAttendance: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("updateUserAttendance...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-
       // if (args.selectedUserId != args.userId ) {
       //   throw new Error('Not the creator! No edit permission');
       // }
       // else {
-
       const userAttendanceObject = {
         date: args.userInput.attendanceDate,
         status: args.userInput.attendanceStatus,
@@ -263,14 +315,65 @@ module.exports = {
       console.log(`
         userAttendanceObject: ${util.inspect(userAttendanceObject)}
         `);
-
         const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attendance: userAttendanceObject}},{new: true, useFindAndModify: false})
-
         return {
-            ...user._doc,
-            _id: user.id,
-            email: user.email,
-            name: user.name,
+          ...user._doc,
+          _id: user.id,
+          email: user.email,
+          name: user.name,
+          dob: user.dob,
+          address: user.address,
+          phone: user.phone,
+          role: user.role,
+          employmentDate: user.employmentDate,
+          terminationDate: user.terminationDate,
+          attachments: user.attachments,
+          attendance: user.attendance,
+          leave: user.leave,
+        };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updateUserAttendanceToday: async (args, req) => {
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      // if (args.selectedUserId != args.userId ) {
+      //   throw new Error('Not the creator! No edit permission');
+      // }
+      // else {
+      const today = new Date();
+      const status = "Present";
+      const userAttendanceObject = {
+        date: today,
+        status: status,
+      }
+      console.log(`
+        userAttendanceObject: ${util.inspect(userAttendanceObject)}
+        `);
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attendance: userAttendanceObject}},{new: true, useFindAndModify: false})
+        return {
+          ...user._doc,
+          _id: user.id,
+          email: user.email,
+          name: user.name,
+          dob: user.dob,
+          address: user.address,
+          phone: user.phone,
+          role: user.role,
+          employmentDate: user.employmentDate,
+          terminationDate: user.terminationDate,
+          attachments: user.attachments,
+          attendance: user.attendance,
+          leave: user.leave,
         };
       // }
     } catch (err) {
@@ -278,19 +381,19 @@ module.exports = {
     }
   },
   updateUserLeave: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("updateUserLeave...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-
       // if (args.selectedUserId != args.userId ) {
       //   throw new Error('Not the creator! No edit permission');
       // }
       // else {
-
       const userLeaveObject = {
         type: args.userInput.leaveType,
         startDate: args.userInput.leaveStartDate,
@@ -299,20 +402,21 @@ module.exports = {
       console.log(`
         userLeaveObject: ${JSON.stringify(userLeaveObject)}
         `);
-
         const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { leave: userLeaveObject}},{new: true})
-
         return {
-            ...user._doc,
-            _id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-            employmentDate: user.employmentDate,
-            terminationDate: user.terminationDate,
-            attachment: user.attachment,
-            attendance: user.attendance,
-            leave: user.leave,
+          ...user._doc,
+          _id: user.id,
+          email: user.email,
+          name: user.name,
+          dob: user.dob,
+          address: user.address,
+          phone: user.phone,
+          role: user.role,
+          employmentDate: user.employmentDate,
+          terminationDate: user.terminationDate,
+          attachments: user.attachments,
+          attendance: user.attendance,
+          leave: user.leave,
         };
       // }
     } catch (err) {
@@ -320,38 +424,39 @@ module.exports = {
     }
   },
   deleteUserLeave: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("deleteUserLeave...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-
       // if (args.selectedUserId != args.userId ) {
       //   throw new Error('Not the creator! No edit permission');
       // }
       // else {
-
-      const startDate = dateToString(args.startDate);
-      const endDate = dateToString(args.endDate);
+      const title = args.leaveTitle;
       console.log(`
+          title: ${title}
         `);
 
-        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { leave: { title: args.leaveTitle}}},{new: true})
-        // user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { leave: { type: "test3"}}},{new: true})
-
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { leave: { title: title }}},{new: true})
         return {
-            ...user._doc,
-            _id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-            employmentDate: user.employmentDate,
-            terminationDate: user.terminationDate,
-            attachment: user.attachment,
-            attendance: user.attendance,
-            leave: user.leave,
+          ...user._doc,
+          _id: user.id,
+          email: user.email,
+          name: user.name,
+          dob: user.dob,
+          address: user.address,
+          phone: user.phone,
+          role: user.role,
+          employmentDate: user.employmentDate,
+          terminationDate: user.terminationDate,
+          attachments: user.attachments,
+          attendance: user.attendance,
+          leave: user.leave,
         };
       // }
     } catch (err) {
@@ -359,29 +464,32 @@ module.exports = {
     }
   },
   deleteUser: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("deleteUser...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-
       // if (args.selectedUserId != args.userId) {
       //   throw new Error('Not the creator! No edit permission');
       // }
       // else {
-
       const user = await User.findByIdAndRemove(args.selectedUserId);
         return {
           ...user._doc,
           _id: user.id,
           email: user.email,
           name: user.name,
+          dob: user.dob,
+          address: user.address,
+          phone: user.phone,
           role: user.role,
           employmentDate: user.employmentDate,
           terminationDate: user.terminationDate,
-          attachment: user.attachment,
+          attachments: user.attachments,
           attendance: user.attendance,
           leave: user.leave,
         };
@@ -391,46 +499,49 @@ module.exports = {
     }
   },
   createUser: async (args, req) => {
-    // console.log("args..." + JSON.stringify(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object...", util.inspect(req));
-    console.log("createUser...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
-    // console.log(JSON.stringify(req));
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
     try {
       const existingUserName = await User.findOne({ name: args.userInput.name});
-
       if (existingUserName) {
         throw new Error('User w/ that name exists already.');
       }
-
       const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
-
       const user = new User({
         email: args.userInput.email,
         password: hashedPassword,
         name: args.userInput.name,
+        dob: args.userInput.dob,
+        address: {
+          number: args.userInput.addressNumber,
+          street: args.userInput.addressStreet,
+          town: args.userInput.addressTown,
+          parish: args.userInput.addressParish,
+          postOffice: args.userInput.addressPostOffice,
+        },
+        phone: args.userInput.phone,
         role: args.userInput.role,
         employmentDate: args.userInput.employmentDate,
         terminationDate: args.userInput.terminationDate,
-        attachments: [
-          {
+        attachments: [{
               name: "",
               format: "",
               path: "",
-            }
-        ],
-        attendance: [
-          {
+            }],
+        attendance: [{
             date: 0,
             status: "",
             description: "",
-          }
-        ],
-        leave: [
-          {
+          }],
+        leave: [{
             type: "",
+            title: "",
             startDate: 0,
             endDate: 0,
-          }
-        ],
+          }],
       });
 
       const result = await user.save();
@@ -441,9 +552,15 @@ module.exports = {
         _id: result.id,
         email: result.email,
         name: result.name,
+        dob: result.dob,
+        address: result.address,
+        phone: result.phone,
         role: result.role,
         employmentDate: result.employmentDate,
         terminationDate: result.terminationDate,
+        attachments: result.attachments,
+        attendance: result.attendance,
+        leave: result.leave,
       };
     } catch (err) {
       throw err;

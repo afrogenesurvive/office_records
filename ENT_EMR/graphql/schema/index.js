@@ -10,8 +10,9 @@ type User {
   email: String
   password: String
   name: String
+  dob: String
   address: Address
-  phone: Int
+  phone: String
   role: String
   employmentDate: String
   terminationDate: String
@@ -138,6 +139,7 @@ type Survey {
   attachment: Attachment
 }
 type Vitals {
+  date: String
   pr: Float
   bp1: Float
   bp2: Float
@@ -240,11 +242,13 @@ input UserInput {
   email: String
   password: String
   name: String
+  dob: String
   addressNumber: Int
   addressStreet: String
   addressTown: String
   addressParish: String
   addressPostOffice: String
+  phone: String
   role: String
   employmentDate: String
   terminationDate: String
@@ -312,6 +316,7 @@ input PatientInput {
   surveyAttachmentName: String
   surveyAttachmentFormat: String
   surveyAttachmentPath: String
+  vitalsDate: String
   vitalsPr: Float
   vitalsBp1: Float
   vitalsBp2: Float
@@ -410,17 +415,23 @@ input AppointmentInput {
 type RootQuery {
 
     users(userId: ID!): [User]
-    getUserId(userId: ID! otherUserId: ID!): User
+    getUserId(userId: ID! selectedUserId: ID!): User
     getUserField(userId: ID!, field: String!, query: String!): [User]
+    getUserAttendanceDate(userId: ID!, attendanceDate: String!): [User]
+    getUserLeaveDateRange(userId: ID!, startDate: String, endDate: String!): [User]
     getThisUser: User
 
     patients(userId: ID!): [Patient]
     getPatientId(patientId: ID! userId: ID!): Patient
     getPatientField(userId: ID!, field: String!, query: String!): [Patient]
+    getPatientVisit(userId: ID!, visitDate: String!): [Patient]
+    getPatientNameRegex(userId: ID!, regex: String!): [Patient]
+    getPatientDiagnosis(userId: ID!, diagnosisType: String!): [Patient]
 
     appointments(userId: ID!): [Appointment]
     getAppointmentId(appointmentId: ID! userId: ID!): Appointment
     getAppointmentField(userId: ID!, field: String!, query: String!): [Appointment]
+    getAppointmentPatient(userId: ID!, ): [Appointment]
     getAppointmentDate(userId: ID!, date: String!): [Appointment]
     getAppointmentDateRange(userId: ID!, startDate: String!, endDate: String!): [Appointment]
     getAppointmentToday(userId: ID!): [Appointment]
@@ -437,16 +448,17 @@ type RootMutation {
     updateUser(userId: ID!, selectedUserId: ID!, userInput: UserInput!): User
     updateUserAttachment(userId: ID!, selectedUserId: ID!, userInput: UserInput!): User
     updateUserAttendance(userId: ID!, selectedUserId: ID!, userInput: UserInput!): User
+    updateUserAttendanceToday(userId: ID!, selectedUserId: ID!): User
     updateUserLeave(userId: ID!, selectedUserId: ID!, userInput: UserInput!): User
     updateUserField(userId: ID!, selectedUserId: ID!, field: String!, query: String!): User
+
     deleteUser(userId: ID!, selectedUserId: ID!): User
-    deleteUserLeave(userId: ID!, selectedUserId: ID!, startDate: String!, endDate: String! ): User
-    deleteUserAttendance(userId: ID!, selectedUserId: ID!, index: Int!): User
-    deleteUserAttachment(userId: ID!, selectedUserId: ID!, index: Int!): User
+    deleteUserLeave(userId: ID!, selectedUserId: ID!, leaveTitle: String! ): User
+    deleteUserAttendance(userId: ID!, selectedUserId: ID!, attendanceDate: String!): User
+    deleteUserAttachment(userId: ID!, selectedUserId: ID!, attachmentName: String!): User
 
     createPatient(userId: ID!, patientInput: PatientInput!): Patient
     updatePatient(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
-    updatePatientArray(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientField(userId: ID!, patientId: ID!, field: String!, query: String!): Patient
     updatePatientAppointment(userId: ID!, patientId: ID!, appointmentId: ID!): Patient
     updatePatientConsultant(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
@@ -464,13 +476,32 @@ type RootMutation {
     updatePatientTreatment(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientBilling(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientAttachment(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+
     deletePatient(userId: ID!, patientId: ID!): Patient
+    deletePatientAppointment(userId: ID!, patientId: ID!, appointmentDate: String!): Patient
+    deletePatientConsultant(userId: ID!, patientId: ID!, consultantId: ID!): Patient
+    deletePatientInsurance(userId: ID!, patientId: ID!, insuranceNumber: Int!): Patient
+    deletePatientNextOfKin(userId: ID!, patientId: ID!, nextOfKinName: String!): Patient
+    deletePatientComplaint(userId: ID!, patientId: ID!, complaintDate: String!): Patient
+    deletePatientSurvey(userId: ID!, patientId: ID!, surveyDate: String!, surveyTitle: String!): Patient
+    deletePatientVitals(userId: ID!, patientId: ID!, vitalsDate: String!): Patient
+    deletePatientExamination(userId: ID!, patientId: ID!, examinationDate: String!): Patient
+    deletePatientHistory(userId: ID!, patientId: ID!, historyDate: String!, historyTitle: String!): Patient
+    deletePatientAllergies(userId: ID!, patientId: ID!, allergiesTitle: String!): Patient
+    deletePatientMedication(userId: ID!, patientId: ID!, medicationTitle: String!): Patient
+    deletePatientInvestigation(userId: ID!, patientId: ID!, investigationTitle: String!): Patient
+    deletePatientDiagnosis(userId: ID!, patientId: ID!, diagnosisTitle: String!): Patient
+    deletePatientTreatment(userId: ID!, patientId: ID!, treatmentTitle: String!): Patient
+    deletePatientBilling(userId: ID!, patientId: ID!, billingTitle: String!): Patient
+    deletePatientAttachment(userId: ID!, patientId: ID!, attachmentName: String!): Patient
 
     createAppointment(userId: ID!, patientId: ID!, appointmentInput: AppointmentInput!): Appointment
     updateAppointment(userId: ID!, appointmentId: ID!, patientId: ID, appointmentInput: AppointmentInput!): Appointment
+    updateAppointmentCheckin(userId: ID!, appointmentId: ID!, patientId: ID, appointmentInput: AppointmentInput!): Appointment
+    updateAppointmentSeen(userId: ID!, appointmentId: ID!, patientId: ID, appointmentInput: AppointmentInput!): Appointment
+    updateAppointmentDischarged(userId: ID!, appointmentId: ID!, patientId: ID, appointmentInput: AppointmentInput!): Appointment
     updateAppointmentNotes(userId: ID!, appointmentId: ID!, patientId: ID, appointmentInput: AppointmentInput!): Appointment
     updateAppointmentField(userId: ID!, appointmentId: ID!, field: String!, query: String!): Appointment
-    updateAppointmentFieldArray(userId: ID!, appointmentId: ID!, field: String!, query: String!): Appointment
     updateAppointmentPatient(userId: ID!, appointmentId: ID!, patientId: ID!): Appointment
     deleteAppointment(userId: ID!, appointmentId: ID!): Appointment
 

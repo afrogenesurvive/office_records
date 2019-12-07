@@ -6,6 +6,7 @@ const userSchema = new Schema({
   email: {type: String,required: true},
   password: {type: String,required: true},
   name: {type: String,required: true},
+  dob:{type: Date},
   address: {
     number: Number,
     street: {type: String},
@@ -13,11 +14,16 @@ const userSchema = new Schema({
     parish: {type:String},
     postOffice: {type:String},
   },
-  phone: {type: Number},
+  phone: {type: String},
   role: {type:String},
   employmentDate: {type: Date},
   terminationDate: {type: Date},
-  attachments: [{name: String,format: String,path: String}],
+  attachments: [{
+    name: {type:String},
+    format: {type:String},
+    path: {type:String},
+    _id: false
+  }],
   attendance: [{
     date: {type: Date},
     status: {type:String},

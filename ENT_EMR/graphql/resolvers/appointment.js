@@ -316,41 +316,6 @@ module.exports = {
       throw err;
     }
   },
-  updateAppointmentFieldArray: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updateAppointmentFieldArray...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
-
-    if (!req.isAuth) {
-      throw new Error('Unauthenticated!');
-    }
-    try {
-
-      // const user = await User.findById(args.userId);
-      // userRole = user.role;
-      // console.log("userRole:  ", userRole);
-      //
-      // if (userRole !== "test") {
-      //   throw new Error('Your role does not give access to the data');
-      // }
-
-        const resolverField = args.field;
-        const resolverQuery = args.query;
-        const query = {[resolverField]:resolverQuery};
-
-        console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
-
-        const appointment = await Appointment.findOneAndUpdate({_id:args.appointmentId},{$addToSet: query},{new: true})
-        .populate('patient');
-
-        return {
-          ...appointment._doc,
-          _id: appointment.id,
-          title: appointment.title
-        };
-    } catch (err) {
-      throw err;
-    }
-  },
   deleteAppointment: async (args, req) => {
     // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
     console.log("deleteAppointment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
@@ -406,6 +371,8 @@ module.exports = {
         type: args.appointmentInput.type,
         date: args.appointmentInput.date,
         time: args.appointmentInput.time,
+        seenTime: args.appointmentInput.seenTime,
+        checkinTime: args.appointmentInput.checkinTime,
         location: args.appointmentInput.location,
         description: args.appointmentInput.description,
         patient: appointmentPatient,
