@@ -931,7 +931,7 @@ module.exports = {
           company: "",
           number: 0,
           description: "",
-          expiry: null,
+          expiry: 0,
           subscriber:{
             company: "",
             description: "",
@@ -949,7 +949,7 @@ module.exports = {
         ],
         complaints: [
           {
-            date: null,
+            date: 0,
             title: "",
             description: "",
             attachment:{
@@ -973,7 +973,7 @@ module.exports = {
         ],
         examination: [
           {
-            date: null,
+            date: 0,
             area: "",
             type: "",
             measure: "",
@@ -989,7 +989,7 @@ module.exports = {
         history: [
           {
             type: "",
-            date: null,
+            date: 0,
             title: "",
             description: "",
             attachment:{
@@ -1023,7 +1023,7 @@ module.exports = {
         ],
         investigation: [
           {
-            date: null,
+            date: 0,
             title: "",
             description: "",
             attachment:{
@@ -1035,7 +1035,7 @@ module.exports = {
         ],
         diagnosis: [
           {
-            date: null,
+            date: 0,
             title: "",
             description: "",
             attachment:{
@@ -1047,7 +1047,7 @@ module.exports = {
         ],
         treatment: [
           {
-            date: null,
+            date: 0,
             title: "",
             description: "",
             dose: "",
@@ -1062,7 +1062,7 @@ module.exports = {
         ],
         billing: [
           {
-            date: null,
+            date: 0,
             title: "",
             type: "",
             description: "",

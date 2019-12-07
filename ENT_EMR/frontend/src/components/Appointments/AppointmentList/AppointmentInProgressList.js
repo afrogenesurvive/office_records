@@ -6,7 +6,7 @@ import './UserList.css';
 const appointmentInProgressList = props => {
   console.log("patient InProgress list props", props.appointmentInProgress);
   const appointmentInProgress = props.appointmentInProgress.map(appointment => {
-    const appointmentInProgressDate = new Date(appointment.date*1000).toUTCString();
+    const appointmentInProgressDate = new Date(appointment.date.substr(0,10)*1000).toLocaleString();
     return (
       <AppointmentInProgressItem
         key={appointment.date}
