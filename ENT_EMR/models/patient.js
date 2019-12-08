@@ -191,7 +191,6 @@ const patientSchema = new Schema({
       description: {type: String},
       dose: {type: String},
       frequency: {type: String},
-      type: {type: String},
       attachment: {
           name: {type: String},
           format: {type: String},
@@ -215,7 +214,11 @@ const patientSchema = new Schema({
     notes: {type: String},
     _id: false
   }],
-  attachments: [{name: String,format: String,path: String}],
+  attachments: [{
+    name: String,
+    format: String,
+    path: String,
+  }],
   notes: [String],
   tags: [String]
 },
