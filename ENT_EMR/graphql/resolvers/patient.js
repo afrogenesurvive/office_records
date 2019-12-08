@@ -627,8 +627,11 @@ module.exports = {
     }
   },
   updatePatientMedication: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientMedication...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientMedication...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -638,6 +641,7 @@ module.exports = {
 
       const patientMedicationObject = {
             title: args.patientInput.medicationTitle,
+            type: args.patientInput.medicationType,
             description: args.patientInput.medicationDescription,
             attachment: {
               name: args.patientInput.medicationAttachmentName,
@@ -663,8 +667,11 @@ module.exports = {
     }
   },
   updatePatientInvestigation: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientInvestigation...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientInvestigation...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -675,6 +682,7 @@ module.exports = {
       const patientInvestigationObject = {
             date: args.patientInput.investigationDate,
             title: args.patientInput.investigationTitle,
+            type: args.patientInput.investigationType,
             description: args.patientInput.investigationDescription,
             attachment: {
               name: args.patientInput.investigationAttachmentName,
@@ -700,8 +708,11 @@ module.exports = {
     }
   },
   updatePatientDiagnosis: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientDiagnosis...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientDiagnosis...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -712,6 +723,7 @@ module.exports = {
       const patientDiagnosisObject = {
             date: args.patientInput.diagnosisDate,
             title: args.patientInput.diagnosisTitle,
+            type: args.patientInput.diagnosisType,
             description: args.patientInput.diagnosisDescription,
             attachment: {
               name: args.patientInput.diagnosisAttachmentName,
@@ -737,8 +749,11 @@ module.exports = {
     }
   },
   updatePatientTreatment: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientTreatment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientTreatment...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -777,8 +792,11 @@ module.exports = {
     }
   },
   updatePatientBilling: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientBilling...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientBilling...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -817,9 +835,92 @@ module.exports = {
       throw err;
     }
   },
+  updatePatientAttachment: async (args, req) => {
+    console.log(`
+      updatePatientAttachment...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+      const patientAttachmentObject = {
+        name: args.patientInput.attachmentName,
+        format: args.patientInput.attachmentFormat,
+        path: args.patientInput.attachmentPath,
+      }
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {attachments:patientAttachmentObject}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientNotes: async (args, req) => {
+    console.log(`
+      updatePatientNotes...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {notes:args.notes}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
+  updatePatientTags: async (args, req) => {
+    console.log(`
+      updatePatientTags...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {tags:args.tag}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
   deletePatient: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("deletePatient...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      deletePatient...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -840,8 +941,11 @@ module.exports = {
     }
   },
   createPatient: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("createPatient...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      createPatient...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
