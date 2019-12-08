@@ -33,7 +33,7 @@ module.exports = {
   },
   getThisUser: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      getThisUser...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -63,7 +63,7 @@ module.exports = {
   },
   getUserId: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      getUserId...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -85,7 +85,7 @@ module.exports = {
   },
   getUserField: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      getUserField...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -111,7 +111,7 @@ module.exports = {
   },
   getUserAttendanceDate: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      getUserAttendanceDate...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -133,7 +133,7 @@ module.exports = {
   },
   getUserLeaveDateRange: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      getUserLeaveDateRange...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -158,7 +158,7 @@ module.exports = {
   },
   updateUser: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      updateUser...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -210,7 +210,7 @@ module.exports = {
   },
   updateUserField: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      updateUserField...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -253,7 +253,7 @@ module.exports = {
   },
   updateUserAttachment: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      updateUserAttachment...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -296,7 +296,8 @@ module.exports = {
   },
   updateUserAttendance: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      updateUserAttendance...args:
+      ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -339,7 +340,8 @@ module.exports = {
   },
   updateUserAttendanceToday: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      updateUserAttendanceToday...args:
+      ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -383,7 +385,7 @@ module.exports = {
   },
   updateUserLeave: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      updateUserLeave...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -427,7 +429,7 @@ module.exports = {
   },
   deleteUserLeave: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      deleteUserLeave...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -467,7 +469,7 @@ module.exports = {
   },
   deleteUserAttendance: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      deleteUserAttendance...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -507,7 +509,7 @@ module.exports = {
   },
   deleteUserAttachment: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      deleteUserAttachment...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -547,7 +549,7 @@ module.exports = {
   },
   deleteUser: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      deleteUser...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -582,7 +584,7 @@ module.exports = {
   },
   createUser: async (args, req) => {
     console.log(`
-      users...args: ${util.inspect(args)},
+      createUser...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 

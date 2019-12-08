@@ -15,8 +15,10 @@ const { pocketVariables } = require('../../helpers/pocketVars');
 
 module.exports = {
   patients: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("patients...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      patients...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -35,8 +37,10 @@ module.exports = {
     }
   },
   getPatientId: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("getPatientId...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      getPatientId...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -56,22 +60,22 @@ module.exports = {
     }
   },
   getPatientField: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("getPatientField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      getPatientField...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
 
     try {
-
       const resolverField = args.field;
       const resolverQuery = args.query;
       const query = {[resolverField]:resolverQuery};
 
       console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
 
-      // const patients = await Patient.find(query);
       const patients = await Patient.find(query);
 
       return patients.map(patient => {
@@ -83,8 +87,10 @@ module.exports = {
     }
   },
   updatePatient: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatient...args:  ", util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatient...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -92,197 +98,50 @@ module.exports = {
 
     try {
 
-      // const patientInsuranceObject = {
-      //   company: args.patientInput.insuranceCompany,
-      //   number: args.patientInput.insuranceNumber,
-      //   description: args.patientInput.insuranceDescription,
-      //   expiry: args.patientInput.insuranceExpiry,
-      //   company: args.patientInput.insuranceSubscriberCompany,
-      //   description: args.patientInput.insuranceSubscriberDescription
-      // }
-      // const patientNextOfKinObject = {
-      //   name: args.patientInput.nextOfKinName,
-      //   phone: args.patientInput.nextOfKinPhone,
-      //   email: args.patientInput.nextOfKinEmail
-      // }
-
-      //
-      // console.log(`
-      //   updatePatientArray input objects:
-      //   // insurance: ${JSON.stringify(patientInsuranceObject)}
-      //   // nextOfKin: ${JSON.stringify(patientNextOfKinObject)}
-      //   // complaint: ${JSON.stringify(patientComplaintObject)}
-      //       examintion: ${JSON.stringify(patientExaminationObject)}
-      //   // history: ${JSON.stringify(patientHistoryObject)}
-      //   // allergies: ${JSON.stringify(patientAllergiesObject)}
-      //   // medication: ${JSON.stringify(patientMedicationObject)}
-      //   // investigation: ${JSON.stringify(patientInvestigationObject)}
-      //   // diagnosis: ${JSON.stringify(patientDiagnosisObject)}
-      //   // treatment: ${JSON.stringify(patientTreatmentObject)}
-      //   // billing: ${JSON.stringify(patientBillingObject)}
-      //   // `);
-
-
       const today = new Date();
       const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       const dateTime = date+' '+time;
 
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{
-          name: args.patientInput.name,
-          dob: args.patientInput.dob,
-          age: args.patientInput.age,
-          address: args.patientInput.address,
-          contact: {
-            phone: args.patientInput.contactPhone,
-            email: args.patientInput.contactEmail
-          },
-          registrationDate: args.patientInput.registrationDate,
-          referralDate: args.patientInput.referralDate,
-          expirationDate: args.patientInput.expirationDate,
-          referringDoctor: {
-            name: args.patientInput.referringDoctorName,
-            email: args.patientInput.referringDoctorEmail,
-            phone: args.patientInput.referringDoctorPhone
-          },
-          occupation: {
-            role: args.patientInput.occupationRole,
-            employer: args.patientInput.occupationEmployer,
-            contact:{
-              phone: args.patientInput.occupationEmployerContactPhone,
-              email: args.patientInput.occupationEmployerContactEmail
-            }
-          },
-        //   $addToSet: {
-        //     insurance: {
-        //       company: args.patientInput.insuranceCompany,
-        //       number: args.patientInput.insuranceNumber,
-        //       description: args.patientInput.insuranceDescription,
-        //       expiry: args.patientInput.insuranceExpiry,
-        //       subscriber: {
-        //         company: args.patientInput.insuranceSubscriberCompany,
-        //         description: args.patientInput.insuranceSubscriberDescription
-        //       }
-        //     },
-        //     nextOfKin: {
-        //       name: args.patientInput.nextOfKinName,
-        //       contact: {
-        //         email: args.patientInput.nextOfKinEmail,
-        //         phone: args.patientInput.nextOfKinPhone
-        //       }
-        //     },
-        //     complaints: {
-        //       date: args.patientInput.complaintDate,
-        //       title: args.patientInput.complaintTitle,
-        //       description: args.patientInput.complaintDescription,
-        //       attachment: {
-        //         name: args.patientInput.complaintAttachmentName,
-        //         format: args.patientInput.complaintAttachmentFormat,
-        //         path: args.patientInput.complaintAttachmentPath
-        //       }
-        //     },
-        //     examination: {
-        //       area: args.patientInput.examinationArea,
-        //       type: args.patientInput.examinationType,
-        //       measure: args.patientInput.examinationMeasure,
-        //       value: args.patientInput.examinationValue,
-        //       description: args.patientInput.examinationDescription,
-        //       attachment: {
-        //         name: args.patientInput.examinationAttachmentName,
-        //         format: args.patientInput.examinationAttachmentFormat,
-        //         path: args.patientInput.examinationAttachmentPath
-        //       }
-        //     },
-        //     history: {
-        //       title: args.patientInput.historyTitle,
-        //       type: args.patientInput.historyType,
-        //       date: args.patientInput.historyDate,
-        //       description: args.patientInput.historyDescription,
-        //       attachment: {
-        //         name: args.patientInput.historyAttachmentName,
-        //         format: args.patientInput.historyAttachmentFormat,
-        //         path: args.patientInput.historyAttachmentPath
-        //       }
-        //     },
-        //     allergies: {
-        //       title: args.patientInput.allergiesTitle,
-        //       description: args.patientInput.allergiesDescription,
-        //       attachment: {
-        //         name: args.patientInput.allergiesAttachmentName,
-        //         format: args.patientInput.allergiesAttachmentFormat,
-        //         path: args.patientInput.allergiesAttachmentPath
-        //       },
-        //     },
-        //     medication: {
-        //       title: args.patientInput.medicationTitle,
-        //       description: args.patientInput.medicationDescription,
-        //       attachment: {
-        //         name: args.patientInput.medicationAttachmentName,
-        //         format: args.patientInput.medicationAttachmentFormat,
-        //         path: args.patientInput.medicationAttachmentPath
-        //       }
-        //     },
-        //     investigation: {
-        //       date: args.patientInput.investigationDate,
-        //       title: args.patientInput.investigationTitle,
-        //       description: args.patientInput.investigationDescription,
-        //       attachment: {
-        //         name: args.patientInput.investigationAttachmentName,
-        //         format: args.patientInput.investigationAttachmentFormat,
-        //         path: args.patientInput.investigationAttachmentPath
-        //       }
-        //     },
-        //     diagnosis: {
-        //       date: args.patientInput.diagnosisDate,
-        //       title: args.patientInput.diagnosisTitle,
-        //       description: args.patientInput.diagnosisDescription,
-        //       attachment: {
-        //         name: args.patientInput.diagnosisAttachmentName,
-        //         format: args.patientInput.diagnosisAttachmentFormat,
-        //         path: args.patientInput.diagnosisAttachmentPath
-        //       }
-        //     },
-        //     treatment: {
-        //       date: args.patientInput.treatmentDate,
-        //       title: args.patientInput.treatmentTitle,
-        //       type: args.patientInput.treatmentType,
-        //       description: args.patientInput.treatmentDescription,
-        //       dose: args.patientInput.treatmentDose,
-        //       frequency: args.patientInput.treatmentFrequency,
-        //       attachment: {
-        //         name: args.patientInput.treatmentAttachmentName,
-        //         format: args.patientInput.treatmentAttachmentFormat,
-        //         path: args.patientInput.treatmentAttachmentPath
-        //       }
-        //     },
-        //     billing: {
-        //       date: args.patientInput.billingDate,
-        //       title: args.patientInput.billingTitle,
-        //       type: args.patientInput.billingType,
-        //       description: args.patientInput.billingDescription,
-        //       amount: args.patientInput.billingAmount,
-        //       paid: args.patientInput.billingPaid,
-        //       notes: args.patientInput.billingNotes,
-        //       attachment: {
-        //         name: args.patientInput.billingAttachmentName,
-        //         format: args.patientInput.billingAttachmentFormat,
-        //         path: args.patientInput.billingAttachmentPath
-        //       }
-        //     }
-        // }
-        //   $addToSet: {
-        //     insurance: patientInsuranceObject,
-        //         nextOfKin: patientNextOfKinObject,
-        //         complaint: patientComplaintObject,
-        //         examination: patientExaminationObject,
-        //         history: patientHistoryObject,
-        //         allergies: patientAllergiesObject,
-        //         medication: patientMedicationObject,
-        //         investigation: patientInvestigationObject,
-        //         diagnosis: patientDiagnosisObject,
-        //         treatment: patientTreatmentObject,
-        //         billing: patientBillingObject
-        // }
+        title: args.patientInput.title,
+        name: args.patientInput.name,
+        dob: args.patientInput.dob,
+        age: args.patientInput.age,
+        gender: args.patientInput.gender,
+        address: {
+          number: args.patientInput.addressNumber,
+          street: args.patientInput.addressStreet,
+          town: args.patientInput.addressTown,
+          parish: args.patientInput.addressParish,
+          postOffice: args.patientInput.addressPostOffice,
+        },
+        contact: {
+          phone: args.patientInput.contactPhone,
+          email: args.patientInput.contactEmail
+        },
+        registrationDate: args.patientInput.registrationDate,
+        referralDate: args.patientInput.referralDate,
+        expirationDate: args.patientInput.expirationDate,
+        referringDoctor: {
+          name: args.patientInput.referringDoctorName,
+          email: args.patientInput.referringDoctorEmail,
+          phone: args.patientInput.referringDoctorPhone
+        },
+        attendingPhysician: {
+          name: args.patientInput.attendingPhysicianName,
+          email: args.patientInput.attendingPhysicianEmail,
+          phone: args.patientInput.attendingPhysicianPhone
+        },
+        occupation: {
+          role: args.patientInput.occupationRole,
+          employer: args.patientInput.occupationEmployer,
+          contact:{
+            phone: args.patientInput.occupationEmployerContactPhone,
+            email: args.patientInput.occupationEmployerContactEmail
+          }
+        },
+
        }
       ,{new: true})
       .populate('appointments');
@@ -297,8 +156,11 @@ module.exports = {
     }
   },
   updatePatientField: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientField...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -325,8 +187,11 @@ module.exports = {
     }
   },
   updatePatientAppointment: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientAppointment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientAppointment...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -352,8 +217,11 @@ module.exports = {
     }
   },
   updatePatientConsultant: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientConsultant...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientConsultant...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -391,8 +259,11 @@ module.exports = {
     }
   },
   updatePatientInsurance: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientInsurance...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientInsurance...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -428,8 +299,10 @@ module.exports = {
     }
   },
   updatePatientNextOfKin: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientNextOfKin...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientNextOfKin...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -462,8 +335,11 @@ module.exports = {
     }
   },
   updatePatientComplaint: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientComplaint...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientComplaint...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -475,6 +351,7 @@ module.exports = {
             date: args.patientInput.complaintDate,
             title: args.patientInput.complaintTitle,
             description: args.patientInput.complaintDescription,
+            anamnesis: args.patientInput.complaintAnamnesis,
             attachment: {
               name: args.patientInput.complaintAttachmentName,
               format: args.patientInput.complaintAttachmentFormat,
@@ -499,8 +376,11 @@ module.exports = {
     }
   },
   updatePatientSurvey: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientSurvey...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientSurvey...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -550,9 +430,83 @@ module.exports = {
       throw err;
     }
   },
+  updatePatientVitals: async (args, req) => {
+    console.log(`
+      updatePatientVitals...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const vitalsDate  = args.patientInput.vitalsDate;
+      const vitalsPr  = args.patientInput.vitalsPr;
+      const vitalsBp1  = args.patientInput.vitalsBp1;
+      const vitalsBp2  = args.patientInput.vitalsBp2;
+      const vitalsRr  = args.patientInput.vitalsRr;
+      const vitalsTemp  = args.patientInput.vitalsTemp;
+      const vitalsPs02 = args.patientInput.vitalsPs02;
+      const vitalsHeight = args.patientInput.vitalsHeight;
+      const vitalsWeight = args.patientInput.vitalsWeight;
+      const vitalsBmi = args.patientInput.vitalsBmi;
+      const vitalsUrineType = args.patientInput.vitalsUrineType;
+      const vitalsUrineValue = args.patientInput.vitalsUrineValue;
+
+      console.log(`
+        vitalsDate: ${vitalsDate},
+        vitalsPr: ${vitalsPr},
+        vitalsBp1: ${vitalsBp1},
+        vitalsBp2: ${vitalsBp2},
+        vitalsRr: ${vitalsRr},
+        vitalsTemp: ${vitalsTemp},
+        vitalsPs02: ${vitalsPs02},
+        vitalsHeight: ${vitalsHeight},
+        vitalsWeight: ${vitalsWeight},
+        vitalsBmi: ${vitalsBmi},
+        vitalsUrineType: ${vitalsUrineType},
+        vitalsUrineValue: ${vitalsUrineValue},
+        `);
+
+
+      const patientVitals = {
+        date: vitalsDate,
+        pr: vitalsPr,
+        bp1: vitalsBp1,
+        bp2: vitalsBp2,
+        rr: vitalsRr,
+        temp: vitalsTemp,
+        ps02: vitalsPs02,
+        height: vitalsHeight,
+        weight: vitalsWeight,
+        bmi: vitalsBmi,
+        urine: {
+          type: vitalsUrineType,
+          value: vitalsUrineValue,
+        }
+      }
+
+      console.log(" patientVitals: ", patientVitals);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {vitals:patientVitals}},{new: true})
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
   updatePatientExamination: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientExamination...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientExamination...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -562,11 +516,13 @@ module.exports = {
 
       const patientExaminationObject = {
             date: args.patientInput.examinationDate,
+            general: args.patientInput.examinationGeneral,
             area: args.patientInput.examinationArea,
             type: args.patientInput.examinationType,
             measure: args.patientInput.examinationMeasure,
             value: args.patientInput.examinationValue,
             description: args.patientInput.examinationDescription,
+            followUp: args.patientInput.examinationFollowUp,
             attachment: {
               name: args.patientInput.examinationAttachmentName,
               format: args.patientInput.examinationAttachmentFormat,
@@ -591,15 +547,17 @@ module.exports = {
     }
   },
   updatePatientHistory: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientHistory...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientHistory...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
 
     try {
-
       const patientHistoryObject = {
             title: args.patientInput.historyTitle,
             type: args.patientInput.historyType,
@@ -629,8 +587,11 @@ module.exports = {
     }
   },
   updatePatientAllergies: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updatePatientAllergies...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updatePatientAllergies...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -640,6 +601,7 @@ module.exports = {
 
       const patientAllergiesObject = {
             title: args.patientInput.allergiesTitle,
+            type: args.patientInput.allergiesType,
             description: args.patientInput.allergiesDescription,
             attachment: {
               name: args.patientInput.allergiesAttachmentName,
@@ -900,9 +862,11 @@ module.exports = {
 
       const patient = new Patient(
         {
+        title: args.patientInput.title,
         name: args.patientInput.name,
         dob: args.patientInput.dob,
         age: args.patientInput.age,
+        gender: args.patientInput.gender,
         address: {
           number: args.patientInput.addressNumber,
           street: args.patientInput.addressStreet,
@@ -1101,9 +1065,11 @@ module.exports = {
 
       return {
         ...result._doc,
+        title: result.title,
         name: result.name,
         dob: result.dob,
         age: result.age,
+        gender: result.gender,
         address: result.address,
         contact: {
           phone: result.contact.phone,

@@ -271,7 +271,7 @@ input PatientInput {
   dob: String
   age: Int
   gender: String
-  addressNumber: String
+  addressNumber: Int
   addressStreet: String
   addressTown: String
   addressParish: String
