@@ -353,6 +353,7 @@ input PatientInput {
   allergiesAttachmentFormat: String
   allergiesAttachmentPath: String
   medicationTitle: String
+  medicationType: String
   medicationDescription: String
   medicationAttachmentName: String
   medicationAttachmentFormat: String
@@ -476,6 +477,8 @@ type RootMutation {
     updatePatientTreatment(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientBilling(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientAttachment(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientNotes(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientTags(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
 
     deletePatient(userId: ID!, patientId: ID!): Patient
     deletePatientAppointment(userId: ID!, patientId: ID!, appointmentDate: String!): Patient
