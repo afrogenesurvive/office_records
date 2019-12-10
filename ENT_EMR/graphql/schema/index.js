@@ -432,7 +432,7 @@ type RootQuery {
     appointments(userId: ID!): [Appointment]
     getAppointmentId(appointmentId: ID! userId: ID!): Appointment
     getAppointmentField(userId: ID!, field: String!, query: String!): [Appointment]
-    getAppointmentPatient(userId: ID!, ): [Appointment]
+    getAppointmentPatient(userId: ID!, patientId: ID!): [Appointment]
     getAppointmentDate(userId: ID!, date: String!): [Appointment]
     getAppointmentDateRange(userId: ID!, startDate: String!, endDate: String!): [Appointment]
     getAppointmentToday(userId: ID!): [Appointment]

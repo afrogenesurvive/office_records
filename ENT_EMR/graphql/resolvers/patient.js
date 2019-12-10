@@ -1112,9 +1112,14 @@ module.exports = {
     try {
       const nextOfKin = {
         name: args.patientInput.nextOfKinName,
-        phone: args.patientInput.nextOfKinPhone,
-        email: args.patientInput.nextOfKinEmail,
+        contact: {
+          phone: args.patientInput.nextOfKinPhone,
+          email: args.patientInput.nextOfKinEmail
+        }
       }
+      console.log(`
+        nextOfKin: ${util.inspect(nextOfKin)}
+        `);
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { nextOfKin: nextOfKin}},{new: true})
       .populate('appointments')
       .populate('consultant.reference');

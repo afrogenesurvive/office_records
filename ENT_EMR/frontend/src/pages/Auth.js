@@ -15,11 +15,9 @@ class AuthPage extends Component {
   static contextType = AuthContext;
   // static contextType = ThisUserContext;
 
-  constructor(props) {
-    super(props);
-    this.emailEl = React.createRef();
-    this.passwordEl = React.createRef();
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   // switchModeHandler = () => {
   //   this.setState(prevState => {
