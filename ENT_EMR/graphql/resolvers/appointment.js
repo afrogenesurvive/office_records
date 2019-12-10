@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const DataLoader = require('dataloader');
 
-
 const User = require('../../models/user');
 const Patient = require('../../models/patient');
 const Appointment = require('../../models/appointment');
@@ -15,8 +14,10 @@ const { pocketVariables } = require('../../helpers/pocketVars');
 
 module.exports = {
   appointments: async (args, req) => {
-    // console.log("args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
-    console.log("appointments...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables));
+    console.log(`
+      appointments...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -25,7 +26,8 @@ module.exports = {
     try {
       const appointments = await Appointment.find()
       .populate('patient')
-      .populate('patient.consultant');
+      .populate('patient.consultant')
+      .populate('patient.appointments');
 
       return appointments.map(appointment => {
         return transformAppointment(appointment);
@@ -35,15 +37,20 @@ module.exports = {
     }
   },
   getAppointmentId: async (args, req) => {
-    console.log("getAppointmentId...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + util.inspect(req));
+    console.log(`
+      getAppointmentId...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
 
     try {
-      const appointments = await Appointment.findById(args.appointmentId)
-      .populate('patient');
+      const appointment = await Appointment.findById(args.appointmentId)
+      .populate('patient')
+      .populate('patient.consultant')
+      .populate('patient.appointments');
 
         return {
             ...appointment._doc,
@@ -55,8 +62,10 @@ module.exports = {
     }
   },
   getAppointmentField: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("getAppointmentField..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      getAppointmentField...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -70,6 +79,34 @@ module.exports = {
       console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
 
       const appointments = await Appointment.find(query)
+      .populate('patient')
+      .populate('patient.consultant')
+      .populate('patient.appointments');
+
+        return appointments.map(appointment => {
+          return transformAppointment(appointment);
+        });
+    } catch (err) {
+      throw err;
+    }
+  },
+  getAppointmentDateRange: async (args, req) => {
+    console.log(`
+      getAppointmentDateRange...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      let startDate = new Date(args.startDate);
+      let endDate = new Date(args.endDate);
+      console.log("startDate:  ", startDate, "endDate:  ", endDate);
+
+      const appointments = await Appointment.find({'date': {'$gt' : startDate, '$lt': endDate}})
       .populate('patient');
 
         return appointments.map(appointment => {
@@ -79,33 +116,40 @@ module.exports = {
       throw err;
     }
   },
-  // getAppointmentDateRange: async (args, req) => {
-  //   // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-  //   console.log("getAppointmentDateRange..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
-  //
-  //   if (!req.isAuth) {
-  //     throw new Error('Unauthenticated!');
-  //   }
-  //
-  //   try {
-  //
-  //     let startDate = new Date(args.startDate);
-  //     let endDate = new Date(args.endDate);
-  //     console.log("startDate:  ", startDate, "endDate:  ", endDate);
-  //
-  //     const appointments = await Appointment.find({'date': {'$gt' : startDate, '$lt': endDate}})
-  //     .populate('patient');
-  //
-  //       return appointments.map(appointment => {
-  //         return transformAppointment(appointment);
-  //       });
-  //   } catch (err) {
-  //     throw err;
-  //   }
-  // },
+  getAppointmentDate: async (args, req) => {
+    console.log(`
+      getAppointmentDate...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      let today = new Date();
+      let tomorrow = new Date(Date.now() + 1*24*60*60*1000);
+      let yesterday = new Date(Date.now() - 1*24*60*60*1000);
+      console.log("Yesterday:  ", today);
+      console.log("Tomorrow:  ",tomorrow);
+      console.log("Yesterday:  ",yesterday);
+
+      const appointments = await Appointment.find({'date': {'$gt' : today, '$lt': tomorrow}})
+      .populate('patient');
+
+        return appointments.map(appointment => {
+          return transformAppointment(appointment);
+        });
+    } catch (err) {
+      throw err;
+    }
+  },
   getAppointmentToday: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("getAppointmentToday..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      getAppointmentToday...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -131,8 +175,10 @@ module.exports = {
     }
   },
   getAppointmentWeek: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("getAppointmentWeek..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      getAppointmentWeek...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -156,8 +202,10 @@ module.exports = {
     }
   },
   getAppointmentWeekImportant: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("getAppointmentWeekImportant..args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      getAppointmentWeekImportant...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -181,15 +229,16 @@ module.exports = {
     }
   },
   updateAppointment: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updateAppointment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updateAppointment...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
 
     try {
-
       // const user = await User.findById(args.userId);
       // userRole = user.role;
       // console.log("userRole:  ", userRole);
@@ -347,23 +396,26 @@ module.exports = {
     }
   },
   createAppointment: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("createAppointment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      createAppointment...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
-      const appointmentPatient = await Patient.findById({_id: args.patientId}).populate('appointments');
-      console.log("appointmentPatient:  ", JSON.stringify(appointmentPatient));
+      const appointmentPatient = await Patient.findById({_id: args.patientId})
+      .populate('appointments');
+      console.log(`
+        appointmentPatient:
+        ${util.inspect(appointmentPatient)}
+      `);
 
       const existingAppointmentTitle = await Appointment.findOne({ title: args.appointmentInput.title});
           if (existingAppointmentTitle) {
             throw new Error('Appointment w/ that title exists already.');
           }
-
 
       let appointment = new Appointment({
         _id: args.appointmentInput.id,
@@ -385,7 +437,10 @@ module.exports = {
       const result = await appointment.save();
 
       const patientAppointment = await Patient. findOneAndUpdate({_id: args.patientId},{$addToSet: {appointments: appointment}},{new: true})
-      console.log("patientAppointment:  ", JSON.stringify(patientAppointment));
+      console.log(`
+          patientAppointment:
+          ${util.inspect(patientAppointment)}
+        `);
 
       return {
         ...result._doc,

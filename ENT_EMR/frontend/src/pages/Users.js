@@ -229,29 +229,8 @@ class UsersPage extends Component {
 
     const requestBody = {
       query: `
-          mutation { updateUser(userId:"${userId}", selectedUserId:"${selectedUserId}", userInput:{email:"${email}", password:"${password}", name:"${name}", role:"${role}", employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"}) {
-            _id
-            name
-            email
-            role
-            employmentDate
-            terminationDate
-            attendance{
-              date
-              status
-              description}
-              attachments{
-                name
-                format
-                path}
-            leave{
-              type
-              startDate
-              endDate}
-            }
-          }
-        `
-    };
+
+        `};
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
@@ -269,7 +248,6 @@ class UsersPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data.updateUser));
-
         const updatedUserId = resData.data.updateUser._id;
         const updatedUser = this.state.users.find(e => e._id === updatedUserId);
         const updatedUserPos = this.state.users.indexOf(updatedUser);
@@ -287,7 +265,6 @@ class UsersPage extends Component {
 
 
   updateUserAttendanceHandler = (event) => {
-
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
