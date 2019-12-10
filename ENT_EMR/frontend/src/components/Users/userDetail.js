@@ -49,10 +49,10 @@ const UserDetail = (props) => {
           Role: {user.role}
         </Card.Text>
         <Card.Text>
-          Start Date: {user.employmentDate}
+          Start Date: {userEmploymentDate}
         </Card.Text>
         <Card.Text>
-          End Date: {user.terminationDate}
+          End Date: {userTerminationDate}
         </Card.Text>
       </Card.Body>
       </Card>

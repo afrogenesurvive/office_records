@@ -22,6 +22,10 @@ return (
     <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="Leave Type"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridLeaveTitle">
+    <Form.Label>Title</Form.Label>
+    <Form.Control type="text" placeholder="Leave Title"/>
+  </Form.Group>
   <Form.Group as={Col} controlId="formGridLeaveStartDate">
     <Form.Label>Start Date</Form.Label>
     <Form.Control type="date" placeholder="Start Date"/>
