@@ -26,8 +26,7 @@ module.exports = {
     try {
       const appointments = await Appointment.find()
       .populate('patient')
-      .populate('patient.consultant')
-      .populate('patient.appointments');
+      .populate('patient.consultant');
 
       return appointments.map(appointment => {
         return transformAppointment(appointment);
@@ -49,8 +48,7 @@ module.exports = {
     try {
       const appointment = await Appointment.findById(args.appointmentId)
       .populate('patient')
-      .populate('patient.consultant')
-      .populate('patient.appointments');
+      .populate('patient.consultant');
 
         return {
             ...appointment._doc,
@@ -79,6 +77,32 @@ module.exports = {
       console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
 
       const appointments = await Appointment.find(query)
+      .populate('patient')
+      .populate('patient.consultant')
+      .populate('patient.appointments');
+
+        return appointments.map(appointment => {
+          return transformAppointment(appointment);
+        });
+    } catch (err) {
+      throw err;
+    }
+  },
+  getAppointmentPatient: async (args, req) => {
+    console.log(`
+      getAppointmentPatient...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const patient = await Patient.findById({_id:args.patientId})
+      console.log(`
+        patient: ${util.inspect(patient)}
+        `);
+      const appointments = await Appointment.find({patient: patient})
       .populate('patient')
       .populate('patient.consultant')
       .populate('patient.appointments');
@@ -128,14 +152,7 @@ module.exports = {
 
     try {
 
-      let today = new Date();
-      let tomorrow = new Date(Date.now() + 1*24*60*60*1000);
-      let yesterday = new Date(Date.now() - 1*24*60*60*1000);
-      console.log("Yesterday:  ", today);
-      console.log("Tomorrow:  ",tomorrow);
-      console.log("Yesterday:  ",yesterday);
-
-      const appointments = await Appointment.find({'date': {'$gt' : today, '$lt': tomorrow}})
+      const appointments = await Appointment.find({'date': {'$eq' : args.date}})
       .populate('patient');
 
         return appointments.map(appointment => {
@@ -210,9 +227,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
       let today = new Date();
       let weekLater = new Date(Date.now() + 7*24*60*60*1000);
       console.log("Today:  ", today);
@@ -237,7 +252,6 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
       // const user = await User.findById(args.userId);
       // userRole = user.role;
@@ -246,7 +260,6 @@ module.exports = {
       // if (userRole !== "test") {
       //   throw new Error('Your role does not give access to the data');
       // }
-
       const appointment = await Appointment.findOneAndUpdate({_id:args.appointmentId},{
         title:args.appointmentInput.title,
         type: args.appointmentInput.type,
@@ -256,7 +269,6 @@ module.exports = {
         inProgress: args.appointmentInput.inProgress,
         attended: args.appointmentInput.attended,
         important: args.appointmentInput.important,
-        notes: args.appointmentInput.notes
       },{new: true})
       .populate('patient');
 
@@ -270,15 +282,15 @@ module.exports = {
     }
   },
   updateAppointmentNotes: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updateAppointmentNotes...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updateAppointmentNotes...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
       const appointmentNote = args.appointmentInput.notes;
       console.log("appointmentNote:  ", appointmentNote);
 
@@ -295,15 +307,15 @@ module.exports = {
     }
   },
   updateAppointmentPatient: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updateAppointmentPatient...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updateAppointmentPatient...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
       // const user = await User.findById(args.userId);
       // userRole = user.role;
       // console.log("userRole:  ", userRole);
@@ -311,7 +323,6 @@ module.exports = {
       // if (userRole !== "test") {
       //   throw new Error('Your role does not give access to the data');
       // }
-
       const appointmentPatient = await Patient.findById({_id: args.patientId}).populate('appointments');
       console.log("appointmentPatient:  ", JSON.stringify(appointmentPatient));
 
@@ -331,14 +342,15 @@ module.exports = {
     }
   },
   updateAppointmentField: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("updateAppointmentField...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      updateAppointmentField...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-
       // const user = await User.findById(args.userId);
       // userRole = user.role;
       // console.log("userRole:  ", userRole);
@@ -366,15 +378,15 @@ module.exports = {
     }
   },
   deleteAppointment: async (args, req) => {
-    // console.log("users...args..." + util.inspect(args), "pocketVariables..." + JSON.stringify(pocketVariables), "req object..." + JSON.stringify(req));
-    console.log("deleteAppointment...args:  " + util.inspect(args), "pocketVariables:  " + JSON.stringify(pocketVariables), "isAuth:  " + req.isAuth);
+    console.log(`
+      deleteAppointment...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
       // const user = await User.findById(args.userId);
       // userRole = user.role;
       // console.log("userRole:  ", userRole);
@@ -382,7 +394,6 @@ module.exports = {
       // if (userRole !== "test") {
       //   throw new Error('Your role does not give access to the data');
       // }
-
       const appointment = await Appointment.findByIdAndRemove(args.appointmentId)
       .populate('patient');
 
