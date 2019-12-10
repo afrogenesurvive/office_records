@@ -13,8 +13,6 @@ import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceFo
 import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentForm';
 import UpdateUserLeaveForm from '../components/Forms/UpdateUserLeaveForm';
 
-// import Modal from '../components/Modal/Modal';
-// import Backdrop from '../components/Backdrop/Backdrop';
 import ThisUserProfile from '../components/Users/thisUserProfile';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
@@ -32,14 +30,9 @@ class ThisUserPage extends Component {
 
   static contextType = AuthContext;
 
-  constructor(props) {
-    super(props);
-    this.emailElRef = React.createRef();
-    this.passwordElRef = React.createRef();
-    this.nameElRef = React.createRef();
-    this.roleElRef = React.createRef();
-    this.user = null;
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentDidMount() {
     this.getThisUser();
@@ -52,17 +45,14 @@ class ThisUserPage extends Component {
 
 
   modalConfirmUpdateHandler = (event) => {
-
+    const token = this.context.token;
     let userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
     if(userId !== selectedUserId && this.context.user.role !== 'admin') {
-
       console.log("Not the creator or Admin! No edit permission!!");
       selectedUserId = null;
     }
-
     console.log("UpdateUserFormData:  ", event.target.formGridEmail.value);
-
     this.setState({ updating: false });
     let email = event.target.formGridEmail.value;
     let password = event.target.formGridPassword.value;
@@ -72,7 +62,6 @@ class ThisUserPage extends Component {
     if (email.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
       email  = this.state.user.email;
-      // return;
     }
     if (password.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -93,43 +82,8 @@ class ThisUserPage extends Component {
 
     const requestBody = {
       query: `
-          mutation UpdateUser($userId: ID!, $selectedUserId: ID!, $email: String!, $password: String!, $name: String!, $role: String!) {
-            updateUser(userId: $userId, selectedUserId: $selectedUserId, userInput: {email: $email, password: $password, name: $name, role: $role}) {
-              _id
-              name
-              email
-              role
-              employmentDate
-              terminationDate
-              attachments{
-                name
-                format
-                path
-              }
-              attendance{
-                date
-                status
-                description
-              }
-              leave{
-                type
-                startDate
-                endDate
-              }
-            }
-          }
-        `,
-        variables: {
-          userId: userId,
-          selectedUserId: userId,
-          email: email,
-          password: password,
-          name: name,
-          role: role
-        }
-    };
 
-    const token = this.context.token;
+        `};
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
@@ -137,8 +91,7 @@ class ThisUserPage extends Component {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token
-      }
-    })
+      }})
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error('Failed!');
@@ -147,30 +100,24 @@ class ThisUserPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
-
         const updatedUser = resData.data.updateUser;
         console.log("updatedUser:  ", JSON.stringify(updatedUser));
-
         this.setState({user: updatedUser})
-        this.state.users.push(
-          {
+        this.state.users.push({
               _id: resData.data.updateUser._id,
               email: resData.data.updateUser.email,
               name: resData.data.updateUser.name,
               role: resData.data.updateUser.role
-            }
-        );
+            });
         this.context.users = this.state.users;
         // this.fetchUsers();
       })
       .catch(err => {
         console.log(err);
       });
-  };
-
+    };
 
   updateUserAttendanceHandler = (event) => {
-
     const token = this.context.token;
     const userId = this.state.user._id;
     // let selectedUserId = this.context.selectedUser._id;
@@ -178,7 +125,6 @@ class ThisUserPage extends Component {
     //   console.log("Not the creator or Admin! No edit permission!!");
     //   selectedUserId = null;
     // }
-
     console.log("UpdateUserAttendanceFormData:  ", event.target.formGridAttendanceDate.value);
 
     this.setState({ updating: false , userUpdateField: null });
@@ -220,8 +166,7 @@ class ThisUserPage extends Component {
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token
-        }
-      })
+        }})
         .then(res => {
           if (res.status !== 200 && res.status !== 201) {
             throw new Error('Failed!');
@@ -230,13 +175,11 @@ class ThisUserPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateUserAttendance));
-
           const updatedUserId = resData.data.updateUserAttendance._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);
           const updatedUserPos = this.state.users.indexOf(updatedUser);
           const slicedArray = this.state.users.splice(updatedUserPos, 1);
           console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-
           this.state.users.push(updatedUser);
           this.context.users = this.state.users;
           // this.fetchUsers();
@@ -244,13 +187,10 @@ class ThisUserPage extends Component {
         .catch(err => {
           console.log(err);
         });
-
-
-  }
+  };
 
 
   updateUserLeaveHandler = (event) => {
-
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
@@ -303,8 +243,7 @@ class ThisUserPage extends Component {
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token
-        }
-      })
+        }})
         .then(res => {
           if (res.status !== 200 && res.status !== 201) {
             throw new Error('Failed!');
@@ -327,43 +266,15 @@ class ThisUserPage extends Component {
         .catch(err => {
           console.log(err);
         });
-
-
-  }
+  };
 
 
   getThisUser() {
-
     this.setState({ isLoading: true });
     const requestBody = {
       query: `
-          query {
-            getThisUser {
-              _id
-              name
-              email
-              role
-              employmentDate
-              terminationDate
-              attachments{
-                name
-                format
-                path
-              }
-              attendance{
-                date
-                status
-                description
-              }
-              leave{
-                type
-                startDate
-                endDate
-              }
-            }
-          }
-        `
-    };
+
+        `};
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
@@ -371,8 +282,7 @@ class ThisUserPage extends Component {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.context.token
-      }
-    })
+      }})
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error('Failed!');
@@ -380,18 +290,16 @@ class ThisUserPage extends Component {
         return res.json();
       })
       .then(resData => {
-        // console.log("resdata..." + JSON.stringify(resData));
+        console.log("resdata..." + JSON.stringify(resData));
         const thisUser = resData.data.getThisUser;
         if (this.isActive) {
 
           this.setState({ user: thisUser, isLoading: false });
 
           this.context.user = thisUser;
-          console.log("thisUser context, user object.name ..." + this.context.user.name);
-          console.log("thisUser context, user object.role ..." + this.context.user.role);
+          console.log("this.context.user:  " + this.context.user.name);
 
           sessionStorage.setItem('thisUser', JSON.stringify(thisUser));
-
         }
       })
       .catch(err => {
@@ -407,81 +315,10 @@ class ThisUserPage extends Component {
     this.setState({ updating: false  });
   };
 
-  fetchUsers() {
-    console.log("'fetch users function' context object... " + JSON.stringify(this.context));
-    const userId = this.context.userId;
-
-    this.setState({ isLoading: true });
-    const requestBody = {
-      query: `
-          query users($userId: ID!) {
-            users(userId: $userId) {
-              _id
-              name
-              email
-              role
-              employmentDate
-              terminationDate
-              attachments{
-                name
-                format
-                path
-              }
-              attendance{
-                date
-                status
-                description
-              }
-              leave{
-                type
-                startDate
-                endDate
-              }
-            }
-          }
-        `,
-        variables: {
-          userId: userId
-        }
-    };
-
-    fetch('http://localhost:10000/graphql', {
-      method: 'POST',
-      body: JSON.stringify(requestBody),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.context.token
-      }
-    })
-      .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Failed!');
-        }
-        return res.json();
-      })
-      .then(resData => {
-        const users = resData.data.users;
-        console.log(users);
-
-        if (this.isActive) {
-          this.setState({ users: users, isLoading: false });
-        }
-        this.context.users = this.state.users;
-      })
-      .catch(err => {
-        console.log(err);
-        if (this.isActive) {
-          this.setState({ isLoading: false });
-        }
-      });
-  }
-
   updateUserSpecialProfile (event) {
-
     console.log("special field to update:  ", event.target.value);
     const field = event.target.value;
     this.setState({ userUpdateField: field});
-
   }
 
 
@@ -492,34 +329,25 @@ class ThisUserPage extends Component {
   render() {
     return (
       <React.Fragment>
-
       <Row>
-
       <Col md={3} className="MasterCol1">
-
       <SidebarPage
         you={this.state.user}
       />
-
       </Col>
 
       <Col md={9} className="MasterCol2">
-
         <Container className="containerProfile">
-
         <Tabs defaultActiveKey="Detail" id="uncontrolled-tab-example2">
-
           <Tab eventKey="" title="Edit:" disabled>
           </Tab>
           <Tab eventKey="Detail" title="Detail">
-          {
-            this.state.user !== null && (
+          {this.state.user !== null && (
               <ThisUserProfile
                 user={this.state.user}
                 authUserId={this.context.userId}
               />
-            )
-          }
+            )}
           </Tab>
 
           <Tab eventKey="Demographics" title="Demographics">
@@ -535,7 +363,6 @@ class ThisUserPage extends Component {
               authUserId={this.context.userId}
             />
           )}
-
           </Tab>
 
           <Tab eventKey="Atttendance" title="Atttendance">
@@ -584,11 +411,8 @@ class ThisUserPage extends Component {
           </Tab>
         </Tabs>
         </Container>
-
       </Col>
-
       </Row>
-
       </React.Fragment>
     );
   }

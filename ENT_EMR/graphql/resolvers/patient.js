@@ -48,7 +48,8 @@ module.exports = {
 
     try {
       const patient = await Patient.findById(args.patientId)
-      .populate('appointments');
+      .populate('appointments')
+      .populate('consultant.reference');
 
         return {
             ...patient._doc,
@@ -76,7 +77,9 @@ module.exports = {
 
       console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
 
-      const patients = await Patient.find(query);
+      const patients = await Patient.find(query)
+      .populate('appointments')
+      .populate('consultant.reference');
 
       return patients.map(patient => {
         return transformPatient(patient);
@@ -86,6 +89,81 @@ module.exports = {
       throw err;
     }
   },
+  getPatientNameRegex: async (args, req) => {
+    console.log(`
+      getPatientNameRegex...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+
+
+      const patients = await Patient.find({name: {$regex: args.regex, $options: 'i'}})
+      .populate('appointments')
+      .populate('consultant.reference');
+
+      return patients.map(patient => {
+        return transformPatient(patient);
+
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  getPatientDiagnosis: async (args, req) => {
+    console.log(`
+      getPatientDiagnosis...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patients = await Patient.find({'diagnosis.type': args.diagnosisType})
+      .populate('appointments')
+      .populate('consultant.reference');
+
+      return patients.map(patient => {
+        return transformPatient(patient);
+
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  // getPatientVisit: async (args, req) => {
+  //   console.log(`
+  //     getPatientVisit...args: ${util.inspect(args)},
+  //     isAuth: ${req.isAuth},
+  //     `);
+  //
+  //   if (!req.isAuth) {
+  //     throw new Error('Unauthenticated!');
+  //   }
+  //
+  //   try {
+  //     const patientVisitDate = args.visitDate;
+  //     console.log(`
+  //         visit date: ${patientVisitDate}
+  //       `);
+  //
+  //     const visitPatient = await Patient.findById({_id: args.patientId});
+  //     var result = jsObjects.filter(x=> x.b === 6);
+  //
+  //     // return patients.map(patient => {
+  //     //   return transformPatient(patient);
+  //     //
+  //     // });
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  // },
   updatePatient: async (args, req) => {
     console.log(`
       updatePatient...args: ${util.inspect(args)},
@@ -144,7 +222,8 @@ module.exports = {
 
        }
       ,{new: true})
-      .populate('appointments');
+      .populate('appointments')
+      .populate('consultant.reference');
 
         return {
             ...patient._doc,
@@ -175,7 +254,8 @@ module.exports = {
         console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},query,{new: true})
-        .populate('appointments');
+        .populate('appointments')
+        .populate('consultant.reference');
 
         return {
           ...patient._doc,
@@ -205,6 +285,8 @@ module.exports = {
         console.log("patientAppointmentId... " + patientAppointmentId);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {appointments:patientAppointment}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
 
           return {
               ...patient._doc,
@@ -247,6 +329,7 @@ module.exports = {
       console.log(" consultantObject: ", consultantObject);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {consultant:consultantObject}},{new: true})
+        .populate('appointments')
         .populate('consultant.reference');
 
           return {
@@ -287,6 +370,8 @@ module.exports = {
         `);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {insurance:patientInsuranceObject}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
 
           return {
               ...patient._doc,
@@ -323,6 +408,8 @@ module.exports = {
         `);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {nextOfKin:patientNextOfKinObject}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
 
           return {
               ...patient._doc,
@@ -364,6 +451,8 @@ module.exports = {
         `);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {complaints:patientComplaintObject}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
 
           return {
               ...patient._doc,
@@ -419,6 +508,8 @@ module.exports = {
       console.log(" patientSurvey: ", patientSurvey);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {surveys:patientSurvey}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
 
           return {
               ...patient._doc,
@@ -491,6 +582,8 @@ module.exports = {
       console.log(" patientVitals: ", patientVitals);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {vitals:patientVitals}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
 
           return {
               ...patient._doc,
@@ -535,6 +628,8 @@ module.exports = {
         `);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {examination:patientExaminationObject}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
 
           return {
               ...patient._doc,
@@ -575,6 +670,8 @@ module.exports = {
         `);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {history:patientHistoryObject}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
 
           return {
               ...patient._doc,
@@ -615,6 +712,8 @@ module.exports = {
         `);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {allergies:patientAllergiesObject}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
 
           return {
               ...patient._doc,
@@ -655,13 +754,14 @@ module.exports = {
         `);
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {medication:patientMedicationObject}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
 
           return {
               ...patient._doc,
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
@@ -676,9 +776,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
       const patientInvestigationObject = {
             date: args.patientInput.investigationDate,
             title: args.patientInput.investigationTitle,
@@ -690,19 +788,17 @@ module.exports = {
               path: args.patientInput.investigationAttachmentPath
             }
           }
-
       console.log(`
         patientInvestigationObject: ${patientInvestigationObject}
         `);
-
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {investigation:patientInvestigationObject}},{new: true})
-
+        .populate('appointments')
+        .populate('consultant.reference');
           return {
               ...patient._doc,
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
@@ -717,9 +813,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
       const patientDiagnosisObject = {
             date: args.patientInput.diagnosisDate,
             title: args.patientInput.diagnosisTitle,
@@ -731,19 +825,17 @@ module.exports = {
               path: args.patientInput.diagnosisAttachmentPath
             }
           }
-
       console.log(`
         patientDiagnosisObject: ${patientDiagnosisObject}
         `);
-
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {diagnosis:patientDiagnosisObject}},{new: true})
-
+        .populate('appointments')
+        .populate('consultant.reference');
           return {
               ...patient._doc,
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
@@ -758,9 +850,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
       const patientTreatmentObject = {
             date: args.patientInput.treatmentDate,
             title: args.patientInput.treatmentTitle,
@@ -774,19 +864,17 @@ module.exports = {
               path: args.patientInput.treatmentAttachmentPath
             }
           }
-
       console.log(`
         patientTreatmentObject: ${patientTreatmentObject}
         `);
-
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {treatment:patientTreatmentObject}},{new: true})
-
+        .populate('appointments')
+        .populate('consultant.reference');
           return {
               ...patient._doc,
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
@@ -801,9 +889,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
       const patientBillingObject = {
             date: args.patientInput.billingDate,
             title: args.patientInput.billingTitle,
@@ -818,19 +904,17 @@ module.exports = {
               path: args.patientInput.billingAttachmentPath
             }
           }
-
       console.log(`
         patientBillingObject: ${patientBillingObject}
         `);
-
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {billing:patientBillingObject}},{new: true})
-
+        .populate('appointments')
+        .populate('consultant.reference');
           return {
               ...patient._doc,
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
@@ -845,7 +929,6 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
       const patientAttachmentObject = {
         name: args.patientInput.attachmentName,
@@ -854,13 +937,13 @@ module.exports = {
       }
 
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {attachments:patientAttachmentObject}},{new: true})
-
+        .populate('appointments')
+        .populate('consultant.reference');
           return {
               ...patient._doc,
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
@@ -875,17 +958,15 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {notes:args.notes}},{new: true})
-
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {notes:args.patientInput.notes}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
           return {
               ...patient._doc,
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
@@ -900,17 +981,15 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {tags:args.tag}},{new: true})
-
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {tags:args.patientInput.tag}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
           return {
               ...patient._doc,
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
@@ -925,11 +1004,585 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
+    try {
+      const patient = await Patient.findByIdAndRemove(args.patientId);
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientAppointment: async (args, req) => {
+    console.log(`
+      deletePatientAppointment...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { appointments: { _id: args.appointmentId}}},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientConsultant: async (args, req) => {
+    console.log(`
+      deletePatientConsultant...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+
+      const consultantObject = await User.findById({_id: args.consultantId});
+
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { consultant: { reference:consultantObject }}},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientInsurance: async (args, req) => {
+    console.log(`
+      deletePatientInsurance...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const insurance = {
+        company: args.patientInput.insuranceCompany,
+        number: args.patientInput.insuranceNumber,
+        description: args.patientInput.insuranceDescription,
+        subscriber: {
+          company: args.patientInput.insuranceSubscriberCompany,
+          description: args.patientInput.insuranceSubscriberDescription,
+        }
+      }
+      console.log(`
+        insurance: ${insurance},
+        `);
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { insurance: insurance }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientNextOfKin: async (args, req) => {
+    console.log(`
+      deletePatientNextOfKin...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const nextOfKin = {
+        name: args.patientInput.nextOfKinName,
+        phone: args.patientInput.nextOfKinPhone,
+        email: args.patientInput.nextOfKinEmail,
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { nextOfKin: nextOfKin}},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientComplaint: async (args, req) => {
+    console.log(`
+      deletePatientComplaint...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const complaint = {
+        date: args.patientInput.complaintDate,
+        title: args.patientInput.complaintTitle,
+        description: args.patientInput.complaintDescription,
+        anamnesis: args.patientInput.complaintAnamnesis,
+        attachment:{
+          name: args.patientInput.complaintAttachmentName,
+          format: args.patientInput.complaintAttachmentFormat,
+          path: args.patientInput.complaintAttachmentPath,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { complaints: complaint}},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientSurvey: async (args, req) => {
+    console.log(`
+      deletePatientSurvey...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+      const survey = {
+        date: args.patientInput.surveyDate,
+        title: args.patientInput.surveyTitle,
+        description: args.patientInput.surveyDescription,
+        attachment:{
+          name: args.patientInput.surveyAttachmentName,
+          format: args.patientInput.surveyAttachmentFormat,
+          path: args.patientInput.surveyAttachmentPath,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { surveys: survey}},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientVitals: async (args, req) => {
+    console.log(`
+      deletePatientVitals...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+      const vitals = {
+        date: args.patientInput.vitalsDate,
+        pr: args.patientInput.vitalsPr,
+        bp1: args.patientInput.vitalsBp1,
+        bp2: args.patientInput.vitalsBp2,
+        rr: args.patientInput.vitalsRr,
+        temp: args.patientInput.vitalsTemp,
+        ps02: args.patientInput.vitalsPs02,
+        height: args.patientInput.vitalsHeight,
+        weight: args.patientInput.vitalsWeight,
+        bmi: args.patientInput.vitalsBmi,
+        urine:{
+          type: args.patientInput.vitalsUrineType,
+          value: args.patientInput.vitalsUrineValue,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { vitals: vitals}},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientExamination: async (args, req) => {
+    console.log(`
+      deletePatientExamination...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const examination = {
+        date: args.patientInput.examinationDate,
+        general: args.patientInput.examinationGeneral,
+        area: args.patientInput.examinationArea,
+        type: args.patientInput.examinationType,
+        measure: args.patientInput.examinationMeasure,
+        value: args.patientInput.examinationValue,
+        description: args.patientInput.examinationDescription,
+        followUp: args.patientInput.examinationFollowUp,
+        attachment:{
+          name: args.patientInput.examinationAttachmentName,
+          format: args.patientInput.examinationAttachmentFormat,
+          path: args.patientInput.examinationAttachmentPath,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { examination: examination }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientHistory: async (args, req) => {
+    console.log(`
+      deletePatientHistory...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const history = {
+        type: args.patientInput.historyType,
+        date: args.patientInput.historyDate,
+        title: args.patientInput.historyTitle,
+        description: args.patientInput.historyDescription,
+        attachment: {
+          name: args.patientInput.historyAttachmentName,
+          format: args.patientInput.historyAttachmentFormat,
+          path: args.patientInput.historyAttachmentPath,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { history: history }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientAllergies: async (args, req) => {
+    console.log(`
+      deletePatientAllergies...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const allergies = {
+        title: args.patientInput.allergiesTitle,
+        type: args.patientInput.allergiesType,
+        description: args.patientInput.allergiesDescription,
+        attachment: {
+          name: args.patientInput.allergiesAttachmentName,
+          format: args.patientInput.allergiesAttachmentFormat,
+          path: args.patientInput.allergiesAttachmentPath,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { allergies: allergies }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientMedication: async (args, req) => {
+    console.log(`
+      deletePatientMedication...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const medication = {
+        title: args.patientInput.medicationTitle,
+        type: args.patientInput.medicationType,
+        description: args.patientInput.medicationDescription,
+        attachment: {
+          name: args.patientInput.medicationAttachmentName,
+          format: args.patientInput.medicationAttachmentFormat,
+          path: args.patientInput.medicationAttachmentPath,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { medication: medication }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientInvestigation: async (args, req) => {
+    console.log(`
+      deletePatientInvestigation...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const investigation = {
+        date: args.patientInput.investigationDate,
+        title: args.patientInput.investigationTitle,
+        type: args.patientInput.investigationType,
+        description: args.patientInput.investigationDescription,
+        attachment: {
+          name: args.patientInput.investigationAttachmentName,
+          format: args.patientInput.investigationAttachmentFormat,
+          path: args.patientInput.investigationAttachmentPath,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { investigation: investigation }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientDiagnosis: async (args, req) => {
+    console.log(`
+      deletePatientDiagnosis...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const diagnosis = {
+        date: args.patientInput.diagnosisDate,
+        title: args.patientInput.diagnosisTitle,
+        type: args.patientInput.diagnosisType,
+        description: args.patientInput.diagnosisDescription,
+        attachment: {
+          name: args.patientInput.diagnosisAttachmentName,
+          format: args.patientInput.diagnosisAttachmentFormat,
+          path: args.patientInput.diagnosisAttachmentPath,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { diagnosis: diagnosis }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientTreatment: async (args, req) => {
+    console.log(`
+      deletePatientTreatment...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const treatment = {
+        date: args.patientInput.treatmentDate,
+        title: args.patientInput.treatmentTitle,
+        type: args.patientInput.treatmentType,
+        description: args.patientInput.treatmentDescription,
+        dose: args.patientInput.treatmentDose,
+        frequency: args.patientInput.treatmentFrequency,
+        attachment: {
+          name: args.patientInput.treatmentAttachmentName,
+          format: args.patientInput.treatmentAttachmentFormat,
+          path: args.patientInput.treatmentAttachmentPath,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { treatment: treatment }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientBilling: async (args, req) => {
+    console.log(`
+      deletePatientBilling...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const billing = {
+        date: args.patientInput.billingDate,
+        title: args.patientInput.billingTitle,
+        type: args.patientInput.billingType,
+        description: args.patientInput.billingDescription,
+        amount: args.patientInput.billingAmount,
+        paid: args.patientInput.billingPaid,
+        attachment: {
+          name: args.patientInput.billingAttachmentName,
+          format: args.patientInput.billingAttachmentFormat,
+          path: args.patientInput.billingAttachmentPath,
+        }
+      }
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { billing: billing }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientAttachment: async (args, req) => {
+    console.log(`
+      deletePatientAttachment...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
 
     try {
 
-      const patient = await Patient.findByIdAndRemove(args.patientId)
-      .populate('appointments');
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { attachments: { name: args.attachmentName }}},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientNote: async (args, req) => {
+    console.log(`
+      deletePatientNote...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { notes: args.note }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientTag: async (args, req) => {
+    console.log(`
+      deletePatientTag...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { tags: args.tag }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
 
         return {
           ...patient._doc,
