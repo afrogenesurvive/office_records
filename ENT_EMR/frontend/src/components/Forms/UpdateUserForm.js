@@ -39,9 +39,18 @@ return (
   <Form.Label>Role</Form.Label>
   <Form.Control type="text" placeholder={user.role}/>
 </Form.Group>
+
+<Form.Group as={Col} controlId="formGridPhone">
+  <Form.Label>Phone</Form.Label>
+  <Form.Control type="number" placeholder={user.phone}/>
+</Form.Group>
 </Form.Row>
 
 <Form.Row>
+<Form.Group as={Col} controlId="formGridDob">
+  <Form.Label>D.O.B</Form.Label>
+  <Form.Control type="date" placeholder={user.dob}/>
+</Form.Group>
 <Form.Group as={Col} controlId="formGridEmploymentDate">
   <Form.Label>Employment Date</Form.Label>
   <Form.Control type="date" placeholder={user.employmentDate}/>
@@ -50,6 +59,34 @@ return (
 <Form.Group as={Col} controlId="formGridTerminationDate">
   <Form.Label>Termination Date</Form.Label>
   <Form.Control type="date" placeholder={user.terminationDate}/>
+</Form.Group>
+</Form.Row>
+
+<Form.Row>
+<Form.Group as={Col} controlId="formGridAddressNumber">
+  <Form.Label>addressNumber</Form.Label>
+  <Form.Control type="number" placeholder={user.address.number}/>
+</Form.Group>
+
+<Form.Group as={Col} controlId="formGridAddressStreet">
+  <Form.Label>addressStreet</Form.Label>
+  <Form.Control type="text" placeholder={user.address.street}/>
+</Form.Group>
+
+<Form.Group as={Col} controlId="formGridAddressTown">
+  <Form.Label>addressTown</Form.Label>
+  <Form.Control type="text" placeholder={user.address.town}/>
+</Form.Group>
+</Form.Row>
+
+<Form.Row>
+<Form.Group as={Col} controlId="formGridAddressParish">
+  <Form.Label>addressParish</Form.Label>
+  <Form.Control type="text" placeholder={user.address.parish}/>
+</Form.Group>
+<Form.Group as={Col} controlId="formGridAddressPostOffice">
+  <Form.Label>addressPostOffice</Form.Label>
+  <Form.Control type="text" placeholder={user.address.postOffice}/>
 </Form.Group>
 </Form.Row>
 

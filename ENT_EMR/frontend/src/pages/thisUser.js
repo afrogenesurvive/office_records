@@ -58,10 +58,19 @@ class ThisUserPage extends Component {
     let password = event.target.formGridPassword.value;
     let name = event.target.formGridName.value;
     let role = event.target.formGridRole.value;
+    let dob = event.target.formGridDob.value;
+    let phone = event.target.formGridPhone.value;
+    let addressNumber = event.target.formGridAddressNumber.value;
+    let addressStreet = event.target.formGridAddressStreet.value;
+    let addressTown = event.target.formGridAddressTown.value;
+    let addressParish = event.target.formGridAddressParish.value;
+    let addressPostOffice = event.target.formGridAddressPostOffice.value;
+    let employmentDate = event.target.formGridEmploymentDate.value;
+    let terminationDate = event.target.formGridTerminationDate.value;
 
     if (email.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      email  = this.state.user.email;
+      email = this.state.user.email;
     }
     if (password.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -69,20 +78,75 @@ class ThisUserPage extends Component {
     }
     if (name.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      name  = this.state.user.name;
+      name = this.state.user.name;
     }
     if (role.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      role  = this.state.user.role;
+      role = this.state.user.role;
+    }
+    if (dob.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      dob = this.state.user.dob;
+    }
+    if (phone.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      phone = this.state.user.phone;
+    }
+    if (addressNumber.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      addressNumber = this.state.user.address.number;
+    }
+    if (addressStreet.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      addressStreet = this.state.user.address.street;
+    }
+    if (addressTown.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      addressTown = this.state.user.address.town;
+    }
+    if (addressParish.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      addressParish = this.state.user.address.parish;
+    }
+    if (addressPostOffice.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      addressPostOffice = this.state.user.address.postOffice;
+    }
+    if (employmentDate.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      employmentDate = this.state.user.employmentDate;
+    }
+    if (terminationDate.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      terminationDate = this.state.user.terminationDate;
     }
 
 
-    const user = { email, password, name, role };
-    console.log("updating user.. " + JSON.stringify(user));
+    const user = { email, password, name, role, dob, phone, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, employmentDate, terminationDate };
+    console.log(`
+      updating user profile...
+      userId: ${userId}
+      email: ${email},
+      password: ${password},
+      name: ${name},
+      role: ${role},
+      dob: ${dob},
+      phone: ${phone},
+      addressNumber: ${addressNumber},
+      addressStreet: ${addressStreet},
+      addressTown: ${addressTown},
+      addressParish: ${addressParish},
+      addressPostOffice: ${addressPostOffice},
+      employmentDate: ${employmentDate},
+      terminationDate: ${terminationDate},
+      `);
 
     const requestBody = {
       query: `
-
+      mutation{
+        updateUser(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{email:"${email}",password:"${password}",name:"${name}",dob:"${dob}",addressNumber:"${addressNumber}",addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
+      }
         `};
 
     fetch('http://localhost:10000/graphql', {
@@ -157,7 +221,8 @@ class ThisUserPage extends Component {
 
       const requestBody = {
         query:`
-          mutation {updateUserAttendance(userId:"${userId}", selectedUserId:"${userId}",userInput:{attendanceDate:"${attendanceDate}",attendanceStatus:"${attendanceStatus}",attendanceDescription:"${attendanceDescription}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
+          mutation {updateUserAttendance(userId:"${userId}", selectedUserId:"${userId}",userInput:{attendanceDate:"${attendanceDate}",attendanceStatus:"${attendanceStatus}",attendanceDescription:"${attendanceDescription}"})
+          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
       fetch('http://localhost:10000/graphql', {
@@ -204,12 +269,17 @@ class ThisUserPage extends Component {
     this.setState({ updating: false , userUpdateField: null });
 
     let leaveType = event.target.formGridLeaveType.value;
+    let leaveTitle = event.target.formGridLeaveTitle.value;
     let leaveStartDate = event.target.formGridLeaveStartDate.value;
     let leaveEndDate = event.target.formGridLeaveEndDate.value;
 
     if (leaveType.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
       leaveType = this.context.selectedUser.leaveType;
+    }
+    if (leaveTitle.trim().length === 0) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      leaveTitle = this.context.selectedUser.leaveTitle;
     }
     if (leaveStartDate.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -220,13 +290,14 @@ class ThisUserPage extends Component {
       leaveEndDate = this.context.selectedUser.leaveEndDate;
     }
 
-    const userLeave = { leaveType, leaveStartDate, leaveEndDate }
+    const userLeave = { leaveType, leaveTitle, leaveStartDate, leaveEndDate }
     console.log(`
       adding user attendance item...
       userId: ${userId},
       selectedUserId: ${selectedUserId}
       leave: {
         type: ${leaveType},
+        title: ${leaveTitle},
         startDate: ${leaveStartDate},
         endDate: ${leaveEndDate}
       }
@@ -234,7 +305,8 @@ class ThisUserPage extends Component {
 
       const requestBody = {
         query:`
-          mutation {updateUserLeave(userId:"${userId}", selectedUserId:"${userId}",userInput:{leaveType:"${leaveType}",leaveStartDate:"${leaveStartDate}",leaveEndDate:"${leaveEndDate}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,startDate,endDate}}}
+          mutation {updateUserLeave(userId:"${userId}", selectedUserId:"${userId}",userInput:{leaveType:"${leaveType}",leaveTitle:"${leaveTitle}",leaveStartDate:"${leaveStartDate}",leaveEndDate:"${leaveEndDate}"})
+          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
       fetch('http://localhost:10000/graphql', {
@@ -273,7 +345,8 @@ class ThisUserPage extends Component {
     this.setState({ isLoading: true });
     const requestBody = {
       query: `
-
+      query {getThisUser
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
     fetch('http://localhost:10000/graphql', {

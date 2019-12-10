@@ -5,15 +5,9 @@ import Form from 'react-bootstrap/Form';
 
 import './Auth.css';
 import AuthContext from '../context/auth-context';
-// import ThisUserContext from '../context/thisUser-context';
 
 class AuthPage extends Component {
-  // state = {
-  //   isLogin: true
-  // };
-
   static contextType = AuthContext;
-  // static contextType = ThisUserContext;
 
   // constructor(props) {
   //   super(props);
@@ -38,19 +32,14 @@ class AuthPage extends Component {
 
     let requestBody = {
       query: `
-        query Login($email: String!, $password: String!) {
-          login(email: $email, password: $password) {
+        query {
+          login(email: "${email}", password: "${password}") {
             userId
             token
             tokenExpiration
           }
         }
-      `,
-      variables: {
-        email: email,
-        password: password
-      }
-    };
+      `};
 
 
     fetch('http://localhost:10000/graphql', {
