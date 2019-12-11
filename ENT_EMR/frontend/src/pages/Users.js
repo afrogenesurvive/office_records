@@ -26,6 +26,9 @@ import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceFo
 import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentForm';
 import UpdateUserLeaveForm from '../components/Forms/UpdateUserLeaveForm';
 import SearchUserForm from '../components/Forms/SearchUserForm';
+import SearchUserIdForm from '../components/Forms/SearchUserIdForm';
+import SearchUserAttendanceDateForm from '../components/Forms/SearchUserAttendanceDateForm';
+import SearchUserLeaveDateRangeForm from '../components/Forms/SearchUserLeaveDateRangeForm';
 import './Users.css';
 
 class UsersPage extends Component {
@@ -622,8 +625,13 @@ class UsersPage extends Component {
       console.log("SearchUserFormData:  ", event.target.formBasicField.value);
       this.setState({ searching: false });
 
-      let field = event.target.formBasicField.value;
+      let field = undefined;
       let query = event.target.formBasicQuery.value;
+      if (event.target.formBasicFieldSelect = "select") {
+        field = event.target.formBasicField.value;
+      } else {
+        field = event.target.formBasicFieldSelect.value;
+      }
 
       this.setState({
         userSearchField: field,
@@ -675,6 +683,19 @@ class UsersPage extends Component {
         .catch(err => {
           console.log(err);
         });
+  }
+
+  modalConfirmSearchIdHandler = (event) => {
+    console.log("SearchUserIdFormData:");
+
+  }
+  modalConfirmSearchAttendanceDateHandler = (event) => {
+    console.log("SearchUserAttendanceDateFormData:");
+
+  }
+  modalConfirmSearchLeaveDateRangeHandler = (event) => {
+    console.log("SearchUserLeaveDateRangeFormData:");
+
   }
 
 
@@ -890,7 +911,7 @@ updateUserSpecial (event) {
                 canCancel
                 canConfirm
                 onCancel={this.modalCancelHandler}
-                onConfirm={this.modalConfirmUpdateFieldHandler}
+                onConfirm={this.modalConfirmUpdateHandler}
                 confirmText="Confirm"
                 user={this.context.selectedUser}
               />
@@ -915,7 +936,7 @@ updateUserSpecial (event) {
                   canCancel
                   canConfirm
                   onCancel={this.modalCancelHandler}
-                  onConfirm={this.modalConfirmUpdateHandler}
+                  onConfirm={this.modalConfirmUpdateFieldHandler}
                   confirmText="Confirm"
                   user={this.state.selectedUser}
                 />
@@ -1035,13 +1056,43 @@ updateUserSpecial (event) {
       />)}
     </Tab>
     <Tab eventKey="Id" title="Id:">
-      Search by ID
+    {this.state.searching === true && (
+      <SearchUserIdForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.modalConfirmSearchIdHandler}
+        confirmText="Search"
+        user={this.context.selectedUser}
+      />
+      )}
     </Tab>
     <Tab eventKey="Attendance" title="Attendance:">
-      Search by Attendance
+    {this.state.searching === true && (
+      <SearchUserAttendanceDateForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.modalConfirmSearchAttendanceDateHandler}
+        confirmText="Search"
+        user={this.context.selectedUser}
+      />
+      )}
     </Tab>
     <Tab eventKey="Leave" title="Leave:">
-      Search by Leave
+    {this.state.searching === true && (
+      <SearchUserLeaveDateRangeForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.modalConfirmSearchLeaveDateRangeHandler}
+        confirmText="Search"
+        user={this.context.selectedUser}
+      />
+      )}
     </Tab>
     </Tabs>
     </Col>

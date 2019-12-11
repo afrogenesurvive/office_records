@@ -45,6 +45,14 @@ return (
     <Form.Label>TreatmentFrequency</Form.Label>
     <Form.Control type="text" placeholder="TreatmentFrequency"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridTreatmentTypeSelect">
+    <Form.Label>TreatmentType Options</Form.Label>
+    <Form.Control as="select">
+    <option>select</option>
+    <option>procedure</option>
+    <option>prescription</option>
+    </Form.Control>
+  </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentType">
     <Form.Label>TreatmentType</Form.Label>
     <Form.Control type="text" placeholder="TreatmentType"/>

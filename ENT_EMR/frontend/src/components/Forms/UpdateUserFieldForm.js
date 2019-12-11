@@ -13,17 +13,33 @@ console.log("UpdateUserFieldForm.props:  ", {...props});
 const {...user} = props.user;
 console.log("UpdateUserFieldForm.props.user:  ", {...user});
 
-
 return (
 <div className="UpdateFormContainer">
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
-  <Form.Group as={Col} controlId="formGridField">
+  <Form.Group as={Col} controlId="formGridFieldSelect">
+  <Form.Label>Field Options</Form.Label>
+  <Form.Control as="select">
+    <option>select</option>
+    <option>email</option>
+    <option>password</option>
+    <option>name</option>
+    <option>dob</option>
+    <option>phone</option>
+    <option>address.town</option>
+    <option>address.parish</option>
+    <option>role</option>
+    <option>employmentDate</option>
+    <option>terminationDate</option>
+  </Form.Control>
+  </Form.Group>
+    <Form.Group as={Col} controlId="formGridField">
     <Form.Label>Field</Form.Label>
-    <Form.Control type="text" placeholder="Field"/>
+    <Form.Control type="text" placeholder="Query"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridQuery">
     <Form.Label>Query</Form.Label>
+    <Form.Label>Date Format YYYY-MM-DD</Form.Label>
     <Form.Control type="text" placeholder="Query"/>
   </Form.Group>
 </Form.Row>

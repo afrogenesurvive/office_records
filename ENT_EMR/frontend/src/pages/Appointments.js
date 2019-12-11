@@ -19,9 +19,14 @@ import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
 import SearchAppointmentList from '../components/Appointments/AppointmentList/SearchAppointmentList';
 import SearchAppointmentForm from '../components/Forms/SearchAppointmentForm';
+import SearchAppointmentIdForm from '../components/Forms/SearchAppointmentIdForm';
+import SearchAppointmentPatientForm from '../components/Forms/SearchAppointmentPatientForm';
+import SearchAppointmentDateForm from '../components/Forms/SearchAppointmentDateForm';
+import SearchAppointmentDateRangeForm from '../components/Forms/SearchAppointmentDateRangeForm';
 
 import CreateAppointmentForm from '../components/Forms/CreateAppointmentForm';
 import UpdateAppointmentForm from '../components/Forms/UpdateAppointmentForm';
+import UpdateAppointmentFieldForm from '../components/Forms/UpdateAppointmentFieldForm';
 import './Users.css';
 
 class AppointmentsPage extends Component {
@@ -369,6 +374,62 @@ class AppointmentsPage extends Component {
   }
 
 
+  modalConfirmUpdateFieldHandler = (event) => {
+
+    const token = this.context.token;
+    const userId = this.context.userId;
+    let selectedAppointmentId = this.context.selectedAppointment._id;
+    if( this.context.user.role !== 'admin') {
+      console.log("Not the creator or Admin! No edit permission!!");
+      selectedAppointmentId = null;
+    }
+
+      console.log("UpdateAppointmentFieldFormData:  ", event.target.formGridField.value);
+      this.setState({ updating: false });
+
+      let field = event.target.formGridField.value;
+      let query = event.target.formGridQuery.value;
+
+      const requestBody = {
+        query:`
+          mutation{updateAppointmentField(userId:"${userId}",selectedAppointmentId:"${selectedAppointmentId}",field:"${field}",query:"${query}")
+
+        `};
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData.data.updateAppointmentField));
+
+          const updatedAppointmentId = resData.data.updateAppointmentField._id;
+          const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
+          const updatedAppointmentPos = this.state.appointments.indexOf(updatedAppointment);
+          const slicedArray = this.state.appointments.splice(updatedAppointmentPos, 1);
+          console.log("updatedAppointment:  ", JSON.stringify(updatedAppointment),"  updatedAppointmentPos:  ", updatedAppointmentPos, "  slicedArray:  ", slicedArray);
+
+          this.state.appointments.push(resData.data.updateAppointmentField);
+          this.context.appointments = this.state.appointments;
+          // this.fetchAppointments();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+  }
+
+
   modalConfirmSearchHandler = (event) => {
     console.log("SearchAppointmentForm:  ");
 
@@ -378,8 +439,13 @@ class AppointmentsPage extends Component {
       console.log("SearchAppointmentFormData:  ", event.target.formBasicField.value);
       this.setState({ searching: false });
 
-      let field = event.target.formBasicField.value;
+      let field = undefined;
       let query = event.target.formBasicQuery.value;
+      if (event.target.formBasicFieldSelect = "select") {
+        field = event.target.formBasicField.value;
+      } else {
+        field = event.target.formBasicFieldSelect.value;
+      }
 
       if (
         field.trim().length === 0 ||
@@ -426,6 +492,27 @@ class AppointmentsPage extends Component {
         .catch(err => {
           console.log(err);
         });
+  }
+
+  modalConfirmSearchIdHandler = (event) => {
+    console.log(`
+      SearchAppointmentIdFormData
+      `);
+  }
+  modalConfirmSearchPatientHandler = (event) => {
+    console.log(`
+      SearchAppointmentPatientFormData
+      `);
+  }
+  modalConfirmSearchDateHandler = (event) => {
+    console.log(`
+      SearchAppointmentDateFormData
+      `);
+  }
+  modalConfirmSearchDateRangeHandler = (event) => {
+    console.log(`
+      SearchAppointmentDateRangeFormData
+      `);
   }
 
 
@@ -733,7 +820,15 @@ class AppointmentsPage extends Component {
               {this.state.updating &&
                 this.state.selectedAppointment !== null
                 && (
-                  <p>Update Appointment Field</p>
+                  <UpdateAppointmentFieldForm
+                    authUserId={this.context.userId}
+                    canCancel
+                    canConfirm
+                    onCancel={this.modalCancelHandler}
+                    onConfirm={this.modalConfirmUpdateFieldHandler}
+                    confirmText="Confirm"
+                    appointment={this.state.selectedAppointment}
+                  />
               )}
               </Tab>
 
@@ -804,19 +899,64 @@ class AppointmentsPage extends Component {
           onConfirm={this.modalConfirmSearchHandler}
           confirmText="Search"
           appointment={this.context.selectedAppointment}
-        />)}
+        />
+      )}
       </Tab>
       <Tab eventKey="Id" title="Id:">
         Search by ID
+        {this.state.searching === true && (
+          <SearchAppointmentIdForm
+          authUserId={this.context.userId}
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.modalConfirmSearchIdHandler}
+            confirmText="Search"
+            appointment={this.context.selectedAppointment}
+          />
+        )}
       </Tab>
       <Tab eventKey="Patient" title="Patient:">
         Search by Patient
+        {this.state.searching === true && (
+          <SearchAppointmentPatientForm
+          authUserId={this.context.userId}
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.modalConfirmSearchPatientHandler}
+            confirmText="Search"
+            appointment={this.context.selectedAppointment}
+          />
+        )}
       </Tab>
       <Tab eventKey="Date" title="Date:">
         Search by Date
+        {this.state.searching === true && (
+          <SearchAppointmentDateForm
+          authUserId={this.context.userId}
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.modalConfirmSearchDateHandler}
+            confirmText="Search"
+            appointment={this.context.selectedAppointment}
+          />
+        )}
       </Tab>
       <Tab eventKey="Date Range" title="Date Range:">
         Search by Date Range
+        {this.state.searching === true && (
+          <SearchAppointmentDateRangeForm
+          authUserId={this.context.userId}
+          canCancel
+            canConfirm
+            onCancel={this.modalCancelHandler}
+            onConfirm={this.modalConfirmSearchDateRangeHandler}
+            confirmText="Search"
+            appointment={this.context.selectedAppointment}
+          />
+        )}
       </Tab>
       </Tabs>
       </Col>
@@ -858,248 +998,6 @@ class AppointmentsPage extends Component {
     </Col>
     </Row>
 
-
-
-
-      <Container className="containerUserDetail">
-
-      <Row className="createUserRowAdd">
-      <Col md={4} className="createUserColAdd">
-      <p>Appointment Detail</p>
-      </Col>
-      <Col md={6} className="createUserColAdd">
-      <Accordion.Toggle as={Button} variant="link" eventKey="10" className="btn">
-      Details
-      </Accordion.Toggle>
-      </Col>
-      </Row>
-
-      <Accordion.Collapse eventKey="10">
-      <Row className="createUserRowForm">
-      <Col md={11} className="createUserColForm">
-      {
-        this.state.isLoading === false &&
-        this.state.selectedAppointment !== null
-        &&
-        (
-          <AppointmentDetail
-          authUserId={this.context.userId}
-          appointment={this.state.selectedAppointment}
-          onEdit={this.startUpdateAppointmentHandler}
-          onDelete={this.modalDeleteHandler}
-      />
-    )}
-      </Col>
-      </Row>
-      </Accordion.Collapse>
-
-      </Container>
-
-      <Container className="containerCreateuser">
-      <Row className="createUserRowAdd">
-      <Col md={2} className="createUserColAdd">
-        <p>Add New Appointment</p>
-      </Col>
-      <Col md={4}>
-        {this.context.token && (
-          <Accordion.Toggle as={Button} variant="link" eventKey="11" className="btn" onClick={this.startCreateAppointmentHandler}>
-          Add
-          </Accordion.Toggle>
-        )}
-      </Col>
-      <Col md={2}>
-        <p>Patient</p>
-      </Col>
-      <Col md={4}>
-        {this.context.selectedPatient && (
-          <p>{this.context.selectedPatient.name}</p>
-        )}
-      </Col>
-      </Row>
-
-      <Accordion.Collapse eventKey="11">
-      <Row className="createUserRowForm">
-      <Col md={12} className="createUserColForm">
-      {
-        this.state.creating && this.context.selectedPatient._id
-        && (
-          <CreateAppointmentForm
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmHandler}
-            onSubmit={this.modalConfirmHandler}
-            confirmText="Confirm"
-          />
-      )}
-      </Col>
-      </Row>
-      </Accordion.Collapse>
-
-
-      <Row className="updateUserRowAdd">
-      <Col md={2} className="updateUserCol">
-      <p>Edit Selected Appointment</p>
-      </Col>
-      <Col md={4} className="updateUserCol">
-      {this.context.token && (
-        <Accordion.Toggle as={Button} variant="link" eventKey="12" className="btn" onClick={this.startUpdateAppointmentHandler}>
-        Basic Info & Demographics
-        </Accordion.Toggle>
-      )}
-      </Col>
-      <Col md={2}>
-        <p>Appointment</p>
-      </Col>
-      <Col md={4}>
-        {this.context.selectedAppointment && (
-          <p>{this.context.selectedAppointment.title}</p>
-        )}
-      </Col>
-      </Row>
-
-      <Row className="createUserRowAdd">
-      <Col md={3} className="updateUserCol2">
-      <p>Edit Selected Appointment</p>
-      </Col>
-      <Col md={9} className="updateUserCol2">
-      {this.context.token && (
-        <Accordion.Toggle as={Button} variant="link" eventKey="13" className="btn" value='patient' onClick={this.updateAppointmentSpecial.bind(this)}>
-        Patient
-        </Accordion.Toggle>
-      )}
-      </Col>
-      </Row>
-
-      <Accordion.Collapse eventKey="12">
-      <Row className="updateUserRowForm">
-      <Col md={10} className="updateUserColForm">
-      {this.state.updating &&
-        this.state.selectedAppointment !== null
-        && (
-        <UpdateAppointmentForm
-        authUserId={this.context.userId}
-        canCancel
-          canConfirm
-          onCancel={this.modalCancelHandler}
-          onConfirm={this.modalConfirmUpdateHandler}
-          confirmText="Confirm"
-          appointment={this.state.selectedAppointment}
-        />
-      )}
-      </Col>
-      </Row>
-      </Accordion.Collapse>
-
-      <Accordion.Collapse eventKey="13">
-      <Row className="updateUserRowForm">
-      <Col md={10} className="updateUserColForm">
-      {
-      //   this.state.appointmentUpdateField === 'patient' &&
-      // this.state.selectedAppointment !== null
-      // && (
-      //   <UpdateAppointmentPatientForm
-      //   authUserId={this.context.userId}
-      //   canCancel
-      //     canConfirm
-      //     onCancel={this.modalCancelHandler}
-      //     onConfirm={this.updateAppointmentPatientHandler}
-      //     confirmText="Confirm"
-      //     appointment={this.state.selectedAppointment}
-      //   />
-      // )
-    }
-      {this.state.appointmentUpdateField === 'patient' &&
-      this.state.selectedAppointment !== null &&
-      this.context.selectedPatient !== null && (
-        <Row>
-        <Col md={8} className="updateUserColAdd">
-        <p>Add Patient: {this.context.selectedPatient.name}</p>
-        <p> To Appointment: {this.state.selectedAppointment.title} ??</p>
-        <Accordion.Toggle as={Button} variant="link" eventKey="13" className="btn" onClick={this.updateAppointmentPatientHandler}>
-        Yes
-        </Accordion.Toggle>
-        </Col>
-        </Row>
-      )}
-      </Col>
-      </Row>
-      </Accordion.Collapse>
-
-      </Container>
-
-
-
-      <Container className="containerSearchuser">
-    <Row className="createUserRowAdd">
-    <Col md={4} className="createUserColAdd">
-      <p>Search for a Appointment</p>
-    </Col>
-    <Col md={8}>
-      {this.context.token && (
-        <Accordion.Toggle as={Button} variant="link" eventKey="14" className="btn" onClick={this.startSearchAppointmentHandler}>
-        Search
-        </Accordion.Toggle>
-      )}
-
-    </Col>
-    </Row>
-
-    <Accordion.Collapse eventKey="14">
-    <Row className="createUserRowForm">
-    <Col md={10} className="createUserColForm">
-    {
-      this.state.searching === true &&
-      <SearchAppointmentForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.modalConfirmSearchHandler}
-        confirmText="Search"
-        appointment={this.context.selectedAppointment}
-      />
-    }
-    </Col>
-    <Col md={10}>
-
-    </Col>
-    </Row>
-    </Accordion.Collapse>
-    </Container>
-
-  <Accordion.Collapse eventKey="14">
-    <Container className="containerSearchuser">
-    <Row className="searchListRow">
-    {
-      this.state.searchAppointments !== [] &&
-      <SearchAppointmentList
-        searchAppointments={this.state.searchAppointments}
-        authUserId={this.context.userId}
-        onCancel={this.modalCancelHandler}
-          onViewDetail={this.showDetailHandler}
-      />
-    }
-    </Row>
-    </Container>
-    </Accordion.Collapse>
-
-
-    <Container className="containerSearchuser">
-  <Row className="searchListRow">
-
-  {this.state.isLoading ? (
-    <Spinner />
-  ) : (
-    <AppointmentList
-      appointments={this.state.appointments}
-      authUserId={this.context.userId}
-      onViewDetail={this.showDetailHandler}
-    />
-  )}
-
-  </Row>
-  </Container>
   </Accordion>
 
         {
