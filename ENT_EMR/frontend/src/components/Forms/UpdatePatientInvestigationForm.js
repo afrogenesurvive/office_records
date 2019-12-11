@@ -26,6 +26,14 @@ return (
     <Form.Label>InvestigationTitle</Form.Label>
     <Form.Control type="text" placeholder="InvestigationTitle"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridInvestigationTypeSelect">
+    <Form.Label>InvestigationType Options</Form.Label>
+    <Form.Control as="select">
+    <option>select</option>
+    <option>procedure</option>
+    <option>prescription</option>
+    </Form.Control>
+  </Form.Group>
   <Form.Group as={Col} controlId="formGridInvestigationType">
     <Form.Label>InvestigationType</Form.Label>
     <Form.Control type="text" placeholder="InvestigationType"/>

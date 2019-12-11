@@ -22,6 +22,20 @@ return (
     <Form.Label>ExaminationDate</Form.Label>
     <Form.Control type="date" placeholder="ExaminationDate"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridExaminationAreaSelect">
+    <Form.Label>ExaminationArea Options</Form.Label>
+    <Form.Control as="select">
+    <option>select</option>
+    <option>nose</option>
+    <option>fauces</option>
+    <option>ears</option>
+    <option>larynx</option>
+    <option>neck</option>
+    <option>chest</option>
+    <option>cvs</option>
+    <option>abdomen</option>
+    </Form.Control>
+  </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationArea">
     <Form.Label>ExaminationArea</Form.Label>
     <Form.Control type="text" placeholder="ExaminationArea"/>

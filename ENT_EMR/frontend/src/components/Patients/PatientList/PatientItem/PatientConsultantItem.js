@@ -10,13 +10,13 @@ const patientConsultantItem = props => (
         Date: {props.date}
       </p>
       <p>
-      ID: {props.reference._id}
+      ID: {props.referenceId}
       </p>
       <p>
-        Name: {props.reference.name}
+        Name: {props.referenceName}
       </p>
       <p>
-        Role: {props.reference.role}
+        Role: {props.referenceRole}
       </p>
     </div>
   </li>

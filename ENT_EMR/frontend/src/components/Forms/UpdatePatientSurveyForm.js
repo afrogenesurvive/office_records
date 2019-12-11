@@ -22,13 +22,13 @@ return (
     <Form.Label>SurveyDate</Form.Label>
     <Form.Control type="date" placeholder="SurveyDate"/>
   </Form.Group>
-  <Form.Group as={Col} controlId="formGridComplaintTitle">
-    <Form.Label>ComplaintTitle</Form.Label>
-    <Form.Control type="text" placeholder="ComplaintTitle"/>
+  <Form.Group as={Col} controlId="formGridSurveyTitle">
+    <Form.Label>SurveyTitle</Form.Label>
+    <Form.Control type="text" placeholder="SurveyTitle"/>
   </Form.Group>
-  <Form.Group as={Col} controlId="formGridComplaintDescription">
-    <Form.Label>ComplaintDescription</Form.Label>
-    <Form.Control as="textarea" rows="3" placeholder="ComplaintDescription"/>
+  <Form.Group as={Col} controlId="formGridSurveyDescription">
+    <Form.Label>SurveyDescription</Form.Label>
+    <Form.Control as="textarea" rows="3" placeholder="SurveyDescription"/>
   </Form.Group>
   </Form.Row>
 

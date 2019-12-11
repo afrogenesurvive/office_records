@@ -135,7 +135,7 @@ return (
   </Form.Group>
   <Form.Group as={Col} controlId="formGridOccupationEmployerContactPhone">
     <Form.Label>OccupationEmployerContactPhone</Form.Label>
-    <Form.Control type="number" placeholder={patient.employer.contact.phone}/>
+    <Form.Control type="number" placeholder={patient.occupation.contact.phone}/>
   </Form.Group>
   </Form.Row>
   <Form.Row>

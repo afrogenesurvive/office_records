@@ -22,6 +22,14 @@ return (
     <Form.Label>AllergiesTitle</Form.Label>
     <Form.Control type="text" placeholder="AllergiesTitle"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridAllergiesTypeSelect">
+    <Form.Label>AllergiesType Options</Form.Label>
+    <Form.Control as="select">
+    <option>select</option>
+    <option>food</option>
+    <option>drug</option>
+    </Form.Control>
+  </Form.Group>
   <Form.Group as={Col} controlId="formGridAllergiesType">
     <Form.Label>AllergiesType</Form.Label>
     <Form.Control type="text" placeholder="AllergiesType"/>
