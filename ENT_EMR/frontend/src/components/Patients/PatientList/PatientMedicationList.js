@@ -11,6 +11,7 @@ const patientMedicationList = props => {
         key={medication.title}
         userId={props.authUserId}
         title={medication.title}
+        type={medication.type}
         description={medication.description}
         attachment={medication.attachment}
       />

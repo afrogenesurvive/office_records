@@ -13,6 +13,7 @@ const patientInvestigationList = props => {
         userId={props.authUserId}
         date={patientInvestigationDate}
         title={investigation.title}
+        type={investigation.type}
         description={investigation.description}
         attachment={investigation.attachment}
       />

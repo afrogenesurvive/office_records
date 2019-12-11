@@ -25,6 +25,9 @@ const patientBillingItem = props => (
         Paid: {props.paid}
       </p>
       <p>
+        Notes: {props.notes}
+      </p>
+      <p>
         Attachment: {props.attachment.name}
       </p>
       <p>

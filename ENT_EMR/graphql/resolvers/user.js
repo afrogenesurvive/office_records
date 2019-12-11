@@ -228,7 +228,7 @@ module.exports = {
       console.log(`
           resolverField: ${resolverField},
           resolverQuery: ${resolverQuery},
-          query object: ${query},
+          query object: ${JSON.stringify(query)},
         `);
       const user = await User.findOneAndUpdate({_id:args.selectedUserId},query,{new: true})
       return {

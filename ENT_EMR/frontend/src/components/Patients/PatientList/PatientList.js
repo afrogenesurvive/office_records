@@ -5,12 +5,13 @@ import './UserList.css';
 
 const patientList = props => {
   const patients = props.patients.map(patient => {
+    const patientRegistrationDate = new Date(patient.registrationDate.substr(0,10)*1000).toLocaleString()
     return (
       <PatientItem
         key={patient._id}
         _id={patient._id}
         name={patient.name}
-        address={patient.address}
+        registrationDate={patientRegistrationDate}
         onDetail={props.onViewDetail}
       />
     );

@@ -137,33 +137,57 @@ module.exports = {
       throw err;
     }
   },
-  // getPatientVisit: async (args, req) => {
-  //   console.log(`
-  //     getPatientVisit...args: ${util.inspect(args)},
-  //     isAuth: ${req.isAuth},
-  //     `);
-  //
-  //   if (!req.isAuth) {
-  //     throw new Error('Unauthenticated!');
-  //   }
-  //
-  //   try {
-  //     const patientVisitDate = args.visitDate;
-  //     console.log(`
-  //         visit date: ${patientVisitDate}
-  //       `);
-  //
-  //     const visitPatient = await Patient.findById({_id: args.patientId});
-  //     var result = jsObjects.filter(x=> x.b === 6);
-  //
-  //     // return patients.map(patient => {
-  //     //   return transformPatient(patient);
-  //     //
-  //     // });
-  //   } catch (err) {
-  //     throw err;
-  //   }
-  // },
+  getPatientVisit: async (args, req) => {
+    console.log(`
+      getPatientVisit...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+      const patientVisitDate = args.visitDate;
+      console.log(`
+          visit date: ${patientVisitDate}
+        `);
+
+      const visitPatient = await Patient.findById({_id: args.patientId});
+      const visitConsultant = visitPatient.consultant.filter(x=> x.date === patientVisitDate);
+      const visitComplaints = visitPatient.complaints.filter(x=> x.date === patientVisitDate);
+      const visitSurveys = visitPatient.surveys.filter(x=> x.date === patientVisitDate);
+      const visitVitals = visitPatient.vitals.filter(x=> x.date === patientVisitDate);
+      const visitExamination = visitPatient.examination.filter(x=> x.date === patientVisitDate);
+      const visitHistory = visitPatient.history.filter(x=> x.date === patientVisitDate);
+      const visitAllergies = visitPatient.allergies.filter(x=> x.date === patientVisitDate);
+      const visitMedication = visitPatient.medication.filter(x=> x.date === patientVisitDate);
+      const visitInvestigation = visitPatient.investigation.filter(x=> x.date === patientVisitDate);
+      const visitDiagnosis = visitPatient.diagnosis.filter(x=> x.date === patientVisitDate);
+      const visitTreatment = visitPatient.treatment.filter(x=> x.date === patientVisitDate);
+      const visitBilling = visitPatient.billing.filter(x=> x.date === patientVisitDate);
+
+      const visit = {
+        consultant: visitConsultant,
+        complaints: visitComplaints,
+        surveys: visitSurveys,
+        vitals: visitVitals,
+        examination: visitExamination,
+        history: visitHistory,
+        Aallergies: visitAllergies,
+        medication: visitMedication,
+        investigation: visitInvestigation,
+        diagnosis: visitDiagnosis,
+        treatment: visitTreatment,
+        billing: visitBilling,
+      }
+      return  {
+        visit
+      };
+    } catch (err) {
+      throw err;
+    }
+  },
   updatePatient: async (args, req) => {
     console.log(`
       updatePatient...args: ${util.inspect(args)},

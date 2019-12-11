@@ -26,6 +26,13 @@ return (
     <Form.Label>ExaminationArea</Form.Label>
     <Form.Control type="text" placeholder="ExaminationArea"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridExaminationGeneral">
+    <Form.Label>ExaminationGeneral</Form.Label>
+    <Form.Control type="text" placeholder="ExaminationGeneral"/>
+  </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridExaminationType">
     <Form.Label>ExaminationType</Form.Label>
     <Form.Control type="text" placeholder="ExaminationType"/>
@@ -38,9 +45,19 @@ return (
     <Form.Label>ExaminationValue</Form.Label>
     <Form.Control type="text" placeholder="ExaminationValue"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridExaminationDescription">
     <Form.Label>ExaminationDescription</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="ExaminationDescription"/>
+  </Form.Group>
+  <Form.Group as={Col} controlId="formGridExaminationFollowUp">
+    <Form.Label>ExaminationFollowUp</Form.Label>
+    <Form.Control as="select">
+      <option>true</option>
+      <option>false</option>
+    </Form.Control>
   </Form.Group>
   </Form.Row>
 

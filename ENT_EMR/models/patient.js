@@ -136,7 +136,8 @@ const patientSchema = new Schema({
           name: {type:String},
           format: {type:String},
           path: {type:String},
-      }
+      },
+      _id: false
     }],
   allergies: [{
       type: {type:String},

@@ -10,8 +10,6 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Card from 'react-bootstrap/Card';
 
-// import Modal from '../components/Modal/Modal';
-// import Backdrop from '../components/Backdrop/Backdrop';
 import PatientList from '../components/Patients/PatientList/PatientList';
 import PatientDetail from '../components/Patients/PatientDetail';
 import Spinner from '../components/Spinner/Spinner';
@@ -25,7 +23,8 @@ import UpdatePatientConsultantForm from '../components/Forms/UpdatePatientConsul
 import UpdatePatientInsuranceForm from '../components/Forms/UpdatePatientInsuranceForm';
 import UpdatePatientNextOfKinForm from '../components/Forms/UpdatePatientNextOfKinForm';
 import UpdatePatientComplaintForm from '../components/Forms/UpdatePatientSurveyForm';
-import UpdatePatientSurveyForm from '../components/Forms/UpdatePatientComplaintForm';
+import UpdatePatientSurveyForm from '../components/Forms/UpdatePatientSurveyForm';
+import UpdatePatientVitalsForm from '../components/Forms/UpdatePatientVitalsForm';
 import UpdatePatientExaminationForm from '../components/Forms/UpdatePatientExaminationForm';
 import UpdatePatientHistoryForm from '../components/Forms/UpdatePatientHistoryForm';
 import UpdatePatientAllergiesForm from '../components/Forms/UpdatePatientAllergiesForm';
@@ -34,7 +33,6 @@ import UpdatePatientInvestigationForm from '../components/Forms/UpdatePatientInv
 import UpdatePatientDiagnosisForm from '../components/Forms/UpdatePatientDiagnosisForm';
 import UpdatePatientTreatmentForm from '../components/Forms/UpdatePatientTreatmentForm';
 import UpdatePatientBillingForm from '../components/Forms/UpdatePatientBillingForm';
-// import UpdatePatientArrayForm from '../components/Forms/UpdatePatientArrayForm';
 import './Users.css';
 
 class PatientsPage extends Component {
@@ -86,15 +84,24 @@ class PatientsPage extends Component {
     this.setState({ creating: false });
     const userId = this.context.userId;
 
+    let title = event.target.formGridTitle.value;
     let name = event.target.formGridName.value;
     let dob = event.target.formGridDob.value;
     let age = event.target.formGridAge.value;
-    let address = event.target.formGridAddress.value;
+    let gender = event.target.formGridgender.value;
+    let addressNumber = event.target.formGridAddressNumber.value;
+    let addressStreet = event.target.formGridAddressStreet.value;
+    let addressTown = event.target.formGridAddressTown.value;
+    let addressParish = event.target.formGridAddressParish.value;
+    let addressPostOffice = event.target.formGridAddressPostOffice.value;
     let contactPhone = event.target.formGridContactPhone.value;
     let contactEmail = event.target.formGridContactEmail.value;
     let registrationDate = event.target.formGridRegistrationDate.value;
     let referralDate = event.target.formGridReferralDate.value;
     let expirationDate = event.target.formGridExpirationDate.value;
+    let attendingPhysicianName = event.target.formGridAttendingPhysicianName.value;
+    let attendingPhysicianEmail = event.target.formGridAttendingPhysicianEmail.value;
+    let attendingPhysicianPhone = event.target.formGridAttendingPhysicianPhone.value;
     let referringDoctorName = event.target.formGridReferringDoctorName.value;
     let referringDoctorEmail = event.target.formGridReferringDoctorEmail.value;
     let referringDoctorPhone = event.target.formGridReferringDoctorPhone.value;
@@ -103,16 +110,27 @@ class PatientsPage extends Component {
     let occupationEmployerContactPhone = event.target.formGridOccupationEmployerContactPhone.value;
     let occupationEmployerContactEmail = event.target.formGridOccupationEmployerContactEmail.value;
 
+
     if (
+      name.trim().length === 0 ||
+      title.trim().length === 0 ||
       name.trim().length === 0 ||
       dob.trim().length === 0 ||
       age.trim().length === 0 ||
-      address.trim().length === 0 ||
+      gender.trim().length === 0 ||
+      addressNumber.trim().length === 0 ||
+      addressStreet.trim().length === 0 ||
+      addressTown.trim().length === 0 ||
+      addressParish.trim().length === 0 ||
+      addressPostOffice.trim().length === 0 ||
       contactPhone.trim().length === 0 ||
       contactEmail.trim().length === 0 ||
       registrationDate.trim().length === 0 ||
       referralDate.trim().length === 0 ||
       expirationDate.trim().length === 0 ||
+      attendingPhysicianName.trim().length === 0 ||
+      attendingPhysicianEmail.trim().length === 0 ||
+      attendingPhysicianPhone.trim().length === 0 ||
       referringDoctorName.trim().length === 0 ||
       referringDoctorEmail.trim().length === 0 ||
       referringDoctorPhone.trim().length === 0 ||
@@ -126,15 +144,41 @@ class PatientsPage extends Component {
       return;
     }
 
-    const patient = { name, dob, age, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
-    console.log("creating patient.. " + JSON.stringify(patient));
+    const patient = { title, name, dob, age, gender, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, contactPhone, contactEmail, registrationDate, referralDate, expirationDate, attendingPhysicianName, attendingPhysicianEmail, attendingPhysicianPhone, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
+    console.log(`
+      creating patient...
+      title: ${title},
+      name: ${name},
+      dob: ${dob},
+      age: ${age},
+      gender: ${gender},
+      addressNumber: ${addressNumber},
+      addressStreet: ${addressStreet},
+      addressTown: ${addressTown},
+      addressParish: ${addressParish},
+      addressPostOffice: ${addressPostOffice},
+      contactPhone: ${contactPhone},
+      contactEmail: ${contactEmail},
+      registrationDate: ${registrationDate},
+      referralDate: ${referralDate},
+      expirationDate: ${expirationDate},
+      attendingPhysicianName: ${attendingPhysicianName},
+      attendingPhysicianEmail: ${attendingPhysicianEmail},
+      attendingPhysicianPhone: ${attendingPhysicianPhone},
+      referringDoctorName: ${referringDoctorName},
+      referringDoctorEmail: ${referringDoctorEmail},
+      referringDoctorPhone: ${referringDoctorPhone},
+      occupationRole: ${occupationRole},
+      occupationEmployer: ${occupationEmployer},
+      occupationEmployerContactPhone: ${occupationEmployerContactPhone},
+      occupationEmployerContactEmail: ${occupationEmployerContactEmail},
+      `);
 
     const requestBody = {
       query: `
-          mutation {createPatient(userId:\"${userId}\",patientInput: {name:\"${name}\",dob:\"${dob}\",age:\"${age}\",address:\"${address}\",contactEmail:\"${contactEmail}\",contactPhone:\"${contactPhone}\",referringDoctorName:\"${referringDoctorName}\",referringDoctorEmail:\"${referringDoctorEmail}\",referringDoctorPhone:\"${referringDoctorPhone}\",occupationRole:\"${occupationRole}\",occupationEmployer:\"${occupationEmployer}\",occupationEmployerContactPhone:\"${occupationEmployerContactPhone}\",occupationEmployerContactEmail:\"${occupationEmployerContactEmail}\",registrationDate:\"${registrationDate}\",referralDate:\"${referralDate}\",expirationDate:\"${expirationDate}\"})
-          {_id,age,name,address,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},occupation{role,employer,contact{email,phone}}}}
-        `
-    };
+          mutation {createPatient(userId:"${userId}", patientInput:{title:"${title}",name:"${name}",dob:"${dob}",age:${age},gender:"${gender}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",contactPhone:"${contactPhone}",contactEmail:"${contactEmail}",registrationDate:"${registrationDate}",referralDate:"${referralDate}",expirationDate:"${expirationDate}",referringDoctorName:"${referringDoctorName}",referringDoctorEmail:"${referringDoctorEmail}",referringDoctorPhone:"${referringDoctorPhone}",attendingPhysicianName:"${attendingPhysicianName}",attendingPhysicianEmail:"${attendingPhysicianEmail}",attendingPhysicianPhone:"${attendingPhysicianPhone}",occupationRole:"${occupationRole}",occupationEmployer:"${occupationEmployer}",occupationEmployerContactPhone:"${occupationEmployerContactPhone}",occupationEmployerContactEmail:"${occupationEmployerContactEmail}"})
+          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        `};
 
     const token = this.context.token;
 
@@ -153,39 +197,14 @@ class PatientsPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData));
-
+        console.log(`
+          response data:
+          ${JSON.stringify(resData.data.createPatient)}
+          `);
+        const newPatient = resData.data.createPatient;
         this.setState(prevState => {
           const updatedPatients = [...prevState.patients];
-          updatedPatients.push(
-            {
-            _id: resData.data.createPatient._id,
-            name: resData.data.createPatient.name,
-            dob: resData.data.createPatient.dob,
-            age: resData.data.createPatient.age,
-            address: resData.data.createPatient.address,
-            contact:{
-              phone: resData.data.createPatient.contactPhone,
-              email: resData.data.createPatient.contactEmail
-            },
-            registrationDate: resData.data.createPatient.registrationDate,
-            referralDate: resData.data.createPatient.referralDate,
-            expirationDate: resData.data.createPatient.expirationDate,
-            referringDoctor: {
-              name: resData.data.createPatient.referringDoctorName,
-              email: resData.data.createPatient.referringDoctorEmail,
-              phone: resData.data.createPatient.referringDoctorPhone,
-            },
-            occupation: {
-              role: resData.data.createPatient.occupationRole,
-              employer: resData.data.createPatient.occupationEmployer,
-              contact: {
-                phone: resData.data.createPatient.occupationEmployerContactPhone,
-                email: resData.data.createPatient.occupationEmployerContactEmail
-              }
-            }
-          }
-        );
+          updatedPatients.push(newPatient);
 
           return { patients: updatedPatients };
         });
@@ -209,20 +228,31 @@ class PatientsPage extends Component {
     }
 
     const userId = this.context.userId;
-    const patientId = this.context.selectedPatient._id;
+    const selectedPatientId = this.context.selectedPatient._id;
 
-    // console.log("UpdateUserFormData:  ", event);
     console.log("UpdatePatientFormData:  ", event.target.formGridName.value);
 
 
     this.setState({ updating: false });
+
+    let title = event.target.formGridTitle.value;
     let name = event.target.formGridName.value;
     let dob = event.target.formGridDob.value;
     let age = event.target.formGridAge.value;
-    let address = event.target.formGridAddress.value;
+    let gender = event.target.formGridgender.value;
+    let addressNumber = event.target.formGridAddressNumber.value;
+    let addressStreet = event.target.formGridAddressStreet.value;
+    let addressTown = event.target.formGridAddressTown.value;
+    let addressParish = event.target.formGridAddressParish.value;
+    let addressPostOffice = event.target.formGridAddressPostOffice.value;
     let contactPhone = event.target.formGridContactPhone.value;
     let contactEmail = event.target.formGridContactEmail.value;
     let registrationDate = event.target.formGridRegistrationDate.value;
+    let referralDate = event.target.formGridReferralDate.value;
+    let expirationDate = event.target.formGridExpirationDate.value;
+    let attendingPhysicianName = event.target.formGridAttendingPhysicianName.value;
+    let attendingPhysicianEmail = event.target.formGridAttendingPhysicianEmail.value;
+    let attendingPhysicianPhone = event.target.formGridAttendingPhysicianPhone.value;
     let referringDoctorName = event.target.formGridReferringDoctorName.value;
     let referringDoctorEmail = event.target.formGridReferringDoctorEmail.value;
     let referringDoctorPhone = event.target.formGridReferringDoctorPhone.value;
@@ -231,78 +261,120 @@ class PatientsPage extends Component {
     let occupationEmployerContactPhone = event.target.formGridOccupationEmployerContactPhone.value;
     let occupationEmployerContactEmail = event.target.formGridOccupationEmployerContactEmail.value;
 
-
+    if (title.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      title = this.context.selectedUser.title;
+    }
     if (name.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      name  = this.context.selectedUser.name;
-      // return;
+      name = this.context.selectedUser.name;
     }
     if (dob.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      dob  = this.context.selectedUser.dob;
+      dob = this.context.selectedUser.dob;
+    }
+    if (gender.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      gender = this.context.selectedUser.gender;
     }
     if (age.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      age  = this.context.selectedUser.age;
+      age = this.context.selectedUser.age;
     }
-    if (address.trim().length === 0 ) {
+    if (addressNumber.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      address  = this.context.selectedUser.address;
+      addressNumber = this.context.selectedUser.address.number;
+    }
+    if (addressStreet.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      addressStreet = this.context.selectedUser.address.street;
+    }
+    if (addressTown.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      addressTown = this.context.selectedUser.address.town;
+    }
+    if (addressParish.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      addressParish = this.context.selectedUser.address;
+    }
+    if (addressPostOffice.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      addressPostOffice = this.context.selectedUser.address.postOffice;
     }
     if (contactPhone.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      contactPhone  = this.context.selectedUser.contactPhone;
+      contactPhone = this.context.selectedUser.contact.phone;
     }
     if (contactEmail.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      contactEmail  = this.context.selectedUser.contactEmail;
+      contactEmail = this.context.selectedUser.contact.email;
     }
     if (registrationDate.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      registrationDate  = this.context.selectedUser.registrationDate;
+      registrationDate = this.context.selectedUser.registrationDate;
+    }
+    if (attendingPhysicianName.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attendingPhysicianName = this.context.selectedUser.attendingPhysician.name;
+    }
+    if (attendingPhysicianEmail.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attendingPhysicianEmail = this.context.selectedUser.attendingPhysician.email;
+    }
+    if (attendingPhysicianPhone.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      attendingPhysicianPhone = this.context.selectedUser.attendingPhysician.phone;
     }
     if (referringDoctorName.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      referringDoctorName  = this.context.selectedUser.referringDoctorName;
+      referringDoctorName = this.context.selectedUser.referringDoctor.name;
     }
     if (referringDoctorEmail.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      referringDoctorEmail  = this.context.selectedUser.referringDoctorEmail;
+      referringDoctorEmail = this.context.selectedUser.referringDoctor.email;
     }
     if (referringDoctorPhone.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      referringDoctorPhone  = this.context.selectedUser.referringDoctorPhone;
+      referringDoctorPhone = this.context.selectedUser.referringDoctor.phone;
     }
     if (occupationRole.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      occupationRole  = this.context.selectedUser.occupationRole;
+      occupationRole = this.context.selectedUser.occupation.role;
     }
     if (occupationEmployer.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      occupationEmployer  = this.context.selectedUser.occupationEmployer;
+      occupationEmployer = this.context.selectedUser.occupation.employer;
     }
     if (occupationEmployerContactEmail.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      occupationEmployerContactEmail  = this.context.selectedUser.occupationEmployerContactEmail;
+      occupationEmployerContactEmail = this.context.selectedUser.occupation.contact.email;
     }
     if (occupationEmployerContactPhone.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      occupationEmployerContactPhone  = this.context.selectedUser.occupationEmployerContactPhone;
+      occupationEmployerContactPhone = this.context.selectedUser.occupation.contact.phone;
     }
 
-
-    const patient = { name, dob, age, address, contactPhone, contactEmail, registrationDate, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail};
+    const patient = { title, name, dob, age, gender, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, contactPhone, contactEmail, registrationDate, referralDate, expirationDate, attendingPhysicianName, attendingPhysicianEmail, attendingPhysicianPhone, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
     console.log(`
       updating patient...
-      userId: ${userId},
-      patientId: ${patientId},
+      title: ${title},
       name: ${name},
       dob: ${dob},
       age: ${age},
-      address: ${address},
+      gender: ${gender},
+      addressNumber: ${addressNumber},
+      addressStreet: ${addressStreet},
+      addressTown: ${addressTown},
+      addressParish: ${addressParish},
+      addressPostOffice: ${addressPostOffice},
       contactPhone: ${contactPhone},
       contactEmail: ${contactEmail},
       registrationDate: ${registrationDate},
+      referralDate: ${referralDate},
+      expirationDate: ${expirationDate},
+      attendingPhysicianName: ${attendingPhysicianName},
+      attendingPhysicianEmail: ${attendingPhysicianEmail},
+      attendingPhysicianPhone: ${attendingPhysicianPhone},
       referringDoctorName: ${referringDoctorName},
       referringDoctorEmail: ${referringDoctorEmail},
       referringDoctorPhone: ${referringDoctorPhone},
@@ -314,12 +386,9 @@ class PatientsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation {
-            updatePatient(userId:\"${userId}\", patientId: "${patientId}", patientInput: { name: "${name}", dob: "${dob}",age: ${age}, address: "${address}", contactPhone: "${contactPhone}", contactEmail: "${contactEmail}", registrationDate: "${registrationDate}", referringDoctorName: "${referringDoctorName}", referringDoctorEmail: "${referringDoctorEmail}", referringDoctorPhone: "${referringDoctorPhone}", occupationRole: "${occupationRole}", occupationEmployer: "${occupationEmployer}", occupationEmployerContactPhone: "${occupationEmployerContactPhone}", occupationEmployerContactEmail: "${occupationEmployerContactEmail}" })
-            {_id,name,address,dob,age,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},appointments{date,title,type},consultant{date,reference{name,role}},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},examination{date,area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}
-          }
-        `
-    };
+          mutation {updatePatient(userId:"${userId}",patientId:"${selectedPatientId}", patientInput:{title:"${title}",name:"${name}",dob:"${dob}",age:${age},gender:"${gender}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",contactPhone:"${contactPhone}",contactEmail:"${contactEmail}",registrationDate:"${registrationDate}",referralDate:"${referralDate}",expirationDate:"${expirationDate}",referringDoctorName:"${referringDoctorName}",referringDoctorEmail:"${referringDoctorEmail}",referringDoctorPhone:"${referringDoctorPhone}",attendingPhysicianName:"${attendingPhysicianName}",attendingPhysicianEmail:"${attendingPhysicianEmail}",attendingPhysicianPhone:"${attendingPhysicianPhone}",occupationRole:"${occupationRole}",occupationEmployer:"${occupationEmployer}",occupationEmployerContactPhone:"${occupationEmployerContactPhone}",occupationEmployerContactEmail:"${occupationEmployerContactPhone}"})
+          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        `};
 
     const token = this.context.token;
 
@@ -346,38 +415,7 @@ class PatientsPage extends Component {
         const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
         console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
 
-        this.state.patients.push(
-          {
-          _id: resData.data.updatePatient._id,
-          name: resData.data.updatePatient.name,
-          dob: resData.data.updatePatient.dob,
-          age: resData.data.updatePatient.age,
-          address: resData.data.updatePatient.address,
-          contact:{
-            phone: resData.data.updatePatient.contactPhone,
-            email: resData.data.updatePatient.contactEmail
-          },
-          registrationDate: resData.data.updatePatient.registrationDate,
-          referringDoctor: {
-            name: resData.data.updatePatient.referringDoctorName,
-            email: resData.data.updatePatient.referringDoctorEmail,
-            phone: resData.data.updatePatient.referringDoctorPhone,
-          },
-          occupation: {
-            role: resData.data.updatePatient.occupationRole,
-            employer: resData.data.updatePatient.occupationEmployer,
-            contact: {
-              phone: resData.data.updatePatient.occupationEmployerContactPhone,
-              email: resData.data.updatePatient.occupationEmployerContactEmail
-            }
-          }
-        }
-        );
-
-        // if (this.state.updatingArray === false && this.state.updating === false) {
-        //   console.log("update and updateArray complete...now fetching users");
-        //
-        // }
+        this.state.patients.push(resData.data.updatePatient);
         this.fetchPatients();
 
       })
@@ -679,6 +717,160 @@ updatePatientComplaintHandler = (event) => {
 
 }
 
+updatePatientSurveyHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientComplaintFormData:  ", event.target.formGridComplaintTitle.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+  let complaintTitle = event.target.formGridComplaintTitle.value;
+  let complaintDate = event.target.formGridComplaintDate.value;
+  let complaintDescription = event.target.formGridComplaintDescription.value;
+  let complaintAttachmentName = event.target.formGridComplaintAttachmentName.value;
+  let complaintAttachmentFormat = event.target.formGridComplaintAttachmentFormat.value;
+  let complaintAttachmentPath = event.target.formGridComplaintAttachmentPath.value;
+
+  const patientComplaint = { complaintTitle, complaintDate, complaintDescription, complaintAttachmentName, complaintAttachmentFormat, complaintAttachmentPath };
+  console.log(`
+    adding patient complaint...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    complaintTitle: ${complaintTitle},
+    complaintDate: ${complaintDate},
+    complaintDescription: ${complaintDescription},
+    complaintAttachmentName: ${complaintAttachmentName},
+    complaintAttachmentFormat: ${complaintAttachmentFormat},
+    complaintAttachmentPath: ${complaintAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientComplaint(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{complaintDate:\"${complaintDate}\",complaintTitle:\"${complaintTitle}\",complaintDescription:\"${complaintDescription}\",complaintAttachmentName:\"${complaintAttachmentName}\",complaintAttachmentFormat:\"${complaintAttachmentFormat}\",complaintAttachmentPath:\"${complaintAttachmentPath}\"})
+        {_id,name,address,dob,age,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},appointments{date,title,type},consultant{date,reference{name,role}},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},examination{date,area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}
+      }
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientComplaint._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+}
+
+updatePatientVitalsHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+  if(
+    this.context.user.role !== 'admin'
+  ) {
+    console.log("No edit permission!!");
+    return;
+  }
+
+  console.log("UpdatePatientComplaintFormData:  ", event.target.formGridComplaintTitle.value);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+  let complaintTitle = event.target.formGridComplaintTitle.value;
+  let complaintDate = event.target.formGridComplaintDate.value;
+  let complaintDescription = event.target.formGridComplaintDescription.value;
+  let complaintAttachmentName = event.target.formGridComplaintAttachmentName.value;
+  let complaintAttachmentFormat = event.target.formGridComplaintAttachmentFormat.value;
+  let complaintAttachmentPath = event.target.formGridComplaintAttachmentPath.value;
+
+  const patientComplaint = { complaintTitle, complaintDate, complaintDescription, complaintAttachmentName, complaintAttachmentFormat, complaintAttachmentPath };
+  console.log(`
+    adding patient complaint...
+    userId: ${userId},
+    patientId: ${selectedPatientId},
+    complaintTitle: ${complaintTitle},
+    complaintDate: ${complaintDate},
+    complaintDescription: ${complaintDescription},
+    complaintAttachmentName: ${complaintAttachmentName},
+    complaintAttachmentFormat: ${complaintAttachmentFormat},
+    complaintAttachmentPath: ${complaintAttachmentPath},
+    `);
+
+    const requestBody = {
+      query:`
+        mutation {updatePatientComplaint(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{complaintDate:\"${complaintDate}\",complaintTitle:\"${complaintTitle}\",complaintDescription:\"${complaintDescription}\",complaintAttachmentName:\"${complaintAttachmentName}\",complaintAttachmentFormat:\"${complaintAttachmentFormat}\",complaintAttachmentPath:\"${complaintAttachmentPath}\"})
+        {_id,name,address,dob,age,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},appointments{date,title,type},consultant{date,reference{name,role}},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},examination{date,area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}
+      }
+      `
+    }
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data));
+
+        const updatedPatientId = resData.data.updatePatientComplaint._id;
+        const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+        const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+        const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+        console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+        this.state.patients.push(updatedPatient);
+        this.context.patients = this.state.patients;
+        this.fetchPatients();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+}
+
 
 updatePatientExaminationHandler = (event) => {
 
@@ -754,7 +946,7 @@ updatePatientExaminationHandler = (event) => {
         const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
         console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
 
-        this.state.patients.push(updatedPatient);
+        this.state.patients.push(resData.data.updatePatientExamination);
         this.context.patients = this.state.patients;
         this.fetchPatients();
       })
@@ -834,7 +1026,7 @@ updatePatientHistoryHandler = (event) => {
         const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
         console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
 
-        this.state.patients.push(updatedPatient);
+        this.state.patients.push(resData.data.updatePatientHistory);
         this.context.patients = this.state.patients;
         this.fetchPatients();
       })
@@ -1368,7 +1560,7 @@ modalConfirmSearchHandler = (event) => {
       query: `
         query {
           getPatientField(userId: "${userId}", field: "${field}", query: "${query}" )
-          {_id,name,address,dob,age,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},appointments{date,title,type},consultant{date,reference{name,role}},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},examination{date,area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}
+          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}
       }
       `
     }
@@ -1418,9 +1610,8 @@ modalConfirmSearchHandler = (event) => {
     this.setState({ isLoading: true });
     const requestBody = {
       query: `
-          query {patients(userId:\"${userId}\")
-          {_id,name,address,dob,age,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},appointments{date,title,type},consultant{date,reference{name,role}},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},examination{date,area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}
-        }
+          query {patients(userId:"${userId}")
+          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
         `
     };
 
@@ -1473,10 +1664,8 @@ modalConfirmSearchHandler = (event) => {
 
     const requestBody = {
       query: `
-          mutation  {
-            deletePatient(userId: ${userId}, patientId: ${selectedPatientId})
-            {_id,name,address,dob,age,contact{email,phone},registrationDate,referralDate,expirationDate,referringDoctor{name,email,phone},appointments{date,title,type},consultant{date,reference{name,role}},occupation{role,employer,contact{email,phone}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{email,phone}},complaints{date,title,description,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},examination{date,area,type,measure,value,description,attachment{name,format,path}},history{title,type,date,description,attachment{name,format,path}},allergies{title,description,attachment{name,format,path}},medication{title,description,attachment{name,format,path}},investigation{date,title,description,attachment{name,format,path}},diagnosis{date,title,description,attachment{name,format,path}},treatment{date,title,type,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,notes,attachment{name,format,path}}}
-          }
+          mutation {deletePatient(userId:"${userId}",patientId:"${selectedPatientId}")
+          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
         `
     };
 
@@ -1616,6 +1805,22 @@ modalConfirmSearchHandler = (event) => {
     )}
     </Tab>
 
+    <Tab eventKey="patientEditField" title="Single Field">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" onClick={this.startUpdatePatientHandler}>Edit Field</Button>
+    )}
+    {this.state.updating &&
+      this.state.selectedPatient !== null
+      && (
+        <p>Update Patient Field</p>
+    )}
+    </Tab>
+
     <Tab eventKey="patientEditConsultant" title="Consultant">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
@@ -1720,7 +1925,7 @@ modalConfirmSearchHandler = (event) => {
             canCancel
               canConfirm
               onCancel={this.modalCancelHandler}
-              onConfirm={this.updatePatientSurveyHandler}
+              onConfirm={this.updatePatientComplaintHandler}
               confirmText="Confirm"
               patient={this.state.selectedPatient}
             />
@@ -1743,7 +1948,30 @@ modalConfirmSearchHandler = (event) => {
             canCancel
               canConfirm
               onCancel={this.modalCancelHandler}
-              onConfirm={this.updatePatientComplaintHandler}
+              onConfirm={this.updatePatientSurveyHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+    )}
+    </Tab>
+    <Tab eventKey="patientEditVitals" title="Vitals">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='vitals' onClick={this.updatePatientSpecial.bind(this)}>Add Vitals</Button>
+    )}
+    {this.state.patientUpdateField === 'vitals' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientVitalsForm
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientVitalsHandler}
               confirmText="Confirm"
               patient={this.state.selectedPatient}
             />
@@ -1964,8 +2192,11 @@ modalConfirmSearchHandler = (event) => {
     <Accordion.Collapse eventKey="10">
     <Row className="searchUserRowForm">
     <Col md={10} className="searchUserColForm">
-    {
-      this.state.searching === true &&
+    <Tabs defaultActiveKey="userPatient" id="uncontrolled-tab-example">
+    <Tab eventKey="Search" title="Search:" disabled>
+    </Tab>
+    <Tab eventKey="Field" title="Field:">
+    {this.state.searching === true && (
       <SearchPatientForm
       authUserId={this.context.userId}
       canCancel
@@ -1974,8 +2205,18 @@ modalConfirmSearchHandler = (event) => {
         onConfirm={this.modalConfirmSearchHandler}
         confirmText="Search"
         patient={this.context.selectedPatient}
-      />
-    }
+      />)}
+    </Tab>
+    <Tab eventKey="Id" title="Id:">
+      Search by ID
+    </Tab>
+    <Tab eventKey="Visit" title="Visit:">
+      Search by Visit
+    </Tab>
+    <Tab eventKey="Name RegEx" title="Name RegEx:">
+      Search by Name RegEx
+    </Tab>
+    </Tabs>
     </Col>
     </Row>
     </Accordion.Collapse>

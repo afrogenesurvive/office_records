@@ -22,6 +22,10 @@ return (
     <Form.Label>MedicationTitle</Form.Label>
     <Form.Control type="text" placeholder="MedicationTitle"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridMedicationType">
+    <Form.Label>MedicationType</Form.Label>
+    <Form.Control type="text" placeholder="MedicationType"/>
+  </Form.Group>
   <Form.Group as={Col} controlId="formGridMedicationDescription">
     <Form.Label>MedicationDescription</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="MedicationDescription"/>

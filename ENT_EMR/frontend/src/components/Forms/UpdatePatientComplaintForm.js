@@ -30,6 +30,10 @@ return (
     <Form.Label>ComplaintDescription</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="ComplaintDescription"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridComplaintAnamnesis">
+    <Form.Label>ComplaintAnamnesis</Form.Label>
+    <Form.Control as="textarea" rows="3" placeholder="ComplaintAnamnesis"/>
+  </Form.Group>
   </Form.Row>
 
   <Form.Row>

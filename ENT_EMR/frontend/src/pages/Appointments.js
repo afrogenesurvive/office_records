@@ -42,19 +42,9 @@ class AppointmentsPage extends Component {
 
   static contextType = AuthContext;
 
-  constructor(props) {
-    super(props);
-    this.titleELRef = React.createRef();
-    this.typeELRef = React.createRef();
-    this.dateELRef = React.createRef();
-    this.locationELRef = React.createRef();
-    this.descriptionELRef = React.createRef();
-    this.patientELRef = React.createRef();
-    this.inProgressELRef = React.createRef();
-    this.attendedELRef = React.createRef();
-    this.importantELRef = React.createRef();
-    this.notesELRef = React.createRef();
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentDidMount() {
     this.fetchAppointments();
@@ -82,58 +72,59 @@ class AppointmentsPage extends Component {
 
     this.setState({ creating: false });
     const userId = this.context.userId;
-    const patientId = this.context.selectedPatient._id;
+    const selectedPatientId = this.context.selectedPatient._id;
     console.log(`
         userId: ${userId}
-        patientId: ${patientId}
+        patientId: ${selectedPatientId}
       `);
 
     const title = event.target.formGridTitle.value;
     const type = event.target.formGridType.value;
     const date = event.target.formGridDate.value;
     const time = event.target.formGridTime.value;
+    const seenTime = event.target.formGridSeenTime.value;
+    const checkinTime = event.target.formGridCheckinTime.value;
     const location = event.target.formGridLocation.value;
     const description = event.target.formGridDescription.value;
     const inProgress = event.target.formGridInProgress.value;
     const attended = event.target.formGridAttended.value;
     const important = event.target.formGridImportant.value;
-    const notes = event.target.formGridNotes.value;
 
     if (
       title.trim().length === 0 ||
       type.trim().length === 0 ||
       date.trim().length === 0 ||
       time.trim().length === 0 ||
+      seenTime.trim().length === 0 ||
+      checkinTime.trim().length === 0 ||
       location.trim().length === 0 ||
       description.trim().length === 0 ||
       inProgress.trim().length === 0 ||
       attended.trim().length === 0 ||
-      important.trim().length === 0 ||
-      notes.trim().length === 0
+      important.trim().length === 0
     ) {
       console.log("blank fields detected!!!...Please try again...");
-      // return;
     }
 
-    const appointment = { title, type, date, time, location, description, inProgress, attended, important, notes };
+    const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important };
     console.log(`creating appointment...
         title: ${title},
         type: ${type},
         date: ${date},
         time: ${time},
+        seenTime: $seenTtime},
+        checkinTime: ${checkinTime},
         location: ${location},
         description: ${description},
         inProgress: ${inProgress},
         attended: ${attended},
         important: ${important},
-        notes: ${notes},
       `);
 
     const requestBody = {
       query: `
-          mutation {
-            createAppointment(userId:\"${userId}\", patientId:\"${patientId}\", appointmentInput: {title:\"${title}\",type:\"${type}\",date:\"${date}\",time:\"${time}\",location:\"${location}\",description:\"${description}\",inProgress:${inProgress},attended:${attended},important:${important},notes:\"${notes}\"})
-            {_id,title,date,time,type,patient{name,dob,address},inProgress,attended,important,notes}}
+          mutation {createAppointment(userId:"${userId}",patientId:"${selectedPatientId}",appointmentInput:{title:"${title}",type:"${type}",date:"${date}",time:"${time}",seenTime:"${seenTime}",checkinTime:"${checkinTime}",location:"${location}",description:"${description}",inProgress:${inProgress},attended:${attended},important:${important}})
+          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important}}
         `,
     };
 
@@ -154,26 +145,11 @@ class AppointmentsPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData));
-
+        console.log("response data... " + JSON.stringify(resData.data.createAppointment));
+        const newAppointment = resData.data.createAppointment;
         this.setState(prevState => {
           const updatedAppointments = [...prevState.appointments];
-          updatedAppointments.push(
-            {
-            _id: resData.data.createAppointment._id,
-            title: resData.data.createAppointment.title,
-            type: resData.data.createAppointment.type,
-            date: resData.data.createAppointment.date,
-            time: resData.data.createAppointment.time,
-            location: resData.data.createAppointment.location,
-            description: resData.data.createAppointment.description,
-            patient: resData.data.createAppointment.patient,
-            inProgress: resData.data.createAppointment.inProgress,
-            attended: resData.data.createAppointment.attended,
-            important: resData.data.createAppointment.important,
-            notes: resData.data.createAppointment.notes
-          }
-        );
+          updatedAppointments.push(newAppointment);
 
           return { appointments: updatedAppointments };
         });
@@ -200,7 +176,7 @@ class AppointmentsPage extends Component {
 
     const userId = this.context.userId;
     const appointmentId = this.context.selectedAppointment._id;
-    // const patientId = this.context.selectedPatientId;
+    const selectedPatientId = this.context.selectedPatientId;
     console.log(`
         userId: ${userId}
         appointmentd: ${appointmentId},
@@ -215,6 +191,8 @@ class AppointmentsPage extends Component {
     let type = event.target.formGridType.value;
     let date = event.target.formGridDate.value;
     let time = event.target.formGridTime.value;
+    const seenTime = event.target.formGridSeenTime.value;
+    const checkinTime = event.target.formGridCheckinTime.value;
     let location = event.target.formGridLocation.value;
     let description = event.target.formGridDescription.value;
     let inProgress = event.target.formGridInProgress.value;
@@ -239,6 +217,14 @@ class AppointmentsPage extends Component {
       console.log("blank fields detected!!!...filling w/ previous data...");
       time  = this.context.selectedAppointment.time;
     }
+    if (seenTime.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      seenTime  = this.context.selectedAppointment.seenTime;
+    }
+    if (checkinTime.trim().length === 0 ) {
+      console.log("blank fields detected!!!...filling w/ previous data...");
+      checkinTime  = this.context.selectedAppointment.checkinTime;
+    }
     if (location.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
       location  = this.context.selectedAppointment.location;
@@ -259,33 +245,27 @@ class AppointmentsPage extends Component {
       console.log("blank fields detected!!!...filling w/ previous data...");
       important  = this.context.selectedAppointment.important;
     }
-    if (notes.trim().length === 0 ) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      notes  = this.context.selectedAppointment.notes;
-    }
 
-
-
-    const appointment = { title, type, date, location, description, inProgress, attended, important, notes };
+    const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important };
     console.log(`
         updating appointment...
-        title: ${title}
-        type: ${type}
-        date: ${date}
-        time: ${time}
-        location: ${location}
-        description: ${description}
-        inProgress: ${inProgress}
-        attended: ${attended}
-        important: ${important}
-        notes: ${notes}
+        title: ${title},
+        type: ${type},
+        date: ${date},
+        time: ${time},
+        seenTime: ${seenTime},
+        checkinTime: ${checkinTime},
+        location: ${location},
+        description: ${description},
+        inProgress: ${inProgress},
+        attended: ${attended},
+        important: ${important},
       `);
 
     const requestBody = {
       query: `
-          mutation {updateAppointment(userId:\"${userId}\", appointmentId:\"${appointmentId}\", appointmentInput: {title:\"${title}\",type:\"${type}\",date:\"${date}\",time:\"${time}\",location:\"${location}\",description:\"${description}\"})
-          {_id,title,date,time,type,patient{name,dob,address},inProgress,attended,important,notes}}
-        }
+      mutation {updateAppointment(userId:"${userId}",patientId:"${selectedPatientId}",appointmentInput:{title:"${title}",type:"${type}",date:"${date}",time:"${time}",seenTime:"${seenTime}",checkinTime:"${checkinTime}",location:"${location}",description:"${description}",inProgress:${inProgress},attended:${attended},important:${important}})
+      {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important}}
         `
     };
 
@@ -314,21 +294,7 @@ class AppointmentsPage extends Component {
         const slicedArray = this.state.appointments.splice(updatedAppointmentPos, 1);
         console.log("updatedAppointment:  ", JSON.stringify(updatedAppointment),"  updatedPatientPos:  ", updatedAppointmentPos, "  slicedArray:  ", slicedArray);
 
-        this.state.appointments.push(
-          {
-          _id: resData.data.updateAppointment._id,
-          title: resData.data.updateAppointment.title,
-          type: resData.data.updateAppointment.type,
-          date: resData.data.updateAppointment.date,
-          time: resData.data.updateAppointment.time,
-          location: resData.data.updateAppointment.location,
-          description: resData.data.updateAppointment.description,
-          patient: resData.data.updateAppointment.patient,
-          inProgress: resData.data.updateAppointment.inProgress,
-          attended: resData.data.updateAppointment.attended,
-          important: resData.data.updateAppointment.important,
-          notes: resData.data.updateAppointment.notes
-        });
+        this.state.appointments.push(resData.data.updateAppointment);
         this.fetchAppointments();
 
       })
@@ -363,7 +329,7 @@ class AppointmentsPage extends Component {
       const requestBody = {
         query:`
         mutation {updateAppointmentPatient(userId:\"${userId}\",appointmentId:\"${selectedAppointmentId}\",patientId:\"${selectedPatientId}\")
-        {_id,title,date,time,patient{_id,name,address,contact{phone,email},registrationDate,referralDate,expirationDate,insurance{company,number,expiry}},notes,inProgress,attended,important}}
+        {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title},consultant{reference{_id,name,role}}},inProgress,attended,important}}
         `
       }
 
@@ -391,7 +357,7 @@ class AppointmentsPage extends Component {
           const slicedArray = this.state.appointments.splice(updatedAppointmentPos, 1);
           console.log("updatedAppointment:  ", JSON.stringify(updatedAppointment),"  updatedPatientPos:  ", updatedAppointmentPos, "  slicedArray:  ", slicedArray);
 
-          this.state.appointments.push(updatedAppointment);
+          this.state.appointments.push(resData.data.updateAppointmentPatient);
           this.fetchAppointments();
 
         })
@@ -428,33 +394,9 @@ class AppointmentsPage extends Component {
 
       const requestBody = {
         query: `
-          query GetAppointmentField($userId: ID!, $field: String!, $query: String!)
-          {getAppointmentField(userId: $userId, field: $field, query: $query )
-            {
-            _id
-            title
-            type
-            date
-            time
-            location
-            description
-            patient{
-              name
-              address
-            }
-            inProgress
-            attended
-            important
-            notes
-          }
-        }
-        `,
-        variables: {
-          userId: userId,
-          field: field,
-          query: query
-        }
-      }
+          query {getAppointmentField(userId:"${userId}", field:"${field}", query:"${query}")
+          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title},consultant{reference{_id,name,role}}},inProgress,attended,important}}
+        `}
 
       const token = this.context.token;
 
@@ -500,40 +442,9 @@ class AppointmentsPage extends Component {
     this.setState({ isLoading: true });
     const requestBody = {
       query: `
-          query appointments($userId: ID!) {
-            appointments(userId: $userId)
-            {
-              _id
-              title
-              type
-              date
-              time
-              location
-              description
-              patient
-              {
-                name
-                dob
-                address
-                consultant{
-                  date
-                  reference{
-                    name
-                    role
-                  }
-                }
-              }
-              inProgress
-              attended
-              important
-              notes
-            }
-          }
-        `,
-        variables: {
-          userId: userId
-        }
-    };
+            query {appointments(userId:"${userId}")
+            {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
+        `};
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
@@ -569,6 +480,7 @@ class AppointmentsPage extends Component {
   modalDeleteHandler = () => {
     console.log("deleting appointment...selectedAppointment:  ", this.context.selectedAppointment);
 
+    const userId = this.context.userId;
     const selectedAppointmentId = this.context.selectedAppointment._id;
 
     if(this.context.user.role !== 'admin') {
@@ -580,37 +492,9 @@ class AppointmentsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation DeleteAppointment($userId: ID!, $appointmentId: ID!) {
-            deleteAppointment(userId: $userId, appointmentId: $appointmentId) {
-              _id
-              title
-              type
-              date
-              time
-              location
-              description
-              patient
-              {
-                name
-                dob
-                address
-                consultant{
-                  name
-                  role
-                }
-              }
-              inProgress
-              attended
-              important
-              notes
-            }
-          }
-        `,
-        variables: {
-          userId: this.context.userId,
-          appointmentId: selectedAppointmentId
-        }
-    };
+          mutation {deleteAppointment(userId:"${userId}",appointmentId:"${selectedAppointmentId}")
+          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
+        `};
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
@@ -837,6 +721,22 @@ class AppointmentsPage extends Component {
               )}
               </Tab>
 
+              <Tab eventKey="appointmentEditField" title="Single Field">
+              {this.state.selectedAppointment === null && (
+                <Button variant="outline-warning" size="lg">
+                  Select a Patient from the Master List below
+                </Button>
+              )}
+              {this.state.selectedAppointment !== null && (
+                <Button variant="outline-primary" onClick={this.startUpdateAppointmentHandler}>Edit Field</Button>
+              )}
+              {this.state.updating &&
+                this.state.selectedAppointment !== null
+                && (
+                  <p>Update Appointment Field</p>
+              )}
+              </Tab>
+
               <Tab eventKey="appointmentEditPatient" title="Patient">
               {this.state.selectedAppointment === null && (
                 <Button variant="outline-warning" size="lg">
@@ -891,8 +791,11 @@ class AppointmentsPage extends Component {
       <Accordion.Collapse eventKey="14">
       <Row className="searchUserRowForm">
       <Col md={10} className="searchUserColForm">
-      {
-        this.state.searching === true &&
+      <Tabs defaultActiveKey="userPatient" id="uncontrolled-tab-example">
+      <Tab eventKey="Search" title="Search:" disabled>
+      </Tab>
+      <Tab eventKey="Field" title="Field:">
+      {this.state.searching === true && (
         <SearchAppointmentForm
         authUserId={this.context.userId}
         canCancel
@@ -901,8 +804,21 @@ class AppointmentsPage extends Component {
           onConfirm={this.modalConfirmSearchHandler}
           confirmText="Search"
           appointment={this.context.selectedAppointment}
-        />
-      }
+        />)}
+      </Tab>
+      <Tab eventKey="Id" title="Id:">
+        Search by ID
+      </Tab>
+      <Tab eventKey="Patient" title="Patient:">
+        Search by Patient
+      </Tab>
+      <Tab eventKey="Date" title="Date:">
+        Search by Date
+      </Tab>
+      <Tab eventKey="Date Range" title="Date Range:">
+        Search by Date Range
+      </Tab>
+      </Tabs>
       </Col>
       <Col md={10}>
       </Col>

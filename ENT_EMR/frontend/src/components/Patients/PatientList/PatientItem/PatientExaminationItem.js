@@ -10,6 +10,9 @@ const patientExaminationItem = props => (
       Date: {props.date}
       </p>
       <p>
+      General: {props.general}
+      </p>
+      <p>
       Area: {props.area}
       </p>
       <p>
@@ -20,6 +23,12 @@ const patientExaminationItem = props => (
       </p>
       <p>
         Value: {props.value}
+      </p>
+      <p>
+        Description: {props.description}
+      </p>
+      <p>
+        FollowUp?: {props.followUp}
       </p>
       <p>
         Attachment : {props.attachment.name}
