@@ -21,6 +21,7 @@ import SidebarPage from './Sidebar';
 
 import CreateUserForm from '../components/Forms/CreateUserForm';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
+import UpdateUserFieldForm from '../components/Forms/UpdateUserFieldForm';
 import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceForm';
 import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentForm';
 import UpdateUserLeaveForm from '../components/Forms/UpdateUserLeaveForm';
@@ -295,12 +296,7 @@ class UsersPage extends Component {
         const updatedUser = resData.data.updateUser;
         console.log("updatedUser:  ", JSON.stringify(updatedUser));
         this.setState({user: updatedUser})
-        this.state.users.push({
-              _id: resData.data.updateUser._id,
-              email: resData.data.updateUser.email,
-              name: resData.data.updateUser.name,
-              role: resData.data.updateUser.role
-            });
+        this.state.users.push(resData.data.updateUser);
         this.context.users = this.state.users;
         // this.fetchUsers();
       })
@@ -309,6 +305,62 @@ class UsersPage extends Component {
       });
   };
 
+
+  modalConfirmUpdateFieldHandler = (event) => {
+
+    const token = this.context.token;
+    const userId = this.context.userId;
+    let selectedUserId = this.context.selectedUser._id;
+    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+      console.log("Not the creator or Admin! No edit permission!!");
+      selectedUserId = null;
+    }
+
+      console.log("UpdateUserFieldFormData:  ", event.target.formGridField.value);
+      this.setState({ updating: false });
+
+      let field = event.target.formGridField.value;
+      let query = event.target.formGridQuery.value;
+
+      const requestBody = {
+        query:`
+          mutation{updateUserField(userId:"${userId}",selectedUserId:"${selectedUserId}",field:"${field}",query:"${query}")
+          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
+        }
+        `};
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData.data.updateUserField));
+
+          const updatedUserId = resData.data.updateUserField._id;
+          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+          const updatedUserPos = this.state.users.indexOf(updatedUser);
+          const slicedArray = this.state.users.splice(updatedUserPos, 1);
+          console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+          this.state.users.push(resData.data.updateUserField);
+          this.context.users = this.state.users;
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+  }
 
   updateUserAttendanceHandler = (event) => {
     const token = this.context.token;
@@ -378,7 +430,7 @@ class UsersPage extends Component {
           const slicedArray = this.state.users.splice(updatedUserPos, 1);
           console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
 
-          this.state.users.push(updatedUser);
+          this.state.users.push(resData.data.updateUserAttendance);
           this.context.users = this.state.users;
           // this.fetchUsers();
         })
@@ -459,7 +511,7 @@ class UsersPage extends Component {
           const slicedArray = this.state.users.splice(updatedUserPos, 1);
           console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
 
-          this.state.users.push(updatedUser);
+          this.state.users.push(resData.data.updateUserAttachment);
           this.context.users = this.state.users;
           // this.fetchUsers();
         })
@@ -549,7 +601,7 @@ class UsersPage extends Component {
           const slicedArray = this.state.users.splice(updatedUserPos, 1);
           console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
 
-          this.state.users.push(updatedUser);
+          this.state.users.push(resData.data.updateUserLeave);
           this.context.users = this.state.users;
           // this.fetchUsers();
         })
@@ -838,13 +890,38 @@ updateUserSpecial (event) {
                 canCancel
                 canConfirm
                 onCancel={this.modalCancelHandler}
-                onConfirm={this.modalConfirmUpdateHandler}
+                onConfirm={this.modalConfirmUpdateFieldHandler}
                 confirmText="Confirm"
                 user={this.context.selectedUser}
               />
             )}
 
             </Tab>
+
+            <Tab eventKey="userEditField" title="Single Field">
+            {this.state.selectedUser === null && (
+              <Button variant="outline-warning" size="lg">
+                Select a Staff member from the Master List below
+              </Button>
+            )}
+            {this.state.selectedUser !== null && (
+              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Field</Button>
+            )}
+            {this.state.updating &&
+              this.state.selectedUser !== null
+              && (
+                <UpdateUserFieldForm
+                  authUserId={this.context.userId}
+                  canCancel
+                  canConfirm
+                  onCancel={this.modalCancelHandler}
+                  onConfirm={this.modalConfirmUpdateHandler}
+                  confirmText="Confirm"
+                  user={this.state.selectedUser}
+                />
+            )}
+            </Tab>
+
             <Tab eventKey="userEditAttendance" title="Attendance">
             {this.state.selectedUser === null && (
               <Button variant="outline-warning" size="lg">
@@ -942,7 +1019,11 @@ updateUserSpecial (event) {
     <Accordion.Collapse eventKey="3">
     <Row className="searchUserRowForm">
     <Col md={10} className="searchUserColForm">
-    {this.state.searching === true &&
+    <Tabs defaultActiveKey="userSearch" id="uncontrolled-tab-example">
+    <Tab eventKey="Search" title="Search:" disabled>
+    </Tab>
+    <Tab eventKey="Field" title="Field:">
+    {this.state.searching === true && (
       <SearchUserForm
       authUserId={this.context.userId}
       canCancel
@@ -951,7 +1032,18 @@ updateUserSpecial (event) {
         onConfirm={this.modalConfirmSearchHandler}
         confirmText="Search"
         user={this.context.selectedUser}
-      />}
+      />)}
+    </Tab>
+    <Tab eventKey="Id" title="Id:">
+      Search by ID
+    </Tab>
+    <Tab eventKey="Attendance" title="Attendance:">
+      Search by Attendance
+    </Tab>
+    <Tab eventKey="Leave" title="Leave:">
+      Search by Leave
+    </Tab>
+    </Tabs>
     </Col>
     <Col md={10}>
     </Col>

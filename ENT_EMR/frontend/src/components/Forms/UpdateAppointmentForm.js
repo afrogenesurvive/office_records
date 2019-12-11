@@ -27,6 +27,11 @@ return (
   <Form.Label>Type</Form.Label>
   <Form.Control type="text" placeholder={appointment.type} />
 </Form.Group>
+
+<Form.Group as={Col} controlId="formGridLocation">
+  <Form.Label>Location</Form.Label>
+  <Form.Control type="text" placeholder={appointment.location} />
+</Form.Group>
 </Form.Row>
 
 <Form.Row>
@@ -36,12 +41,15 @@ return (
 </Form.Group>
 <Form.Group as={Col} controlId="formGridTime">
   <Form.Label>Time</Form.Label>
-    <Form.Control type="time" placeholder="Time" />
+    <Form.Control type="time" placeholder={appointment.time}/>
 </Form.Group>
-
-<Form.Group as={Col} controlId="formGridLocation">
-  <Form.Label>Location</Form.Label>
-  <Form.Control type="text" placeholder={appointment.location} />
+<Form.Group as={Col} controlId="formGridCheckinTime">
+  <Form.Label>CheckinTime</Form.Label>
+    <Form.Control type="time" placeholder={appointment.checkinTime}/>
+</Form.Group>
+<Form.Group as={Col} controlId="formGridSeenTime">
+  <Form.Label>SeenTime</Form.Label>
+    <Form.Control type="time" placeholder={appointment.seenTime}/>
 </Form.Group>
 </Form.Row>
 
@@ -49,11 +57,6 @@ return (
 <Form.Group as={Col} controlId="formGridDescription">
   <Form.Label>Description</Form.Label>
   <Form.Control as="textarea" rows="2" placeholder={appointment.description} />
-</Form.Group>
-
-<Form.Group as={Col} controlId="formGridNotes">
-  <Form.Label>Notes</Form.Label>
-  <Form.Control as="textarea" rows="4" placeholder={appointment.notes} />
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridInProgress">

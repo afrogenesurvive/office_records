@@ -29,6 +29,12 @@ const AppointmentDetail = (props) => {
         Time: {appointment.time}
       </Card.Text>
       <Card.Text>
+        SeenTime: {appointment.seenTime}
+      </Card.Text>
+      <Card.Text>
+        CheckinTime: {appointment.checkinTime}
+      </Card.Text>
+      <Card.Text>
         Title: {appointment.title}
       </Card.Text>
       <Card.Text>

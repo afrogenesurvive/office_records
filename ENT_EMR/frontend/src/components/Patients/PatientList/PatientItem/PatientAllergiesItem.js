@@ -10,6 +10,9 @@ const patientAllergiesItem = props => (
         Title: {props.title}
       </p>
       <p>
+        Type: {props.type}
+      </p>
+      <p>
         Description: {props.description}
       </p>
       <p>

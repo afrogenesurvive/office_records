@@ -17,14 +17,13 @@ return (
 <div className="CreateFormContainer">
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
+  <Form.Group as={Col} controlId="formGridTitle">
+    <Form.Label>Title</Form.Label>
+    <Form.Control type="text" placeholder="Patient Title"/>
+  </Form.Group>
   <Form.Group as={Col} controlId="formGridName">
     <Form.Label>Name</Form.Label>
     <Form.Control type="text" placeholder="Patient Name"/>
-  </Form.Group>
-
-  <Form.Group as={Col} controlId="formGridAddress">
-    <Form.Label>Address</Form.Label>
-    <Form.Control type="text" placeholder="Adress"/>
   </Form.Group>
 
 <Form.Group as={Col} controlId="formGridDob">
@@ -35,23 +34,51 @@ return (
   <Form.Label>Age</Form.Label>
   <Form.Control type="number" placeholder="Age"/>
 </Form.Group>
+<Form.Group as={Col} controlId="formGridGender">
+  <Form.Label>Gender</Form.Label>
+  <Form.Control as="select">
+    <option>Male</option>
+    <option>Female</option>
+  </Form.Control>
+</Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridContactEmail">
-
   <Form.Label>Email</Form.Label>
   <Form.Control type="email" placeholder="Patient Email"/>
-
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridContactPhone">
-
   <Form.Label>Phone</Form.Label>
-  <Form.Control type="number" placeholder="Patient Phone"/>
-
+  <Form.Control type="number" placeholder="Address Phone"/>
 </Form.Group>
+</Form.Row>
 
+<Form.Row>
+<Form.Group as={Col} controlId="formGridAddressNumber">
+  <Form.Label>AddressNumber</Form.Label>
+  <Form.Control type="number" placeholder="Address Street No."/>
+</Form.Group>
+<Form.Group as={Col} controlId="formGridAddressStreet">
+  <Form.Label>AddressStreet</Form.Label>
+  <Form.Control type="text" placeholder="Address Street Name"/>
+</Form.Group>
+<Form.Group as={Col} controlId="formGridAddressTown">
+  <Form.Label>AddressTown</Form.Label>
+  <Form.Control type="text" placeholder="Address Town"/>
+</Form.Group>
+<Form.Group as={Col} controlId="formGridAddressParish">
+  <Form.Label>AddressParish</Form.Label>
+  <Form.Control type="text" placeholder="Address Parish"/>
+</Form.Group>
+<Form.Group as={Col} controlId="formGridAddressPostOffice">
+  <Form.Label>AddressPostOffice</Form.Label>
+  <Form.Control type="text" placeholder="Address PostOffice"/>
+</Form.Group>
+</Form.Row>
+
+<Form.Row>
 <Form.Group as={Col} controlId="formGridRegistrationDate">
   <Form.Label>RegistrationDate</Form.Label>
   <Form.Control type="date" placeholder="Registration Date"/>
@@ -68,58 +95,53 @@ return (
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridReferringDoctorName">
-
   <Form.Label>ReferringDoctorName</Form.Label>
   <Form.Control type="text" placeholder='Ref Doctor Name' />
-
 </Form.Group>
-
 <Form.Group as={Col} controlId="formGridReferringDoctorEmail">
-
   <Form.Label>ReferringDoctorEmail</Form.Label>
   <Form.Control type="email" placeholder='Ref Doctor Email'/>
-
 </Form.Group>
-
 <Form.Group as={Col} controlId="formGridReferringDoctorPhone">
-
   <Form.Label>ReferringDoctorPhone</Form.Label>
   <Form.Control type="number" placeholder="Ref Doctor Phone"/>
+</Form.Group>
+</Form.Row>
 
+<Form.Row>
+<Form.Group as={Col} controlId="formGridAttendingPhysicianName">
+  <Form.Label>AttendingPhysicianName</Form.Label>
+  <Form.Control type="text" placeholder='Attending Physician Name' />
+</Form.Group>
+<Form.Group as={Col} controlId="formGridAttendingPhysicianEmail">
+  <Form.Label>AttendingPhysicianEmail</Form.Label>
+  <Form.Control type="email" placeholder='Attending Physician Email'/>
+</Form.Group>
+<Form.Group as={Col} controlId="formGridAttendingPhysicianPhone">
+  <Form.Label>AttendingPhysicianPhone</Form.Label>
+  <Form.Control type="number" placeholder="Attending Physician Phone"/>
 </Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridOccupationRole">
-
   <Form.Label>OccupationRole</Form.Label>
   <Form.Control type="text" placeholder="Job Role"/>
-
 </Form.Group>
-
 <Form.Group as={Col} controlId="formGridOccupationEmployer">
-
   <Form.Label>OccupationEmployer</Form.Label>
   <Form.Control type="text" placeholder="Employer Name"/>
-
 </Form.Group>
-
 <Form.Group as={Col} controlId="formGridOccupationEmployerContactPhone">
-
   <Form.Label>OccupationEmployerContactPhone</Form.Label>
   <Form.Control type="number" placeholder="Employer Phone"/>
-
 </Form.Group>
 </Form.Row>
-
 <Form.Row>
 <Form.Group as={Col} controlId="formGridOccupationEmployerContactEmail">
-
   <Form.Label>OccupationEmployerContactEmail</Form.Label>
   <Form.Control type="email" placeholder="Employer Email" />
-
 </Form.Group>
-
 </Form.Row>
 
 

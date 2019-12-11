@@ -237,6 +237,21 @@ type Appointment {
   notes: [String]
 }
 
+type Visit {
+  consultant: [Consultant]
+  complaints: [Complaint]
+  surveys: [Survey]
+  vitals: [Vitals]
+  examination: [Examination]
+  history: [History]
+  allergies: [Allergy]
+  medication: [Medication]
+  investigation: [Investigation]
+  diagnosis: [Diagnosis]
+  treatment: [Treatment]
+  billing: [Billing]
+}
+
 
 input UserInput {
   email: String
@@ -425,7 +440,7 @@ type RootQuery {
     patients(userId: ID!): [Patient]
     getPatientId(patientId: ID! userId: ID!): Patient
     getPatientField(userId: ID!, field: String!, query: String!): [Patient]
-    getPatientVisit(userId: ID!, patientId: ID!, visitDate: String!): [Patient]
+    getPatientVisit(userId: ID!, patientId: ID!, visitDate: String!): Visit
     getPatientNameRegex(userId: ID!, regex: String!): [Patient]
     getPatientDiagnosis(userId: ID!, diagnosisType: String!): [Patient]
 

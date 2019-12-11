@@ -12,6 +12,7 @@ const patientAllergiesList = props => {
         key={allergies.title}
         userId={props.authUserId}
         title={allergies.title}
+        type={allergies.type}
         description={allergies.description}
         attachment={allergies.attachment}
       />

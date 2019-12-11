@@ -12,11 +12,12 @@ const patientBillingList = props => {
         key={billing.date}
         userId={props.authUserId}
         date={patientBillingDate}
+        type={billing.type}
         title={billing.title}
         description={billing.description}
         amount={billing.amount}
         paid={billing.paid}
-        type={billing.type}
+        notes={billing.notes}
         attachment={billing.attachment}
       />
     );

@@ -10,6 +10,9 @@ const patientInvestigationItem = props => (
         Title: {props.title}
       </p>
       <p>
+        Type: {props.type}
+      </p>
+      <p>
         Date: {props.date}
       </p>
       <p>

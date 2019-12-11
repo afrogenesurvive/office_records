@@ -18,49 +18,74 @@ class SignupPage extends Component {
 
     event.preventDefault();
     console.log("signing up...");
-
+    console.log("CreateUserFormData:  ", event.target.formGridEmail.value);
 
     this.setState({ creating: false });
     const email = event.target.formGridEmail.value;
     const password = event.target.formGridPassword.value;
     const name = event.target.formGridName.value;
     const role = event.target.formGridRole.value;
+    let dob = event.target.formGridDob.value;
+    let phone = event.target.formGridPhone.value;
+    let addressNumber = event.target.formGridAddressNumber.value;
+    let addressStreet = event.target.formGridAddressStreet.value;
+    let addressTown = event.target.formGridAddressTown.value;
+    let addressParish = event.target.formGridAddressParish.value;
+    let addressPostOffice = event.target.formGridAddressPostOffice.value;
+    let employmentDate = event.target.formGridEmploymentDate.value;
+    let terminationDate = event.target.formGridTerminationDate.value;
 
     if (
       email.trim().length === 0 ||
       password.trim().length === 0 ||
       name.trim().length === 0 ||
-      role.trim().length === 0
+      role.trim().length === 0 ||
+      dob.trim().length === 0 ||
+      phone.trim().length === 0 ||
+      addressNumber.trim().length === 0 ||
+      addressStreet.trim().length === 0 ||
+      addressTown.trim().length === 0 ||
+      addressParish.trim().length === 0 ||
+      addressPostOffice.trim().length === 0 ||
+      employmentDate.trim().length === 0 ||
+      terminationDate.trim().length === 0
     ) {
-      console.log("empty fields present!!!");
-      this.setState({success: "Empty fields present!!!" });
+      console.log("blank fields detected!!!...Please try again...");
       return;
     }
 
-    const user = { email, password, name, role };
-    console.log("creating user.. " + JSON.stringify(user));
+    const token = this.context.token;
+    const userId = this.context.userId;
+    const user = { email, password, name, role, dob, phone, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, employmentDate, terminationDate };
+
+    console.log(`
+      creating user...
+      userId: ${userId}
+      email: ${email},
+      password: ${password},
+      name: ${name},
+      role: ${role},
+      dob: ${dob},
+      phone: ${phone},
+      addressNumber: ${addressNumber},
+      addressStreet: ${addressStreet},
+      addressTown: ${addressTown},
+      addressParish: ${addressParish},
+      addressPostOffice: ${addressPostOffice},
+      employmentDate: ${employmentDate},
+      terminationDate: ${terminationDate},
+      `);
 
     const requestBody = {
       query: `
-          mutation CreateUser($email: String!, $password: String!, $name: String!, $role: String!) {
-            createUser(userInput: {email: $email, password: $password, name: $name, role: $role}) {
-              _id
-              email
-              password
-              name
-              role
-            }
-          }
-        `,
-        variables: {
-          email: email,
-          password: password,
-          name: name,
-          role: role
-        }
-    };
+          mutation {
+            createUser(userInput: {email:"${email}",password:"${password}",name:"${name}",role:"${role}",
 
-    const token = this.context.token;
+            employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
+            {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
+          }
+        `
+    };
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',

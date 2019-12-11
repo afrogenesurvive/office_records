@@ -13,6 +13,7 @@ const patientTreatmentList = props => {
         userId={props.authUserId}
         date={patientTreatmentDate}
         title={treatment.title}
+        type={treatment.type}
         description={treatment.description}
         dose={treatment.dose}
         frequency={treatment.frequency}

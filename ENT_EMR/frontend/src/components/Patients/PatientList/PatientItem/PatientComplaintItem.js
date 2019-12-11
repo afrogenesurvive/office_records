@@ -13,6 +13,9 @@ const patientComplaintItem = props => (
       <p>
         Description: {props.description}
       </p>
+      <p>
+        Anamnesis: {props.anamnesis}
+      </p>
     </div>
   </li>
 );

@@ -14,6 +14,7 @@ const patientComplaintList = props => {
         date={patientComplaintDate}
         title={complaint.title}
         description={complaint.description}
+        anamnesis={complaint.anamnesis}
         attachment={complaint.attachment}
       />
     );

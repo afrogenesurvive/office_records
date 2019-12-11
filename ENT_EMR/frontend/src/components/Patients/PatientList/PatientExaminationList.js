@@ -12,9 +12,13 @@ const patientExaminationList = props => {
         key={examination.area}
         userId={props.authUserId}
         date={patientExaminationDate}
+        general={examination.general}
+        area={examination.area}
         type={examination.type}
         measure={examination.measure}
         value={examination.value}
+        description={examination.description}
+        followUp={examination.followUp}
         attachment={examination.attachment}
       />
     );
