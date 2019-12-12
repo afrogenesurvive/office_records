@@ -148,7 +148,7 @@ module.exports = {
     }
 
     try {
-      const patientVisitDate = args.visitDate;
+      const patientVisitDate = dateToString(args.visitDate);
       console.log(`
           visit date: ${patientVisitDate}
         `);
@@ -160,27 +160,28 @@ module.exports = {
       const visitVitals = visitPatient.vitals.filter(x=> x.date === patientVisitDate);
       const visitExamination = visitPatient.examination.filter(x=> x.date === patientVisitDate);
       const visitHistory = visitPatient.history.filter(x=> x.date === patientVisitDate);
-      const visitAllergies = visitPatient.allergies.filter(x=> x.date === patientVisitDate);
-      const visitMedication = visitPatient.medication.filter(x=> x.date === patientVisitDate);
       const visitInvestigation = visitPatient.investigation.filter(x=> x.date === patientVisitDate);
       const visitDiagnosis = visitPatient.diagnosis.filter(x=> x.date === patientVisitDate);
       const visitTreatment = visitPatient.treatment.filter(x=> x.date === patientVisitDate);
       const visitBilling = visitPatient.billing.filter(x=> x.date === patientVisitDate);
 
       const visit = {
+        patient: visitPatient.name,
         consultant: visitConsultant,
         complaints: visitComplaints,
         surveys: visitSurveys,
         vitals: visitVitals,
         examination: visitExamination,
         history: visitHistory,
-        Aallergies: visitAllergies,
-        medication: visitMedication,
         investigation: visitInvestigation,
         diagnosis: visitDiagnosis,
         treatment: visitTreatment,
         billing: visitBilling,
       }
+
+      console.log(`
+        patientVisit: ${util.inspect(visit)}
+        `);
       return  {
         visit
       };

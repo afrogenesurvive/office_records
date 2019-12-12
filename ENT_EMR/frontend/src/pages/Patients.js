@@ -53,6 +53,7 @@ class PatientsPage extends Component {
     patientUpdateField: null,
     patientSearchField: null,
     patientSearchQuery: null,
+    canDelete: null,
   };
   isActive = true;
 
@@ -65,6 +66,9 @@ class PatientsPage extends Component {
 
   componentDidMount() {
     this.fetchPatients();
+    if (this.context.user.name === 'admin579'){
+      this.setState({canDelete: true})
+    }
   }
 
 
@@ -442,8 +446,13 @@ class PatientsPage extends Component {
       console.log("UpdatePatientFieldFormData:  ", event.target.formGridField.value);
       this.setState({ updating: false });
 
-      let field = event.target.formGridField.value;
+      let field = undefined;
       let query = event.target.formGridQuery.value;
+      if (event.target.formGridFieldSelect = "select") {
+        field = event.target.formGridField.value;
+      } else {
+        field = event.target.formGridFieldSelect.value;
+      }
 
       const requestBody = {
         query:`
@@ -947,11 +956,12 @@ updatePatientExaminationHandler = (event) => {
 
   let examinationDate = event.target.formGridExaminationDate.value;
   let examinationGeneral = event.target.formGridExaminationGeneral.value;
-
-  // FIX ME!!!!!
-  // choose between input and select fields w/ if check
-
-  let examinationArea = event.target.formGridExaminationArea.value;
+  let examinationArea = undefined;
+  if (event.target.formGridExaminationAreaSelect = "select") {
+    examinationArea = event.target.formGridExaminationArea.value;
+  } else {
+    examinationArea = event.target.formGridExaminationAreaSelect.value;
+  }
   let examinationType = event.target.formGridExaminationType.value;
   let examinationMeasure = event.target.formGridExaminationMeasure.value;
   let examinationValue = event.target.formGridExaminationValue.value;
@@ -1117,12 +1127,12 @@ updatePatientAllergiesHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let allergiesTitle = event.target.formGridAllergiesTitle.value;
-
-  let allergiesType = event.target.formGridAllergiesType.value;
-
-  // FIX ME!!!!!
-  // choose between input and select fields w/ if check
-
+  let allergiesType = undefined;
+  if (event.target.formGridAllergiesTypeSelect = "select") {
+    allergiesType = event.target.formGridAllergiesType.value;
+  } else {
+    allergiesType = event.target.formGridAllergiesTypeSelect.value;
+  }
   let allergiesDescription = event.target.formGridAllergiesDescription.value;
   let allergiesAttachmentName = event.target.formGridAllergiesAttachmentName.value;
   let allergiesAttachmentFormat = event.target.formGridAllergiesAttachmentFormat.value;
@@ -1280,12 +1290,12 @@ updatePatientInvestigationHandler = (event) => {
 
   let investigationDate = event.target.formGridInvestigationDate.value;
   let investigationTitle = event.target.formGridInvestigationTitle.value;
-
-  let investigationType = event.target.formGridInvestigationType.value;
-
-  // FIX ME!!!!!
-  // choose between input and select fields w/ if check
-
+  let investigationType = undefined;
+  if (event.target.formGridInvestigationTypeSelect = "select") {
+    investigationType = event.target.formGridInvestigationType.value;
+  } else {
+    investigationType = event.target.formGridInvestigationTypeSelect.value;
+  }
   let investigationDescription = event.target.formGridInvestigationDescription.value;
   let investigationAttachmentName = event.target.formGridInvestigationAttachmentName.value;
   let investigationAttachmentFormat = event.target.formGridInvestigationAttachmentFormat.value;
@@ -1448,11 +1458,12 @@ updatePatientTreatmentHandler = (event) => {
   let treatmentDescription = event.target.formGridTreatmentDescription.value;
   let treatmentDose = event.target.formGridTreatmentDose.value;
   let treatmentFrequency = event.target.formGridTreatmentFrequency.value;
-
-  let treatmentType = event.target.formGridTreatmentType.value;
-  // FIX ME!!!!!
-  // choose between input and select fields w/ if check
-
+  let treatmentType = undefined;
+  if (event.target.formGridInvestigationTypeSelect = "select") {
+    treatmentType = event.target.formGridTreatmentType.value;
+  } else {
+    treatmentType = event.target.formGridTreatmentTypeSelect.value;
+  }
   let treatmentAttachmentName = event.target.formGridTreatmentAttachmentName.value;
   let treatmentAttachmentFormat = event.target.formGridTreatmentAttachmentFormat.value;
   let treatmentAttachmentPath = event.target.formGridTreatmentAttachmentPath.value;
@@ -1855,6 +1866,7 @@ modalConfirmSearchNameHandler = (event) => {
         authUserId={this.context.userId}
         patient={this.state.selectedPatient}
         onEdit={this.startUpdatePatientHandler}
+        canDelete={this.state.canDelete}
         onDelete={this.modalDeleteHandler}
         />
     )}

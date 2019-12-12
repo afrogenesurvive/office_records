@@ -34,10 +34,12 @@ return (
   <Form.Control type="text" placeholder="Name" />
 </Form.Group>
 
-<Form.Group as={Col} controlId="formGridRole">
-  <Form.Label>Role</Form.Label>
-  <Form.Control type="text" placeholder="role" />
-</Form.Group>
+{
+//   <Form.Group as={Col} controlId="formGridRole">
+//   <Form.Label>Role</Form.Label>
+//   <Form.Control type="text" placeholder="role" />
+// </Form.Group>
+}
 <Form.Group as={Col} controlId="formGridPhone">
   <Form.Label>Phone</Form.Label>
   <Form.Control type="number" placeholder="phone"/>

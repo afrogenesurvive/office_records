@@ -157,6 +157,11 @@ const PatientDetail = (props) => {
       <Card.Text>
         Email: {patient.attendingPhysician.email}
       </Card.Text>
+      { props.canDelete === true && (
+        <Button variant="danger" onClick={props.onDelete}>
+          Delete Patient !!??
+        </Button>
+      )}
       </Card.Body>
       </Card>
       </Tab>
