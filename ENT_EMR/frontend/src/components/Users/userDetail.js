@@ -54,6 +54,11 @@ const UserDetail = (props) => {
         <Card.Text>
           End Date: {userTerminationDate}
         </Card.Text>
+        { props.canDelete === true && (
+          <Button variant="danger" onClick={props.onDelete}>
+            Delete Staff !!??
+          </Button>
+        )}
       </Card.Body>
       </Card>
       </Tab>

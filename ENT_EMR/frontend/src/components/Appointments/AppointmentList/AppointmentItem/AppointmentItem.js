@@ -1,10 +1,11 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 // import { NavLink } from 'react-router-dom';
 
 import './UserItem.css';
 
 const appointmentItem = props => (
-  
+
   <li key={props.appointmentId} className="users__list-item">
     <div>
       <h1>{props.title}</h1>
@@ -12,9 +13,9 @@ const appointmentItem = props => (
 
     </div>
     <div>
-    <button className="btn" onClick={props.onDetail.bind(this, props._id)}>
-          View Details
-        </button>
+    <Button variant="primary" onClick={props.onDetail.bind(this, props._id)}>
+          Details
+        </Button>
     </div>
   </li>
 );

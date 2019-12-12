@@ -80,7 +80,13 @@ const AppointmentDetail = (props) => {
         appointmentNote={appointmentNote}
         authUserId={props.authUserId}
         />
+
     </Card.Body>
+    { props.canDelete === true && (
+      <Button variant="danger" onClick={props.onDelete}>
+        Delete Appointment !!??
+      </Button>
+    )}
   </Card>
     </div>
 

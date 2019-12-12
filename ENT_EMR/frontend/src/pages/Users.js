@@ -44,6 +44,7 @@ class UsersPage extends Component {
     userUpdateField: null,
     userSearchField: null,
     userSearchQuery: null,
+    canDelete: null,
   };
   isActive = true;
 
@@ -55,6 +56,9 @@ class UsersPage extends Component {
 
   componentDidMount() {
     this.fetchUsers();
+    if (this.context.user.name === 'admin579'){
+      this.setState({canDelete: true})
+    }
   }
 
 
@@ -322,8 +326,13 @@ class UsersPage extends Component {
       console.log("UpdateUserFieldFormData:  ", event.target.formGridField.value);
       this.setState({ updating: false });
 
-      let field = event.target.formGridField.value;
+      let field = undefined;
       let query = event.target.formGridQuery.value;
+      if (event.target.formGridFieldSelect = "select") {
+        field = event.target.formGridField.value;
+      } else {
+        field = event.target.formGridFieldSelect.value;
+      }
 
       const requestBody = {
         query:`
@@ -873,6 +882,7 @@ updateUserSpecial (event) {
                       AuthContext={this.context}
                       user={this.state.selectedUser}
                       onEdit={this.startUpdateUserHandler}
+                      canDelete={this.state.canDelete}
                       onDelete={this.modalDeleteHandler}
                       />
                     )}

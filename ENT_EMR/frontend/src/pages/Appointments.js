@@ -42,6 +42,7 @@ class AppointmentsPage extends Component {
     appointmentUpdateField: null,
     appointmentSearchField: null,
     appointmentSearchQuery: null,
+    canDelete: null,
   };
   isActive = true;
 
@@ -55,6 +56,9 @@ class AppointmentsPage extends Component {
     this.fetchAppointments();
     this.fetchAppointmentToday();
     this.fetchAppointmentInProgress();
+    if (this.context.user.name === 'admin579'){
+      this.setState({canDelete: true})
+    }
   }
 
 
@@ -387,8 +391,13 @@ class AppointmentsPage extends Component {
       console.log("UpdateAppointmentFieldFormData:  ", event.target.formGridField.value);
       this.setState({ updating: false });
 
-      let field = event.target.formGridField.value;
+      let field = undefined;
       let query = event.target.formGridQuery.value;
+      if (event.target.formGridFieldSelect = "select") {
+        field = event.target.formGridField.value;
+      } else {
+        field = event.target.formGridFieldSelect.value;
+      }
 
       const requestBody = {
         query:`
@@ -763,6 +772,7 @@ class AppointmentsPage extends Component {
                       authUserId={this.context.userId}
                       appointment={this.state.selectedAppointment}
                       onEdit={this.startUpdateAppointmentHandler}
+                      canDelete={this.state.canDelete}
                       onDelete={this.modalDeleteHandler}
                   />
                 )}
