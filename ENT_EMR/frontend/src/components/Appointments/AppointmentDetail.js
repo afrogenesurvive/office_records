@@ -71,7 +71,7 @@ const AppointmentDetail = (props) => {
         Important?:
       </Card.Text>
       {appointment.important === true &&(
-        <p>High Prioity Apoointment</p>
+        <p>High Prioity Appointment</p>
       )}
       <Card.Text>
       Notes:

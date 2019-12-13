@@ -391,12 +391,12 @@ class AppointmentsPage extends Component {
       console.log("UpdateAppointmentFieldFormData:  ", event.target.formGridField.value);
       this.setState({ updating: false });
 
-      let field = undefined;
-      let query = event.target.formGridQuery.value;
-      if (event.target.formGridFieldSelect = "select") {
-        field = event.target.formGridField.value;
+      let field = null;
+      let query = event.target.formBasicQuery.value;
+      if (event.target.formBasicFieldSelect.value === "select") {
+        field = event.target.formBasicField.value;
       } else {
-        field = event.target.formGridFieldSelect.value;
+        field = event.target.formBasicFieldSelect.value;
       }
 
       const requestBody = {
@@ -448,9 +448,9 @@ class AppointmentsPage extends Component {
       console.log("SearchAppointmentFormData:  ", event.target.formBasicField.value);
       this.setState({ searching: false });
 
-      let field = undefined;
+      let field = null;
       let query = event.target.formBasicQuery.value;
-      if (event.target.formBasicFieldSelect = "select") {
+      if (event.target.formBasicFieldSelect.value === "select") {
         field = event.target.formBasicField.value;
       } else {
         field = event.target.formBasicFieldSelect.value;
@@ -507,21 +507,183 @@ class AppointmentsPage extends Component {
     console.log(`
       SearchAppointmentIdFormData
       `);
+
+      let userId = this.context.userId;
+      this.setState({ searching: false });
+      let selectedAppointmentId = event.target.formBasicId.value;
+
+      const requestBody = {
+        query: `
+          query {getAppointmentId(userId:"${userId}", appointmentId:"${selectedAppointmentId}")
+          {_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+        `}
+
+      const token = this.context.token;
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData));
+
+          const searchApointments = resData.data.getApointmentId;
+
+          this.setState({ searchApointments: searchApointments})
+          console.log("state.searchApointments:  ", this.state.searchApointments);
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
   }
+
   modalConfirmSearchPatientHandler = (event) => {
     console.log(`
       SearchAppointmentPatientFormData
       `);
+
+      let userId = this.context.userId;
+      this.setState({ searching: false });
+      let selectedPatientId = event.target.formBasicPatientId.value;
+
+      const requestBody = {
+        query: `
+          query {getAppointmentPatient(userId:"${userId}", patientId:"${selectedPatientId}")
+          {_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+        `}
+
+      const token = this.context.token;
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData));
+
+          const searchApointments = resData.data.getApointmentId;
+
+          this.setState({ searchApointments: searchApointments})
+          console.log("state.searchApointments:  ", this.state.searchApointments);
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
   }
   modalConfirmSearchDateHandler = (event) => {
     console.log(`
       SearchAppointmentDateFormData
       `);
+
+      let userId = this.context.userId;
+      this.setState({ searching: false });
+      let appointmentDate = event.target.formBasicDate.value;
+
+      const requestBody = {
+        query: `
+          query {getAppointmentDate(userId:"${userId}",date:"${appointmentDate}")
+          {_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+        `}
+
+      const token = this.context.token;
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData));
+
+          const searchApointments = resData.data.getApointmentId;
+
+          this.setState({ searchApointments: searchApointments})
+          console.log("state.searchApointments:  ", this.state.searchApointments);
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
   }
   modalConfirmSearchDateRangeHandler = (event) => {
     console.log(`
       SearchAppointmentDateRangeFormData
       `);
+
+      let userId = this.context.userId;
+      this.setState({ searching: false });
+      let appointmentStartDate = event.target.formBasicStartDate.value;
+      let appointmentEndDate = event.target.formBasicEndDate.value;
+
+      const requestBody = {
+        query: `
+          query {getAppointmentDateRange(userId:"${userId}",startDate:"${appointmentStartDate}",endDate:"${appointmentEndDate}")
+          {_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+        `}
+
+      const token = this.context.token;
+
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
+          }
+          return res.json();
+        })
+        .then(resData => {
+          console.log("response data... " + JSON.stringify(resData));
+
+          const searchApointments = resData.data.getApointmentId;
+
+          this.setState({ searchApointments: searchApointments})
+          console.log("state.searchApointments:  ", this.state.searchApointments);
+          // this.fetchUsers();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+
   }
 
 
@@ -781,7 +943,8 @@ class AppointmentsPage extends Component {
               <Tab eventKey="appointmentCreate" title="New">
               <Button variant="outline-primary" onClick={this.startCreateAppointmentHandler} >Create</Button>
               {
-                this.state.creating && this.context.selectedPatient._id
+                this.state.creating &&
+                this.context.selectedPatient._id !== null
                 && (
                   <CreateAppointmentForm
                   canCancel

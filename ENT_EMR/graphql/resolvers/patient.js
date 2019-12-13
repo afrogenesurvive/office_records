@@ -25,7 +25,7 @@ module.exports = {
     }
 
     try {
-      const patients = await Patient.find()
+      const patients = await Patient.find({}).sort({ name: 1 })
       .populate('appointments')
       .populate('consultant.reference');
 
@@ -91,7 +91,8 @@ module.exports = {
   },
   getPatientNameRegex: async (args, req) => {
     console.log(`
-      getPatientNameRegex...args: ${util.inspect(args)},
+      getPatientNameRegex...args:
+      ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
 
@@ -100,10 +101,15 @@ module.exports = {
     }
     try {
 
+      const regex = "/^" + args.regex + "/"
+      console.log(`
+        regex: ${regex}
+        `);
 
-      const patients = await Patient.find({name: {$regex: args.regex, $options: 'i'}})
+      const patients = await Patient.find({name: {$regex: regex, $options: 'i'}})
       .populate('appointments')
       .populate('consultant.reference');
+      console.log("regex response:  ", patients);
 
       return patients.map(patient => {
         return transformPatient(patient);

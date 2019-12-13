@@ -12,7 +12,10 @@ const searchPatientItem = props => (
     </p>
     <h5 className="userItemHeading"> Address:</h5>
     <p className="userItemText">
-      {props.address}
+      {props.addressParish}
+    </p>
+    <p className="userItemText">
+      {props.addressTown}
     </p>
   </div>
   <div>

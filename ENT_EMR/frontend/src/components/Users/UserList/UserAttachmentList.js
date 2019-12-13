@@ -8,7 +8,7 @@ const userAttachmentList = props => {
   const userAttachment = props.userAttachment.map(attachment => {
     return (
       <UserAttachmentItem
-        key={attachment.format}
+        key={attachment.name}
         userId={props.authUserId}
         name={attachment.name}
         format={attachment.format}

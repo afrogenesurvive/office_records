@@ -139,9 +139,7 @@ class UsersPage extends Component {
     const requestBody = {
       query: `
           mutation {
-            createUser(userInput: {email:"${email}",password:"${password}",name:"${name}",role:"${role}",
-
-            employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
+            createUser(userInput: {email:"${email}",password:"${password}",name:"${name}",role:"${role}",dob:"${dob}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",phone:"${phone}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
             {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
           }
         `
@@ -323,16 +321,20 @@ class UsersPage extends Component {
       selectedUserId = null;
     }
 
-      console.log("UpdateUserFieldFormData:  ", event.target.formGridField.value);
+      console.log("UpdateUserFieldFormData:  ", event.target.formGridField.value, event.target.formGridFieldSelect.value);
       this.setState({ updating: false });
 
-      let field = undefined;
+      let field = null;
       let query = event.target.formGridQuery.value;
-      if (event.target.formGridFieldSelect = "select") {
+      if (event.target.formGridFieldSelect.value === "select") {
         field = event.target.formGridField.value;
       } else {
         field = event.target.formGridFieldSelect.value;
       }
+      console.log(`
+          field: ${field},
+          query: ${query},
+        `);
 
       const requestBody = {
         query:`
@@ -634,9 +636,9 @@ class UsersPage extends Component {
       console.log("SearchUserFormData:  ", event.target.formBasicField.value);
       this.setState({ searching: false });
 
-      let field = undefined;
+      let field = null;
       let query = event.target.formBasicQuery.value;
-      if (event.target.formBasicFieldSelect = "select") {
+      if (event.target.formBasicFieldSelect.value === "select") {
         field = event.target.formBasicField.value;
       } else {
         field = event.target.formBasicFieldSelect.value;
@@ -695,15 +697,138 @@ class UsersPage extends Component {
   }
 
   modalConfirmSearchIdHandler = (event) => {
-    console.log("SearchUserIdFormData:");
+
+    let userId = this.context.userId;
+    this.setState({ searching: false });
+
+    console.log("SearchUserIdFormData:", event.target.formBasicId.value);
+    let selectedUserId = event.target.formBasicId.value;
+
+    const requestBody = {
+      query: `
+        query {getUserId(userId:"${userId}",selectedUserId:"${selectedUserId}")
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+      `}
+
+    const token = this.context.token;
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData));
+
+        const searchUsers = resData.data.getUserId;
+
+        this.setState({ searchUsers: searchUsers})
+        console.log("state.searchUsers:  ", this.state.searchUsers);
+        // this.fetchUsers();
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
   }
   modalConfirmSearchAttendanceDateHandler = (event) => {
+
+    let userId = this.context.userId;
+    this.setState({ searching: false });
+
     console.log("SearchUserAttendanceDateFormData:");
+
+    const attendanceDate = event.target.formBasicDate.value;
+
+    const requestBody = {
+      query: `
+        query {getUserAttendanceDate(userId:"${userId}",attendanceDate:"${attendanceDate}")
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+      `}
+
+    const token = this.context.token;
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData));
+
+        const searchUsers = resData.data.getUserField;
+
+        this.setState({ searchUsers: searchUsers})
+        console.log("state.searchUsers:  ", this.state.searchUsers);
+        // this.fetchUsers();
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
   }
   modalConfirmSearchLeaveDateRangeHandler = (event) => {
+
+    let userId = this.context.userId;
+    this.setState({ searching: false });
+
     console.log("SearchUserLeaveDateRangeFormData:");
+
+    const startDate = event.target.formBasicStartDate.value;
+    const endDate = event.target.formBasicEndDate.value;
+
+    const requestBody = {
+      query: `
+        query{getUserLeaveDateRange(userId:"${userId}",startDate:"${startDate}",endDate:"${endDate}")
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+      `}
+
+    const token = this.context.token;
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData));
+
+        const searchUsers = resData.data.getUserField;
+
+        this.setState({ searchUsers: searchUsers})
+        console.log("state.searchUsers:  ", this.state.searchUsers);
+        // this.fetchUsers();
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
   }
 
