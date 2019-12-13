@@ -14,7 +14,8 @@ const searchPatientList = props => {
         userId={props.authUserId}
         _id={patient._id}
         name={patient.name}
-        address={patient.address}
+        addressParish={patient.address.parish}
+        addressTown={patient.address.town}
         onDetail={props.onViewDetail}
       />
       </React.Fragment>

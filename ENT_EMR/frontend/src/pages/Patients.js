@@ -446,12 +446,12 @@ class PatientsPage extends Component {
       console.log("UpdatePatientFieldFormData:  ", event.target.formGridField.value);
       this.setState({ updating: false });
 
-      let field = undefined;
-      let query = event.target.formGridQuery.value;
-      if (event.target.formGridFieldSelect = "select") {
-        field = event.target.formGridField.value;
+      let field = null;
+      let query = event.target.formBasicQuery.value;
+      if (event.target.formBasicFieldSelect.value === "select") {
+        field = event.target.formBasicField.value;
       } else {
-        field = event.target.formGridFieldSelect.value;
+        field = event.target.formBasicFieldSelect.value;
       }
 
       const requestBody = {
@@ -957,7 +957,7 @@ updatePatientExaminationHandler = (event) => {
   let examinationDate = event.target.formGridExaminationDate.value;
   let examinationGeneral = event.target.formGridExaminationGeneral.value;
   let examinationArea = undefined;
-  if (event.target.formGridExaminationAreaSelect = "select") {
+  if (event.target.formGridExaminationAreaSelect === "select") {
     examinationArea = event.target.formGridExaminationArea.value;
   } else {
     examinationArea = event.target.formGridExaminationAreaSelect.value;
@@ -1128,7 +1128,7 @@ updatePatientAllergiesHandler = (event) => {
 
   let allergiesTitle = event.target.formGridAllergiesTitle.value;
   let allergiesType = undefined;
-  if (event.target.formGridAllergiesTypeSelect = "select") {
+  if (event.target.formGridAllergiesTypeSelect === "select") {
     allergiesType = event.target.formGridAllergiesType.value;
   } else {
     allergiesType = event.target.formGridAllergiesTypeSelect.value;
@@ -1291,7 +1291,7 @@ updatePatientInvestigationHandler = (event) => {
   let investigationDate = event.target.formGridInvestigationDate.value;
   let investigationTitle = event.target.formGridInvestigationTitle.value;
   let investigationType = undefined;
-  if (event.target.formGridInvestigationTypeSelect = "select") {
+  if (event.target.formGridInvestigationTypeSelect === "select") {
     investigationType = event.target.formGridInvestigationType.value;
   } else {
     investigationType = event.target.formGridInvestigationTypeSelect.value;
@@ -1459,7 +1459,7 @@ updatePatientTreatmentHandler = (event) => {
   let treatmentDose = event.target.formGridTreatmentDose.value;
   let treatmentFrequency = event.target.formGridTreatmentFrequency.value;
   let treatmentType = undefined;
-  if (event.target.formGridInvestigationTypeSelect = "select") {
+  if (event.target.formGridInvestigationTypeSelect === "select") {
     treatmentType = event.target.formGridTreatmentType.value;
   } else {
     treatmentType = event.target.formGridTreatmentTypeSelect.value;
@@ -1487,10 +1487,9 @@ updatePatientTreatmentHandler = (event) => {
 
     const requestBody = {
       query:`
-        mutation {updatePatientTreatment(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{treatmentDate:\"${treatmentDate}\",treatmentTitle:\"${treatmentTitle}\",treatmentType:\"${treatmentType}\",treatmentDescription:\"${treatmentDescription}\",treatmentDose:\"${treatmentDose}\",treatmentFrequency:\"${treatmentFrequency}\",treatmentAttachmentName:\"${treatmentAttachmentName}\",treatmentAttachmentFormat:\"${treatmentAttachmentFormat}\",treatmentAttachmentPath:\"${treatmentAttachmentPath}\"})
+        mutation {updatePatientTreatment(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{treatmentDate:"${treatmentDate}",treatmentTitle:"${treatmentTitle}",treatmentType:"${treatmentType}",treatmentDescription:"${treatmentDescription}",treatmentDose:"${treatmentDose}",treatmentFrequency:"${treatmentFrequency}",treatmentAttachmentName:"${treatmentAttachmentName}",treatmentAttachmentFormat:"${treatmentAttachmentFormat}",treatmentAttachmentPath:"${treatmentAttachmentPath}"})
         {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
-      `
-    }
+      `}
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
@@ -1625,9 +1624,9 @@ modalConfirmSearchHandler = (event) => {
     console.log("SearchPatientFormData:  ", event.target.formBasicField.value);
     this.setState({ searching: false });
 
-    let field = undefined;
+    let field = null;
     let query = event.target.formBasicQuery.value;
-    if (event.target.formBasicFieldSelect = "select") {
+    if (event.target.formBasicFieldSelect.value === "select") {
       field = event.target.formBasicField.value;
     } else {
       field = event.target.formBasicFieldSelect.value;
@@ -1689,14 +1688,131 @@ modalConfirmSearchHandler = (event) => {
       });
 }
 
-modalConfirmSearcIdhHandler = (event) => {
+modalConfirmSearchIdHandler = (event) => {
   console.log("SearchPatientIdFormData");
+
+  let userId = this.context.userId;
+  this.setState({ searching: false });
+
+  const patientId = event.target.formBasicId.value;
+
+  const requestBody = {
+    query: `
+      query {getPatientId(userId:"${userId}",patientId:"${patientId}")
+      {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `}
+
+  const token = this.context.token;
+
+  fetch('http://localhost:10000/graphql', {
+    method: 'POST',
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      if (res.status !== 200 && res.status !== 201) {
+        throw new Error('Failed!');
+      }
+      return res.json();
+    })
+    .then(resData => {
+      console.log("response data... " + JSON.stringify(resData));
+
+      const searchPatients = resData.data.getPatientId;
+
+      this.setState({ searchPatients: searchPatients})
+      console.log("state.searchPatients:  ", this.state.searchPatients);
+      // this.fetchUsers();
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
+
 modalConfirmSearchVisitHandler = (event) => {
   console.log("SearchPatientVisitFormData");
+
+  let userId = this.context.userId;
+  this.setState({ searching: false });
+
+  const requestBody = {
+    query: `
+      {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `}
+
+  const token = this.context.token;
+
+  fetch('http://localhost:10000/graphql', {
+    method: 'POST',
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      if (res.status !== 200 && res.status !== 201) {
+        throw new Error('Failed!');
+      }
+      return res.json();
+    })
+    .then(resData => {
+      console.log("response data... " + JSON.stringify(resData));
+
+      const searchPatients = resData.data.getPatientId;
+
+      this.setState({ searchPatients: searchPatients})
+      console.log("state.searchPatients:  ", this.state.searchPatients);
+      // this.fetchUsers();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
 }
 modalConfirmSearchNameHandler = (event) => {
   console.log("SearchPatientNameFormData");
+
+  let userId = this.context.userId;
+  this.setState({ searching: false });
+
+  const requestBody = {
+    query: `
+      {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `}
+
+  const token = this.context.token;
+
+  fetch('http://localhost:10000/graphql', {
+    method: 'POST',
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      if (res.status !== 200 && res.status !== 201) {
+        throw new Error('Failed!');
+      }
+      return res.json();
+    })
+    .then(resData => {
+      console.log("response data... " + JSON.stringify(resData));
+
+      const searchPatients = resData.data.getPatientId;
+
+      this.setState({ searchPatients: searchPatients})
+      console.log("state.searchPatients:  ", this.state.searchPatients);
+      // this.fetchUsers();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
 }
 
 

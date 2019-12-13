@@ -24,7 +24,7 @@ module.exports = {
     }
 
     try {
-      const appointments = await Appointment.find()
+      const appointments = await Appointment.find({}).sort({ date: 1 })
       .populate('patient')
       .populate('patient.consultant');
 

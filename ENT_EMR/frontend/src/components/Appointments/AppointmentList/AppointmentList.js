@@ -6,14 +6,15 @@ import './UserList.css';
 const appointmentList = props => {
 
   const appointment = props.appointments.map(appointment => {
-    // const appointmentDate = new Date(appointment.date).toUTCString();
+    const appointmentDate = new Date(appointment.date.substr(0,10)*1000).toLocaleString();
+
     return (
       <AppointmentItem
         key={appointment._id}
         userId={appointment.authUserId}
         _id={appointment._id}
         title={appointment.title}
-        date={appointment.date}
+        date={appointmentDate}
         onDetail={props.onViewDetail}
       />
     );
