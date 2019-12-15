@@ -18,6 +18,7 @@ export default React.createContext({
     appointmentsWeekImportant: null,
     appointmentsInProgress: null,
     userAlert: null,
+    visit: null,
     login: (token, userId, tokenExpiration) => {},
     logout: () => {}
 });

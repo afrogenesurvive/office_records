@@ -58,6 +58,7 @@ class PatientsPage extends Component {
     patientSearchField: null,
     patientSearchQuery: null,
     canDelete: null,
+    visit: null,
   };
   isActive = true;
 
@@ -2003,6 +2004,46 @@ modalConfirmSearchNameHandler = (event) => {
 
 }
 
+  getPatientVisit = (event) => {
+
+    const selectedPatient = this.state.selectedPatient;
+    event.preventDefault();
+    console.log(`
+        getUserVisit function:
+      `);
+    let visitDate = new Date(event.target.formBasicVisitDate.value).toISOString();
+    let visitConsultants = selectedPatient.consultant.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitComplaints = selectedPatient.complaints.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitSurveys = selectedPatient.surveys.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitVitals = selectedPatient.vitals.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitExaminations = selectedPatient.examination.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitHistory = selectedPatient.history.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitInvestigations = selectedPatient.investigation.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitDiagnosis = selectedPatient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitTreatments = selectedPatient.treatment.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitBilling = selectedPatient.billing.filter(x=> x.date === new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+
+      const visit = {
+        date: visitDate,
+        patientName: this.context.selectedPatient.name,
+        consultant: visitConsultants,
+        examination: visitExaminations,
+        survey: visitSurveys,
+        vitals: visitVitals,
+        history: visitHistory,
+        investigation: visitInvestigations,
+        diagnosis: visitDiagnosis,
+        treatment: visitTreatments,
+        billing: visitBilling,
+      };
+
+      console.log(`
+        visit: ${JSON.stringify(visit)},
+        `);
+        this.context.visit = visit;
+        this.setState({visit: visit});
+
+  }
 
 
   modalCancelHandler = () => {
@@ -2172,6 +2213,8 @@ modalConfirmSearchNameHandler = (event) => {
         onEdit={this.startUpdatePatientHandler}
         canDelete={this.state.canDelete}
         onDelete={this.modalDeleteHandler}
+        onGetVisit={this.getPatientVisit}
+        visit={this.context.visit}
         />
     )}
     </Tab>
