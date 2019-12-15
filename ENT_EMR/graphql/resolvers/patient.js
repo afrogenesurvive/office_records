@@ -106,7 +106,7 @@ module.exports = {
         regex: ${regex}
         `);
 
-      const patients = await Patient.find({name: {$regex: regex, $options: 'i'}})
+      const patients = await Patient.find({'address.parish': {$regex: regex, $options: 'i'}})
       .populate('appointments')
       .populate('consultant.reference');
       console.log("regex response:  ", patients);
@@ -139,58 +139,6 @@ module.exports = {
         return transformPatient(patient);
 
       });
-    } catch (err) {
-      throw err;
-    }
-  },
-  getPatientVisit: async (args, req) => {
-    console.log(`
-      getPatientVisit...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
-
-    if (!req.isAuth) {
-      throw new Error('Unauthenticated!');
-    }
-
-    try {
-      const patientVisitDate = dateToString(args.visitDate);
-      console.log(`
-          visit date: ${patientVisitDate}
-        `);
-
-      const visitPatient = await Patient.findById({_id: args.patientId});
-      const visitConsultant = visitPatient.consultant.filter(x=> x.date === patientVisitDate);
-      const visitComplaints = visitPatient.complaints.filter(x=> x.date === patientVisitDate);
-      const visitSurveys = visitPatient.surveys.filter(x=> x.date === patientVisitDate);
-      const visitVitals = visitPatient.vitals.filter(x=> x.date === patientVisitDate);
-      const visitExamination = visitPatient.examination.filter(x=> x.date === patientVisitDate);
-      const visitHistory = visitPatient.history.filter(x=> x.date === patientVisitDate);
-      const visitInvestigation = visitPatient.investigation.filter(x=> x.date === patientVisitDate);
-      const visitDiagnosis = visitPatient.diagnosis.filter(x=> x.date === patientVisitDate);
-      const visitTreatment = visitPatient.treatment.filter(x=> x.date === patientVisitDate);
-      const visitBilling = visitPatient.billing.filter(x=> x.date === patientVisitDate);
-
-      const visit = {
-        patient: visitPatient.name,
-        consultant: visitConsultant,
-        complaints: visitComplaints,
-        surveys: visitSurveys,
-        vitals: visitVitals,
-        examination: visitExamination,
-        history: visitHistory,
-        investigation: visitInvestigation,
-        diagnosis: visitDiagnosis,
-        treatment: visitTreatment,
-        billing: visitBilling,
-      }
-
-      console.log(`
-        patientVisit: ${util.inspect(visit)}
-        `);
-      return  {
-        visit
-      };
     } catch (err) {
       throw err;
     }

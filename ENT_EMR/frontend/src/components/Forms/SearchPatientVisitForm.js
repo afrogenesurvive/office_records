@@ -10,9 +10,9 @@ const SearchPatientVisitForm = (props) => {
 
 return (
 <div className="SearchFormContainer">
-  <Form onSubmit={props.onConfirm}>
+  <Form onSubmit={props.onGetVisit}>
 
-  <Form.Group controlId="formBasiVisitDate">
+  <Form.Group controlId="formBasicVisitDate">
   <Form.Label>VisitDate</Form.Label>
   <Form.Control type="date" placeholder="VisitDate"/>
   </Form.Group>
@@ -24,9 +24,9 @@ return (
 )}
 
 {props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="10" type="submit">
+  <Button variant="primary" type="submit">
   Submit
-  </Accordion.Toggle>
+  </Button>
 )}
 
 {

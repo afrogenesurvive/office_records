@@ -21,6 +21,9 @@ module.exports = {
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
+      // FiX ME!!!
+      // return error messages here(qgl resolver). log gql response from frontend request. pass to context.userAlert .Create floating alert/console log component === the.context.userAlert
+      // check all gql responses for errors and other non-success statuses
     }
     try {
       const users = await User.find({}).sort({ name: 1 });

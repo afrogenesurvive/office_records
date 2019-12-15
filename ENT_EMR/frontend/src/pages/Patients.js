@@ -37,6 +37,10 @@ import UpdatePatientInvestigationForm from '../components/Forms/UpdatePatientInv
 import UpdatePatientDiagnosisForm from '../components/Forms/UpdatePatientDiagnosisForm';
 import UpdatePatientTreatmentForm from '../components/Forms/UpdatePatientTreatmentForm';
 import UpdatePatientBillingForm from '../components/Forms/UpdatePatientBillingForm';
+import UpdatePatientAttachmentForm from '../components/Forms/UpdatePatientAttachmentForm';
+import UpdatePatientNoteForm from '../components/Forms/UpdatePatientNoteForm';
+import UpdatePatientTagForm from '../components/Forms/UpdatePatientTagForm';
+
 import './Users.css';
 
 class PatientsPage extends Component {
@@ -121,34 +125,34 @@ class PatientsPage extends Component {
 
     if (
       name.trim().length === 0 ||
-      title.trim().length === 0 ||
-      name.trim().length === 0 ||
-      dob.trim().length === 0 ||
-      age.trim().length === 0 ||
-      gender.trim().length === 0 ||
-      addressNumber.trim().length === 0 ||
-      addressStreet.trim().length === 0 ||
-      addressTown.trim().length === 0 ||
-      addressParish.trim().length === 0 ||
-      addressPostOffice.trim().length === 0 ||
-      contactPhone.trim().length === 0 ||
-      contactEmail.trim().length === 0 ||
-      registrationDate.trim().length === 0 ||
-      referralDate.trim().length === 0 ||
-      expirationDate.trim().length === 0 ||
-      attendingPhysicianName.trim().length === 0 ||
-      attendingPhysicianEmail.trim().length === 0 ||
-      attendingPhysicianPhone.trim().length === 0 ||
-      referringDoctorName.trim().length === 0 ||
-      referringDoctorEmail.trim().length === 0 ||
-      referringDoctorPhone.trim().length === 0 ||
-      occupationRole.trim().length === 0 ||
-      occupationEmployer.trim().length === 0 ||
-      occupationEmployerContactPhone.trim().length === 0 ||
-      occupationEmployerContactEmail.trim().length === 0
+      // title.trim().length === 0 ||
+      // name.trim().length === 0 ||
+      // dob.trim().length === 0 ||
+      // age.trim().length === 0 ||
+      // gender.trim().length === 0 ||
+      // addressNumber.trim().length === 0 ||
+      // addressStreet.trim().length === 0 ||
+      // addressTown.trim().length === 0 ||
+      // addressParish.trim().length === 0 ||
+      // addressPostOffice.trim().length === 0 ||
+      contactPhone.trim().length === 0
+      // contactEmail.trim().length === 0 ||
+      // registrationDate.trim().length === 0 ||
+      // referralDate.trim().length === 0 ||
+      // expirationDate.trim().length === 0 ||
+      // attendingPhysicianName.trim().length === 0 ||
+      // attendingPhysicianEmail.trim().length === 0 ||
+      // attendingPhysicianPhone.trim().length === 0 ||
+      // referringDoctorName.trim().length === 0 ||
+      // referringDoctorEmail.trim().length === 0 ||
+      // referringDoctorPhone.trim().length === 0 ||
+      // occupationRole.trim().length === 0 ||
+      // occupationEmployer.trim().length === 0 ||
+      // occupationEmployerContactPhone.trim().length === 0 ||
+      // occupationEmployerContactEmail.trim().length === 0
 
     ) {
-      console.log("blank fields detected!!!...Please try again...");
+      console.log("patient must have at least a Name and Contact Number!!!...Please try again...");
       return;
     }
 
@@ -230,10 +234,9 @@ class PatientsPage extends Component {
 
   modalConfirmUpdateHandler = (event) => {
 
-    if(this.context.user.role !== 'admin') {
-      console.log("Not the Admin! No edit permission!!");
-
-    }
+    // if(this.context.user.role !== 'admin') {
+    //   console.log("Not the Admin! No edit permission!!");
+    // }
 
     const userId = this.context.userId;
     const selectedPatientId = this.context.selectedPatient._id;
@@ -438,10 +441,11 @@ class PatientsPage extends Component {
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedPatientId = this.context.selectedPatient._id;
-    if( this.context.user.role !== 'admin') {
-      console.log("Not the creator or Admin! No edit permission!!");
-      selectedPatientId = null;
-    }
+
+    // if( this.context.user.role !== 'admin') {
+    //   console.log("Not the creator or Admin! No edit permission!!");
+    //   selectedPatientId = null;
+    // }
 
       console.log("UpdatePatientFieldFormData:  ", event.target.formGridField.value);
       this.setState({ updating: false });
@@ -500,12 +504,11 @@ updatePatientConsultantHandler = (event) => {
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
   const patientConsultantReference = this.context.selectedUser._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientConsultantFormData:  ", event.target.formGridConsultantDate.value);
 
@@ -566,12 +569,11 @@ updatePatientInsuranceHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientInsuranceFormData:  ", event.target.formGridInsuranceCompany.value);
 
@@ -642,12 +644,11 @@ updatePatientNextOfKinHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientNextOfKinFormData:  ", event.target.formGridNextOfKinName.value);
 
@@ -712,12 +713,11 @@ updatePatientComplaintHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientComplaintFormData:  ", event.target.formGridComplaintTitle.value);
 
@@ -790,12 +790,11 @@ updatePatientSurveyHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientSurveyFormData:  ", event.target.formGridSurveyTitle.value);
 
@@ -866,12 +865,11 @@ updatePatientVitalsHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientVitalsFormData:  ", event.target.formGridVitalsDate.value);
 
@@ -943,12 +941,11 @@ updatePatientExaminationHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientExaminationFormData:  ", event.target.formGridExaminationArea.value);
 
@@ -1036,12 +1033,11 @@ updatePatientHistoryHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientHistoryFormData:  ", event.target.formGridHistoryTitle.value);
 
@@ -1115,12 +1111,11 @@ updatePatientAllergiesHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientAllergiesFormData:  ", event.target.formGridAllergiesTitle.value);
 
@@ -1199,12 +1194,11 @@ updatePatientMedicationHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientMedicationFormData:  ", event.target.formGridMedicationTitle.value);
 
@@ -1277,12 +1271,11 @@ updatePatientInvestigationHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientInvestigationFormData:  ", event.target.formGridInvestigationTitle.value);
 
@@ -1362,12 +1355,11 @@ updatePatientDiagnosisHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientDiagnosisFormData:  ", event.target.formGridDiagnosisTitle.value);
 
@@ -1442,12 +1434,11 @@ updatePatientTreatmentHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientTreatmentFormData:  ", event.target.formGridTreatmentTitle.value);
 
@@ -1531,12 +1522,11 @@ updatePatientBillingHandler = (event) => {
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
-  if(
-    this.context.user.role !== 'admin'
-  ) {
-    console.log("No edit permission!!");
-    return;
-  }
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
 
   console.log("UpdatePatientBillingFormData:  ", event.target.formGridBillingTitle.value);
 
@@ -1612,7 +1602,205 @@ updatePatientBillingHandler = (event) => {
 
 }
 
+updatePatientAttachmentHandler = (event) => {
 
+    const token = this.context.token;
+    const userId = this.context.userId;
+    let selectedPatientId = this.context.selectedPatient._id;
+
+    // if(this.context.user.role !== 'admin') {
+    //   console.log("No edit permission!!");
+    //   return;
+    // }
+
+    console.log(`
+        UpdatePatientAttachmentFormData:
+        ${event.target.formGridPatientAttachmentName.value}
+      `);
+
+    this.setState({ updating: false , patientUpdateField: null });
+
+    let attachmentName = event.target.formGridPatientAttachmentName.value;
+    let attachmentFormat = event.target.formGridPatientAttachmentFormat.value;
+    let attachmentPath = event.target.formGridPatientAttachmentPath.value;
+
+    if (
+      attachmentName.trim().length === 0 ||
+      attachmentFormat.trim().length === 0 ||
+      attachmentPath.trim().length === 0
+    ) {
+      console.log("blank fields detected!!!...Please try again...");
+      return;
+    }
+
+    const requestBody = {
+                    query:`
+                    mutation {updatePatientAttachment(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentFormat}"})
+                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+            `}
+
+    fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            console.log("response data... " + JSON.stringify(resData.data));
+
+            const updatedPatientId = resData.data.updatePatientAttachment._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.updatePatientAttachment);
+            this.context.patients = this.state.patients;
+            this.fetchPatients();
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+}
+
+updatePatientNoteHandler = (event) => {
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
+
+  console.log(`
+      UpdatePatientNoteFormData:
+      ${event.target.formGridNote.value}
+    `);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+    let note = event.target.formGridNote.value;
+
+    if (
+      note.trim().length === 0
+    ) {
+      console.log("Can't Submit a blank form!!!...Please try again...");
+      return;
+    }
+
+    const requestBody = {
+                    query:`
+                    mutation {updatePatientNotes(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{notes:"${note}"})
+                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+            `}
+
+    fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            console.log("response data... " + JSON.stringify(resData.data));
+
+            const updatedPatientId = resData.data.updatePatientNotes._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.updatePatientNotes);
+            this.context.patients = this.state.patients;
+            this.fetchPatients();
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+}
+updatePatientTagHandler = (event) => {
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedPatientId = this.context.selectedPatient._id;
+
+  // if(this.context.user.role !== 'admin') {
+  //   console.log("No edit permission!!");
+  //   return;
+  // }
+
+  console.log(`
+      UpdatePatientTagFormData:
+      ${event.target.formGridTag.value}
+    `);
+
+  this.setState({ updating: false , patientUpdateField: null });
+
+    let tag = event.target.formGridTag.value;
+
+    if (
+      tag.trim().length === 0
+    ) {
+      console.log("Can't Submit a blank form!!!...Please try again...");
+      return;
+    }
+
+    const requestBody = {
+                    query:`
+                    mutation {updatePatientTags(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{tag:"${tag}"})
+                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+            `}
+
+    fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            console.log("response data... " + JSON.stringify(resData.data));
+
+            const updatedPatientId = resData.data.updatePatientTags._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.updatePatientTags);
+            this.context.patients = this.state.patients;
+            this.fetchPatients();
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+
+}
 
 
 modalConfirmSearchHandler = (event) => {
@@ -2389,6 +2577,76 @@ modalConfirmSearchNameHandler = (event) => {
               patient={this.state.selectedPatient}
             />
     )}
+    </Tab>
+
+    <Tab eventKey="patientEditAttachment" title="Attachment">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='attachment' onClick={this.updatePatientSpecial.bind(this)}>Add Attachment</Button>
+    )}
+    {this.state.patientUpdateField === 'attachment' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientAttachmentForm
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientAttachmentHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+          )}
+    </Tab>
+    <Tab eventKey="patientEditNote" title="Note">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='notes' onClick={this.updatePatientSpecial.bind(this)}>Add Note</Button>
+    )}
+    {this.state.patientUpdateField === 'notes' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientNoteForm
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientNoteHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+          )}
+    </Tab>
+    <Tab eventKey="patientEditTag" title="Tag">
+    {this.state.selectedPatient === null && (
+      <Button variant="outline-warning" size="lg">
+        Select a Patient from the Master List below
+      </Button>
+    )}
+    {this.state.selectedPatient !== null && (
+      <Button variant="outline-primary" value='tags' onClick={this.updatePatientSpecial.bind(this)}>Add Tag</Button>
+    )}
+    {this.state.patientUpdateField === 'tags' &&
+    this.state.selectedPatient !== null
+    && (
+      <UpdatePatientTagForm
+            authUserId={this.context.userId}
+            canCancel
+              canConfirm
+              onCancel={this.modalCancelHandler}
+              onConfirm={this.updatePatientTagHandler}
+              confirmText="Confirm"
+              patient={this.state.selectedPatient}
+            />
+          )}
     </Tab>
     </Tabs>
     </Container>
