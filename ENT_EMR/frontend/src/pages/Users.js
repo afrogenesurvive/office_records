@@ -1,3 +1,5 @@
+
+
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -316,10 +318,11 @@ class UsersPage extends Component {
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
-    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
-      console.log("Not the creator or Admin! No edit permission!!");
-      selectedUserId = null;
-    }
+    // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+    //   console.log("Not the creator or Admin! No edit permission!!");
+    //   selectedUserId = null;
+    // }
+
 
       console.log("UpdateUserFieldFormData:  ", event.target.formGridField.value, event.target.formGridFieldSelect.value);
       this.setState({ updating: false });
@@ -380,9 +383,13 @@ class UsersPage extends Component {
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
-    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+    // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+    //   console.log("Not the creator or Admin! No edit permission!!");
+    //   selectedUserId = null;
+    // }
+    if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
       console.log("Not the creator or Admin! No edit permission!!");
-      selectedUserId = null;
+        selectedUserId = null;
     }
 
     console.log("UpdateUserAttendanceFormData:  ", event.target.formGridAttendanceDate.value);
@@ -418,7 +425,8 @@ class UsersPage extends Component {
 
       const requestBody = {
         query:`
-          mutation {updateUserAttendance(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{attendanceDate:"${attendanceDate}",attendanceStatus:"${attendanceStatus}",attendanceDescription:"${attendanceDescription}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
+          mutation {updateUserAttendance(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{attendanceDate:"${attendanceDate}",attendanceStatus:"${attendanceStatus}",attendanceDescription:"${attendanceDescription}"})
+          {_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
         `};
 
       fetch('http://localhost:10000/graphql', {
@@ -460,9 +468,13 @@ class UsersPage extends Component {
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
-    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+    // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+    //   console.log("Not the creator or Admin! No edit permission!!");
+    //   selectedUserId = null;
+    // }
+    if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
       console.log("Not the creator or Admin! No edit permission!!");
-      selectedUserId = null;
+        selectedUserId = null;
     }
 
     console.log("UpdateUserAttachmentFormData:  ", event.target.formGridAttachmentName.value);
@@ -499,7 +511,8 @@ class UsersPage extends Component {
 
       const requestBody = {
         query:`
-          mutation {updateUserAttachment(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentPath}"}){_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
+          mutation {updateUserAttachment(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentPath}"})
+          {_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
         `};
 
       fetch('http://localhost:10000/graphql', {
@@ -542,9 +555,13 @@ class UsersPage extends Component {
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
-    if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+    // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+    //   console.log("Not the creator or Admin! No edit permission!!");
+    //   selectedUserId = null;
+    // }
+    if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
       console.log("Not the creator or Admin! No edit permission!!");
-      selectedUserId = null;
+        selectedUserId = null;
     }
 
     console.log("UpdateUserLeaveFormData:  ", event.target.formGridLeaveType.value);
@@ -622,7 +639,6 @@ class UsersPage extends Component {
         .catch(err => {
           console.log(err);
         });
-
 
   }
 
@@ -1013,21 +1029,22 @@ updateUserSpecial (event) {
                     )}
             </Tab>
 
-
-            <Tab eventKey="userCreate" title="New">
-            <Button variant="outline-primary" onClick={this.startCreateUserHandler} >Create</Button>
-            {this.state.creating && (
-              <CreateUserForm
-                authUserId={this.context.userId}
-                canCancel
-                canConfirm
-                onCancel={this.modalCancelHandler}
-                onConfirm={this.modalConfirmHandler}
-                onSubmit={this.modalConfirmHandler}
-                confirmText="Confirm"
-              />
+            { this.context.user.role === "admin" && (
+              <Tab eventKey="userCreate" title="New">
+              <Button variant="outline-primary" onClick={this.startCreateUserHandler} >Create</Button>
+              {this.state.creating && (
+                <CreateUserForm
+                  authUserId={this.context.userId}
+                  canCancel
+                  canConfirm
+                  onCancel={this.modalCancelHandler}
+                  onConfirm={this.modalConfirmHandler}
+                  onSubmit={this.modalConfirmHandler}
+                  confirmText="Confirm"
+                />
+              )}
+              </Tab>
             )}
-            </Tab>
 
             <Tab eventKey="userEditDemographics" title="Demographics">
             {this.state.selectedUser === null && (
@@ -1035,8 +1052,27 @@ updateUserSpecial (event) {
                 Select a Staff member from the Master List below
               </Button>
             )}
-            {this.state.selectedUser !== null && (
-              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Demographics</Button>
+            {this.state.selectedUser !== null &&
+              this.context.user.role === "admin"
+              && (
+              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Demographics as Admin</Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id === this.context.user._id
+              && (
+              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Demographics (your profile)</Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id === this.context.user._id && (
+              <Button variant="outline-danger" size="lg">
+                Your Profile
+              </Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id !== this.context.user._id && (
+              <Button variant="outline-danger" size="lg">
+                Not my profile
+              </Button>
             )}
             {this.state.updating &&
               this.state.selectedUser !== null
@@ -1060,8 +1096,28 @@ updateUserSpecial (event) {
                 Select a Staff member from the Master List below
               </Button>
             )}
-            {this.state.selectedUser !== null && (
-              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Field</Button>
+
+            {this.state.selectedUser !== null &&
+              this.context.user.role === "admin"
+              && (
+              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Field as Admin</Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id === this.context.user._id
+              && (
+              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Field (your profile)</Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id === this.context.user._id && (
+              <Button variant="outline-danger" size="lg">
+                Your Profile
+              </Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id !== this.context.user._id && (
+              <Button variant="outline-danger" size="lg">
+                Not my profile
+              </Button>
             )}
             {this.state.updating &&
               this.state.selectedUser !== null
@@ -1084,9 +1140,30 @@ updateUserSpecial (event) {
                 Select a Staff member from the Master List below
               </Button>
             )}
-            {this.state.selectedUser !== null && (
-              <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance</Button>
+
+            {this.state.selectedUser !== null &&
+              this.context.user.role === "admin"
+              && (
+              <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance as Admin</Button>
             )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id === this.context.user._id
+              && (
+              <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance (your profile)</Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id === this.context.user._id && (
+              <Button variant="outline-danger" size="lg">
+                Your Profile
+              </Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id !== this.context.user._id && (
+              <Button variant="outline-danger" size="lg">
+                Not my profile
+              </Button>
+            )}
+
             {this.state.userUpdateField === 'attendance' &&
             this.state.selectedUser !== null
              && (
@@ -1108,9 +1185,30 @@ updateUserSpecial (event) {
                 Select a Staff member from the Master List below
               </Button>
             )}
-            {this.state.selectedUser !== null && (
-              <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave</Button>
+
+            {this.state.selectedUser !== null &&
+              this.context.user.role === "admin"
+              && (
+              <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave as Admin</Button>
             )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id === this.context.user._id
+              && (
+              <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave (your profile)</Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id === this.context.user._id && (
+              <Button variant="outline-danger" size="lg">
+                Your Profile
+              </Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id !== this.context.user._id && (
+              <Button variant="outline-danger" size="lg">
+                Not my profile
+              </Button>
+            )}
+
             {this.state.userUpdateField === 'leave' &&
             this.state.selectedUser !== null
             && (<UpdateUserLeaveForm
@@ -1129,9 +1227,30 @@ updateUserSpecial (event) {
                 Select a Staff member from the Master List below
               </Button>
             )}
-            {this.state.selectedUser !== null && (
-              <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment</Button>
+
+            {this.state.selectedUser !== null &&
+              this.context.user.role === "admin"
+              && (
+              <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment as Admin</Button>
             )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id === this.context.user._id
+              && (
+              <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment (your profile)</Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id === this.context.user._id && (
+              <Button variant="outline-danger" size="lg">
+                Your Profile
+              </Button>
+            )}
+            {this.state.selectedUser !== null &&
+              this.state.selectedUser._id !== this.context.user._id && (
+              <Button variant="outline-danger" size="lg">
+                Not my profile
+              </Button>
+            )}
+
             {this.state.userUpdateField === 'attachments' &&
             this.state.selectedUser !== null
             && (<UpdateUserAttachmentForm

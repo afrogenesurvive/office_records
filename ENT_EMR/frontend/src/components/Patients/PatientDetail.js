@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import Form from 'react-bootstrap/Form';
 
 import PatientAppointmentList from './PatientList/PatientAppointmentList';
 import PatientInsuranceList from './PatientList/PatientInsuranceList';
@@ -24,6 +25,7 @@ import PatientAttachmentsList from './PatientList/PatientAttachmentsList';
 import PatientNotesList from './PatientList/PatientNotesList';
 import PatientTagsList from './PatientList/PatientTagsList';
 
+import SearchPatientVisitForm from '../../components/Forms/SearchPatientVisitForm';
 
 
 import './PatientDetail.css';
@@ -59,6 +61,43 @@ const PatientDetail = (props) => {
   else {patientExpirationDate = patient.expirationDate;}
 
   console.log("PatientDetail.props.patient:  ", {...patient});
+  // console.log("patientExamination[1].date:  ", new Date(patientExamination[1].date.substr(0,10)*1000).toISOString());
+  // console.log("patientConsultant[1].date:  ", patientConsultant[1].date);
+  // console.log("patientComplaint[1].date:  ", patientComplaint[1].date);
+  // console.log("patientComplaint[1].date:  ", new Date(patientComplaint[1].date.substr(0,10)*1000).toLocaleString());
+
+  function getUserVisit (event) {
+    event.preventDefault();
+    let visitDate = new Date(event.target.formBasicVisitDate.value).toISOString();
+    let visitConsultants = patient.consultant.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitComplaints = patientComplaint.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitSurveys = patientSurvey.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitVitals = patientVitals.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitExaminations = patient.examination.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitHistory = patientHistory.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitInvestigations = patientInvestigation.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitDiagnosis = patientDiagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitTreatments = patientTreatment.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitBilling = patientBilling.filter(x=> x.date === new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+
+    console.log(`
+      get user visit:
+      visitDate: ${visitDate},
+      visitConsultants: ${JSON.stringify(visitConsultants)},
+      visitExaminations: ${JSON.stringify(visitExaminations)},
+      visitSurveys: ${JSON.stringify(visitSurveys)},
+      visitVitals: ${JSON.stringify(visitVitals)},
+      visitHistory: ${JSON.stringify(visitHistory)},
+      visitInvestigations: ${JSON.stringify(visitInvestigations)},
+      visitDiagnosis: ${JSON.stringify(visitDiagnosis)},
+      visitTreatments: ${JSON.stringify(visitTreatments)},
+      visitBilling: ${JSON.stringify(visitBilling)},
+      `);
+
+      // FIX ME!!
+      // create visit object, send to visit component
+
+  }
 
   return (
     <div className="PatientDetailBox1">
@@ -333,6 +372,18 @@ const PatientDetail = (props) => {
         patientTags={patientTags}
         authUserId={props.authUserId}
         />
+      </Tab>
+      <Tab eventKey="Visit" title="Visit">
+      <Card.Text>
+        Visit:
+      </Card.Text>
+      <SearchPatientVisitForm
+            authUserId={props.authUserId}
+              canConfirm
+              onGetVisit={getUserVisit}
+              confirmText="Search"
+              patient={props.patient}
+            />
       </Tab>
     </Tabs>
   </div>

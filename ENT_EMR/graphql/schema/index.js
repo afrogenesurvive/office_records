@@ -238,6 +238,8 @@ type Appointment {
 }
 
 type Visit {
+  date: String
+  patient: Patient
   consultant: [Consultant]
   complaints: [Complaint]
   surveys: [Survey]
