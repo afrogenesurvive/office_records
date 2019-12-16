@@ -1028,7 +1028,7 @@ class AppointmentsPage extends Component {
 
       </Col>
 
-      <Col md={6} className="MasterCol2">
+      <Col md={9} className="MasterCol2">
 
           <Container className="containerCombinedDetail">
             <Tabs defaultActiveKey="appointmentDetail" id="uncontrolled-tab-example">
@@ -1142,155 +1142,151 @@ class AppointmentsPage extends Component {
                 </Row>
               )}
               </Tab>
+
+              <Tab eventKey="MasterList" title="Master List">
+              <Container className="containerUserMasterList">
+              <Row className="searchListRow">
+              <Button variant="primary" size="sm" onClick={this.fetchAppointmentsAsc}>
+                 Sort Asc
+               </Button>
+              <Button variant="info" size="sm" onClick={this.fetchAppointmentsDesc}>
+                 Sort Desc
+               </Button>
+              {this.state.isLoading ? (
+                <Spinner />
+              ) :
+              (
+                <AppointmentList
+                  appointments={this.state.appointments}
+                  authUserId={this.context.userId}
+                  onViewDetail={this.showDetailHandler}
+                />
+              )}
+              </Row>
+              </Container>
+              </Tab>
+
+              <Tab eventKey="SearchInput" title="Search">
+              <Container className="containerSearchUserInput">
+              <Row className="searchUserRowAdd">
+              <Button variant="primary" onClick={this.startSearchAppointmentHandler}>Search</Button>
+              </Row>
+
+              <Row className="searchUserRowForm">
+              <Col md={10} className="searchUserColForm">
+              <Tabs defaultActiveKey="Field" id="uncontrolled-tab-example">
+              <Tab eventKey="Search" title="Search:" disabled>
+              </Tab>
+              <Tab eventKey="Field" title="Field:">
+              {this.state.searching === true && (
+                <SearchAppointmentForm
+                authUserId={this.context.userId}
+                canCancel
+                  canConfirm
+                  onCancel={this.modalCancelHandler}
+                  onConfirm={this.modalConfirmSearchHandler}
+                  confirmText="Search"
+                  appointment={this.context.selectedAppointment}
+                />
+              )}
+              </Tab>
+              <Tab eventKey="Id" title="Id:">
+                Search by ID
+                {this.state.searching === true && (
+                  <SearchAppointmentIdForm
+                  authUserId={this.context.userId}
+                  canCancel
+                    canConfirm
+                    onCancel={this.modalCancelHandler}
+                    onConfirm={this.modalConfirmSearchIdHandler}
+                    confirmText="Search"
+                    appointment={this.context.selectedAppointment}
+                  />
+                )}
+              </Tab>
+              <Tab eventKey="Patient" title="Patient:">
+                Search by Patient
+                {this.state.searching === true && (
+                  <SearchAppointmentPatientForm
+                  authUserId={this.context.userId}
+                  canCancel
+                    canConfirm
+                    onCancel={this.modalCancelHandler}
+                    onConfirm={this.modalConfirmSearchPatientHandler}
+                    confirmText="Search"
+                    appointment={this.context.selectedAppointment}
+                  />
+                )}
+              </Tab>
+              <Tab eventKey="Date" title="Date:">
+                Search by Date
+                {this.state.searching === true && (
+                  <SearchAppointmentDateForm
+                  authUserId={this.context.userId}
+                  canCancel
+                    canConfirm
+                    onCancel={this.modalCancelHandler}
+                    onConfirm={this.modalConfirmSearchDateHandler}
+                    confirmText="Search"
+                    appointment={this.context.selectedAppointment}
+                  />
+                )}
+              </Tab>
+              <Tab eventKey="Date Range" title="Date Range:">
+                Search by Date Range
+                {this.state.searching === true && (
+                  <SearchAppointmentDateRangeForm
+                  authUserId={this.context.userId}
+                  canCancel
+                    canConfirm
+                    onCancel={this.modalCancelHandler}
+                    onConfirm={this.modalConfirmSearchDateRangeHandler}
+                    confirmText="Search"
+                    appointment={this.context.selectedAppointment}
+                  />
+                )}
+              </Tab>
+              </Tabs>
+              </Col>
+              <Col md={10}>
+              </Col>
+              </Row>
+              </Container>
+              </Tab>
+
+              <Tab eventKey="SearchResult" title="Search Results">
+              <Container className="containerSearchUserResults">
+              <Row>
+                <Card className="searchCard">
+                  <Card.Body className="searchCardBody">
+                    <Card.Title>Your Search</Card.Title>
+                    <Card.Text>
+                      Field: {this.state.appointmentSearchField}
+                    </Card.Text>
+                    <Card.Text>
+                      Query: {this.state.appointmentSearchQuery}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </Row>
+              <Row className="searchListRow">
+              {
+                this.state.searchAppointments !== [] && (
+                <SearchAppointmentList
+                  searchAppointments={this.state.searchAppointments}
+                  authUserId={this.context.userId}
+                  onCancel={this.modalCancelHandler}
+                    onViewDetail={this.showDetailHandler}
+                />
+              )}
+              </Row>
+              </Container>
+              </Tab>
+
             </Tabs>
           </Container>
 
-          <Container className="containerUserMasterList">
-          <Row className="searchListRow">
-          <Button variant="primary" size="sm" onClick={this.fetchAppointmentsAsc}>
-             Sort Asc
-           </Button>
-          <Button variant="info" size="sm" onClick={this.fetchAppointmentsDesc}>
-             Sort Desc
-           </Button>
-          {this.state.isLoading ? (
-            <Spinner />
-          ) :
-          (
-            <AppointmentList
-              appointments={this.state.appointments}
-              authUserId={this.context.userId}
-              onViewDetail={this.showDetailHandler}
-            />
-          )}
-          </Row>
-          </Container>
       </Col>
-
-
-      <Col md={3} className="MasterCol3">
-
-      <Container className="containerSearchUserInput">
-      <Row className="searchUserRowAdd">
-        {this.context.token && (
-        <Accordion.Toggle as={Button} variant="primary" eventKey="14" onClick={this.startSearchAppointmentHandler}>
-        Search
-        </Accordion.Toggle>)}
-      </Row>
-
-      <Accordion.Collapse eventKey="14">
-      <Row className="searchUserRowForm">
-      <Col md={10} className="searchUserColForm">
-      <Tabs defaultActiveKey="userPatient" id="uncontrolled-tab-example">
-      <Tab eventKey="Search" title="Search:" disabled>
-      </Tab>
-      <Tab eventKey="Field" title="Field:">
-      {this.state.searching === true && (
-        <SearchAppointmentForm
-        authUserId={this.context.userId}
-        canCancel
-          canConfirm
-          onCancel={this.modalCancelHandler}
-          onConfirm={this.modalConfirmSearchHandler}
-          confirmText="Search"
-          appointment={this.context.selectedAppointment}
-        />
-      )}
-      </Tab>
-      <Tab eventKey="Id" title="Id:">
-        Search by ID
-        {this.state.searching === true && (
-          <SearchAppointmentIdForm
-          authUserId={this.context.userId}
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmSearchIdHandler}
-            confirmText="Search"
-            appointment={this.context.selectedAppointment}
-          />
-        )}
-      </Tab>
-      <Tab eventKey="Patient" title="Patient:">
-        Search by Patient
-        {this.state.searching === true && (
-          <SearchAppointmentPatientForm
-          authUserId={this.context.userId}
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmSearchPatientHandler}
-            confirmText="Search"
-            appointment={this.context.selectedAppointment}
-          />
-        )}
-      </Tab>
-      <Tab eventKey="Date" title="Date:">
-        Search by Date
-        {this.state.searching === true && (
-          <SearchAppointmentDateForm
-          authUserId={this.context.userId}
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmSearchDateHandler}
-            confirmText="Search"
-            appointment={this.context.selectedAppointment}
-          />
-        )}
-      </Tab>
-      <Tab eventKey="Date Range" title="Date Range:">
-        Search by Date Range
-        {this.state.searching === true && (
-          <SearchAppointmentDateRangeForm
-          authUserId={this.context.userId}
-          canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmSearchDateRangeHandler}
-            confirmText="Search"
-            appointment={this.context.selectedAppointment}
-          />
-        )}
-      </Tab>
-      </Tabs>
-      </Col>
-      <Col md={10}>
-      </Col>
-      </Row>
-      </Accordion.Collapse>
-      </Container>
-
-
-      <Container className="containerSearchUserResults">
-      <Row>
-        <Card className="searchCard">
-          <Card.Body className="searchCardBody">
-            <Card.Title>Your Search</Card.Title>
-            <Card.Text>
-              Field: {this.state.appointmentSearchField}
-            </Card.Text>
-            <Card.Text>
-              Query: {this.state.appointmentSearchQuery}
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </Row>
-      <Row className="searchListRow">
-      {
-        this.state.searchAppointments !== [] && (
-        <SearchAppointmentList
-          searchAppointments={this.state.searchAppointments}
-          authUserId={this.context.userId}
-          onCancel={this.modalCancelHandler}
-            onViewDetail={this.showDetailHandler}
-        />
-      )}
-      </Row>
-      </Container>
-
-
-    </Col>
     </Row>
 
   </Accordion>
