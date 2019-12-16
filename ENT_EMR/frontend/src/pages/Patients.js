@@ -2323,7 +2323,7 @@ modalConfirmSearchNameHandler = (event) => {
       <SidebarPage/>
     </Col>
 
-    <Col md={6} className="MasterCol2">
+    <Col md={9} className="MasterCol2">
     <Container className="containerCombinedDetail">
     <Tabs defaultActiveKey="" id="uncontrolled-tab-example">
     <Tab eventKey="" title="Edit:" disabled>
@@ -2821,8 +2821,8 @@ modalConfirmSearchNameHandler = (event) => {
             />
           )}
     </Tab>
-    </Tabs>
-    </Container>
+
+    <Tab eventKey="MasterList" title="Master List">
     <Container className="containerUserMasterList">
     <Row className="searchListRow">
     <Button variant="primary" size="sm" onClick={this.fetchPatientsAsc}>
@@ -2842,23 +2842,19 @@ modalConfirmSearchNameHandler = (event) => {
     )}
     </Row>
     </Container>
+    </Tab>
 
-    </Col>
-
-    <Col md={3} className="MasterCol3">
-
+    <Tab eventKey="SearchInput" title="Search">
     <Container className="containerSearchUserInput">
-    <Row className="searchUserRowAdd">
       {this.context.token && (
-      <Accordion.Toggle as={Button} variant="primary" eventKey="10" onClick={this.startSearchPatientHandler}>
-      Search
-      </Accordion.Toggle>)}
-    </Row>
+      <Row className="searchUserRowAdd">
+      <Button variant="primary" onClick={this.startSearchPatientHandler}>Search</Button>
+      </Row>
+    )}
 
-    <Accordion.Collapse eventKey="10">
     <Row className="searchUserRowForm">
     <Col md={10} className="searchUserColForm">
-    <Tabs defaultActiveKey="userPatient" id="uncontrolled-tab-example">
+    <Tabs defaultActiveKey="Field" id="uncontrolled-tab-example">
     <Tab eventKey="Search" title="Search:" disabled>
     </Tab>
     <Tab eventKey="Field" title="Field:">
@@ -2916,9 +2912,10 @@ modalConfirmSearchNameHandler = (event) => {
     </Tabs>
     </Col>
     </Row>
-    </Accordion.Collapse>
     </Container>
+    </Tab>
 
+    <Tab eventKey="SearchResult" title="Search Results">
     <Container className="containerSearchUserResults">
     <Row>
       <Card className="searchCard">
@@ -2945,6 +2942,19 @@ modalConfirmSearchNameHandler = (event) => {
     }
     </Row>
     </Container>
+    </Tab>
+
+    </Tabs>
+    </Container>
+
+
+
+
+
+    </Col>
+
+    <Col md={3} className="MasterCol3">
+
 
     </Col>
     </Row>
