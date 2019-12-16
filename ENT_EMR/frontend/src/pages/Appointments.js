@@ -755,6 +755,92 @@ class AppointmentsPage extends Component {
         }
       });
   }
+  fetchAppointmentsAsc = () => {
+    console.log("'fetch appointments function' context object... " + JSON.stringify(this.context));
+    const userId = this.context.userId;
+
+    // this.setState({ isLoading: true });
+    const requestBody = {
+      query: `
+            query {appointmentsDateAsc(userId:"${userId}")
+            {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
+        `};
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.context.token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        const appointments = resData.data.appointmentsDateAsc;
+        console.log(appointments);
+
+        this.context.appointments = appointments;
+        this.setState({appointments: appointments})
+        // if (this.isActive) {
+        //   this.setState({ appointments: appointments, isLoading: false });
+        // }
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({userAlert: err});
+        // if (this.isActive) {
+        //   this.setState({ isLoading: false });
+        // }
+      });
+  }
+  fetchAppointmentsDesc = () => {
+    console.log("'fetch appointments function' context object... " + JSON.stringify(this.context));
+    const userId = this.context.userId;
+
+    // this.setState({ isLoading: true });
+    const requestBody = {
+      query: `
+            query {appointmentsDateDesc(userId:"${userId}")
+            {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
+        `};
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.context.token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        const appointments = resData.data.appointmentsDateDesc;
+        console.log(appointments);
+
+        this.context.appointments = appointments;
+        this.setState({appointments: appointments})
+        // if (this.isActive) {
+        //   this.setState({ appointments: appointments, isLoading: false });
+        // }
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({userAlert: err});
+        // if (this.isActive) {
+        //   this.setState({ isLoading: false });
+        // }
+      });
+  }
 
   modalDeleteHandler = () => {
     console.log("deleting appointment...selectedAppointment:  ", this.context.selectedAppointment);
@@ -1061,6 +1147,12 @@ class AppointmentsPage extends Component {
 
           <Container className="containerUserMasterList">
           <Row className="searchListRow">
+          <Button variant="primary" size="sm" onClick={this.fetchAppointmentsAsc}>
+             Sort Asc
+           </Button>
+          <Button variant="info" size="sm" onClick={this.fetchAppointmentsDesc}>
+             Sort Desc
+           </Button>
           {this.state.isLoading ? (
             <Spinner />
           ) :

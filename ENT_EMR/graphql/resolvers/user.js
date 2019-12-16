@@ -26,7 +26,49 @@ module.exports = {
       // check all gql responses for errors and other non-success statuses
     }
     try {
+      const users = await User.find({});
+      return users.map(user => {
+        return transformUser(user,);
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  usersNameAsc: async (args, req) => {
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+      // FiX ME!!!
+      // return error messages here(qgl resolver). log gql response from frontend request. pass to context.userAlert .Create floating alert/console log component === the.context.userAlert
+      // check all gql responses for errors and other non-success statuses
+    }
+    try {
       const users = await User.find({}).sort({ name: 1 });
+      return users.map(user => {
+        return transformUser(user,);
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  usersNameDesc: async (args, req) => {
+    console.log(`
+      users...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+      // FiX ME!!!
+      // return error messages here(qgl resolver). log gql response from frontend request. pass to context.userAlert .Create floating alert/console log component === the.context.userAlert
+      // check all gql responses for errors and other non-success statuses
+    }
+    try {
+      const users = await User.find({}).sort({ name: -1 });
       return users.map(user => {
         return transformUser(user,);
       });

@@ -433,6 +433,8 @@ input AppointmentInput {
 type RootQuery {
 
     users(userId: ID!): [User]
+    usersNameAsc(userId: ID!): [User]
+    usersNameDesc(userId: ID!): [User]
     getUserId(userId: ID! selectedUserId: ID!): User
     getUserField(userId: ID!, field: String!, query: String!): [User]
     getUserAttendanceDate(userId: ID!, attendanceDate: String!): [User]
@@ -440,6 +442,8 @@ type RootQuery {
     getThisUser: User
 
     patients(userId: ID!): [Patient]
+    patientsNameAsc(userId: ID!): [Patient]
+    patientsNameDesc(userId: ID!): [Patient]
     getPatientId(patientId: ID! userId: ID!): Patient
     getPatientField(userId: ID!, field: String!, query: String!): [Patient]
     getPatientVisit(userId: ID!, patientId: ID!, visitDate: String!): Visit
@@ -447,6 +451,8 @@ type RootQuery {
     getPatientDiagnosis(userId: ID!, diagnosisType: String!): [Patient]
 
     appointments(userId: ID!): [Appointment]
+    appointmentsDateAsc(userId: ID!): [Appointment]
+    appointmentsDateDesc(userId: ID!): [Appointment]
     getAppointmentId(appointmentId: ID! userId: ID!): Appointment
     getAppointmentField(userId: ID!, field: String!, query: String!): [Appointment]
     getAppointmentPatient(userId: ID!, patientId: ID!): [Appointment]

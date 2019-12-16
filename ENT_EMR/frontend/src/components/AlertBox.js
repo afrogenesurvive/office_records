@@ -18,7 +18,7 @@ const AlertBox = (props) => {
 
 return (
   <div className="alertBox">
-  <Alert variant="danger">
+  <Alert variant="warning">
   {alert}
   </Alert>
   </div>
