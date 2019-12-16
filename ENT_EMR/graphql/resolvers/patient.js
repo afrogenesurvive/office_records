@@ -25,7 +25,51 @@ module.exports = {
     }
 
     try {
+      const patients = await Patient.find({})
+      .populate('appointments')
+      .populate('consultant.reference');
+
+      return patients.map(patient => {
+        return transformPatient(patient);
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  patientsNameAsc: async (args, req) => {
+    console.log(`
+      patients...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
       const patients = await Patient.find({}).sort({ name: 1 })
+      .populate('appointments')
+      .populate('consultant.reference');
+
+      return patients.map(patient => {
+        return transformPatient(patient);
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  patientsNameDesc: async (args, req) => {
+    console.log(`
+      patients...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+      const patients = await Patient.find({}).sort({ name: -1 })
       .populate('appointments')
       .populate('consultant.reference');
 

@@ -30,6 +30,7 @@ import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentFo
 import UpdateUserLeaveForm from '../components/Forms/UpdateUserLeaveForm';
 import SearchUserForm from '../components/Forms/SearchUserForm';
 import SearchUserIdForm from '../components/Forms/SearchUserIdForm';
+import SearchUserNameForm from '../components/Forms/SearchUserNameForm';
 import SearchUserAttendanceDateForm from '../components/Forms/SearchUserAttendanceDateForm';
 import SearchUserLeaveDateRangeForm from '../components/Forms/SearchUserLeaveDateRangeForm';
 import './Users.css';
@@ -43,6 +44,7 @@ class UsersPage extends Component {
     users: [],
     searchUsers: [],
     isLoading: false,
+    isSorting: false,
     selectedUser: null,
     userUpdateField: null,
     userSearchField: null,
@@ -874,6 +876,26 @@ class UsersPage extends Component {
 
   }
 
+  modalConfirmSearchNameHandler = (event) => {
+    console.log("SearchUserNameFormData:", event.target.formBasicName.value);
+
+    let userId = this.context.userId;
+    this.setState({ searching: false });
+
+    let users = this.state.users;
+    const regex = new RegExp(event.target.formBasicName.value,"i");
+    console.log(`
+      regex: ${regex},
+      `);
+      let result = users.filter(user => user.name.match(regex))
+      console.log(`
+        result: ${JSON.stringify(result)}
+        `);
+
+        this.setState({ searchUsers: result})
+
+  }
+
 
   modalCancelHandler = () => {
     this.setState({ creating: false, updating: false, deleting: false, searching: false});
@@ -921,6 +943,97 @@ class UsersPage extends Component {
         if (this.isActive) {
           this.setState({ isLoading: false });
         }
+      });
+  }
+
+  fetchUsersAsc = () => {
+    console.log("'fetch usersAsc function' context object... " + JSON.stringify(this.context));
+    const userId = this.context.userId;
+
+    // this.setState({ isSorting: true });
+    const requestBody = {
+      query: `
+          query {usersNameAsc (userId:"${userId}")
+          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+        `};
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.context.token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          this.context.userAlert = 'Failed!';
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        const users = resData.data.usersNameAsc;
+        console.log("resData:  ", resData);
+        console.log(users);
+
+        this.setState({users: users});
+        // if (this.isActive) {
+        //   this.setState({ users: users, isLoading: false });
+        // }
+        this.context.users = this.state.users;
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({userAlert: err});
+        // if (this.isActive) {
+        //   this.setState({ isLoading: false });
+        // }
+      });
+  }
+  fetchUsersDesc = () => {
+    console.log("'fetch usersDesc function' context object... " + JSON.stringify(this.context));
+    const userId = this.context.userId;
+
+    // this.setState({ isLoading: true });
+    const requestBody = {
+      query: `
+          query {usersNameDesc (userId:"${userId}")
+          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+        `};
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.context.token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          this.context.userAlert = 'Failed!';
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        const users = resData.data.usersNameDesc;
+        console.log("resData:  ", resData);
+        console.log(users);
+
+        // if (this.isActive) {
+        //   this.setState({ users: users, isLoading: false });
+        // }
+        this.setState({users: users});
+        this.context.users = this.state.users;
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({userAlert: err});
+        // if (this.isActive) {
+        //   this.setState({ isLoading: false });
+        // }
       });
   }
 
@@ -1301,14 +1414,21 @@ updateUserSpecial (event) {
 
         <Container className="containerUserMasterList">
         <Row className="searchListRow">
-        {this.state.isLoading ? (
-          <Spinner />
-        ) : (
-          <UserList
-            users={this.state.users}
-            authUserId={this.context.userId}
-            onViewDetail={this.showDetailHandler}
-          />)}
+        <Button variant="primary" size="sm" onClick={this.fetchUsersAsc}>
+           Sort Asc
+         </Button>
+        <Button variant="info" size="sm" onClick={this.fetchUsersDesc}>
+           Sort Desc
+         </Button>
+         {this.state.isLoading ? (
+           <Spinner />
+         ) : (
+           <UserList
+             users={this.state.users}
+             authUserId={this.context.userId}
+             onViewDetail={this.showDetailHandler}
+           />
+         )}
         </Row>
         </Container>
     </Col>
@@ -1380,6 +1500,19 @@ updateUserSpecial (event) {
         user={this.context.selectedUser}
       />
       )}
+    </Tab>
+    <Tab eventKey="Name" title="Name:">
+    {this.state.searching === true && (
+      <SearchUserNameForm
+      authUserId={this.context.userId}
+      canCancel
+        canConfirm
+        onCancel={this.modalCancelHandler}
+        onConfirm={this.modalConfirmSearchNameHandler}
+        confirmText="Search"
+        user={this.context.selectedUser}
+      />
+    )}
     </Tab>
     </Tabs>
     </Col>

@@ -24,7 +24,51 @@ module.exports = {
     }
 
     try {
+      const appointments = await Appointment.find({})
+      .populate('patient')
+      .populate('patient.consultant');
+
+      return appointments.map(appointment => {
+        return transformAppointment(appointment);
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  appointmentsDateAsc: async (args, req) => {
+    console.log(`
+      appointments...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
       const appointments = await Appointment.find({}).sort({ date: 1 })
+      .populate('patient')
+      .populate('patient.consultant');
+
+      return appointments.map(appointment => {
+        return transformAppointment(appointment);
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  appointmentsDateDesc: async (args, req) => {
+    console.log(`
+      appointments...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+      const appointments = await Appointment.find({}).sort({ date: -1 })
       .populate('patient')
       .populate('patient.consultant');
 

@@ -2011,45 +2011,24 @@ modalConfirmSearchVisitHandler = (event) => {
     });
 
 }
+
 modalConfirmSearchNameHandler = (event) => {
-  console.log("SearchPatientNameFormData");
+  console.log("SearchPatientNameFormData:", event.target.formBasicName.value);
 
   let userId = this.context.userId;
   this.setState({ searching: false });
 
-  const requestBody = {
-    query: `
-      {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
-    `}
+  let patients = this.state.patients;
+  const regex = new RegExp(event.target.formBasicName.value,"i");
+  console.log(`
+    regex: ${regex},
+    `);
+    let result = patients.filter(patient => patient.name.match(regex))
+    console.log(`
+      result: ${JSON.stringify(result)}
+      `);
 
-  const token = this.context.token;
-
-  fetch('http://localhost:10000/graphql', {
-    method: 'POST',
-    body: JSON.stringify(requestBody),
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
-    }
-  })
-    .then(res => {
-      if (res.status !== 200 && res.status !== 201) {
-        throw new Error('Failed!');
-      }
-      return res.json();
-    })
-    .then(resData => {
-      console.log("response data... " + JSON.stringify(resData));
-
-      const searchPatients = resData.data.getPatientId;
-
-      this.setState({ searchPatients: searchPatients})
-      console.log("state.searchPatients:  ", this.state.searchPatients);
-      // this.fetchUsers();
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      this.setState({ searchPatients: result})
 
 }
 
@@ -2144,6 +2123,102 @@ modalConfirmSearchNameHandler = (event) => {
         if (this.isActive) {
           this.setState({ isLoading: false });
         }
+      });
+  }
+
+  fetchPatientsAsc = () => {
+    console.log("fetch patients function:  ");
+    const userId = this.context.userId;
+    const token = this.context.token;
+
+    // this.setState({ isLoading: true });
+    const requestBody = {
+      query: `
+          query {patientsNameAsc(userId:"${userId}")
+          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        `
+    };
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("resData", resData);
+        const patients = resData.data.patientsNameAsc;
+        console.log(patients);
+
+        this.context.patients = patients;
+        this.setState({ patients: patients});
+        // if (this.isActive) {
+        //   this.setState({ patients: patients, isLoading: false });
+        // }
+
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({userAlert: err});
+        // if (this.isActive) {
+        //   this.setState({ isLoading: false });
+        // }
+      });
+  }
+
+  fetchPatientsDesc = () => {
+    console.log("fetch patients function:  ");
+    const userId = this.context.userId;
+    const token = this.context.token;
+
+    // this.setState({ isLoading: true });
+    const requestBody = {
+      query: `
+          query {patientsNameDesc(userId:"${userId}")
+          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        `
+    };
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("resData", resData);
+        const patients = resData.data.patientsNameDesc;
+        console.log(patients);
+
+        this.context.patients = patients
+        // if (this.isActive) {
+        //   this.setState({ patients: patients, isLoading: false });
+        // }
+        this.setState({ patients: patients});
+
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({userAlert: err});
+        // if (this.isActive) {
+        //   this.setState({ isLoading: false });
+        // }
       });
   }
 
@@ -2750,6 +2825,12 @@ modalConfirmSearchNameHandler = (event) => {
     </Container>
     <Container className="containerUserMasterList">
     <Row className="searchListRow">
+    <Button variant="primary" size="sm" onClick={this.fetchPatientsAsc}>
+       Sort Asc
+     </Button>
+    <Button variant="info" size="sm" onClick={this.fetchPatientsDesc}>
+       Sort Desc
+     </Button>
     {this.state.isLoading ? (
       <Spinner />
     ) : (
@@ -2819,7 +2900,7 @@ modalConfirmSearchNameHandler = (event) => {
       />
     )}
     </Tab>
-    <Tab eventKey="Name RegEx" title="Name RegEx:">
+    <Tab eventKey="Name" title="Name:">
     {this.state.searching === true && (
       <SearchPatientNameForm
       authUserId={this.context.userId}
