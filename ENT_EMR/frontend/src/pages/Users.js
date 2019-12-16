@@ -20,6 +20,7 @@ import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
 
 import SidebarPage from './Sidebar';
+import AlertBox from '../components/AlertBox';
 
 import CreateUserForm from '../components/Forms/CreateUserForm';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
@@ -47,6 +48,7 @@ class UsersPage extends Component {
     userSearchField: null,
     userSearchQuery: null,
     canDelete: null,
+    userAlert: null,
   };
   isActive = true;
 
@@ -113,6 +115,7 @@ class UsersPage extends Component {
       terminationDate.trim().length === 0
     ) {
       console.log("blank fields detected!!!...Please try again...");
+      this.setState({userAlert: "blank fields detected!!!...Please try again..."});
       return;
     }
 
@@ -173,6 +176,7 @@ class UsersPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
   };
 
@@ -184,6 +188,7 @@ class UsersPage extends Component {
     let selectedUserId = this.context.selectedUser._id;
     if(userId !== selectedUserId && this.context.user.role !== 'admin') {
       console.log("Not the creator or Admin! No edit permission!!");
+      this.setState({userAlert: "Not the creator or Admin! No edit permission!!"});
       selectedUserId = null;
     }
 
@@ -276,6 +281,7 @@ class UsersPage extends Component {
       employmentDate: ${employmentDate},
       terminationDate: ${terminationDate},
       `);
+      this.setState({userAlert: "updating user profile..."});
 
     const requestBody = {
       query: `
@@ -309,6 +315,7 @@ class UsersPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
   };
 
@@ -338,6 +345,8 @@ class UsersPage extends Component {
           field: ${field},
           query: ${query},
         `);
+
+        this.setState({ userAlert: "updating user field..."})
 
       const requestBody = {
         query:`
@@ -375,6 +384,7 @@ class UsersPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
   }
@@ -389,6 +399,7 @@ class UsersPage extends Component {
     // }
     if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
       console.log("Not the creator or Admin! No edit permission!!");
+      this.setState({ userAlert: "Not the creator or Admin! No edit permission!!"});
         selectedUserId = null;
     }
 
@@ -422,6 +433,8 @@ class UsersPage extends Component {
       attendanceStatus: ${attendanceStatus},
       attendanceDescription: ${attendanceDescription}
       `);
+
+      this.setState({ userAlert: "adding user attendance item..."});
 
       const requestBody = {
         query:`
@@ -458,6 +471,7 @@ class UsersPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
 
@@ -474,6 +488,7 @@ class UsersPage extends Component {
     // }
     if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
       console.log("Not the creator or Admin! No edit permission!!");
+      this.setState({userAlert: "Not the creator or Admin! No edit permission!!"})
         selectedUserId = null;
     }
 
@@ -508,6 +523,7 @@ class UsersPage extends Component {
       attachmentFormat: ${attachmentFormat},
       attachmentPath: ${attachmentPath}
       `);
+      this.setState({userAlert: "adding user attendance item..."})
 
       const requestBody = {
         query:`
@@ -544,6 +560,7 @@ class UsersPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
 
@@ -561,6 +578,7 @@ class UsersPage extends Component {
     // }
     if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
       console.log("Not the creator or Admin! No edit permission!!");
+      this.setState({userAlert: "Not the creator or Admin! No edit permission!!"})
         selectedUserId = null;
     }
 
@@ -602,6 +620,7 @@ class UsersPage extends Component {
         endDate: ${leaveEndDate}
       }
       `);
+      this.setState({userAlert: "adding user attendance item..."})
 
       const requestBody = {
         query:`
@@ -638,6 +657,7 @@ class UsersPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
   }
@@ -670,11 +690,13 @@ class UsersPage extends Component {
         query.trim().length === 0
       ) {
         console.log("blank fields detected!!!...Please try again...");
+        this.setState({userAlert: "blank fields detected!!!...Please try again..."})
         return;
       }
 
       const search = { field, query }
       console.log("Searching for User:  ", JSON.stringify(search));
+      this.setState({userAlert: "Searching for User..."})
 
       const requestBody = {
         query: `
@@ -709,6 +731,7 @@ class UsersPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
   }
 
@@ -753,6 +776,7 @@ class UsersPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
   }
@@ -798,6 +822,7 @@ class UsersPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
   }
@@ -844,6 +869,7 @@ class UsersPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
   }
@@ -874,6 +900,7 @@ class UsersPage extends Component {
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
+          this.context.userAlert = 'Failed!';
           throw new Error('Failed!');
         }
         return res.json();
@@ -890,6 +917,7 @@ class UsersPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
         if (this.isActive) {
           this.setState({ isLoading: false });
         }
@@ -904,9 +932,10 @@ modalDeleteHandler = () => {
 
   if(this.context.user.role !== 'admin') {
     console.log("Not the Admin! No edit permission!!");
+    this.setState({userAlert: "Not the Admin! No edit permission!!"})
   }
 
-  this.setState({deleting: true});
+  this.setState({deleting: true, userAlert: "deleting user.."});
 
   const requestBody = {
     query: `
@@ -948,6 +977,7 @@ modalDeleteHandler = () => {
     })
     .catch(err => {
       console.log(err);
+      this.setState({userAlert: err});
       if (this.isActive) {
         this.setState({ deleting: false });
       }
@@ -998,7 +1028,10 @@ updateUserSpecial (event) {
     <Row>
 
     <Col md={3} className="MasterCol1">
-
+    <AlertBox
+      authUserId={this.context.userId}
+      alert={this.state.userAlert}
+    />
     <SidebarPage/>
 
     </Col>

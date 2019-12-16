@@ -6,12 +6,14 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
+import AlertBox from '../components/AlertBox';
 import CreateUserForm from '../components/Forms/CreateUserForm';
 import './Auth.css';
 
 class SignupPage extends Component {
   state = {
-    success: "Signup!!"
+    success: "Signup!!",
+    userAlert: null,
   };
 
   modalConfirmHandler = (event) => {
@@ -51,6 +53,7 @@ class SignupPage extends Component {
       terminationDate.trim().length === 0
     ) {
       console.log("blank fields detected!!!...Please try again...");
+      this.setState({userAlert: "blank fields detected!!!...Please try again..."});
       return;
     }
 
@@ -75,6 +78,7 @@ class SignupPage extends Component {
       employmentDate: ${employmentDate},
       terminationDate: ${terminationDate},
       `);
+      this.setState({userAlert: "creating user..."});
 
     const requestBody = {
       query: `
@@ -115,6 +119,7 @@ class SignupPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
   };
 
@@ -123,6 +128,11 @@ class SignupPage extends Component {
       <React.Fragment>
 
       <Row>
+      <AlertBox
+        authUserId={this.context.userId}
+        alert={this.state.userAlert}
+      />
+
       <Col className="signupRow" md={8}>
         <CreateUserForm
           canConfirm

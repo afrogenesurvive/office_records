@@ -20,6 +20,8 @@ import SearchPatientIdForm from '../components/Forms/SearchPatientIdForm';
 import SearchPatientNameForm from '../components/Forms/SearchPatientNameForm';
 import SearchPatientVisitForm from '../components/Forms/SearchPatientVisitForm';
 
+import AlertBox from '../components/AlertBox';
+
 import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import UpdatePatientForm from '../components/Forms/UpdatePatientForm';
 import UpdatePatientFieldForm from '../components/Forms/UpdatePatientFieldForm';
@@ -59,6 +61,7 @@ class PatientsPage extends Component {
     patientSearchQuery: null,
     canDelete: null,
     visit: null,
+    userAlert: null,
   };
   isActive = true;
 
@@ -154,6 +157,7 @@ class PatientsPage extends Component {
 
     ) {
       console.log("patient must have at least a Name and Contact Number!!!...Please try again...");
+      this.setState({userAlert: "patient requires Name and Contact Number!!!... Try again..."});
       return;
     }
 
@@ -225,6 +229,7 @@ class PatientsPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
   };
 
@@ -395,6 +400,7 @@ class PatientsPage extends Component {
       occupationEmployerContactPhone: ${occupationEmployerContactPhone},
       occupationEmployerContactEmail: ${occupationEmployerContactEmail},
       `);
+      this.setState({userAlert: "updating patient..."});
 
     const requestBody = {
       query: `
@@ -433,6 +439,7 @@ class PatientsPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
   };
 
@@ -494,6 +501,7 @@ class PatientsPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
   }
@@ -562,6 +570,7 @@ updatePatientConsultantHandler = (event) => {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
 }
@@ -599,6 +608,7 @@ updatePatientInsuranceHandler = (event) => {
     insuranceSubscriberCompany: ${insuranceSubscriberCompany},
     insuranceSubscriberDescription: ${insuranceSubscriberDescription},
     `);
+    this.setState({userAlert: "adding patient insurance item..."});
 
     const requestBody = {
       query:`
@@ -636,6 +646,7 @@ updatePatientInsuranceHandler = (event) => {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
 }
@@ -668,6 +679,7 @@ updatePatientNextOfKinHandler = (event) => {
     nextOfKinPhone: ${nextOfKinPhone},
     nextOfKinEmail: ${nextOfKinEmail},
     `);
+    this.setState({userAlert: "adding patient nextOfKin item..."});
 
     const requestBody = {
       query:`
@@ -705,6 +717,7 @@ updatePatientNextOfKinHandler = (event) => {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 }
 
@@ -745,6 +758,7 @@ updatePatientComplaintHandler = (event) => {
     complaintAttachmentFormat: ${complaintAttachmentFormat},
     complaintAttachmentPath: ${complaintAttachmentPath},
     `);
+    this.setState({userAlert: "adding patient complaint..."});
 
     const requestBody = {
       query:`
@@ -782,6 +796,7 @@ updatePatientComplaintHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 }
@@ -820,6 +835,7 @@ updatePatientSurveyHandler = (event) => {
     surveyAttachmentFormat: ${surveyAttachmentFormat},
     surveyAttachmentPath: ${surveyAttachmentPath},
     `);
+    this.setState({userAlert: "adding patient survey..."});
 
     const requestBody = {
       query:`
@@ -857,6 +873,7 @@ updatePatientSurveyHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 }
@@ -895,6 +912,7 @@ updatePatientVitalsHandler = (event) => {
     userId: ${userId},
     patientId: ${selectedPatientId},
     `);
+    this.setState({userAlert: "adding patient vitals..."});
 
     const requestBody = {
       query:`
@@ -932,6 +950,7 @@ updatePatientVitalsHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 }
@@ -987,6 +1006,7 @@ updatePatientExaminationHandler = (event) => {
     examinationAttachmentFormat: ${examinationAttachmentFormat},
     examinationAttachmentPath: ${examinationAttachmentPath},
     `);
+    this.setState({userAlert: "adding patient examination..."});
 
     const requestBody = {
       query:`
@@ -1024,6 +1044,7 @@ updatePatientExaminationHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 }
@@ -1065,6 +1086,7 @@ updatePatientHistoryHandler = (event) => {
     historyAttachmentFormat: ${historyAttachmentFormat},
     historyAttachmentPath: ${historyAttachmentPath},
     `);
+    this.setState({userAlert: "adding patient history..."});
 
     const requestBody = {
       query:`
@@ -1102,6 +1124,7 @@ updatePatientHistoryHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 }
@@ -1147,6 +1170,7 @@ updatePatientAllergiesHandler = (event) => {
     allergiesAttachmentFormat: ${allergiesAttachmentFormat},
     allergiesAttachmentPath: ${allergiesAttachmentPath},
     `);
+    this.setState({userAlert: "adding patient allergies..."});
 
     const requestBody = {
       query:`
@@ -1184,6 +1208,7 @@ updatePatientAllergiesHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 
@@ -1225,6 +1250,7 @@ updatePatientMedicationHandler = (event) => {
     medicationAttachmentFormat: ${medicationAttachmentFormat},
     medicationAttachmentPath: ${medicationAttachmentPath},
     `);
+    this.setState({userAlert: "adding patient medication..."});
 
     const requestBody = {
       query:`
@@ -1262,6 +1288,7 @@ updatePatientMedicationHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 }
@@ -1309,6 +1336,7 @@ updatePatientInvestigationHandler = (event) => {
     investigationAttachmentFormat: ${investigationAttachmentFormat},
     investigationAttachmentPath: ${investigationAttachmentPath},
     `);
+    this.setState({userAlert: "adding patient investigation..."});
 
     const requestBody = {
       query:`
@@ -1346,6 +1374,7 @@ updatePatientInvestigationHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 }
@@ -1388,6 +1417,7 @@ updatePatientDiagnosisHandler = (event) => {
     diagnosisAttachmentFormat: ${diagnosisAttachmentFormat},
     diagnosisAttachmentPath: ${diagnosisAttachmentPath},
     `);
+    this.setState({userAlert: "adding patient diagnosis..."});
 
     const requestBody = {
       query:`
@@ -1425,6 +1455,7 @@ updatePatientDiagnosisHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 }
@@ -1476,6 +1507,7 @@ updatePatientTreatmentHandler = (event) => {
     treatmentAttachmentFormat: ${treatmentAttachmentFormat},
     treatmentAttachmentPath: ${treatmentAttachmentPath},
     `);
+    this.setState({userAlert: "adding patient treatment..."});
 
     const requestBody = {
       query:`
@@ -1512,6 +1544,7 @@ updatePatientTreatmentHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 }
@@ -1547,7 +1580,7 @@ updatePatientBillingHandler = (event) => {
   const patientBilling = { billingDate, billingTitle, billingType, billingDescription, billingAmount, billingPaid, billingNotes, billingAttachmentName, billingAttachmentFormat, billingAttachmentPath };
 
   console.log(`
-    adding patient treatment...
+    adding patient billing...
     userId: ${userId},
     patientId: ${selectedPatientId},
     billingDate: ${billingDate},
@@ -1561,6 +1594,7 @@ updatePatientBillingHandler = (event) => {
     billingAttachmentFormat: ${billingAttachmentFormat},
     billingAttachmentPath: ${billingAttachmentPath},
     `);
+    this.setState({userAlert: "adding patient billing..."});
 
     const requestBody = {
       query:`
@@ -1598,6 +1632,7 @@ updatePatientBillingHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 
@@ -1631,8 +1666,11 @@ updatePatientAttachmentHandler = (event) => {
       attachmentPath.trim().length === 0
     ) {
       console.log("blank fields detected!!!...Please try again...");
+      this.setState({userAlert: "blank fields detected!!!...Please try again..."});
       return;
     }
+
+    this.setState({userAlert: "adding patient attachment"});
 
     const requestBody = {
                     query:`
@@ -1669,6 +1707,7 @@ updatePatientAttachmentHandler = (event) => {
           })
           .catch(err => {
             console.log(err);
+            this.setState({userAlert: err});
           });
 
 }
@@ -1696,8 +1735,11 @@ updatePatientNoteHandler = (event) => {
       note.trim().length === 0
     ) {
       console.log("Can't Submit a blank form!!!...Please try again...");
+      this.setState({userAlert: "Can't Submit a blank form!!!...Please try again..."});
       return;
     }
+
+    this.setState({userAlert: "adding patient note"});
 
     const requestBody = {
                     query:`
@@ -1734,6 +1776,7 @@ updatePatientNoteHandler = (event) => {
           })
           .catch(err => {
             console.log(err);
+            this.setState({userAlert: err});
           });
 
 }
@@ -1760,6 +1803,7 @@ updatePatientTagHandler = (event) => {
       tag.trim().length === 0
     ) {
       console.log("Can't Submit a blank form!!!...Please try again...");
+      this.setState({userAlert: "Can't Submit a blank form!!!...Please try again..."});
       return;
     }
 
@@ -1768,6 +1812,8 @@ updatePatientTagHandler = (event) => {
                     mutation {updatePatientTags(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{tag:"${tag}"})
                     {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
             `}
+    this.setState({userAlert: "adding patient tag"});
+
 
     fetch('http://localhost:10000/graphql', {
           method: 'POST',
@@ -1798,6 +1844,7 @@ updatePatientTagHandler = (event) => {
           })
           .catch(err => {
             console.log(err);
+            this.setState({userAlert: err});
           });
 
 
@@ -1838,6 +1885,7 @@ modalConfirmSearchHandler = (event) => {
 
     const search = { field, query }
     console.log("Searching for Patient:  ", JSON.stringify(search));
+    this.setState({userAlert: "Searching for Patient:  "});
 
     const requestBody = {
       query: `
@@ -1874,6 +1922,7 @@ modalConfirmSearchHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 }
 
@@ -2091,6 +2140,7 @@ modalConfirmSearchNameHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
         if (this.isActive) {
           this.setState({ isLoading: false });
         }
@@ -2190,6 +2240,11 @@ modalConfirmSearchNameHandler = (event) => {
 
     <Row>
     <Col md={3} className="MasterCol1">
+
+    <AlertBox
+          authUserId={this.context.userId}
+          alert={this.state.userAlert}
+        />
       <SidebarPage/>
     </Col>
 

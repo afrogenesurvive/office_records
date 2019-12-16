@@ -9,6 +9,7 @@ import SidebarPage from './Sidebar';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
+import AlertBox from '../components/AlertBox';
 import UpdateUserFieldForm from '../components/Forms/UpdateUserFieldForm';
 import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceForm';
 import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentForm';
@@ -26,6 +27,7 @@ class ThisUserPage extends Component {
     updating: false,
     isLoading: false,
     userUpdateField: null,
+    userAlert: null,
   };
   isActive = true;
 
@@ -51,6 +53,7 @@ class ThisUserPage extends Component {
     let selectedUserId = this.context.selectedUser._id;
     if(userId !== selectedUserId && this.context.user.role !== 'admin') {
       console.log("Not the creator or Admin! No edit permission!!");
+      this.setState({userAlert: "Not the creator or Admin! No edit permission!!"});
       selectedUserId = null;
     }
     console.log("UpdateUserFormData:  ", event.target.formGridEmail.value);
@@ -174,6 +177,7 @@ class ThisUserPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
     };
 
@@ -184,6 +188,7 @@ class ThisUserPage extends Component {
       let selectedUserId = this.context.selectedUser._id;
       if(userId !== selectedUserId && this.context.user.role !== 'admin') {
         console.log("Not the creator or Admin! No edit permission!!");
+        this.setState({userAlert: "Not the creator or Admin! No edit permission!!"});
         selectedUserId = null;
       }
 
@@ -229,6 +234,7 @@ class ThisUserPage extends Component {
           })
           .catch(err => {
             console.log(err);
+            this.setState({userAlert: err});
           });
 
     }
@@ -303,6 +309,7 @@ class ThisUserPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
   };
 
@@ -313,6 +320,7 @@ class ThisUserPage extends Component {
     let selectedUserId = this.context.selectedUser._id;
     if(userId !== selectedUserId && this.context.user.role !== 'admin') {
       console.log("Not the creator or Admin! No edit permission!!");
+      this.setState({userAlert: "Not the creator or Admin! No edit permission!!"});
       selectedUserId = null;
     }
 
@@ -389,6 +397,7 @@ class ThisUserPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
   };
 
@@ -429,6 +438,7 @@ class ThisUserPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
         if (this.isActive) {
           this.setState({ isLoading: false });
         }
@@ -456,6 +466,10 @@ class ThisUserPage extends Component {
       <React.Fragment>
       <Row>
       <Col md={3} className="MasterCol1">
+      <AlertBox
+        authUserId={this.context.userId}
+        alert={this.state.userAlert}
+      />
       <SidebarPage
         you={this.state.user}
       />
