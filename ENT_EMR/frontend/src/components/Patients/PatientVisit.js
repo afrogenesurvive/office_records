@@ -10,15 +10,32 @@ import Tab from 'react-bootstrap/Tab';
 import './PatientDetail.css';
 
 const PatientVisit = (props) => {
-  const visit = props.visit;
+  let visit = {
+    date: "",
+    patientName: "",
+    consultant: "",
+    examination: "",
+    survey: "",
+    vitals: "",
+    history: "",
+    investigation: "",
+    diagnosis: "",
+    treatment: "",
+    billing: "",
+  };
+  if (props.visit !== null) {
+    visit = props.visit;
+  }
+
   // FIX ME!!!
   // some subfields are arrays. tease out lists and items
   console.log(`
     patientVisit: ${JSON.stringify(visit)},
+    date: ${visit.date},
     `);
     return (
       <div className="PatientDetailBox1">
-
+      <h5>Date: {new Date(visit.date).toLocaleString()}</h5>
       <Tabs defaultActiveKey="Visit" id="uncontrolled-tab-example" className="tab">
       <Tab eventKey="" title="Visit:" disabled>
       </Tab>

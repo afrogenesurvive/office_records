@@ -63,7 +63,7 @@ class App extends Component {
               appointmentsToday: null,
               appointmentsWeekImportant: null,
               appointmentsInProgress: null,
-              userAlert: null,
+              userAlert: "",
               visit: null,
               login: this.login,
               logout: this.logout

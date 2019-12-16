@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import { NavLink } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+
 
 import './Auth.css';
 import AuthContext from '../context/auth-context';
+import AlertBox from '../components/AlertBox';
+
 
 class AuthPage extends Component {
+  state = {
+    userAlert: null,
+  };
   static contextType = AuthContext;
 
   // constructor(props) {
@@ -51,8 +58,10 @@ class AuthPage extends Component {
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
+          // this.context.userAlert = 'Failed!';
           throw new Error('Failed!');
         }
+        // this.context.userAlert = 'Failed!';
         return res.json();
       })
       .then(resData => {
@@ -77,11 +86,23 @@ class AuthPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
+        // this.context.userAlert = err;
+        // console.log(`
+        //   err: ${this.context.userAlert}
+        //   `);
       });
   };
 
   render() {
     return (
+      <Row>
+      <AlertBox
+        authUserId={this.context.userId}
+        alert={this.state.userAlert}
+      />
+
+
       <Form className="auth-form" onSubmit={this.submitHandler}>
       <Form.Group controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
@@ -103,6 +124,10 @@ class AuthPage extends Component {
         <NavLink to="/signup">Signup</NavLink>
       </Button>
     </Form>
+
+      </Row>
+
+
     );
   }
 }

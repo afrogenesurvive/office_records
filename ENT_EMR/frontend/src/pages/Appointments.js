@@ -12,6 +12,8 @@ import Card from 'react-bootstrap/Card';
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
+import AlertBox from '../components/AlertBox';
+
 import AppointmentList from '../components/Appointments/AppointmentList/AppointmentList';
 import AppointmentDetail from '../components/Appointments/AppointmentDetail';
 import PatientDetail from '../components/Patients/PatientDetail';
@@ -43,6 +45,7 @@ class AppointmentsPage extends Component {
     appointmentSearchField: null,
     appointmentSearchQuery: null,
     canDelete: null,
+    userAlert: null,
   };
   isActive = true;
 
@@ -113,10 +116,13 @@ class AppointmentsPage extends Component {
       important.trim().length === 0
     ) {
       console.log("blank fields detected!!!...Please try again...");
+      this.setState({userAlert: "blank fields detected!!!...Please try again..."});
+      return
     }
 
     const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important };
-    console.log(`creating appointment...
+    console.log(`
+        creating appointment...
         title: ${title},
         type: ${type},
         date: ${date},
@@ -129,6 +135,7 @@ class AppointmentsPage extends Component {
         attended: ${attended},
         important: ${important},
       `);
+      this.setState({userAlert: "creating appointment..."});
 
     const requestBody = {
       query: `
@@ -168,6 +175,7 @@ class AppointmentsPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
   };
 
@@ -180,7 +188,7 @@ class AppointmentsPage extends Component {
 
     if(this.context.user.role !== 'admin') {
       console.log("Not the Admin! No edit permission!!");
-
+      this.setState({userAlert: "Not the Admin! No edit permission!!"});
     }
 
     const userId = this.context.userId;
@@ -270,6 +278,7 @@ class AppointmentsPage extends Component {
         attended: ${attended},
         important: ${important},
       `);
+      this.setState({userAlert: "updating appointment..."});
 
     const requestBody = {
       query: `
@@ -309,6 +318,7 @@ class AppointmentsPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
   };
 
@@ -323,6 +333,7 @@ class AppointmentsPage extends Component {
       this.context.user.role !== 'admin'
     ) {
       console.log("No edit permission!!");
+      this.setState({userAlert: "No edit permission!!"});
       return;
     }
 
@@ -334,6 +345,7 @@ class AppointmentsPage extends Component {
       appointmentId: ${selectedAppointmentId},
       patientId: ${selectedPatientId},
       `);
+      this.setState({userAlert: "updating appointment patient..."});
 
       const requestBody = {
         query:`
@@ -372,6 +384,7 @@ class AppointmentsPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
 
@@ -434,6 +447,7 @@ class AppointmentsPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
   }
@@ -461,6 +475,7 @@ class AppointmentsPage extends Component {
         query.trim().length === 0
       ) {
         console.log("blank fields detected!!!...Please try again...");
+        this.setState({userAlert: "blank fields detected!!!...Please try again..."});
         return;
       }
 
@@ -500,6 +515,7 @@ class AppointmentsPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
   }
 
@@ -545,6 +561,7 @@ class AppointmentsPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
   }
 
@@ -590,6 +607,7 @@ class AppointmentsPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
   }
@@ -635,6 +653,7 @@ class AppointmentsPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
   }
@@ -681,6 +700,7 @@ class AppointmentsPage extends Component {
         })
         .catch(err => {
           console.log(err);
+          this.setState({userAlert: err});
         });
 
 
@@ -729,6 +749,7 @@ class AppointmentsPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
         if (this.isActive) {
           this.setState({ isLoading: false });
         }
@@ -743,6 +764,7 @@ class AppointmentsPage extends Component {
 
     if(this.context.user.role !== 'admin') {
       console.log("Not the Admin! No edit permission!!");
+      this.setState({userAlert: "Not the Admin! No edit permission!!"});
     }
 
     this.setState({deleting: true});
@@ -787,6 +809,7 @@ class AppointmentsPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
         if (this.isActive) {
           this.setState({ deleting: false });
         }
@@ -850,6 +873,7 @@ class AppointmentsPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 
@@ -889,6 +913,7 @@ class AppointmentsPage extends Component {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
       });
 
 
@@ -909,6 +934,10 @@ class AppointmentsPage extends Component {
 
       <Col md={3} className="MasterCol1">
 
+      <AlertBox
+            authUserId={this.context.userId}
+            alert={this.state.userAlert}
+          />
       <SidebarPage/>
 
       </Col>
@@ -1034,7 +1063,8 @@ class AppointmentsPage extends Component {
           <Row className="searchListRow">
           {this.state.isLoading ? (
             <Spinner />
-          ) : (
+          ) :
+          (
             <AppointmentList
               appointments={this.state.appointments}
               authUserId={this.context.userId}
