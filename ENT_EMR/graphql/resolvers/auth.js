@@ -13,7 +13,7 @@ module.exports = {
       throw new Error('User does not exist!');
 
       // FIX ME!!!
-      // return error messages here(qgl resolver). log gql response from frontend request. pass to context.userAlert .Create floating alert/console log component === the.context.userAlert
+      // can gql  quers/mutes return A || B? if so define type Error in schema and send from resolvers, recieve on frontend n pass to component state.userAlert
     }
     const isEqual = await bcrypt.compare(password, user.password);
     if (!isEqual) {

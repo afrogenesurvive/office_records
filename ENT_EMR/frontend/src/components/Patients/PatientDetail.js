@@ -66,6 +66,9 @@ const PatientDetail = (props) => {
   // if (props.visit) {
   //   visit = props.visit;
   // }
+  const token = props.token;
+  const userId = props.authUserId;
+  const patientId = patient._id;
 
   console.log("PatientDetail.props.patient:  ", {...patient});
   // console.log("patientExamination[1].date:  ", new Date(patientExamination[1].date.substr(0,10)*1000).toISOString());
@@ -73,44 +76,7 @@ const PatientDetail = (props) => {
   // console.log("patientComplaint[1].date:  ", patientComplaint[1].date);
   // console.log("patientComplaint[1].date:  ", new Date(patientComplaint[1].date.substr(0,10)*1000).toLocaleString());
 
-  // function getUserVisit (event) {
-  //   event.preventDefault();
-  //   console.log(`
-  //       getUserVisit:
-  //     `);
-  //   let visitDate = new Date(event.target.formBasicVisitDate.value).toISOString();
-  //   let visitConsultants = patientConsultant.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-  //   let visitComplaints = patientComplaint.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-  //   let visitSurveys = patientSurvey.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-  //   let visitVitals = patientVitals.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-  //   let visitExaminations = patientExamination.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-  //   let visitHistory = patientHistory.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-  //   let visitInvestigations = patientInvestigation.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-  //   let visitDiagnosis = patientDiagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-  //   let visitTreatments = patientTreatment.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-  //   let visitBilling = patientBilling.filter(x=> x.date === new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-  //
-  //     visit = {
-  //       date: visitDate,
-  //       patientName: patient.name,
-  //       consultant: visitConsultants,
-  //       examination: visitExaminations,
-  //       survey: visitSurveys,
-  //       vitals: visitVitals,
-  //       history: visitHistory,
-  //       investigation: visitInvestigations,
-  //       diagnosis: visitDiagnosis,
-  //       treatment: visitTreatments,
-  //       billing: visitBilling,
-  //     };
-  //
-  //     console.log(`
-  //       visit: ${JSON.stringify(visit)},
-  //       `);
-  //       return {
-  //         visit
-  //       }
-  // }
+
 
   return (
     <div className="PatientDetailBox1">
@@ -247,6 +213,7 @@ const PatientDetail = (props) => {
       <PatientInsuranceList
         patientInsurance={patientInsurance}
         authUserId={props.authUserId}
+        onDelete={props.insuranceDelete}
         />
       </Tab>
 
@@ -312,6 +279,7 @@ const PatientDetail = (props) => {
       <PatientAllergiesList
         patientAllergies={patientAllergies}
         authUserId={props.authUserId}
+        onDelete={props.deletePatient}
         />
       </Tab>
       <Tab eventKey="Medication" title="Medication">
@@ -396,10 +364,12 @@ const PatientDetail = (props) => {
               confirmText="Search"
               patient={props.patient}
             />
+      {  props.visit !== null && (
         <PatientVisit
           authUserId={props.authUserId}
           visit={props.visit}
           />
+        )}
       </Tab>
     </Tabs>
   </div>

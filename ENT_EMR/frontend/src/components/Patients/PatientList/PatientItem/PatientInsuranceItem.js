@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 import './UserItem.css';
 
@@ -25,6 +26,11 @@ const patientInsuranceItem = props => (
         Subscriber Description: {props.subscriber.description}
       </p>
     </div>
+      {
+        // <Button variant="primary" value={props.insurance} onClick={props.onDelete(this)}>
+        //   Delete
+        // </Button>
+      }
   </li>
 );
 
