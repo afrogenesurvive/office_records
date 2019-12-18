@@ -6,6 +6,9 @@ import Col from 'react-bootstrap/Col';
 // import { NavLink } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion';
 import AuthContext from '../../context/auth-context';
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const CreateUserForm = (props) => {
@@ -58,6 +61,9 @@ return (
   <Form.Label>D.O.B</Form.Label>
   <Form.Control type="date" placeholder="dob"/>
 </Form.Group>
+{
+  // <DatePicker className="formGridDobCalendar"/>
+}
 <Form.Group as={Col} controlId="formGridEmploymentDate">
   <Form.Label>Employment Date</Form.Label>
   <Form.Control type="date" placeholder="employmentDate" />

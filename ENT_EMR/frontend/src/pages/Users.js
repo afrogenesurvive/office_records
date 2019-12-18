@@ -84,6 +84,7 @@ class UsersPage extends Component {
 
   modalConfirmHandler = (event) => {
 
+    console.log("calendarDate", event.target.formGridDobCalendar.value);
     console.log("CreateUserFormData:  ", event.target.formGridEmail.value);
 
     this.setState({ creating: false });

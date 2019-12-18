@@ -2055,6 +2055,7 @@ modalConfirmSearchNameHandler = (event) => {
         date: visitDate,
         patientName: this.context.selectedPatient.name,
         consultant: visitConsultants,
+        complaint: visitComplaints,
         examination: visitExaminations,
         survey: visitSurveys,
         vitals: visitVitals,
@@ -2281,6 +2282,50 @@ modalConfirmSearchNameHandler = (event) => {
   }
 
 
+  deletePatientInsurance = (event) => {
+    event.preventDefault();
+    console.log(`
+      delete patient insurance item:
+      event: ${event}
+      token: ${this.context.token},
+      userId: ${this.context.userId}
+      patientId: ${this.state.selectedPatientId},
+      `);
+
+      // const requestBody = {
+      //   query: `
+      //       mutation {deletePatientInsurance(userId:"${userId}",patientId:"${patientId}",patientInput:{insuranceCompany:"${insuranceItem.company}",insuranceNumber:"${insuranceItem.number}",insuranceDescription:"${insuranceItem.description}",insuranceExpiry:"${insuranceItem.expiry}",insuranceSubscriberCompany:"${insuranceItem.subscriber.company}",insuranceSubscriberDescription:"${insuranceItem.subscriber.description}",})
+      //       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+      //     `};
+      //
+      //     fetch('http://localhost:10000/graphql', {
+      //       method: 'POST',
+      //       body: JSON.stringify(requestBody),
+      //       headers: {
+      //         'Content-Type': 'application/json',
+      //         Authorization: 'Bearer ' + token
+      //       }
+      //     })
+      //       .then(res => {
+      //         if (res.status !== 200 && res.status !== 201) {
+      //           throw new Error('Failed!');
+      //         }
+      //         return res.json();
+      //       })
+      //       .then(resData => {
+      //         let deletedPatient = resData.data.deletePatientInsurance;
+      //         console.log(deletedPatient);
+      //         props.fetchUsers();
+      //         // props.fetchUsers;
+      //
+      //       })
+      //       .catch(err => {
+      //         console.log(err);
+      //       });
+
+  }
+
+
   updatePatientSpecial (event) {
 
     console.log("special field to update:  ", event.target.value);
@@ -2339,12 +2384,15 @@ modalConfirmSearchNameHandler = (event) => {
       &&
       (<PatientDetail
         authUserId={this.context.userId}
+        token={this.context.token}
         patient={this.state.selectedPatient}
         onEdit={this.startUpdatePatientHandler}
         canDelete={this.state.canDelete}
         onDelete={this.modalDeleteHandler}
         onGetVisit={this.getPatientVisit}
         visit={this.context.visit}
+        fetchUsers={this.fetchUsers}
+        insuranceDelete={this.deletePatientInsuranceItem}
         />
     )}
     </Tab>

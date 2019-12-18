@@ -15,6 +15,7 @@ const patientAllergiesList = props => {
         type={allergies.type}
         description={allergies.description}
         attachment={allergies.attachment}
+        onDelete={props.onDelete}
       />
     );
   });
