@@ -84,7 +84,6 @@ class UsersPage extends Component {
 
   modalConfirmHandler = (event) => {
 
-    console.log("calendarDate", event.target.formGridDobCalendar.value);
     console.log("CreateUserFormData:  ", event.target.formGridEmail.value);
 
     this.setState({ creating: false });
@@ -169,6 +168,9 @@ class UsersPage extends Component {
       })
       .then(resData => {
         console.log("create user response data... " + JSON.stringify(resData.data.createUser));
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
+
         this.setState(prevState => {
           const updatedUsers = [...prevState.users];
           updatedUsers.push(resData.data.createUser);
@@ -202,7 +204,7 @@ class UsersPage extends Component {
     let email = event.target.formGridEmail.value;
     let password = event.target.formGridPassword.value;
     let name = event.target.formGridName.value;
-    let role = event.target.formGridRole.value;
+    let role = this.state.selectedUser.role;
     let dob = event.target.formGridDob.value;
     let phone = event.target.formGridPhone.value;
     let addressNumber = event.target.formGridAddressNumber.value;
@@ -215,55 +217,55 @@ class UsersPage extends Component {
 
     if (email.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      email = this.state.user.email;
+      email = this.state.selectedUser.email;
     }
     if (password.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      password = this.state.user.password;
+      password = this.state.selectedUser.password;
     }
     if (name.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      name = this.state.user.name;
+      name = this.state.selectedUser.name;
     }
-    if (role.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      role = this.state.user.role;
-    }
+    // if (role.trim().length === 0) {
+    //   console.log("blank fields detected!!!...filling w/ previous data...");
+    //   role = this.state.selectedUser.role;
+    // }
     if (dob.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      dob = this.state.user.dob;
+      dob = this.state.selectedUser.dob;
     }
     if (phone.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      phone = this.state.user.phone;
+      phone = this.state.selectedUser.phone;
     }
     if (addressNumber.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressNumber = this.state.user.address.number;
+      addressNumber = this.state.selectedUser.address.number;
     }
     if (addressStreet.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressStreet = this.state.user.address.street;
+      addressStreet = this.state.selectedUser.address.street;
     }
     if (addressTown.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressTown = this.state.user.address.town;
+      addressTown = this.state.selectedUser.address.town;
     }
     if (addressParish.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressParish = this.state.user.address.parish;
+      addressParish = this.state.selectedUser.address.parish;
     }
     if (addressPostOffice.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressPostOffice = this.state.user.address.postOffice;
+      addressPostOffice = this.state.selectedUser.address.postOffice;
     }
     if (employmentDate.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      employmentDate = this.state.user.employmentDate;
+      employmentDate = this.state.selectedUser.employmentDate;
     }
     if (terminationDate.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      terminationDate = this.state.user.terminationDate;
+      terminationDate = this.state.selectedUser.terminationDate;
     }
 
     const user = { email, password, name, role, dob, phone, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, employmentDate, terminationDate };
@@ -289,7 +291,7 @@ class UsersPage extends Component {
     const requestBody = {
       query: `
       mutation{
-        updateUser(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{email:"${email}",password:"${password}",name:"${name}",dob:"${dob}",addressNumber:"${addressNumber}",addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
+        updateUser(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{email:"${email}",password:"${password}",name:"${name}",role:"${role}",dob:"${dob}",addressNumber:"${addressNumber}",addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
       }
         `};
@@ -314,6 +316,9 @@ class UsersPage extends Component {
         this.setState({user: updatedUser})
         this.state.users.push(resData.data.updateUser);
         this.context.users = this.state.users;
+
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
         // this.fetchUsers();
       })
       .catch(err => {
@@ -374,6 +379,9 @@ class UsersPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateUserField));
+
+          const responseAlert = JSON.stringify(resData.data).slice(0,8);
+          this.setState({userAlert: responseAlert});
 
           const updatedUserId = resData.data.updateUserField._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);
@@ -461,6 +469,9 @@ class UsersPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateUserAttendance));
+
+          const responseAlert = JSON.stringify(resData.data).slice(0,8);
+          this.setState({userAlert: responseAlert});
 
           const updatedUserId = resData.data.updateUserAttendance._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);
@@ -550,6 +561,9 @@ class UsersPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateUserAttachment));
+
+          const responseAlert = JSON.stringify(resData.data).slice(0,8);
+          this.setState({userAlert: responseAlert});
 
           const updatedUserId = resData.data.updateUserAttachment._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);
@@ -648,6 +662,9 @@ class UsersPage extends Component {
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data));
 
+          const responseAlert = JSON.stringify(resData.data).slice(0,8);
+          this.setState({userAlert: responseAlert});
+
           const updatedUserId = resData.data.updateUserLeave._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);
           const updatedUserPos = this.state.users.indexOf(updatedUser);
@@ -726,6 +743,9 @@ class UsersPage extends Component {
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData));
 
+          const responseAlert = JSON.stringify(resData.data).slice(0,8);
+          this.setState({userAlert: responseAlert});
+
           const searchUsers = resData.data.getUserField;
 
           this.setState({ searchUsers: searchUsers})
@@ -770,6 +790,9 @@ class UsersPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
+
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
 
         const searchUsers = resData.data.getUserId;
 
@@ -817,6 +840,9 @@ class UsersPage extends Component {
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
 
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
+
         const searchUsers = resData.data.getUserField;
 
         this.setState({ searchUsers: searchUsers})
@@ -863,6 +889,9 @@ class UsersPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
+
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
 
         const searchUsers = resData.data.getUserField;
 
@@ -929,6 +958,10 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
+
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
+
         const users = resData.data.users;
         console.log("resData:  ", resData);
         console.log(users);
@@ -978,6 +1011,9 @@ class UsersPage extends Component {
         console.log("resData:  ", resData);
         console.log(users);
 
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
+
         this.setState({users: users});
         // if (this.isActive) {
         //   this.setState({ users: users, isLoading: false });
@@ -1022,6 +1058,9 @@ class UsersPage extends Component {
         const users = resData.data.usersNameDesc;
         console.log("resData:  ", resData);
         console.log(users);
+
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
 
         // if (this.isActive) {
         //   this.setState({ users: users, isLoading: false });
@@ -1074,6 +1113,10 @@ modalDeleteHandler = () => {
       return res.json();
     })
     .then(resData => {
+
+      const responseAlert = JSON.stringify(resData.data).slice(0,8);
+      this.setState({userAlert: responseAlert});
+
       let deletedUser = resData.data.deleteUser;
       console.log(deletedUser);
 
@@ -1122,7 +1165,7 @@ updateUserSpecial (event) {
 
   userSearchClearlHandler () {
     console.log("clearing user search results");
-    this.setState({searchUsers: []});
+    this.setState({searchUsers: [], userAlert: "clearing user search results"});
   }
 
 

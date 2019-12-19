@@ -49,8 +49,7 @@ const PatientVisit = (props) => {
   const diagnosis = visit.diagnosis;
   const treatment = visit.treatment;
   const billing = visit.billing;
-  // FIX ME!!!
-  // some subfields are arrays. tease out lists and items
+  
   console.log(`
     patientVisit: ${JSON.stringify(visit)},
     date: ${visit.date},

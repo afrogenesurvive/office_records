@@ -27,6 +27,7 @@ const patientInsuranceItem = props => (
       </p>
     </div>
       {
+        // FIX ME!!!
         // <Button variant="primary" value={props.insurance} onClick={props.onDelete(this)}>
         //   Delete
         // </Button>

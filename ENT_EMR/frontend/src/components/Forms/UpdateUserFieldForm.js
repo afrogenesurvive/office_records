@@ -28,7 +28,6 @@ return (
     <option>phone</option>
     <option>address.town</option>
     <option>address.parish</option>
-    <option>role</option>
     <option>employmentDate</option>
     <option>terminationDate</option>
   </Form.Control>

@@ -12,8 +12,6 @@ module.exports = {
     if (!user) {
       throw new Error('User does not exist!');
 
-      // FIX ME!!!
-      // can gql  quers/mutes return A || B? if so define type Error in schema and send from resolvers, recieve on frontend n pass to component state.userAlert
     }
     const isEqual = await bcrypt.compare(password, user.password);
     if (!isEqual) {

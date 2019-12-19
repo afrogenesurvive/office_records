@@ -61,7 +61,7 @@ class ThisUserPage extends Component {
     let email = event.target.formGridEmail.value;
     let password = event.target.formGridPassword.value;
     let name = event.target.formGridName.value;
-    let role = event.target.formGridRole.value;
+    let role = this.state.user.role;
     let dob = event.target.formGridDob.value;
     let phone = event.target.formGridPhone.value;
     let addressNumber = event.target.formGridAddressNumber.value;
@@ -84,10 +84,10 @@ class ThisUserPage extends Component {
       console.log("blank fields detected!!!...filling w/ previous data...");
       name = this.state.user.name;
     }
-    if (role.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      role = this.state.user.role;
-    }
+    // if (role.trim().length === 0) {
+    //   console.log("blank fields detected!!!...filling w/ previous data...");
+    //   role = this.state.user.role;
+    // }
     if (dob.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
       dob = this.state.user.dob;
@@ -148,7 +148,7 @@ class ThisUserPage extends Component {
     const requestBody = {
       query: `
       mutation{
-        updateUser(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{email:"${email}",password:"${password}",name:"${name}",dob:"${dob}",addressNumber:"${addressNumber}",addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
+        updateUser(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{email:"${email}",password:"${password}",name:"${name}",role:"${role}",dob:"${dob}",addressNumber:"${addressNumber}",addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
       }
         `};
@@ -168,6 +168,10 @@ class ThisUserPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
+
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
+
         const updatedUser = resData.data.updateUser;
         console.log("updatedUser:  ", JSON.stringify(updatedUser));
         this.setState({user: updatedUser})
@@ -221,6 +225,9 @@ class ThisUserPage extends Component {
           })
           .then(resData => {
             console.log("response data... " + JSON.stringify(resData.data.updateUserField));
+
+            const responseAlert = JSON.stringify(resData.data).slice(0,8);
+            this.setState({userAlert: responseAlert});
 
             const updatedUserId = resData.data.updateUserField._id;
             const updatedUser = this.state.users.find(e => e._id === updatedUserId);
@@ -298,6 +305,10 @@ class ThisUserPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateUserAttendance));
+
+          const responseAlert = JSON.stringify(resData.data).slice(0,8);
+          this.setState({userAlert: responseAlert});
+
           const updatedUserId = resData.data.updateUserAttendance._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);
           const updatedUserPos = this.state.users.indexOf(updatedUser);
@@ -384,6 +395,9 @@ class ThisUserPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data));
+
+          const responseAlert = JSON.stringify(resData.data).slice(0,8);
+          this.setState({userAlert: responseAlert});
 
           const updatedUserId = resData.data.updateUserLeave._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);

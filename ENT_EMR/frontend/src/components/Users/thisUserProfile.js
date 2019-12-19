@@ -16,6 +16,7 @@ const thisUserProfile = (props) => {
   console.log("thisUserProfile.props.user:  " + {...user});
 
   const authUserId = props.authUserId;
+  const userAddress = user.address;
   const userAttendance = user.attendance;
   console.log("Profile: userAttendance", userAttendance);
   const userLeave = user.leave;
@@ -53,6 +54,21 @@ const thisUserProfile = (props) => {
       </Card.Text>
       <Card.Text>
         End Date: {userTerminationDate}
+      </Card.Text>
+      <Card.Text>
+        Address:
+      </Card.Text>
+      <Card.Text>
+        Street & Number : {userAddress.number}, {userAddress.street}
+      </Card.Text>
+      <Card.Text>
+        Town : {userAddress.town}
+      </Card.Text>
+      <Card.Text>
+        Parish : {userAddress.parish}
+      </Card.Text>
+      <Card.Text>
+        Post Office : {userAddress.postOffice}
       </Card.Text>
     </Card.Body>
     </Card>

@@ -104,7 +104,7 @@ class PatientsPage extends Component {
     let name = event.target.formGridName.value;
     let dob = event.target.formGridDob.value;
     let age = event.target.formGridAge.value;
-    let gender = event.target.formGridgender.value;
+    let gender = event.target.formGridGender.value;
     let addressNumber = event.target.formGridAddressNumber.value;
     let addressStreet = event.target.formGridAddressStreet.value;
     let addressTown = event.target.formGridAddressTown.value;
