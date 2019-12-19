@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -15,7 +15,7 @@ const CreateUserForm = (props) => {
 
   // console.log({...props});
   console.log("CreateUserForm:  ", AuthContext.token);
-
+  // const [startDate, setStartDate] = useState(new Date());
 return (
 <div className="CreateFormContainer">
 <Form onSubmit={props.onConfirm}>
@@ -44,7 +44,6 @@ return (
   <option>guest</option>
   <option>nurse</option>
   <option>doctor</option>
-  <option>admin</option>
   <option>staff</option>
 
   </Form.Control>
@@ -61,9 +60,14 @@ return (
   <Form.Label>D.O.B</Form.Label>
   <Form.Control type="date" placeholder="dob"/>
 </Form.Group>
-{
-  // <DatePicker className="formGridDobCalendar"/>
-}
+
+  {
+    // <DatePicker className="calendarDob"
+    //   selected={startDate}
+    //   onChange={date => setStartDate(date)}
+    // />
+  }
+
 <Form.Group as={Col} controlId="formGridEmploymentDate">
   <Form.Label>Employment Date</Form.Label>
   <Form.Control type="date" placeholder="employmentDate" />
@@ -111,9 +115,7 @@ return (
 )}
 
 {props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="0" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
+  <Button variant="success" type="submit">Create</Button>
 )}
 <p>{props.successText}</p>
 

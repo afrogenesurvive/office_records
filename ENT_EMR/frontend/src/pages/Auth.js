@@ -65,7 +65,15 @@ class AuthPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("your data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(0,8)
+        console.log(`
+          resData slice: ${responseAlert},
+          resData: ${JSON.stringify(resData.data)},
+          `);
+
+          this.setState({userAlert: responseAlert})
+        // FIX ME!!!
+        // repeat for signup,login,profile,user,patient,app pages
         if (resData.data.login.token) {
           this.context.login(
             resData.data.login.token,

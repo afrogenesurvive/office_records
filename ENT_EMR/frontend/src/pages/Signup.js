@@ -115,7 +115,7 @@ class SignupPage extends Component {
           this.setState({success: "Signup success...Proceed to login" });
           console.log(this.state.success);
         }
-
+        this.setState({userAlert: JSON.stringify(resData).slice(2,7)})
       })
       .catch(err => {
         console.log(err);
