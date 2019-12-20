@@ -217,15 +217,15 @@ class UsersPage extends Component {
 
     if (email.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      email = this.state.selectedUser.email;
+      email = this.context.selectedUser.email;
     }
     if (password.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      password = this.state.selectedUser.password;
+      password = this.context.selectedUser.password;
     }
     if (name.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      name = this.state.selectedUser.name;
+      name = this.context.selectedUser.name;
     }
     // if (role.trim().length === 0) {
     //   console.log("blank fields detected!!!...filling w/ previous data...");
@@ -233,39 +233,39 @@ class UsersPage extends Component {
     // }
     if (dob.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      dob = this.state.selectedUser.dob;
+      dob = this.context.selectedUser.dob;
     }
     if (phone.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      phone = this.state.selectedUser.phone;
+      phone = this.context.selectedUser.phone;
     }
     if (addressNumber.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressNumber = this.state.selectedUser.address.number;
+      addressNumber = this.context.selectedUser.address.number;
     }
     if (addressStreet.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressStreet = this.state.selectedUser.address.street;
+      addressStreet = this.context.selectedUser.address.street;
     }
     if (addressTown.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressTown = this.state.selectedUser.address.town;
+      addressTown = this.context.selectedUser.address.town;
     }
     if (addressParish.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressParish = this.state.selectedUser.address.parish;
+      addressParish = this.context.selectedUser.address.parish;
     }
     if (addressPostOffice.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressPostOffice = this.state.selectedUser.address.postOffice;
+      addressPostOffice = this.context.selectedUser.address.postOffice;
     }
     if (employmentDate.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      employmentDate = this.state.selectedUser.employmentDate;
+      employmentDate = this.context.selectedUser.employmentDate;
     }
     if (terminationDate.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      terminationDate = this.state.selectedUser.terminationDate;
+      terminationDate = this.context.selectedUser.terminationDate;
     }
 
     const user = { email, password, name, role, dob, phone, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, employmentDate, terminationDate };
@@ -291,8 +291,8 @@ class UsersPage extends Component {
     const requestBody = {
       query: `
       mutation{
-        updateUser(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{email:"${email}",password:"${password}",name:"${name}",role:"${role}",dob:"${dob}",addressNumber:"${addressNumber}",addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
-        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
+        mutation {updateUser(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",userInput: {email:\"${email}\",password:\"${password}\",name:\"${name}\",dob:\"${dob}\",addressNumber:${addressNumber},addressStreet:\"${addressStreet}\",addressTown:\"${addressTown}\",addressParish:\"${addressParish}\", addressPostOffice:\"${addressPostOffice}\",phone:\"${phone}\",role:\"${role}\",employmentDate:\"${employmentDate}\",terminationDate:\"${terminationDate}\"})
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       }
         `};
 
@@ -491,7 +491,7 @@ class UsersPage extends Component {
 
   }
 
-  updateUserAttachmentHandler = (event) => {
+    updateUserAttachmentHandler = (event) => {
 
     const token = this.context.token;
     const userId = this.context.userId;
@@ -515,17 +515,13 @@ class UsersPage extends Component {
     let attachmentPath = event.target.formGridAttachmentPath.value;
 
 
-    if (attachmentName.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      attachmentName = this.context.selectedUser.attachmentName;
-    }
-    if (attachmentFormat.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      attachmentFormat = this.context.selectedUser.attachmentFormat;
-    }
-    if (attachmentPath.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      attachmentPath = this.context.selectedUser.attachmentPath;
+    if (
+      attachmentName.trim().length === 0 ||
+      attachmentFormat.trim().length === 0 ||
+      attachmentPath.trim().length === 0
+  ) {
+      console.log("blank fields detected!!! try again");
+      return
     }
 
     const userAttachment = { attachmentName, attachmentFormat, attachmentPath }
@@ -541,8 +537,8 @@ class UsersPage extends Component {
 
       const requestBody = {
         query:`
-          mutation {updateUserAttachment(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentPath}"})
-          {_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
+          mutation{updateUserAttachment(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",userInput:{attachmentName:\"${attachmentName}\",attachmentFormat:\"${attachmentFormat}\",attachmentPath:\"${attachmentPath}\"})
+          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
       fetch('http://localhost:10000/graphql', {
@@ -608,26 +604,20 @@ class UsersPage extends Component {
     let leaveStartDate = event.target.formGridLeaveStartDate.value;
     let leaveEndDate = event.target.formGridLeaveEndDate.value;
 
-    if (leaveType.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      leaveType = this.context.selectedUser.leaveType;
-    }
-    if (leaveTitle.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      leaveTitle = this.context.selectedUser.leaveTitle;
-    }
-    if (leaveStartDate.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      leaveStartDate = this.context.selectedUser.leaveStartDate;
-    }
-    if (leaveEndDate.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      leaveEndDate = this.context.selectedUser.leaveEndDate;
+    if (
+      leaveType.trim().length === 0 ||
+      leaveTitle.trim().length === 0 ||
+      leaveStartDate.trim().length === 0 ||
+      leaveEndDate.trim().length === 0
+    ) {
+      console.log("blank fields detected!!!...try again");
+      this.setState({userAlert: "blank fields detected!!!...try again"});
+      return
     }
 
     const userLeave = { leaveType, leaveTitle, leaveStartDate, leaveEndDate }
     console.log(`
-      adding user attendance item...
+      adding user leave item...
       userId: ${userId},
       selectedUserId: ${selectedUserId}
       leave: {
@@ -637,11 +627,11 @@ class UsersPage extends Component {
         endDate: ${leaveEndDate}
       }
       `);
-      this.setState({userAlert: "adding user attendance item..."})
+      this.setState({userAlert: "adding user leave item..."})
 
       const requestBody = {
         query:`
-          mutation {updateUserLeave(userId:"${userId}", selectedUserId:"${userId}",userInput:{leaveType:"${leaveType}",leaveTitle:"${leaveTitle}",leaveStartDate:"${leaveStartDate}",leaveEndDate:"${leaveEndDate}"})
+          mutation{updateUserLeave(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",userInput:{leaveType:\"${leaveType}\",leaveTitle:\"${leaveTitle}\",leaveStartDate:\"${leaveStartDate}\",leaveEndDate:\"${leaveEndDate}\"})
           {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
