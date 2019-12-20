@@ -505,21 +505,21 @@ type RootMutation {
     updatePatientTags(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
 
     deletePatient(userId: ID!, patientId: ID!): Patient
-    deletePatientAppointment(userId: ID!, patientId: ID!, appointmentId: ID!): Patient
-    deletePatientConsultant(userId: ID!, patientId: ID!, consultantId: ID!): Patient
+    deletePatientAppointment(userId: ID!, patientId: ID!, appointmentId: ID!, appointmentDate: String): Patient
+    deletePatientConsultant(userId: ID!, patientId: ID!, consultantId: ID!, consultantDate: String!): Patient
     deletePatientInsurance(userId: ID!, patientId: ID!, insuranceCompany: String!, insuranceNumber: String! ): Patient
     deletePatientNextOfKin(userId: ID!, patientId: ID!, nextOfKinName: String!): Patient
     deletePatientComplaint(userId: ID!, patientId: ID!, complaintTitle: String!, complaintDate: String!): Patient
     deletePatientSurvey(userId: ID!, patientId: ID!, surveyTitle: String!, surveyDate: String!): Patient
     deletePatientVitals(userId: ID!, patientId: ID!, vitalsDate: String!): Patient
     deletePatientExamination(userId: ID!, patientId: ID!, examinationType: String!, examinationDate: String!): Patient
-    deletePatientHistory(userId: ID!, patientId: ID!, historyType: String!, historyTitle: String!): Patient
+    deletePatientHistory(userId: ID!, patientId: ID!, historyDate: String!, historyTitle: String!): Patient
     deletePatientAllergies(userId: ID!, patientId: ID!, allergiesType: String!, allergiesTitle: String!): Patient
     deletePatientMedication(userId: ID!, patientId: ID!, medicationType: String!, medicationTitle: String!): Patient
-    deletePatientInvestigation(userId: ID!, patientId: ID!, investigationType: String!, investigationTitle: String!): Patient
-    deletePatientDiagnosis(userId: ID!, patientId: ID!, diagnosisType: String!, diagnosisTitle: String!): Patient
-    deletePatientTreatment(userId: ID!, patientId: ID!, treatmentType: String!, treatmentTitle: String!): Patient
-    deletePatientBilling(userId: ID!, patientId: ID!, billingType: String!, billingTitle: String!): Patient
+    deletePatientInvestigation(userId: ID!, patientId: ID!, investigationDate: String!, investigationTitle: String!): Patient
+    deletePatientDiagnosis(userId: ID!, patientId: ID!, diagnosisDate: String!, diagnosisTitle: String!): Patient
+    deletePatientTreatment(userId: ID!, patientId: ID!, treatmentDate: String!, treatmentTitle: String!): Patient
+    deletePatientBilling(userId: ID!, patientId: ID!, billingDate: String!, billingTitle: String!): Patient
     deletePatientAttachment(userId: ID!, patientId: ID!, attachmentName: String!): Patient
     deletePatientNote(userId: ID!, patientId: ID!, note: String!): Patient
     deletePatientTag(userId: ID!, patientId: ID!, tag: String!): Patient

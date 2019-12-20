@@ -219,6 +219,7 @@ const patientSchema = new Schema({
     name: String,
     format: String,
     path: String,
+    _id: false
   }],
   notes: [String],
   tags: [String]
