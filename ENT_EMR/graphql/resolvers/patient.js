@@ -1049,7 +1049,7 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { appointments: { _id: args.appointmentId}}},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { appointments: { _id: args.appointmentId, date: args.appointmentDate}}},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1075,7 +1075,7 @@ module.exports = {
 
       const consultantObject = await User.findById({_id: args.consultantId});
 
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { consultant: { reference:consultantObject }}},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { consultant: { date: args.consultantDate , reference:consultantObject }}},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1098,19 +1098,11 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const insurance = {
-        company: args.patientInput.insuranceCompany,
-        number: args.patientInput.insuranceNumber,
-        description: args.patientInput.insuranceDescription,
-        subscriber: {
-          company: args.patientInput.insuranceSubscriberCompany,
-          description: args.patientInput.insuranceSubscriberDescription,
-        }
-      }
-      console.log(`
-        insurance: ${insurance},
-        `);
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { insurance: insurance }},{new: true})
+
+      // console.log(`
+      //   insurance: ${insurance},
+      //   `);
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { insurance: { company: args.insuranceCompany, number: args.insuranceNumber } }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1133,17 +1125,10 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const nextOfKin = {
-        name: args.patientInput.nextOfKinName,
-        contact: {
-          phone: args.patientInput.nextOfKinPhone,
-          email: args.patientInput.nextOfKinEmail
-        }
-      }
-      console.log(`
-        nextOfKin: ${util.inspect(nextOfKin)}
-        `);
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { nextOfKin: nextOfKin}},{new: true})
+      // console.log(`
+      //   nextOfKin: ${util.inspect(nextOfKin)}
+      //   `);
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { nextOfKin: { name: args.nextOfKinName}}},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
 
@@ -1167,18 +1152,8 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const complaint = {
-        date: args.patientInput.complaintDate,
-        title: args.patientInput.complaintTitle,
-        description: args.patientInput.complaintDescription,
-        anamnesis: args.patientInput.complaintAnamnesis,
-        attachment:{
-          name: args.patientInput.complaintAttachmentName,
-          format: args.patientInput.complaintAttachmentFormat,
-          path: args.patientInput.complaintAttachmentPath,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { complaints: complaint}},{new: true})
+
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { complaints: {date: args.complaintDate, title: args.complaintTitle}}},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1202,17 +1177,7 @@ module.exports = {
     }
 
     try {
-      const survey = {
-        date: args.patientInput.surveyDate,
-        title: args.patientInput.surveyTitle,
-        description: args.patientInput.surveyDescription,
-        attachment:{
-          name: args.patientInput.surveyAttachmentName,
-          format: args.patientInput.surveyAttachmentFormat,
-          path: args.patientInput.surveyAttachmentPath,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { surveys: survey}},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { surveys: {title: args.surveyTitle, date: args.surveyDate}}},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1236,23 +1201,7 @@ module.exports = {
     }
 
     try {
-      const vitals = {
-        date: args.patientInput.vitalsDate,
-        pr: args.patientInput.vitalsPr,
-        bp1: args.patientInput.vitalsBp1,
-        bp2: args.patientInput.vitalsBp2,
-        rr: args.patientInput.vitalsRr,
-        temp: args.patientInput.vitalsTemp,
-        ps02: args.patientInput.vitalsPs02,
-        height: args.patientInput.vitalsHeight,
-        weight: args.patientInput.vitalsWeight,
-        bmi: args.patientInput.vitalsBmi,
-        urine:{
-          type: args.patientInput.vitalsUrineType,
-          value: args.patientInput.vitalsUrineValue,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { vitals: vitals}},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { vitals: {date: args.vitalsDate}}},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1275,22 +1224,7 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const examination = {
-        date: args.patientInput.examinationDate,
-        general: args.patientInput.examinationGeneral,
-        area: args.patientInput.examinationArea,
-        type: args.patientInput.examinationType,
-        measure: args.patientInput.examinationMeasure,
-        value: args.patientInput.examinationValue,
-        description: args.patientInput.examinationDescription,
-        followUp: args.patientInput.examinationFollowUp,
-        attachment:{
-          name: args.patientInput.examinationAttachmentName,
-          format: args.patientInput.examinationAttachmentFormat,
-          path: args.patientInput.examinationAttachmentPath,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { examination: examination }},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { examination: {type: args.examinationType, date: args.examinationDate} }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1313,18 +1247,7 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const history = {
-        type: args.patientInput.historyType,
-        date: args.patientInput.historyDate,
-        title: args.patientInput.historyTitle,
-        description: args.patientInput.historyDescription,
-        attachment: {
-          name: args.patientInput.historyAttachmentName,
-          format: args.patientInput.historyAttachmentFormat,
-          path: args.patientInput.historyAttachmentPath,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { history: history }},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { history: {date: args.historyDate, title: args.historyTitle} }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1347,17 +1270,7 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const allergies = {
-        title: args.patientInput.allergiesTitle,
-        type: args.patientInput.allergiesType,
-        description: args.patientInput.allergiesDescription,
-        attachment: {
-          name: args.patientInput.allergiesAttachmentName,
-          format: args.patientInput.allergiesAttachmentFormat,
-          path: args.patientInput.allergiesAttachmentPath,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { allergies: allergies }},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { allergies: {title: args.allergiesTitle, type: args.allergiesType} }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1380,17 +1293,7 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const medication = {
-        title: args.patientInput.medicationTitle,
-        type: args.patientInput.medicationType,
-        description: args.patientInput.medicationDescription,
-        attachment: {
-          name: args.patientInput.medicationAttachmentName,
-          format: args.patientInput.medicationAttachmentFormat,
-          path: args.patientInput.medicationAttachmentPath,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { medication: medication }},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { medication: {title: args.medicationTitle, type: args.medicationType} }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1413,18 +1316,7 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const investigation = {
-        date: args.patientInput.investigationDate,
-        title: args.patientInput.investigationTitle,
-        type: args.patientInput.investigationType,
-        description: args.patientInput.investigationDescription,
-        attachment: {
-          name: args.patientInput.investigationAttachmentName,
-          format: args.patientInput.investigationAttachmentFormat,
-          path: args.patientInput.investigationAttachmentPath,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { investigation: investigation }},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { investigation: {date: args.investigationDate, title: args.investigationTitle} }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1447,18 +1339,7 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const diagnosis = {
-        date: args.patientInput.diagnosisDate,
-        title: args.patientInput.diagnosisTitle,
-        type: args.patientInput.diagnosisType,
-        description: args.patientInput.diagnosisDescription,
-        attachment: {
-          name: args.patientInput.diagnosisAttachmentName,
-          format: args.patientInput.diagnosisAttachmentFormat,
-          path: args.patientInput.diagnosisAttachmentPath,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { diagnosis: diagnosis }},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { diagnosis: {date: args.diagnosisDate, title: args.diagnosisTitle} }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1481,20 +1362,7 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const treatment = {
-        date: args.patientInput.treatmentDate,
-        title: args.patientInput.treatmentTitle,
-        type: args.patientInput.treatmentType,
-        description: args.patientInput.treatmentDescription,
-        dose: args.patientInput.treatmentDose,
-        frequency: args.patientInput.treatmentFrequency,
-        attachment: {
-          name: args.patientInput.treatmentAttachmentName,
-          format: args.patientInput.treatmentAttachmentFormat,
-          path: args.patientInput.treatmentAttachmentPath,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { treatment: treatment }},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { treatment: {date: args.treatmentDate, title: args.treatmentTitle} }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
         return {
@@ -1517,20 +1385,7 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const billing = {
-        date: args.patientInput.billingDate,
-        title: args.patientInput.billingTitle,
-        type: args.patientInput.billingType,
-        description: args.patientInput.billingDescription,
-        amount: args.patientInput.billingAmount,
-        paid: args.patientInput.billingPaid,
-        attachment: {
-          name: args.patientInput.billingAttachmentName,
-          format: args.patientInput.billingAttachmentFormat,
-          path: args.patientInput.billingAttachmentPath,
-        }
-      }
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { billing: billing }},{new: true})
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { billing: {date: args.billingDate, title: args.billingTitle} }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
 

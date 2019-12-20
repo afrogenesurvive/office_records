@@ -11,6 +11,7 @@ const patientVitalsList = props => {
       <PatientVitalsItem
         key={patientVitalsDate}
         userId={props.authUserId}
+        date={patientVitalsDate}
         pr={vitals.pr}
         bp1={vitals.bp1}
         bp2={vitals.bp2}
