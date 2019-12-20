@@ -555,7 +555,7 @@ class AppointmentsPage extends Component {
 
           const searchApointments = resData.data.getApointmentId;
 
-          this.setState({ searchApointments: searchApointments})
+          this.setState({ searchApointments: [searchApointments]})
           console.log("state.searchApointments:  ", this.state.searchApointments);
           // this.fetchUsers();
         })

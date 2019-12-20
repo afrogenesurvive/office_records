@@ -6,6 +6,8 @@ import SearchUserItem from './UserItem/SearchUserItem';
 import './UserList.css';
 
 const searchUserList = props => {
+  console.log(" search user list:  ", props.searchUsers);
+  
   const searchUsers = props.searchUsers.map(user => {
     return (
       <React.Fragment>

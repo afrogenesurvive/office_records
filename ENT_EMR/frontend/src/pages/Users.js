@@ -204,7 +204,7 @@ class UsersPage extends Component {
     let email = event.target.formGridEmail.value;
     let password = event.target.formGridPassword.value;
     let name = event.target.formGridName.value;
-    let role = this.state.selectedUser.role;
+    let role = this.context.selectedUser.role;
     let dob = event.target.formGridDob.value;
     let phone = event.target.formGridPhone.value;
     let addressNumber = event.target.formGridAddressNumber.value;
@@ -290,10 +290,8 @@ class UsersPage extends Component {
 
     const requestBody = {
       query: `
-      mutation{
-        mutation {updateUser(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",userInput: {email:\"${email}\",password:\"${password}\",name:\"${name}\",dob:\"${dob}\",addressNumber:${addressNumber},addressStreet:\"${addressStreet}\",addressTown:\"${addressTown}\",addressParish:\"${addressParish}\", addressPostOffice:\"${addressPostOffice}\",phone:\"${phone}\",role:\"${role}\",employmentDate:\"${employmentDate}\",terminationDate:\"${terminationDate}\"})
-        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
-      }
+      mutation {updateUser(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",userInput: {email:\"${email}\",password:\"${password}\",name:\"${name}\",dob:\"${dob}\",addressNumber:${addressNumber},addressStreet:\"${addressStreet}\",addressTown:\"${addressTown}\",addressParish:\"${addressParish}\", addressPostOffice:\"${addressPostOffice}\",phone:\"${phone}\",role:\"${role}\",employmentDate:\"${employmentDate}\",terminationDate:\"${terminationDate}\"})
+      {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
     fetch('http://localhost:10000/graphql', {
@@ -786,7 +784,7 @@ class UsersPage extends Component {
 
         const searchUsers = resData.data.getUserId;
 
-        this.setState({ searchUsers: searchUsers})
+        this.setState({ searchUsers: [searchUsers] });
         console.log("state.searchUsers:  ", this.state.searchUsers);
         // this.fetchUsers();
       })
@@ -833,7 +831,7 @@ class UsersPage extends Component {
         const responseAlert = JSON.stringify(resData.data).slice(0,8);
         this.setState({userAlert: responseAlert});
 
-        const searchUsers = resData.data.getUserField;
+        const searchUsers = resData.data.getUserAttendanceDate;
 
         this.setState({ searchUsers: searchUsers})
         console.log("state.searchUsers:  ", this.state.searchUsers);
@@ -883,7 +881,7 @@ class UsersPage extends Component {
         const responseAlert = JSON.stringify(resData.data).slice(0,8);
         this.setState({userAlert: responseAlert});
 
-        const searchUsers = resData.data.getUserField;
+        const searchUsers = resData.data.getUserLeaveDateRange;
 
         this.setState({ searchUsers: searchUsers})
         console.log("state.searchUsers:  ", this.state.searchUsers);

@@ -4,6 +4,7 @@ import UserItem from './UserItem/UserItem';
 import './UserList.css';
 
 const userList = props => {
+  
   const users = props.users.map(user => {
     return (
       <UserItem
