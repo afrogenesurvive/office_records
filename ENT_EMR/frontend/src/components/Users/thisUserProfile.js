@@ -44,6 +44,9 @@ const thisUserProfile = (props) => {
         Name: {user.name}
       </Card.Text>
       <Card.Text>
+        Phone: {user.phone}
+      </Card.Text>
+      <Card.Text>
         Email: {user.email}
       </Card.Text>
       <Card.Text>

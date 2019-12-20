@@ -46,6 +46,9 @@ const UserDetail = (props) => {
           Email: {user.email}
         </Card.Text>
         <Card.Text>
+          Phone: {user.phone}
+        </Card.Text>
+        <Card.Text>
           Role: {user.role}
         </Card.Text>
         <Card.Text>

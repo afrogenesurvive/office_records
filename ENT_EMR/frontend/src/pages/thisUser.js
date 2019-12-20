@@ -61,7 +61,7 @@ class ThisUserPage extends Component {
     let email = event.target.formGridEmail.value;
     let password = event.target.formGridPassword.value;
     let name = event.target.formGridName.value;
-    let role = this.state.user.role;
+    let role = this.context.user.role;
     let dob = event.target.formGridDob.value;
     let phone = event.target.formGridPhone.value;
     let addressNumber = event.target.formGridAddressNumber.value;
@@ -74,15 +74,15 @@ class ThisUserPage extends Component {
 
     if (email.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      email = this.state.user.email;
+      email = this.context.user.email;
     }
     if (password.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      password = this.state.user.password;
+      password = this.context.user.password;
     }
     if (name.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      name = this.state.user.name;
+      name = this.context.user.name;
     }
     // if (role.trim().length === 0) {
     //   console.log("blank fields detected!!!...filling w/ previous data...");
@@ -90,39 +90,39 @@ class ThisUserPage extends Component {
     // }
     if (dob.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      dob = this.state.user.dob;
+      dob = this.context.user.dob;
     }
     if (phone.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      phone = this.state.user.phone;
+      phone = this.context.user.phone;
     }
     if (addressNumber.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressNumber = this.state.user.address.number;
+      addressNumber = this.context.user.address.number;
     }
     if (addressStreet.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressStreet = this.state.user.address.street;
+      addressStreet = this.context.user.address.street;
     }
     if (addressTown.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressTown = this.state.user.address.town;
+      addressTown = this.context.user.address.town;
     }
     if (addressParish.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressParish = this.state.user.address.parish;
+      addressParish = this.context.user.address.parish;
     }
     if (addressPostOffice.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressPostOffice = this.state.user.address.postOffice;
+      addressPostOffice = this.context.user.address.postOffice;
     }
     if (employmentDate.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      employmentDate = this.state.user.employmentDate;
+      employmentDate = this.context.user.employmentDate;
     }
     if (terminationDate.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      terminationDate = this.state.user.terminationDate;
+      terminationDate = this.context.user.terminationDate;
     }
 
 
@@ -147,10 +147,8 @@ class ThisUserPage extends Component {
 
     const requestBody = {
       query: `
-      mutation{
-        updateUser(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{email:"${email}",password:"${password}",name:"${name}",role:"${role}",dob:"${dob}",addressNumber:"${addressNumber}",addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
-        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
-      }
+        mutation {updateUser(userId:\"${userId}\",selectedUserId:\"${userId}\",userInput: {email:\"${email}\",password:\"${password}\",name:\"${name}\",dob:\"${dob}\",addressNumber:${addressNumber},addressStreet:\"${addressStreet}\",addressTown:\"${addressTown}\",addressParish:\"${addressParish}\", addressPostOffice:\"${addressPostOffice}\",phone:\"${phone}\",role:\"${role}\",employmentDate:\"${employmentDate}\",terminationDate:\"${terminationDate}\"})
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
     fetch('http://localhost:10000/graphql', {
@@ -204,9 +202,8 @@ class ThisUserPage extends Component {
 
         const requestBody = {
           query:`
-            mutation{updateUserField(userId:"${userId}",selectedUserId:"${selectedUserId}",field:"${field}",query:"${query}")
-            {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
-          }
+            mutation{updateUserField(userId:\"${userId}\",selectedUserId:\"${userId}\",field:\"${field}\",query:\"${query}\")
+            {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
           `};
 
         fetch('http://localhost:10000/graphql', {
@@ -314,7 +311,7 @@ class ThisUserPage extends Component {
           const updatedUserPos = this.state.users.indexOf(updatedUser);
           const slicedArray = this.state.users.splice(updatedUserPos, 1);
           console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-          this.state.users.push(updatedUser);
+          this.state.users.push(resData.data.updateUserAttendance);
           this.context.users = this.state.users;
           // this.fetchUsers();
         })
@@ -405,7 +402,7 @@ class ThisUserPage extends Component {
           const slicedArray = this.state.users.splice(updatedUserPos, 1);
           console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
 
-          this.state.users.push(updatedUser);
+          this.state.users.push(resData.data.updateUserLeave);
           this.context.users = this.state.users;
           // this.fetchUsers();
         })
@@ -414,6 +411,95 @@ class ThisUserPage extends Component {
           this.setState({userAlert: err});
         });
   };
+
+
+  updateUserAttachmentHandler = (event) => {
+
+  const token = this.context.token;
+  const userId = this.context.userId;
+  let selectedUserId = this.context.selectedUser._id;
+  // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
+  //   console.log("Not the creator or Admin! No edit permission!!");
+  //   selectedUserId = null;
+  // }
+  if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
+    console.log("Not the creator or Admin! No edit permission!!");
+    this.setState({userAlert: "Not the creator or Admin! No edit permission!!"})
+      selectedUserId = null;
+  }
+
+  console.log("UpdateUserAttachmentFormData:  ", event.target.formGridAttachmentName.value);
+
+  this.setState({ updating: false , userUpdateField: null });
+
+  let attachmentName = event.target.formGridAttachmentName.value;
+  let attachmentFormat = event.target.formGridAttachmentFormat.value;
+  let attachmentPath = event.target.formGridAttachmentPath.value;
+
+
+  if (
+    attachmentName.trim().length === 0 ||
+    attachmentFormat.trim().length === 0 ||
+    attachmentPath.trim().length === 0
+) {
+    console.log("blank fields detected!!! try again");
+    return
+  }
+
+  const userAttachment = { attachmentName, attachmentFormat, attachmentPath }
+  console.log(`
+    adding user attendance item...
+    userId: ${userId},
+    selectedUserId: ${selectedUserId}
+    attachmentName: ${attachmentName},
+    attachmentFormat: ${attachmentFormat},
+    attachmentPath: ${attachmentPath}
+    `);
+    this.setState({userAlert: "adding user attendance item..."})
+
+    const requestBody = {
+      query:`
+        mutation{updateUserAttachment(userId:\"${userId}\",selectedUserId:\"${userId}\",userInput:{attachmentName:\"${attachmentName}\",attachmentFormat:\"${attachmentFormat}\",attachmentPath:\"${attachmentPath}\"})
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+      `};
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("response data... " + JSON.stringify(resData.data.updateUserAttachment));
+
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
+
+        const updatedUserId = resData.data.updateUserAttachment._id;
+        const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+        const updatedUserPos = this.state.users.indexOf(updatedUser);
+        const slicedArray = this.state.users.splice(updatedUserPos, 1);
+        console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+        this.state.users.push(resData.data.updateUserAttachment);
+        this.context.users = this.state.users;
+        // this.fetchUsers();
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({userAlert: err});
+      });
+
+
+}
 
 
   getThisUser() {
