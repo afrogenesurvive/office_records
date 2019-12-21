@@ -62,24 +62,24 @@ return (
 <Form.Group as={Col} controlId="formGridInProgress">
       <Form.Label>InProgress</Form.Label>
       <Form.Control as="select">
-        <option>true</option>
         <option>false</option>
+        <option>true</option>
       </Form.Control>
     </Form.Group>
 
     <Form.Group as={Col} controlId="formGridAttended">
           <Form.Label>Attended</Form.Label>
           <Form.Control as="select">
-            <option>true</option>
             <option>false</option>
+            <option>true</option>
           </Form.Control>
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridImportant">
               <Form.Label>Important</Form.Label>
               <Form.Control as="select">
-                <option>true</option>
                 <option>false</option>
+                <option>true</option>
               </Form.Control>
             </Form.Group>
 </Form.Row>

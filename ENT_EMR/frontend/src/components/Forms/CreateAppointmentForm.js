@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
+import Alert from 'react-bootstrap/Alert'
 import TimeField from 'react-simple-timefield';
 // import FormCheck from 'react-bootstrap/FormCheck'
 // import { NavLink } from 'react-router-dom';
@@ -17,6 +18,11 @@ const CreateAppointmentForm = (props) => {
 return (
 <div className="CreateFormContainer">
 <Form onSubmit={props.onConfirm}>
+<Form.Row>
+<Alert variant="primary">
+  Create an appointment for: {props.selectedPatient.name}
+</Alert>
+</Form.Row>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridTitle">
     <Form.Label>Title</Form.Label>
@@ -62,24 +68,24 @@ return (
 <Form.Group as={Col} controlId="formGridInProgress">
       <Form.Label>InProgress</Form.Label>
       <Form.Control as="select">
-        <option>true</option>
         <option>false</option>
+        <option>true</option>
       </Form.Control>
     </Form.Group>
 
     <Form.Group as={Col} controlId="formGridAttended">
           <Form.Label>Attended</Form.Label>
           <Form.Control as="select">
-            <option>true</option>
             <option>false</option>
+            <option>true</option>
           </Form.Control>
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridImportant">
               <Form.Label>Important</Form.Label>
               <Form.Control as="select">
-                <option>true</option>
                 <option>false</option>
+                <option>true</option>
               </Form.Control>
             </Form.Group>
 </Form.Row>
@@ -91,16 +97,10 @@ return (
 )}
 
 {props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="4" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
+  <Button variant="success" type="submit">Create New</Button>
 )}
 
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};
