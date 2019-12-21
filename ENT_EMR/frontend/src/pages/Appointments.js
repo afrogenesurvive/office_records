@@ -90,6 +90,13 @@ class AppointmentsPage extends Component {
         patientId: ${selectedPatientId}
       `);
 
+      if (selectedPatientId === undefined) {
+        console.log(`
+          select a Patient before creating an Appointment!!
+          `);
+          this.setState({userAlert: "select a Patient before creating an Appointment!!..."});
+          return
+      }
     const title = event.target.formGridTitle.value;
     const type = event.target.formGridType.value;
     const date = event.target.formGridDate.value;
@@ -107,8 +114,6 @@ class AppointmentsPage extends Component {
       type.trim().length === 0 ||
       date.trim().length === 0 ||
       time.trim().length === 0 ||
-      seenTime.trim().length === 0 ||
-      checkinTime.trim().length === 0 ||
       location.trim().length === 0 ||
       description.trim().length === 0 ||
       inProgress.trim().length === 0 ||
@@ -127,7 +132,7 @@ class AppointmentsPage extends Component {
         type: ${type},
         date: ${date},
         time: ${time},
-        seenTime: $seenTtime},
+        seenTime: ${seenTime},
         checkinTime: ${checkinTime},
         location: ${location},
         description: ${description},
@@ -139,7 +144,7 @@ class AppointmentsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation {createAppointment(userId:"${userId}",patientId:"${selectedPatientId}",appointmentInput:{title:"${title}",type:"${type}",date:"${date}",time:"${time}",seenTime:"${seenTime}",checkinTime:"${checkinTime}",location:"${location}",description:"${description}",inProgress:${inProgress},attended:${attended},important:${important}})
+          mutation {createAppointment(userId:\"${userId}\",patientId:\"${selectedPatientId}\",appointmentInput:{title:\"${title}\",type:\"${type}\",date:\"${date}\",time:\"${time}\",seenTime:\"${seenTime}\",checkinTime:\"${checkinTime}\",location:\"${location}\",description:\"${description}\",inProgress:${inProgress},attended:${attended},important:${important},})
           {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important}}
         `,
     };
@@ -162,15 +167,17 @@ class AppointmentsPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data.createAppointment));
-        const newAppointment = resData.data.createAppointment;
+        const responseAlert = JSON.stringify(resData.data).slice(2,12);
+        this.setState({userAlert: responseAlert});
+
         this.setState(prevState => {
           const updatedAppointments = [...prevState.appointments];
-          updatedAppointments.push(newAppointment);
+          updatedAppointments.push(resData.data.createAppointment);
 
           return { appointments: updatedAppointments };
         });
-
-        this.fetchAppointments();
+        this.context.appointments = this.state.appointments;
+        // this.fetchAppointments();
 
       })
       .catch(err => {
@@ -208,14 +215,13 @@ class AppointmentsPage extends Component {
     let type = event.target.formGridType.value;
     let date = event.target.formGridDate.value;
     let time = event.target.formGridTime.value;
-    const seenTime = event.target.formGridSeenTime.value;
-    const checkinTime = event.target.formGridCheckinTime.value;
+    let seenTime = event.target.formGridSeenTime.value;
+    let checkinTime = event.target.formGridCheckinTime.value;
     let location = event.target.formGridLocation.value;
     let description = event.target.formGridDescription.value;
     let inProgress = event.target.formGridInProgress.value;
     let attended = event.target.formGridAttended.value;
     let important = event.target.formGridImportant.value;
-    let notes = event.target.formGridNotes.value;
 
     if (title.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -263,7 +269,7 @@ class AppointmentsPage extends Component {
       important  = this.context.selectedAppointment.important;
     }
 
-    const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important };
+    const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important, };
     console.log(`
         updating appointment...
         title: ${title},
@@ -282,8 +288,8 @@ class AppointmentsPage extends Component {
 
     const requestBody = {
       query: `
-      mutation {updateAppointment(userId:"${userId}",patientId:"${selectedPatientId}",appointmentInput:{title:"${title}",type:"${type}",date:"${date}",time:"${time}",seenTime:"${seenTime}",checkinTime:"${checkinTime}",location:"${location}",description:"${description}",inProgress:${inProgress},attended:${attended},important:${important}})
-      {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important}}
+      mutation {updateAppointment(userId:\"${userId}\",appointmentId:\"${appointmentId}\",appointmentInput:{title:\"${title}\",type:\"${type}\",date:\"${date}\",time:\"${time}\",seenTime:\"${seenTime}\",checkinTime:\"${checkinTime}\",location:\"${location}\",description:\"${description}\",inProgress:${inProgress},attended:${attended},important:${important},})
+      {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
         `
     };
 
@@ -755,6 +761,7 @@ class AppointmentsPage extends Component {
         }
       });
   }
+
   fetchAppointmentsAsc = () => {
     console.log("'fetch appointments function' context object... " + JSON.stringify(this.context));
     const userId = this.context.userId;
@@ -1068,6 +1075,7 @@ class AppointmentsPage extends Component {
                     onConfirm={this.modalConfirmHandler}
                     onSubmit={this.modalConfirmHandler}
                     confirmText="Confirm"
+                    selectedPatient={this.context.selectedPatient}
                   />
               )}
               </Tab>

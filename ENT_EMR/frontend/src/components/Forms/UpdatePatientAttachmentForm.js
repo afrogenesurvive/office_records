@@ -31,6 +31,7 @@ return (
     <Form.Label>PatientAttachmentPath</Form.Label>
     <Form.Control type="text" placeholder="PatientAttachmentPath"/>
   </Form.Group>
+  <input type="file" name="myFile"/>
   </Form.Row>
 
 
