@@ -218,6 +218,9 @@ class PatientsPage extends Component {
           response data:
           ${JSON.stringify(resData.data.createPatient)}
           `);
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
+          
         const newPatient = resData.data.createPatient;
         this.setState(prevState => {
           const updatedPatients = [...prevState.patients];

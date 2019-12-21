@@ -167,7 +167,7 @@ class AppointmentsPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data.createAppointment));
-        const responseAlert = JSON.stringify(resData.data).slice(2,12);
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
         this.setState({userAlert: responseAlert});
 
         this.setState(prevState => {
@@ -311,6 +311,8 @@ class AppointmentsPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedAppointmentId = resData.data.updateAppointment._id;
         const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
@@ -341,6 +343,14 @@ class AppointmentsPage extends Component {
       console.log("No edit permission!!");
       this.setState({userAlert: "No edit permission!!"});
       return;
+    }
+
+    if (selectedPatientId === undefined) {
+      console.log(`
+        select a Patient before creating an Appointment!!
+        `);
+        this.setState({userAlert: "select a Patient before creating an Appointment!!..."});
+        return
     }
 
     this.setState({ updating: false , patientUpdateField: null });
@@ -377,6 +387,8 @@ class AppointmentsPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
           const updatedAppointmentId = resData.data.updateAppointmentPatient._id;
           const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
@@ -411,17 +423,17 @@ class AppointmentsPage extends Component {
       this.setState({ updating: false });
 
       let field = null;
-      let query = event.target.formBasicQuery.value;
-      if (event.target.formBasicFieldSelect.value === "select") {
-        field = event.target.formBasicField.value;
+      let query = event.target.formGridQuery.value;
+      if (event.target.formGridFieldSelect.value === "select") {
+        field = event.target.formGridField.value;
       } else {
-        field = event.target.formBasicFieldSelect.value;
+        field = event.target.formGridFieldSelect.value;
       }
 
       const requestBody = {
         query:`
-          mutation{updateAppointmentField(userId:"${userId}",selectedAppointmentId:"${selectedAppointmentId}",field:"${field}",query:"${query}")
-
+        mutation {updateAppointmentField(userId:\"${userId}\",appointmentId:\"${selectedAppointmentId}\",field:\"${field}\",query:\"${query}\")
+        {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
         `};
 
       fetch('http://localhost:10000/graphql', {
@@ -440,6 +452,8 @@ class AppointmentsPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateAppointmentField));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
           const updatedAppointmentId = resData.data.updateAppointmentField._id;
           const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
@@ -512,6 +526,8 @@ class AppointmentsPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
           const searchAppointments = resData.data.getAppointmentField;
 
@@ -558,11 +574,13 @@ class AppointmentsPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
-          const searchApointments = resData.data.getApointmentId;
+          const searchAppointments = resData.data.getAppointmentId;
 
-          this.setState({ searchApointments: [searchApointments]})
-          console.log("state.searchApointments:  ", this.state.searchApointments);
+          this.setState({ searchAppointments: [searchAppointments]})
+          console.log("state.searchAppointments:  ", this.state.searchAppointments);
           // this.fetchUsers();
         })
         .catch(err => {
@@ -604,10 +622,14 @@ class AppointmentsPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          // const responseAlert = JSON.stringify(resData.errors).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
-          const searchApointments = resData.data.getApointmentId;
+          const searchAppointments = resData.data.getAppointmentPatient;
 
-          this.setState({ searchApointments: searchApointments})
+          this.setState({ searchAppointments: searchAppointments })
+          // this.state.searchApointments.push(searchAppointments)
           console.log("state.searchApointments:  ", this.state.searchApointments);
           // this.fetchUsers();
         })
@@ -650,11 +672,13 @@ class AppointmentsPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
-          const searchApointments = resData.data.getApointmentId;
+          const searchAppointments = resData.data.getAppointmentDate;
 
-          this.setState({ searchApointments: searchApointments})
-          console.log("state.searchApointments:  ", this.state.searchApointments);
+          this.setState({ searchAppointments: searchAppointments})
+          console.log("state.searchAppointments:  ", this.state.searchAppointments);
           // this.fetchUsers();
         })
         .catch(err => {
@@ -697,6 +721,8 @@ class AppointmentsPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
           const searchApointments = resData.data.getApointmentId;
 
@@ -747,6 +773,8 @@ class AppointmentsPage extends Component {
       .then(resData => {
         const appointments = resData.data.appointments;
         console.log(appointments);
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         this.context.appointments = this.state.appointments;
         if (this.isActive) {
@@ -790,6 +818,8 @@ class AppointmentsPage extends Component {
       .then(resData => {
         const appointments = resData.data.appointmentsDateAsc;
         console.log(appointments);
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         this.context.appointments = appointments;
         this.setState({appointments: appointments})
@@ -833,6 +863,8 @@ class AppointmentsPage extends Component {
       .then(resData => {
         const appointments = resData.data.appointmentsDateDesc;
         console.log(appointments);
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         this.context.appointments = appointments;
         this.setState({appointments: appointments})
@@ -888,6 +920,8 @@ class AppointmentsPage extends Component {
         // console.log("resData.data.deleteAppointment:  ", resData.data.deleteAppointment);
         let deletedAppointment = resData.data.deleteAppointment;
         console.log(deletedAppointment);
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         let deletedAppointmentId = deletedAppointment._id;
         deletedAppointment = this.state.appointments.find(e => e._id === deletedAppointmentId);
@@ -963,6 +997,8 @@ class AppointmentsPage extends Component {
         this.context.appointmentsToday = resData.data.getAppointmentToday;
         console.log("context today's appts:  ", JSON.stringify(this.context.appointmentsToday));
 
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
       })
       .catch(err => {
         console.log(err);
@@ -1003,6 +1039,8 @@ class AppointmentsPage extends Component {
         this.context.appointmentsInProgress = resData.data.getAppointmentField;
         console.log("context in progress appts:  ", JSON.stringify(this.context.appointmentsInProgress));
 
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
       })
       .catch(err => {
         console.log(err);

@@ -25,9 +25,7 @@ return (
 )}
 
 {props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="5" type="submit">
-  Submit
-  </Accordion.Toggle>
+  <Button variant="success" type="submit">Search</Button>
 )}
 
 {
