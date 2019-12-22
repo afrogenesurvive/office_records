@@ -72,8 +72,6 @@ class AuthPage extends Component {
           `);
 
           this.setState({userAlert: responseAlert})
-        // FIX ME!!!
-        // repeat for signup,login,profile,user,patient,app pages
         if (resData.data.login.token) {
           this.context.login(
             resData.data.login.token,

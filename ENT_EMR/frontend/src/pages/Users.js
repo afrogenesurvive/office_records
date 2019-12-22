@@ -315,9 +315,9 @@ class UsersPage extends Component {
         this.state.users.push(resData.data.updateUser);
         this.context.users = this.state.users;
 
-        const responseAlert = JSON.stringify(resData.data).slice(0,8);
-        this.setState({userAlert: responseAlert});
-        // this.fetchUsers();
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
+        this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUser})
+        this.fetchUsers();
       })
       .catch(err => {
         console.log(err);
@@ -378,9 +378,6 @@ class UsersPage extends Component {
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateUserField));
 
-          const responseAlert = JSON.stringify(resData.data).slice(0,8);
-          this.setState({userAlert: responseAlert});
-
           const updatedUserId = resData.data.updateUserField._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);
           const updatedUserPos = this.state.users.indexOf(updatedUser);
@@ -389,7 +386,9 @@ class UsersPage extends Component {
 
           this.state.users.push(resData.data.updateUserField);
           this.context.users = this.state.users;
-          // this.fetchUsers();
+          const responseAlert = JSON.stringify(resData.data).slice(2,25);
+          this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserField})
+          this.fetchUsers();
         })
         .catch(err => {
           console.log(err);
@@ -468,9 +467,6 @@ class UsersPage extends Component {
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateUserAttendance));
 
-          const responseAlert = JSON.stringify(resData.data).slice(0,8);
-          this.setState({userAlert: responseAlert});
-
           const updatedUserId = resData.data.updateUserAttendance._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);
           const updatedUserPos = this.state.users.indexOf(updatedUser);
@@ -479,7 +475,9 @@ class UsersPage extends Component {
 
           this.state.users.push(resData.data.updateUserAttendance);
           this.context.users = this.state.users;
-          // this.fetchUsers();
+          const responseAlert = JSON.stringify(resData.data).slice(2,25);
+          this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserAttendance})
+          this.fetchUsers();
         })
         .catch(err => {
           console.log(err);
@@ -556,9 +554,6 @@ class UsersPage extends Component {
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateUserAttachment));
 
-          const responseAlert = JSON.stringify(resData.data).slice(0,8);
-          this.setState({userAlert: responseAlert});
-
           const updatedUserId = resData.data.updateUserAttachment._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);
           const updatedUserPos = this.state.users.indexOf(updatedUser);
@@ -567,7 +562,9 @@ class UsersPage extends Component {
 
           this.state.users.push(resData.data.updateUserAttachment);
           this.context.users = this.state.users;
-          // this.fetchUsers();
+          const responseAlert = JSON.stringify(resData.data).slice(2,25);
+          this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserAttachment})
+          this.fetchUsers();
         })
         .catch(err => {
           console.log(err);
@@ -650,9 +647,6 @@ class UsersPage extends Component {
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data));
 
-          const responseAlert = JSON.stringify(resData.data).slice(0,8);
-          this.setState({userAlert: responseAlert});
-
           const updatedUserId = resData.data.updateUserLeave._id;
           const updatedUser = this.state.users.find(e => e._id === updatedUserId);
           const updatedUserPos = this.state.users.indexOf(updatedUser);
@@ -661,7 +655,9 @@ class UsersPage extends Component {
 
           this.state.users.push(resData.data.updateUserLeave);
           this.context.users = this.state.users;
-          // this.fetchUsers();
+          const responseAlert = JSON.stringify(resData.data).slice(2,25);
+          this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserLeave})
+          this.fetchUsers();
         })
         .catch(err => {
           console.log(err);
