@@ -311,8 +311,6 @@ class AppointmentsPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
-        const responseAlert = JSON.stringify(resData.data).slice(2,15);
-        this.setState({userAlert: responseAlert});
 
         const updatedAppointmentId = resData.data.updateAppointment._id;
         const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
@@ -321,6 +319,8 @@ class AppointmentsPage extends Component {
         console.log("updatedAppointment:  ", JSON.stringify(updatedAppointment),"  updatedPatientPos:  ", updatedAppointmentPos, "  slicedArray:  ", slicedArray);
 
         this.state.appointments.push(resData.data.updateAppointment);
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
+        this.setState({ userAlert: responseAlert, selectedAppointment: resData.data.updateAppointment})
         this.fetchAppointments();
 
       })
@@ -387,8 +387,6 @@ class AppointmentsPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData));
-          const responseAlert = JSON.stringify(resData.data).slice(2,15);
-          this.setState({userAlert: responseAlert});
 
           const updatedAppointmentId = resData.data.updateAppointmentPatient._id;
           const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
@@ -397,6 +395,8 @@ class AppointmentsPage extends Component {
           console.log("updatedAppointment:  ", JSON.stringify(updatedAppointment),"  updatedPatientPos:  ", updatedAppointmentPos, "  slicedArray:  ", slicedArray);
 
           this.state.appointments.push(resData.data.updateAppointmentPatient);
+          const responseAlert = JSON.stringify(resData.data).slice(2,25);
+          this.setState({ userAlert: responseAlert, selectedAppointment: resData.data.updateAppointmentPatient})
           this.fetchAppointments();
 
         })
@@ -452,8 +452,6 @@ class AppointmentsPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateAppointmentField));
-          const responseAlert = JSON.stringify(resData.data).slice(2,15);
-          this.setState({userAlert: responseAlert});
 
           const updatedAppointmentId = resData.data.updateAppointmentField._id;
           const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
@@ -463,7 +461,9 @@ class AppointmentsPage extends Component {
 
           this.state.appointments.push(resData.data.updateAppointmentField);
           this.context.appointments = this.state.appointments;
-          // this.fetchAppointments();
+          const responseAlert = JSON.stringify(resData.data).slice(2,25);
+          this.setState({ userAlert: responseAlert, selectedAppointment: resData.data.updateAppointmentField})
+          this.fetchAppointments();
         })
         .catch(err => {
           console.log(err);
