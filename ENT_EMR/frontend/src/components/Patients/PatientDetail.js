@@ -104,7 +104,7 @@ const PatientDetail = (props) => {
         Street No: {patient.address.number}
       </Card.Text>
       <Card.Text>
-        Street Name: {patient.address.name}
+        Street Name: {patient.address.street}
       </Card.Text>
       <Card.Text>
         Town: {patient.address.town}

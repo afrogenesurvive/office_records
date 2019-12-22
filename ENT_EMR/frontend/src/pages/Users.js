@@ -779,7 +779,7 @@ class UsersPage extends Component {
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
 
-        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({userAlert: responseAlert});
 
         const searchUsers = resData.data.getUserId;

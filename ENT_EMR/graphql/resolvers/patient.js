@@ -187,6 +187,30 @@ module.exports = {
       throw err;
     }
   },
+  getPatientVisitDate: async (args, req) => {
+    console.log(`
+      getPatientVisitDate...args: ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+    // 
+    // if (!req.isAuth) {
+    //   throw new Error('Unauthenticated!');
+    // }
+    //
+    // try {
+    //
+    //   const patients = await Patient.find({'diagnosis.type': args.diagnosisType})
+    //   .populate('appointments')
+    //   .populate('consultant.reference');
+    //
+    //   return patients.map(patient => {
+    //     return transformPatient(patient);
+    //
+    //   });
+    // } catch (err) {
+    //   throw err;
+    // }
+  },
   updatePatient: async (args, req) => {
     console.log(`
       updatePatient...args: ${util.inspect(args)},

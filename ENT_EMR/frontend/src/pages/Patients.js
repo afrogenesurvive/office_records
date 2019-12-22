@@ -28,7 +28,7 @@ import UpdatePatientFieldForm from '../components/Forms/UpdatePatientFieldForm';
 import UpdatePatientConsultantForm from '../components/Forms/UpdatePatientConsultantForm';
 import UpdatePatientInsuranceForm from '../components/Forms/UpdatePatientInsuranceForm';
 import UpdatePatientNextOfKinForm from '../components/Forms/UpdatePatientNextOfKinForm';
-import UpdatePatientComplaintForm from '../components/Forms/UpdatePatientSurveyForm';
+import UpdatePatientComplaintForm from '../components/Forms/UpdatePatientComplaintForm';
 import UpdatePatientSurveyForm from '../components/Forms/UpdatePatientSurveyForm';
 import UpdatePatientVitalsForm from '../components/Forms/UpdatePatientVitalsForm';
 import UpdatePatientExaminationForm from '../components/Forms/UpdatePatientExaminationForm';
@@ -193,7 +193,7 @@ class PatientsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation {createPatient(userId:\"5debdfd99da4842aafe3af56\", patientInput:{title:\"Mrs\",name:\"Diana Simmons-Brown\",dob:\"2002-04-29\",age:44,gender:\"female\",addressNumber:672,addressStreet:\"oxford somewhere\",addressTown:\"Londonshire\",addressParish:\"St. James\",addressPostOffice:\"n/a\",contactPhone:\"18760000000\",contactEmail:\"p.diddy@entmail.com\",registrationDate:\"2012-07-12\",referralDate:\"2018-05-01\",expirationDate:\"0\",referringDoctorName:\"Dr. Zhivgao\",referringDoctorEmail:\"mad.doctor@docmail.com\",referringDoctorPhone:\"187600000000\",attendingPhysicianName:\"Dr. Strangelove\",attendingPhysicianEmail:\"p.sellers@drmail.com\",attendingPhysicianPhone:\"12345678909\",occupationRole:\"software engineer\",occupationEmployer:\"ENT MOBAY\",occupationEmployerContactPhone:\"123456789098\",occupationEmployerContactEmail:\"testbos7775@testmail.com\"})
+          mutation {createPatient(userId:\"${userId}\", patientInput:{title:\"${title}\",name:\"${name}\",dob:\"${dob}\",age:${age},gender:\"${gender}\",addressNumber:${addressNumber},addressStreet:\"${addressStreet}\",addressTown:\"${addressTown}\",addressParish:\"${addressParish}\",addressPostOffice:\"${addressPostOffice}\",contactPhone:\"${contactPhone}\",contactEmail:\"${contactEmail}\",registrationDate:\"${registrationDate}\",referralDate:\"${referralDate}\",expirationDate:\"${expirationDate}\",referringDoctorName:\"${referringDoctorName}\",referringDoctorEmail:\"${referringDoctorEmail}\",referringDoctorPhone:\"${referringDoctorPhone}\",attendingPhysicianName:\"${attendingPhysicianName}\",attendingPhysicianEmail:\"${attendingPhysicianEmail}\",attendingPhysicianPhone:\"${attendingPhysicianPhone}\",occupationRole:\"${occupationRole}\",occupationEmployer:\"${occupationEmployer}\",occupationEmployerContactPhone:\"${occupationEmployerContactPhone}\",occupationEmployerContactEmail:\"${occupationEmployerContactEmail}\"})
           {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
         `};
 
@@ -220,7 +220,7 @@ class PatientsPage extends Component {
           `);
           const responseAlert = JSON.stringify(resData.data).slice(2,15);
           this.setState({userAlert: responseAlert});
-          
+
         const newPatient = resData.data.createPatient;
         this.setState(prevState => {
           const updatedPatients = [...prevState.patients];
@@ -259,7 +259,7 @@ class PatientsPage extends Component {
     let name = event.target.formGridName.value;
     let dob = event.target.formGridDob.value;
     let age = event.target.formGridAge.value;
-    let gender = event.target.formGridgender.value;
+    let gender = event.target.formGridGender.value;
     let addressNumber = event.target.formGridAddressNumber.value;
     let addressStreet = event.target.formGridAddressStreet.value;
     let addressTown = event.target.formGridAddressTown.value;
@@ -283,95 +283,95 @@ class PatientsPage extends Component {
 
     if (title.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      title = this.context.selectedUser.title;
+      title = this.context.selectedPatient.title;
     }
     if (name.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      name = this.context.selectedUser.name;
+      name = this.context.selectedPatient.name;
     }
     if (dob.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      dob = this.context.selectedUser.dob;
+      dob = this.context.selectedPatient.dob;
     }
     if (gender.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      gender = this.context.selectedUser.gender;
+      gender = this.context.selectedPatient.gender;
     }
     if (age.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      age = this.context.selectedUser.age;
+      age = this.context.selectedPatient.age;
     }
     if (addressNumber.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressNumber = this.context.selectedUser.address.number;
+      addressNumber = this.context.selectedPatient.address.number;
     }
     if (addressStreet.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressStreet = this.context.selectedUser.address.street;
+      addressStreet = this.context.selectedPatient.address.street;
     }
     if (addressTown.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressTown = this.context.selectedUser.address.town;
+      addressTown = this.context.selectedPatient.address.town;
     }
     if (addressParish.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressParish = this.context.selectedUser.address;
+      addressParish = this.context.selectedPatient.address.parish;
     }
     if (addressPostOffice.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      addressPostOffice = this.context.selectedUser.address.postOffice;
+      addressPostOffice = this.context.selectedPatient.address.postOffice;
     }
     if (contactPhone.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      contactPhone = this.context.selectedUser.contact.phone;
+      contactPhone = this.context.selectedPatient.contact.phone;
     }
     if (contactEmail.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      contactEmail = this.context.selectedUser.contact.email;
+      contactEmail = this.context.selectedPatient.contact.email;
     }
     if (registrationDate.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      registrationDate = this.context.selectedUser.registrationDate;
+      registrationDate = this.context.selectedPatient.registrationDate;
     }
     if (attendingPhysicianName.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      attendingPhysicianName = this.context.selectedUser.attendingPhysician.name;
+      attendingPhysicianName = this.context.selectedPatient.attendingPhysician.name;
     }
     if (attendingPhysicianEmail.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      attendingPhysicianEmail = this.context.selectedUser.attendingPhysician.email;
+      attendingPhysicianEmail = this.context.selectedPatient.attendingPhysician.email;
     }
     if (attendingPhysicianPhone.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      attendingPhysicianPhone = this.context.selectedUser.attendingPhysician.phone;
+      attendingPhysicianPhone = this.context.selectedPatient.attendingPhysician.phone;
     }
     if (referringDoctorName.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      referringDoctorName = this.context.selectedUser.referringDoctor.name;
+      referringDoctorName = this.context.selectedPatient.referringDoctor.name;
     }
     if (referringDoctorEmail.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      referringDoctorEmail = this.context.selectedUser.referringDoctor.email;
+      referringDoctorEmail = this.context.selectedPatient.referringDoctor.email;
     }
     if (referringDoctorPhone.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      referringDoctorPhone = this.context.selectedUser.referringDoctor.phone;
+      referringDoctorPhone = this.context.selectedPatient.referringDoctor.phone;
     }
     if (occupationRole.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      occupationRole = this.context.selectedUser.occupation.role;
+      occupationRole = this.context.selectedPatient.occupation.role;
     }
     if (occupationEmployer.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      occupationEmployer = this.context.selectedUser.occupation.employer;
+      occupationEmployer = this.context.selectedPatient.occupation.employer;
     }
     if (occupationEmployerContactEmail.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      occupationEmployerContactEmail = this.context.selectedUser.occupation.contact.email;
+      occupationEmployerContactEmail = this.context.selectedPatient.occupation.contact.email;
     }
     if (occupationEmployerContactPhone.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
-      occupationEmployerContactPhone = this.context.selectedUser.occupation.contact.phone;
+      occupationEmployerContactPhone = this.context.selectedPatient.occupation.contact.phone;
     }
 
     const patient = { title, name, dob, age, gender, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, contactPhone, contactEmail, registrationDate, referralDate, expirationDate, attendingPhysicianName, attendingPhysicianEmail, attendingPhysicianPhone, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
@@ -429,6 +429,8 @@ class PatientsPage extends Component {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatient._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -437,6 +439,10 @@ class PatientsPage extends Component {
         console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
 
         this.state.patients.push(resData.data.updatePatient);
+
+        // FIX ME!!!
+        // Add everywhere
+        this.setState({ selectedPatient: resData.data.updatePatient})
         this.fetchPatients();
 
       })
@@ -462,16 +468,16 @@ class PatientsPage extends Component {
       this.setState({ updating: false });
 
       let field = null;
-      let query = event.target.formBasicQuery.value;
-      if (event.target.formBasicFieldSelect.value === "select") {
-        field = event.target.formBasicField.value;
+      let query = event.target.formGridQuery.value;
+      if (event.target.formGridFieldSelect.value === "select") {
+        field = event.target.formGridField.value;
       } else {
-        field = event.target.formBasicFieldSelect.value;
+        field = event.target.formGridFieldSelect.value;
       }
 
       const requestBody = {
         query:`
-          mutation{updatePatientField(userId:"${userId}",selectedPatientId:"${selectedPatientId}",field:"${field}",query:"${query}")
+          mutation {updatePatientField(userId:\"${userId}\",patientId:\"${selectedPatientId}\",field:\"${field}\",query:\"${query}\")
           {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
         `};
 
@@ -491,6 +497,8 @@ class PatientsPage extends Component {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updatePatientField));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
           const updatedPatientId = resData.data.updatePatientField._id;
           const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -512,7 +520,7 @@ class PatientsPage extends Component {
 
 updatePatientConsultantHandler = (event) => {
 
-  const token = this.context.token;
+  let token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
   const patientConsultantReference = this.context.selectedUser._id;
@@ -521,6 +529,13 @@ updatePatientConsultantHandler = (event) => {
   //   console.log("No edit permission!!");
   //   return;
   // }
+  if (patientConsultantReference === undefined) {
+    console.log(`
+      select a Staff member before adding a Patient Consultant!!
+      `);
+      this.setState({userAlert: "select a Staff member before adding a Patient Consultant!!..."});
+      token = null;
+  }
 
   console.log("UpdatePatientConsultantFormData:  ", event.target.formGridConsultantDate.value);
 
@@ -540,7 +555,7 @@ updatePatientConsultantHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientConsultant(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{consultantDate:" ${consultantDate}",consultantReference: "${patientConsultantReference}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     };
 
@@ -560,6 +575,8 @@ updatePatientConsultantHandler = (event) => {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
           const updatedPatientId = resData.data.updatePatientConsultant._id;
           const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -616,7 +633,7 @@ updatePatientInsuranceHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientInsurance(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{insuranceCompany:"${insuranceCompany}",insuranceNumber:"${insuranceNumber}",insuranceDescription:"${insuranceDescription}",insuranceExpiry:"${insuranceExpiry}",insuranceSubscriberCompany:"${insuranceSubscriberCompany}",insuranceSubscriberDescription:"${insuranceSubscriberDescription}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     };
 
@@ -636,6 +653,8 @@ updatePatientInsuranceHandler = (event) => {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
           const updatedPatientId = resData.data.updatePatientInsurance._id;
           const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -687,7 +706,7 @@ updatePatientNextOfKinHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientNextOfKin(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{nextOfKinName:"${nextOfKinName}",nextOfKinEmail:"${nextOfKinEmail}",nextOfKinPhone:"${nextOfKinPhone}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     };
 
@@ -707,6 +726,8 @@ updatePatientNextOfKinHandler = (event) => {
         })
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data));
+          const responseAlert = JSON.stringify(resData.data).slice(2,15);
+          this.setState({userAlert: responseAlert});
 
           const updatedPatientId = resData.data.updatePatientNextOfKin._id;
           const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -766,7 +787,7 @@ updatePatientComplaintHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientComplaint(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{complaintDate:"${complaintDate}",complaintTitle:"${complaintTitle}",complaintDescription:"${complaintDescription}",complaintAnamnesis:"${complaintAnamnesis}",complaintAttachmentName:"${complaintAttachmentName}",complaintAttachmentFormat:"${complaintAttachmentFormat}",complaintAttachmentPath:"${complaintAttachmentPath}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -786,6 +807,8 @@ updatePatientComplaintHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientComplaint._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -843,7 +866,7 @@ updatePatientSurveyHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientSurvey(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{surveyDate:"${surveyDate}",surveyTitle:"${surveyTitle}",surveyDescription:"${surveyDescription}",surveyAttachmentName:"${surveyAttachmentName}",surveyAttachmentFormat:"${surveyAttachmentFormat}",surveyAttachmentPath:"${surveyAttachmentPath}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -863,6 +886,8 @@ updatePatientSurveyHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientSurvey._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -920,7 +945,7 @@ updatePatientVitalsHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientVitals(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{vitalsDate:"${vitalsDate}",vitalsPr:${vitalsPr},vitalsBp1:${vitalsBp1},vitalsBp2:${vitalsBp2},vitalsRr:${vitalsRr},vitalsTemp:${vitalsTemp},vitalsPs02:${vitalsPs02},vitalsHeight:${vitalsHeight},vitalsWeight:${vitalsWeight},vitalsBmi:${vitalsBmi},vitalsUrineType:"${vitalsUrineType}",vitalsUrineValue:"${vitalsUrineValue}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -940,6 +965,8 @@ updatePatientVitalsHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientVitals._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1014,7 +1041,7 @@ updatePatientExaminationHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientExamination(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{examinationDate:"${examinationDate}",examinationGeneral:"${examinationGeneral}",examinationArea:"${examinationArea}",examinationType:"${examinationType}",examinationMeasure:"${examinationMeasure}",examinationValue:"${examinationValue}",examinationDescription:"${examinationDescription}",examinationFollowUp:${examinationFollowUp},examinationAttachmentName:"${examinationAttachmentName}",examinationAttachmentFormat:"${examinationAttachmentFormat}",examinationAttachmentPath:"${examinationAttachmentPath}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -1034,6 +1061,8 @@ updatePatientExaminationHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientExamination._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1094,7 +1123,7 @@ updatePatientHistoryHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientHistory(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{historyTitle:"${historyTitle}",historyType:"${historyType}",historyDate:"${historyDate}",historyDescription:"${historyDescription}",historyAttachmentName:"${historyAttachmentName}",historyAttachmentFormat:"${historyAttachmentFormat}",historyAttachmentPath:"${historyAttachmentPath}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -1114,6 +1143,8 @@ updatePatientHistoryHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientHistory._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1178,7 +1209,7 @@ updatePatientAllergiesHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientAllergies(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{allergiesTitle:"${allergiesTitle}",allergiesType:"${allergiesType}", allergiesDescription:"${allergiesDescription}",allergiesAttachmentName:"${allergiesAttachmentName}",allergiesAttachmentFormat:"${allergiesAttachmentFormat}",allergiesAttachmentPath:"${allergiesAttachmentPath}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -1198,6 +1229,8 @@ updatePatientAllergiesHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientAllergies._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1258,7 +1291,7 @@ updatePatientMedicationHandler = (event) => {
     const requestBody = {
       query:`
       mutation {updatePatientMedication(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{medicationTitle:"${medicationTitle}",medicationType:"${medicationType}" medicationDescription:"${medicationDescription}",medicationAttachmentName:"${medicationAttachmentName}",medicationAttachmentFormat:"${medicationAttachmentFormat}",medicationAttachmentPath:"${medicationAttachmentPath}"})
-      {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+      {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -1278,6 +1311,8 @@ updatePatientMedicationHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientMedication._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1344,7 +1379,7 @@ updatePatientInvestigationHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientInvestigation(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{investigationDate:"${investigationDate}",investigationTitle:"${investigationTitle}",investigationType:"${investigationType}",investigationDescription:"${investigationDescription}",investigationAttachmentName:"${investigationAttachmentName}",investigationAttachmentFormat:"${investigationAttachmentFormat}",investigationAttachmentPath:"${investigationAttachmentPath}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -1364,6 +1399,8 @@ updatePatientInvestigationHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientInvestigation._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1425,7 +1462,7 @@ updatePatientDiagnosisHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientDiagnosis(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{diagnosisDate:"${diagnosisDate}",diagnosisTitle:"${diagnosisTitle}",diagnosisType:"${diagnosisType}",diagnosisDescription:"${diagnosisDescription}",diagnosisAttachmentName:"${diagnosisAttachmentName}",diagnosisAttachmentFormat:"${diagnosisAttachmentFormat}",diagnosisAttachmentPath:"${diagnosisAttachmentPath}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -1445,6 +1482,8 @@ updatePatientDiagnosisHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientDiagnosis._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1515,7 +1554,7 @@ updatePatientTreatmentHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientTreatment(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{treatmentDate:"${treatmentDate}",treatmentTitle:"${treatmentTitle}",treatmentType:"${treatmentType}",treatmentDescription:"${treatmentDescription}",treatmentDose:"${treatmentDose}",treatmentFrequency:"${treatmentFrequency}",treatmentAttachmentName:"${treatmentAttachmentName}",treatmentAttachmentFormat:"${treatmentAttachmentFormat}",treatmentAttachmentPath:"${treatmentAttachmentPath}"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `}
 
     fetch('http://localhost:10000/graphql', {
@@ -1534,6 +1573,8 @@ updatePatientTreatmentHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientTreatment._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1602,7 +1643,7 @@ updatePatientBillingHandler = (event) => {
     const requestBody = {
       query:`
         mutation {updatePatientBilling(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{billingDate:\"${billingDate}\",billingTitle:\"${billingTitle}\",billingType:\"${billingType}\",billingDescription:\"${billingDescription}\",billingAmount:${billingAmount},billingPaid:${billingPaid},billingNotes:\"${billingNotes}\",billingAttachmentName:\"${billingAttachmentName}\",billingAttachmentFormat:\"${billingAttachmentFormat}\",billingAttachmentPath:\"${billingAttachmentPath}\"})
-        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -1622,6 +1663,8 @@ updatePatientBillingHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData.data));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const updatedPatientId = resData.data.updatePatientBilling._id;
         const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1678,7 +1721,7 @@ updatePatientAttachmentHandler = (event) => {
     const requestBody = {
                     query:`
                     mutation {updatePatientAttachment(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentFormat}"})
-                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
             `}
 
     fetch('http://localhost:10000/graphql', {
@@ -1697,6 +1740,8 @@ updatePatientAttachmentHandler = (event) => {
           })
           .then(resData => {
             console.log("response data... " + JSON.stringify(resData.data));
+            const responseAlert = JSON.stringify(resData.data).slice(2,15);
+            this.setState({userAlert: responseAlert});
 
             const updatedPatientId = resData.data.updatePatientAttachment._id;
             const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1747,7 +1792,7 @@ updatePatientNoteHandler = (event) => {
     const requestBody = {
                     query:`
                     mutation {updatePatientNotes(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{notes:"${note}"})
-                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
             `}
 
     fetch('http://localhost:10000/graphql', {
@@ -1766,6 +1811,8 @@ updatePatientNoteHandler = (event) => {
           })
           .then(resData => {
             console.log("response data... " + JSON.stringify(resData.data));
+            const responseAlert = JSON.stringify(resData.data).slice(2,15);
+            this.setState({userAlert: responseAlert});
 
             const updatedPatientId = resData.data.updatePatientNotes._id;
             const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1813,7 +1860,7 @@ updatePatientTagHandler = (event) => {
     const requestBody = {
                     query:`
                     mutation {updatePatientTags(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{tag:"${tag}"})
-                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
             `}
     this.setState({userAlert: "adding patient tag"});
 
@@ -1834,6 +1881,8 @@ updatePatientTagHandler = (event) => {
           })
           .then(resData => {
             console.log("response data... " + JSON.stringify(resData.data));
+            const responseAlert = JSON.stringify(resData.data).slice(2,15);
+            this.setState({userAlert: responseAlert});
 
             const updatedPatientId = resData.data.updatePatientTags._id;
             const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
@@ -1894,7 +1943,7 @@ modalConfirmSearchHandler = (event) => {
       query: `
         query {
           getPatientField(userId: "${userId}", field: "${field}", query: "${query}" )
-          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
 
@@ -1916,6 +1965,8 @@ modalConfirmSearchHandler = (event) => {
       })
       .then(resData => {
         console.log("response data... " + JSON.stringify(resData));
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         const searchPatients = resData.data.getPatientField;
 
@@ -1939,8 +1990,8 @@ modalConfirmSearchIdHandler = (event) => {
 
   const requestBody = {
     query: `
-      query {getPatientId(userId:"${userId}",patientId:"${patientId}")
-      {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+      query {getPatientId(userId:\"${userId}\",patientId:\"${patientId}\")
+      {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `}
 
   const token = this.context.token;
@@ -1961,6 +2012,8 @@ modalConfirmSearchIdHandler = (event) => {
     })
     .then(resData => {
       console.log("response data... " + JSON.stringify(resData));
+      const responseAlert = JSON.stringify(resData.data).slice(2,25);
+      this.setState({userAlert: responseAlert});
 
       const searchPatients = resData.data.getPatientId;
 
@@ -1970,6 +2023,7 @@ modalConfirmSearchIdHandler = (event) => {
     })
     .catch(err => {
       console.log(err);
+      this.setState({userAlert: err});
     });
 }
 
@@ -2011,6 +2065,7 @@ modalConfirmSearchVisitHandler = (event) => {
     })
     .catch(err => {
       console.log(err);
+      this.setState({userAlert: err});
     });
 
 }
@@ -2041,18 +2096,21 @@ modalConfirmSearchNameHandler = (event) => {
     event.preventDefault();
     console.log(`
         getUserVisit function:
+        selectedPatient.consultant: ${JSON.stringify(selectedPatient.consultant)}
+        selectedPatient.complaints: ${JSON.stringify(selectedPatient.complaints)}
       `);
     let visitDate = new Date(event.target.formBasicVisitDate.value).toISOString();
+    let visitSurveys = selectedPatient.surveys.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
     let visitConsultants = selectedPatient.consultant.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
     let visitComplaints = selectedPatient.complaints.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitSurveys = selectedPatient.surveys.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    // let visitSurveys = selectedPatient.surveys.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
     let visitVitals = selectedPatient.vitals.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
     let visitExaminations = selectedPatient.examination.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
     let visitHistory = selectedPatient.history.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
     let visitInvestigations = selectedPatient.investigation.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
     let visitDiagnosis = selectedPatient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
     let visitTreatments = selectedPatient.treatment.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitBilling = selectedPatient.billing.filter(x=> x.date === new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitBilling = selectedPatient.billing.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
 
       const visit = {
         date: visitDate,
@@ -2114,6 +2172,8 @@ modalConfirmSearchNameHandler = (event) => {
         console.log("resData", resData);
         const patients = resData.data.patients;
         console.log(patients);
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         this.context.patients = this.state.patients;
         if (this.isActive) {
@@ -2161,6 +2221,8 @@ modalConfirmSearchNameHandler = (event) => {
         console.log("resData", resData);
         const patients = resData.data.patientsNameAsc;
         console.log(patients);
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         this.context.patients = patients;
         this.setState({ patients: patients});
@@ -2209,6 +2271,8 @@ modalConfirmSearchNameHandler = (event) => {
         console.log("resData", resData);
         const patients = resData.data.patientsNameDesc;
         console.log(patients);
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         this.context.patients = patients
         // if (this.isActive) {
@@ -2264,6 +2328,8 @@ modalConfirmSearchNameHandler = (event) => {
       .then(resData => {
         let deletedPatient = resData.data.deletePatient;
         console.log(deletedPatient);
+        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        this.setState({userAlert: responseAlert});
 
         let deletedPatientId = deletedPatient._id;
         deletedPatient = this.state.patients.find(e => e._id === deletedPatientId);
@@ -2278,6 +2344,7 @@ modalConfirmSearchNameHandler = (event) => {
       })
       .catch(err => {
         console.log(err);
+        this.setState({userAlert: err});
         if (this.isActive) {
           this.setState({ deleting: false });
         }
@@ -2928,25 +2995,27 @@ modalConfirmSearchNameHandler = (event) => {
       canCancel
         canConfirm
         onCancel={this.modalCancelHandler}
-        onConfirm={this.modalConfirmSearcIdhHandler}
+        onConfirm={this.modalConfirmSearchIdHandler}
         confirmText="Search"
         patient={this.context.selectedPatient}
       />
     )}
     </Tab>
-    <Tab eventKey="Visit" title="Visit:">
-    {this.state.searching === true && (
-      <SearchPatientVisitForm
-      authUserId={this.context.userId}
-      canCancel
-        canConfirm
-        onCancel={this.modalCancelHandler}
-        onConfirm={this.modalConfirmSearchVisitHandler}
-        confirmText="Search"
-        patient={this.context.selectedPatient}
-      />
-    )}
-    </Tab>
+    {
+    //   <Tab eventKey="Visit" title="Visit:">
+    // {this.state.searching === true && (
+    //   <SearchPatientVisitForm
+    //   authUserId={this.context.userId}
+    //   canCancel
+    //     canConfirm
+    //     onCancel={this.modalCancelHandler}
+    //     onConfirm={this.modalConfirmSearchVisitHandler}
+    //     confirmText="Search"
+    //     patient={this.context.selectedPatient}
+    //   />
+    // )}
+    // </Tab>
+  }
     <Tab eventKey="Name" title="Name:">
     {this.state.searching === true && (
       <SearchPatientNameForm
