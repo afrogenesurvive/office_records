@@ -441,7 +441,7 @@ class PatientsPage extends Component {
         this.state.patients.push(resData.data.updatePatient);
 
         // FIX ME!!!
-        // Add everywhere
+        // Add everywhere update are found
         this.setState({ selectedPatient: resData.data.updatePatient})
         this.fetchPatients();
 
@@ -2096,21 +2096,24 @@ modalConfirmSearchNameHandler = (event) => {
     event.preventDefault();
     console.log(`
         getUserVisit function:
-        selectedPatient.consultant: ${JSON.stringify(selectedPatient.consultant)}
-        selectedPatient.complaints: ${JSON.stringify(selectedPatient.complaints)}
+        selectedPatient.consultant: ${JSON.stringify(selectedPatient.consultant)},
+        selectedPatient.complaints: ${JSON.stringify(selectedPatient.complaints)},
+        visitDate: ${new Date(event.target.formBasicVisitDate.value)},
+        complaintDate: ${new Date(1580515200*1000)},
       `);
-    let visitDate = new Date(event.target.formBasicVisitDate.value).toISOString();
-    let visitSurveys = selectedPatient.surveys.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitConsultants = selectedPatient.consultant.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitComplaints = selectedPatient.complaints.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+
+    let visitDate = new Date(event.target.formBasicVisitDate.value).toISOString().substring(0, 10);
+    let visitSurveys = selectedPatient.surveys.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    let visitConsultants = selectedPatient.consultant.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    let visitComplaints = selectedPatient.complaints.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
     // let visitSurveys = selectedPatient.surveys.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitVitals = selectedPatient.vitals.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitExaminations = selectedPatient.examination.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitHistory = selectedPatient.history.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitInvestigations = selectedPatient.investigation.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitDiagnosis = selectedPatient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitTreatments = selectedPatient.treatment.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
-    let visitBilling = selectedPatient.billing.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+    let visitVitals = selectedPatient.vitals.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    let visitExaminations = selectedPatient.examination.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    let visitHistory = selectedPatient.history.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    let visitInvestigations = selectedPatient.investigation.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    let visitDiagnosis = selectedPatient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    let visitTreatments = selectedPatient.treatment.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    let visitBilling = selectedPatient.billing.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
 
       const visit = {
         date: visitDate,
@@ -2353,6 +2356,7 @@ modalConfirmSearchNameHandler = (event) => {
 
 
   deletePatientInsurance = (event) => {
+  // deletePatientInsurance = (props) => {
     event.preventDefault();
     console.log(`
       delete patient insurance item:
@@ -2364,9 +2368,8 @@ modalConfirmSearchNameHandler = (event) => {
 
       // const requestBody = {
       //   query: `
-      //       mutation {deletePatientInsurance(userId:"${userId}",patientId:"${patientId}",patientInput:{insuranceCompany:"${insuranceItem.company}",insuranceNumber:"${insuranceItem.number}",insuranceDescription:"${insuranceItem.description}",insuranceExpiry:"${insuranceItem.expiry}",insuranceSubscriberCompany:"${insuranceItem.subscriber.company}",insuranceSubscriberDescription:"${insuranceItem.subscriber.description}",})
-      //       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
-      //     `};
+      //    mutation {deletePatientInsurance(userId:\"5debdfd99da4842aafe3af56\",patientId:\"5dec67dc2cf9b02f6d75b57c\",patientInput:{insuranceCompany:\"test-surance 077\",insuranceNumber:\"077\",insuranceDescription:\"a company that insures tests and testers but not launchers\",insuranceExpiry:\"2006-10-25\",insuranceSubscriberCompany:\"real-insurance\",insuranceSubscriberDescription:\"our insurance is not a test\",}){_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+      // `};
       //
       //     fetch('http://localhost:10000/graphql', {
       //       method: 'POST',
