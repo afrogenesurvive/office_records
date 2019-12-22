@@ -10,6 +10,9 @@ const mongoose = require('mongoose');
 const mongodb = require('mongodb');
 const isAuth = require('./middleware/is-auth');
 
+const multer  = require('multer')
+const upload = multer({ dest: './uploads/' })
+
 const app = express();
 
 app.use(bodyParser.json());

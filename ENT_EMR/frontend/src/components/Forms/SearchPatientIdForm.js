@@ -16,25 +16,16 @@ return (
   <Form.Control type="text" placeholder="Id"/>
   </Form.Group>
 
-{props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="10" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
-)}
+  {props.canCancel && (
+    <Accordion.Toggle as={Button} variant="danger" eventKey="5" className="btn" onClick={props.onCancel}>
+    Cancel
+    </Accordion.Toggle>
+  )}
 
-{props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="10" type="submit">
-  Submit
-  </Accordion.Toggle>
-)}
+  {props.canConfirm && (
+    <Button variant="success" type="submit">Search</Button>
+  )}
 
-{
-// <AuthContext.Consumer>
-// </AuthContext.Consumer>
-
-
-// populate feilds with user object fields
-}
 </Form>
 </div>
 

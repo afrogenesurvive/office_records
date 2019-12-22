@@ -11,6 +11,9 @@ const { transformUser } = require('./merge');
 const { dateToString } = require('../../helpers/date');
 const { pocketVariables } = require('../../helpers/pocketVars');
 
+const multer  = require('multer');
+const upload = multer({ dest: './uploads/' });
+
 
 module.exports = {
   users: async (args, req) => {
