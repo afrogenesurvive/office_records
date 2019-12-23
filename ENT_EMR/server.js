@@ -9,6 +9,7 @@ const { pocketVariables } = require('./helpers/pocketVars');
 const mongoose = require('mongoose');
 const mongodb = require('mongodb');
 const isAuth = require('./middleware/is-auth');
+const path = require('path');
 
 const multer  = require('multer')
 const upload = multer({ dest: './uploads/' })
@@ -39,6 +40,12 @@ app.use(
     graphiql: true
   })
 );
+
+// run react build***
+// app.use(express.static(path.join(__dirname, 'build')));
+// app.get('/', function(req, res) {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 
 mongoose.connect('mongodb://localhost:27017/ent_emr_dev',{useNewUrlParser: true, useUnifiedTopology: true})
