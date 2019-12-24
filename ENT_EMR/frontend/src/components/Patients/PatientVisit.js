@@ -49,7 +49,7 @@ const PatientVisit = (props) => {
   const diagnosis = visit.diagnosis;
   const treatment = visit.treatment;
   const billing = visit.billing;
-  
+
   console.log(`
     patientVisit: ${JSON.stringify(visit)},
     date: ${visit.date},
@@ -64,7 +64,7 @@ const PatientVisit = (props) => {
         `);
     return (
       <div className="PatientDetailBox1">
-      <p>Date: {new Date(visit.date).toLocaleString()}</p>
+      <p>Date: {new Date(visit.date).toISOString().slice(0,10)}</p>
       <p>Patient: {visit.patientName}</p>
       <Tabs defaultActiveKey="Visit" id="uncontrolled-tab-example" className="tab">
       <Tab eventKey="" title="Visit:" disabled>

@@ -6,7 +6,7 @@ import './UserList.css';
 const patientSurveyList = props => {
   console.log("patient survey list props", props.patientSurvey);
   const patientSurvey = props.patientSurvey.map(survey => {
-    const patientSurveyDate = new Date(survey.date.substr(0,10)*1000).toLocaleString();
+    const patientSurveyDate = new Date(survey.date.substr(0,10)*1000).toISOString().slice(0,10);
     return (
       <PatientSurveyItem
         key={survey.title}

@@ -9,7 +9,7 @@ const visitExaminationList = props => {
   let examination = undefined;
   if (props.examination) {
   examination = props.examination.map(examinationItem => {
-    const visitExaminationDate = new Date(examinationItem.date.substr(0,10)*1000).toLocaleString();
+    const visitExaminationDate = new Date(examinationItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const examinationAttachment = examinationItem.attachment;
     console.log(`
       visitExaminationDate: ${visitExaminationDate},

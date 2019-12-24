@@ -23,8 +23,8 @@ const thisUserProfile = (props) => {
   console.log("Profile: userLeave", userLeave);
   const userAttachment = user.attachments;
   console.log("Profile: userAttachment", userAttachment);
-  const userEmploymentDate = new Date(user.employmentDate.substr(0,10)*1000).toLocaleString();
-  const userTerminationDate = new Date(user.terminationDate.substr(0,10)*1000).toLocaleString();
+  const userEmploymentDate = new Date(user.employmentDate.substr(0,10)*1000).toISOString().slice(0,10);
+  const userTerminationDate = new Date(user.terminationDate.substr(0,10)*1000).toISOString().slice(0,10);
   // const authSelectedUser = JSON.stringify(props.AuthContext.selectedUser);
   // console.log(props.user.slice(0,5) === '{"_id' , props.user.slice(0,5));
 

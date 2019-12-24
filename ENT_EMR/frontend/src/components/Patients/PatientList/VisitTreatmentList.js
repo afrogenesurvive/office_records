@@ -8,7 +8,7 @@ const visitTreatmentList = props => {
   let treatment = undefined;
   if (props.treatment) {
   treatment = props.treatment.map(treatmentItem => {
-    const visitTreatmentDate = new Date(treatmentItem.date.substr(0,10)*1000).toLocaleString();
+    const visitTreatmentDate = new Date(treatmentItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const treatmentAttachment = treatmentItem.attachment;
     console.log(`
       visitTreatmentDate: ${visitTreatmentDate},

@@ -10,7 +10,7 @@ const userAttendanceList = props => {
   const userAttendance = props.userAttendance.map(attendance => {
     let userAttendanceDate = attendance.date;
     if (userAttendanceDate !== null) {
-      userAttendanceDate = new Date (attendance.date.substr(0,10)*1000).toLocaleString();
+      userAttendanceDate = new Date (attendance.date.substr(0,10)*1000).toISOString().slice(0,10);
       console.log("userAttendanceDate", userAttendanceDate);
     }
 
