@@ -202,6 +202,8 @@ const PatientDetail = (props) => {
         (<PatientConsultantList
           patientConsultant={patientConsultant}
           authUserId={props.authUserId}
+          canDelete={props.canDelete}
+          onDelete={props.consultantDelete}
           />)
       }
       </Tab>
@@ -213,6 +215,7 @@ const PatientDetail = (props) => {
       <PatientInsuranceList
         patientInsurance={patientInsurance}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
         onDelete={props.insuranceDelete}
         />
       </Tab>
@@ -224,6 +227,8 @@ const PatientDetail = (props) => {
       <PatientNextOfKinList
         patientNextOfKin={patientNextOfKin}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.nextOfKinDelete}
         />
       </Tab>
 
@@ -234,6 +239,8 @@ const PatientDetail = (props) => {
       <PatientComplaintList
         patientComplaint={patientComplaint}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.complaintDelete}
         />
       </Tab>
       <Tab eventKey="Survey" title="Survey">
@@ -243,6 +250,8 @@ const PatientDetail = (props) => {
       <PatientSurveyList
         patientSurvey={patientSurvey}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.surveyDelete}
         />
       </Tab>
       <Tab eventKey="Vitals" title="Vitals">
@@ -252,6 +261,8 @@ const PatientDetail = (props) => {
       <PatientVitalsList
         patientVitals={patientVitals}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.vitalsDelete}
         />
       </Tab>
       <Tab eventKey="Examination" title="Examination">
@@ -261,6 +272,8 @@ const PatientDetail = (props) => {
       <PatientExaminationList
         patientExamination={patientExamination}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.examinationDelete}
         />
       </Tab>
       <Tab eventKey="History" title="History">
@@ -270,6 +283,8 @@ const PatientDetail = (props) => {
       <PatientHistoryList
         patientHistory={patientHistory}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.historyDelete}
         />
       </Tab>
       <Tab eventKey="Allergies" title="Allergies">
@@ -279,7 +294,8 @@ const PatientDetail = (props) => {
       <PatientAllergiesList
         patientAllergies={patientAllergies}
         authUserId={props.authUserId}
-        onDelete={props.deletePatient}
+        canDelete={props.canDelete}
+        onDelete={props.allergiesDelete}
         />
       </Tab>
       <Tab eventKey="Medication" title="Medication">
@@ -289,6 +305,8 @@ const PatientDetail = (props) => {
       <PatientMedicationList
         patientMedication={patientMedication}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.medicationDelete}
         />
       </Tab>
       <Tab eventKey="Investigation" title="Investigation">
@@ -298,6 +316,8 @@ const PatientDetail = (props) => {
       <PatientInvestigationList
         patientInvestigation={patientInvestigation}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.investigationDelete}
         />
       </Tab>
       <Tab eventKey="Diagnosis" title="Diagnosis">
@@ -307,6 +327,8 @@ const PatientDetail = (props) => {
       <PatientDiagnosisList
         patientDiagnosis={patientDiagnosis}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.diagnosisDelete}
         />
       </Tab>
       <Tab eventKey="Treatment" title="Treatment">
@@ -316,6 +338,8 @@ const PatientDetail = (props) => {
       <PatientTreatmentList
         patientTreatment={patientTreatment}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.treatmentDelete}
         />
       </Tab>
       <Tab eventKey="Billing" title="Billing">
@@ -325,6 +349,8 @@ const PatientDetail = (props) => {
       <PatientBillingList
         patientBilling={patientBilling}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.billingDelete}
         />
       </Tab>
       <Tab eventKey="Attachments" title="Attachments">
@@ -334,6 +360,8 @@ const PatientDetail = (props) => {
       <PatientAttachmentsList
         patientAttachments={patientAttachments}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.attachmentDelete}
         />
       </Tab>
       <Tab eventKey="Notes" title="Notes">
@@ -343,6 +371,8 @@ const PatientDetail = (props) => {
       <PatientNotesList
         patientNotes={patientNotes}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.noteDelete}
         />
       </Tab>
       <Tab eventKey="Tags" title="Tags">
@@ -352,6 +382,8 @@ const PatientDetail = (props) => {
       <PatientTagsList
         patientTags={patientTags}
         authUserId={props.authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.tagDelete}
         />
       </Tab>
       <Tab eventKey="Visit" title="Visit">

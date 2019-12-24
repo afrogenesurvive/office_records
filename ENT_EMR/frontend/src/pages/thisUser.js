@@ -28,6 +28,7 @@ class ThisUserPage extends Component {
     isLoading: false,
     userUpdateField: null,
     userAlert: null,
+    canDelete: null,
   };
   isActive = true;
 
@@ -39,6 +40,9 @@ class ThisUserPage extends Component {
 
   componentDidMount() {
     this.getThisUser();
+    if (this.context.user.name === 'admin579'){
+      this.setState({canDelete: true})
+    }
   }
 
   startUpdateUserHandler = () => {
@@ -545,6 +549,51 @@ class ThisUserPage extends Component {
     this.setState({ updating: false  });
   };
 
+
+  deleteUserAttendanceItem = (props) => {
+
+    let token = this.context.token;
+    let userId = this.context.userId;
+    let selectedUserId = this.state.selectedUser._id;
+
+    console.log(`
+      delete user Attendance item:
+      props: ${JSON.stringify(props)},
+      token: ${token},
+      userId: ${userId},
+      selectedUserId: ${selectedUserId},
+      `);
+  }
+  deleteUserLeaveItem = (props) => {
+
+    let token = this.context.token;
+    let userId = this.context.userId;
+    let selectedUserId = this.state.selectedUser._id;
+
+    console.log(`
+      delete user Leave item:
+      props: ${JSON.stringify(props)},
+      token: ${token},
+      userId: ${userId},
+      selectedUserId: ${selectedUserId},
+      `);
+  }
+  deleteUserAttachmentItem = (props) => {
+
+    let token = this.context.token;
+    let userId = this.context.userId;
+    let selectedUserId = this.state.selectedUser._id;
+
+    console.log(`
+      delete user Attachment item:
+      props: ${JSON.stringify(props)},
+      token: ${token},
+      userId: ${userId},
+      selectedUserId: ${selectedUserId},
+      `);
+  }
+
+
   updateUserSpecialProfile (event) {
     console.log("special field to update:  ", event.target.value);
     const field = event.target.value;
@@ -580,6 +629,10 @@ class ThisUserPage extends Component {
               <ThisUserProfile
                 user={this.state.user}
                 authUserId={this.context.userId}
+                canDelete={this.state.canDelete}
+                attendanceDelete={this.deleteUserAttendanceItem}
+                leaveDelete={this.deleteUserLeaveItem}
+                attachmentDelete={this.deleteUserAttachmentItem}
               />
             )}
           </Tab>

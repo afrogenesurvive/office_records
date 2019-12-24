@@ -5,6 +5,8 @@ import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion'
 // import FormCheck from 'react-bootstrap/FormCheck'
 // import AuthContext from '../../context/auth-context';
+import DatePicker from "react-datepicker";
+
 import './CreateUserForm.css';
 
 const UpdateUserForm = (props) => {
@@ -12,7 +14,7 @@ const UpdateUserForm = (props) => {
 console.log("UpdateUserForm.props:  ", {...props});
 const {...user} = props.user;
 console.log("UpdateUserForm.props.user:  ", {...user});
-
+// const [startDate, setStartDate] = useState(new Date());
 
 return (
 <div className="UpdateFormContainer">
@@ -53,6 +55,14 @@ return (
   <Form.Label>D.O.B</Form.Label>
   <Form.Control type="date" placeholder={user.dob}/>
 </Form.Group>
+
+{
+  // <DatePicker className="calendarDob"
+  //   selected={startDate}
+  //   onChange={date => setStartDate(date)}
+  // />
+}
+
 <Form.Group as={Col} controlId="formGridEmploymentDate">
   <Form.Label>Employment Date</Form.Label>
   <Form.Control type="date" placeholder={user.employmentDate}/>

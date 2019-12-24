@@ -83,6 +83,8 @@ const thisUserProfile = (props) => {
     <UserAttendanceList
         userAttendance={userAttendance}
         authUserId={authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.attendanceDelete}
       />
     </Tab>
     <Tab eventKey="Leave" title="Leave">
@@ -92,6 +94,8 @@ const thisUserProfile = (props) => {
     <UserLeaveList
         userLeave={userLeave}
         authUserId={authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.leaveDelete}
       />
     </Tab>
     <Tab eventKey="Attachments" title="Attachments">
@@ -101,6 +105,8 @@ const thisUserProfile = (props) => {
     <UserAttachmentList
         userAttachment={userAttachment}
         authUserId={authUserId}
+        canDelete={props.canDelete}
+        onDelete={props.attachmentDelete}
       />
     </Tab>
   </Tabs>

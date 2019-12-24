@@ -13,8 +13,7 @@ import './CreateUserForm.css';
 
 const CreateUserForm = (props) => {
 
-  // console.log({...props});
-  console.log("CreateUserForm:  ", AuthContext.token);
+  console.log("CreateUserForm...", {...props});
   // const [startDate, setStartDate] = useState(new Date());
 return (
 <div className="CreateFormContainer">

@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 // import { NavLink } from 'react-router-dom';
 
 import './UserItem.css';
@@ -15,6 +16,11 @@ const userAttachmentItem = props => (
       </p>
 
     </div>
+    { props.canDelete === true && (
+      <Button variant="danger" onClick={props.onDelete.bind(this, props.attachment)}>
+        Delete
+      </Button>
+    )}
   </li>
 );
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 import './UserItem.css';
 
@@ -28,6 +29,11 @@ const patientTreatmentItem = props => (
         Attachment: {props.attachment.name}
       </p>
     </div>
+    { props.canDelete === true && (
+      <Button variant="danger" onClick={props.onDelete.bind(this, props.treatment)}>
+        Delete
+      </Button>
+    )}
   </li>
 );
 

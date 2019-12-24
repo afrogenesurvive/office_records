@@ -19,6 +19,9 @@ const patientBillingList = props => {
         paid={billing.paid}
         notes={billing.notes}
         attachment={billing.attachment}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        billing={billing}
       />
     );
   });

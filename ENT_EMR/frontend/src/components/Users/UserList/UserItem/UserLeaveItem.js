@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 
 import './UserItem.css';
@@ -14,6 +15,11 @@ const userLeaveItem = props => (
         To: {props.endDate}
       </p>
     </div>
+    { props.canDelete === true && (
+      <Button variant="danger" onClick={props.onDelete.bind(this, props.leave)}>
+        Delete
+      </Button>
+    )}
   </li>
 );
 

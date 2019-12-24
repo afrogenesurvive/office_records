@@ -25,6 +25,9 @@ const userAttendanceList = props => {
         date={userAttendanceDate}
         status={attendance.status}
         description={attendance.description}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        attendance={attendance}
       />
     );
   });

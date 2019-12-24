@@ -20,6 +20,9 @@ const patientExaminationList = props => {
         description={examination.description}
         followUp={examination.followUp}
         attachment={examination.attachment}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        examination={examination}
       />
     );
   });

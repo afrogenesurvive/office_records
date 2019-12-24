@@ -16,6 +16,7 @@ const patientInsuranceList = props => {
         expiry={patientInsuranceExpiry}
         description={insurance.description}
         subscriber={insurance.subscriber}
+        canDelete={props.canDelete}
         onDelete={props.onDelete}
         insurance={insurance}
       />

@@ -83,6 +83,9 @@ class UsersPage extends Component {
   };
 
   modalConfirmHandler = (event) => {
+    console.log(`
+      event: ${JSON.stringify(event)},
+      `);
 
     console.log("CreateUserFormData:  ", event.target.formGridEmail.value);
 
@@ -916,7 +919,8 @@ class UsersPage extends Component {
   };
 
   fetchUsers() {
-    console.log("'fetch users function' context object... " + JSON.stringify(this.context));
+    console.log("fetch users:");
+    // console.log("'fetch users function' context object... " + JSON.stringify(this.context));
     const userId = this.context.userId;
 
     this.setState({ isLoading: true });
@@ -1124,8 +1128,182 @@ modalDeleteHandler = () => {
       }
     });
 
-
 }
+
+deleteUserAttendanceItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let selectedUserId = this.state.selectedUser._id;
+  let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    delete user Attendance item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    selectedUserId: ${selectedUserId},
+    attandance date: ${date},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation{deleteUserAttendance(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",attendanceDate:\"${date}\")
+       {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedUser = resData.data.deleteUserAttendance;
+            console.log("resData.data:  ",resData.data.deleteUserAttendance);
+
+            const updatedUserId = resData.data.deleteUserAttendance._id;
+            const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+            const updatedUserPos = this.state.users.indexOf(updatedUser);
+            const slicedArray = this.state.users.splice(updatedUserPos, 1);
+            console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+            this.state.users.push(resData.data.deleteUserAttendance);
+            this.context.users = this.state.users;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserAttendance})
+            this.fetchUsers();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deleteUserLeaveItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let selectedUserId = this.state.selectedUser._id;
+
+  console.log(`
+    delete user Leave item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    selectedUserId: ${selectedUserId},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation{deleteUserLeave(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",leaveTitle:\"${props.title}\")
+       {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedUser = resData.data.deleteUserLeave;
+            console.log(deletedUser);
+
+            const updatedUserId = resData.data.deleteUserLeave._id;
+            const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+            const updatedUserPos = this.state.users.indexOf(updatedUser);
+            const slicedArray = this.state.users.splice(updatedUserPos, 1);
+            console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+            this.state.users.push(resData.data.deleteUserLeave);
+            this.context.users = this.state.users;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserLeave})
+            this.fetchUsers();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deleteUserAttachmentItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let selectedUserId = this.state.selectedUser._id;
+
+  console.log(`
+    delete user Attachment item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    selectedUserId: ${selectedUserId},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation{deleteUserAttachment(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",attachmentName:\"${props.name}\")
+       {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedUser = resData.data.deleteUserAttachment;
+            console.log(deletedUser);
+
+            const updatedUserId = resData.data.deleteUserAttachment._id;
+            const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+            const updatedUserPos = this.state.users.indexOf(updatedUser);
+            const slicedArray = this.state.users.splice(updatedUserPos, 1);
+            console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+            this.state.users.push(resData.data.deleteUserAttachment);
+            this.context.users = this.state.users;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserAttachment})
+            this.fetchUsers();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+
 
 updateUserSpecial (event) {
 
@@ -1199,6 +1377,9 @@ updateUserSpecial (event) {
                       onEdit={this.startUpdateUserHandler}
                       canDelete={this.state.canDelete}
                       onDelete={this.modalDeleteHandler}
+                      attendanceDelete={this.deleteUserAttendanceItem}
+                      leaveDelete={this.deleteUserLeaveItem}
+                      attachmentDelete={this.deleteUserAttachmentItem}
                       />
                     )}
             </Tab>

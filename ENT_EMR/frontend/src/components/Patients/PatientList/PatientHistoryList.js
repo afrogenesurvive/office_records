@@ -16,6 +16,9 @@ const patientHistoryList = props => {
         title={history.title}
         description={history.description}
         attachment={history.attachment}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        history={history}
       />
     );
   });

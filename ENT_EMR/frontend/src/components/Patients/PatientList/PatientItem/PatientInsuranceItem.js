@@ -26,16 +26,11 @@ const patientInsuranceItem = props => (
         Subscriber Description: {props.subscriber.description}
       </p>
     </div>
-
-      {
-        // FIX ME!!!
-      //   <Button variant="primary" onClick={props.onDelete}>
-      //   Delete
-      // </Button>
-      // <Button variant="primary" value={props.insurance} onClick={props.onDelete(this)}>
-      //   Delete
-      // </Button>
-      }
+    { props.canDelete === true && (
+      <Button variant="danger" onClick={props.onDelete.bind(this, props.insurance)}>
+        Delete
+      </Button>
+    )}
   </li>
 );
 
