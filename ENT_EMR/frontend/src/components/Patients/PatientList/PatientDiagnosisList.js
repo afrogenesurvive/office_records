@@ -16,6 +16,9 @@ const patientDiagnosisList = props => {
         type={diagnosis.type}
         description={diagnosis.description}
         attachment={diagnosis.attachment}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        diagnosis={diagnosis}
       />
     );
   });

@@ -69,18 +69,24 @@ const UserDetail = (props) => {
       <UserAttendanceList
           userAttendance={userAttendance}
           authUserId={props.AuthContext.userId}
+          canDelete={props.canDelete}
+          onDelete={props.attendanceDelete}
         />
       </Tab>
       <Tab eventKey="Leave" title="Leave">
       <UserLeaveList
           userLeave={userLeave}
           authUserId={props.AuthContext.userId}
+          canDelete={props.canDelete}
+          onDelete={props.leaveDelete}
         />
       </Tab>
       <Tab eventKey="Attachments" title="Attachments">
       <UserAttachmentList
           userAttachment={userAttachment}
           authUserId={props.AuthContext.userId}
+          canDelete={props.canDelete}
+          onDelete={props.attachmentDelete}
         />
       </Tab>
     </Tabs>

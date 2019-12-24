@@ -5,14 +5,17 @@ import './UserList.css';
 
 const patientNextOfKinList = props => {
   console.log("patient NextOfKin list props", props.patientNextOfKin);
-  const patientNextOfKin = props.patientNextOfKin.map(kin => {
+  const patientNextOfKin = props.patientNextOfKin.map(nextOfKin => {
     return (
       <PatientNextOfKinItem
-        key={kin.number}
+        key={nextOfKin.number}
         userId={props.authUserId}
-        name={kin.name}
-        email={kin.contact.email}
-        phone={kin.contact.phone}
+        name={nextOfKin.name}
+        email={nextOfKin.contact.email}
+        phone={nextOfKin.contact.phone}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        nextOfKin={nextOfKin}
       />
     );
   });

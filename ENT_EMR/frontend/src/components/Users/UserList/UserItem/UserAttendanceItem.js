@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 import './UserItem.css';
 
 const userAttendanceItem = props => (
@@ -12,6 +13,11 @@ const userAttendanceItem = props => (
         Description: {props.description}
       </p>
     </div>
+    { props.canDelete === true && (
+      <Button variant="danger" onClick={props.onDelete.bind(this, props.attendance)}>
+        Delete
+      </Button>
+    )}
   </li>
 );
 

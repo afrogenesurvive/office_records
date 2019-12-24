@@ -13,6 +13,9 @@ const userAttachmentList = props => {
         name={attachment.name}
         format={attachment.format}
         path={attachment.path}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        attachment={attachment}
       />
     );
   });

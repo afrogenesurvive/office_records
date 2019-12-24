@@ -19,6 +19,9 @@ const userLeaveList = props => {
         startDate={userLeaveStartDate}
         endDate={userLeaveEndDate}
         description={leave.description}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        leave={leave}
       />
     );
   });

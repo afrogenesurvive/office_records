@@ -22,6 +22,9 @@ const patientVitalsList = props => {
         bmi={vitals.bmi}
         urineType={vitals.urine.type}
         urineValue={vitals.urine.value}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        vitals={vitals}
         />
     );
   });

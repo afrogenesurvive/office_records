@@ -2174,7 +2174,7 @@ modalConfirmSearchNameHandler = (event) => {
         console.log("resData", resData);
         const patients = resData.data.patients;
         console.log(patients);
-        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({userAlert: responseAlert});
 
         this.context.patients = this.state.patients;
@@ -2223,7 +2223,7 @@ modalConfirmSearchNameHandler = (event) => {
         console.log("resData", resData);
         const patients = resData.data.patientsNameAsc;
         console.log(patients);
-        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({userAlert: responseAlert});
 
         this.context.patients = patients;
@@ -2273,7 +2273,7 @@ modalConfirmSearchNameHandler = (event) => {
         console.log("resData", resData);
         const patients = resData.data.patientsNameDesc;
         console.log(patients);
-        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({userAlert: responseAlert});
 
         this.context.patients = patients
@@ -2330,7 +2330,7 @@ modalConfirmSearchNameHandler = (event) => {
       .then(resData => {
         let deletedPatient = resData.data.deletePatient;
         console.log(deletedPatient);
-        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({userAlert: responseAlert});
 
         let deletedPatientId = deletedPatient._id;
@@ -2354,48 +2354,993 @@ modalConfirmSearchNameHandler = (event) => {
   }
 
 
-  deletePatientInsurance = (event) => {
-  // deletePatientInsurance = (props) => {
-    event.preventDefault();
+  deletePatientInsuranceItem = (props) => {
+
+    let token = this.context.token;
+    let userId = this.context.userId;
+    let patientId = this.state.selectedPatient._id;
+
     console.log(`
       delete patient insurance item:
-      event: ${event}
-      token: ${this.context.token},
-      userId: ${this.context.userId}
-      patientId: ${this.state.selectedPatientId},
+      props: ${JSON.stringify(props)},
+      token: ${token},
+      userId: ${userId},
+      patientId: ${patientId},
       `);
 
-      // const requestBody = {
-      //   query: `
-      //    mutation {deletePatientInsurance(userId:\"5debdfd99da4842aafe3af56\",patientId:\"5dec67dc2cf9b02f6d75b57c\",patientInput:{insuranceCompany:\"test-surance 077\",insuranceNumber:\"077\",insuranceDescription:\"a company that insures tests and testers but not launchers\",insuranceExpiry:\"2006-10-25\",insuranceSubscriberCompany:\"real-insurance\",insuranceSubscriberDescription:\"our insurance is not a test\",}){_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
-      // `};
-      //
-      //     fetch('http://localhost:10000/graphql', {
-      //       method: 'POST',
-      //       body: JSON.stringify(requestBody),
-      //       headers: {
-      //         'Content-Type': 'application/json',
-      //         Authorization: 'Bearer ' + token
-      //       }
-      //     })
-      //       .then(res => {
-      //         if (res.status !== 200 && res.status !== 201) {
-      //           throw new Error('Failed!');
-      //         }
-      //         return res.json();
-      //       })
-      //       .then(resData => {
-      //         let deletedPatient = resData.data.deletePatientInsurance;
-      //         console.log(deletedPatient);
-      //         props.fetchUsers();
-      //         // props.fetchUsers;
-      //
-      //       })
-      //       .catch(err => {
-      //         console.log(err);
-      //       });
+      const requestBody = {
+        query: `
+         mutation {deletePatientInsurance (userId:\"${userId}\", patientId:\"${patientId}\",insuranceCompany:\"${props.company}\",insuranceNumber:"${props.number}")
+         {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+      `};
+
+          fetch('http://localhost:10000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token
+            }
+          })
+            .then(res => {
+              if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Failed!');
+              }
+              return res.json();
+            })
+            .then(resData => {
+              let deletedPatient = resData.data.deletePatientInsurance;
+              console.log(deletedPatient);
+
+              const updatedPatientId = resData.data.deletePatientInsurance._id;
+              const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+              const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+              const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+              console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+              this.state.patients.push(resData.data.deletePatientInsurance);
+              this.context.patients = this.state.patients;
+              const responseAlert = JSON.stringify(resData.data).slice(2,25);
+              this.setState({ userAlert: responseAlert})
+              // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientInsurance})
+              this.fetchPatients();
+
+            })
+            .catch(err => {
+              console.log(err);
+            });
 
   }
+
+  deletePatientConsultantItem = (props) => {
+
+    let token = this.context.token;
+    let userId = this.context.userId;
+    let patientId = this.state.selectedPatient._id;
+    let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+    console.log(`
+      delete patient consultant item:
+      props: ${JSON.stringify(props)},
+      token: ${token},
+      userId: ${userId},
+      patientId: ${patientId},
+      consultant date: ${date},
+      `);
+
+      const requestBody = {
+        query: `
+         mutation {deletePatientConsultant (userId:\"${userId}\", patientId:\"${patientId}\",consultantId:\"${props.reference.id}\",consultantDate:\"${date}\")
+         {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+      `};
+
+          fetch('http://localhost:10000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token
+            }
+          })
+            .then(res => {
+              if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Failed!');
+              }
+              return res.json();
+            })
+            .then(resData => {
+              let deletedPatient = resData.data.deletePatientConsultant;
+              console.log(deletedPatient);
+
+              const updatedPatientId = resData.data.deletePatientConsultant._id;
+              const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+              const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+              const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+              console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+              this.state.patients.push(resData.data.deletePatientConsultant);
+              this.context.patients = this.state.patients;
+              const responseAlert = JSON.stringify(resData.data).slice(2,25);
+              this.setState({ userAlert: responseAlert})
+              // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientConsultant})
+              this.fetchPatients();
+
+            })
+            .catch(err => {
+              console.log(err);
+            });
+}
+
+deletePatientNextOfKinItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+
+  console.log(`
+    delete patient nextOfKin item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientNextOfKin (userId:\"${userId}\", patientId:\"${patientId}\",nextOfKinName:\"${props.name}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientNextOfKin;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientNextOfKin._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientNextOfKin);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientNextOfKin})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientComplaintItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+  let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    delete patient Complaint item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    complaint date: ${date},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientComplaint (userId:\"${userId}\", patientId:\"${patientId}\",complaintTitle:\"${props.title}\",complaintDate:\"${date}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientComplaint;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientComplaint._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientComplaint);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientComplaint})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientSurveyItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+  let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    delete patient Survey item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    survey date: ${date}
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientSurvey (userId:\"${userId}\", patientId:\"${patientId}\",surveyTitle:\"${props.title}\",surveyDate:\"${date}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientSurvey;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientSurvey._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientSurvey);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientSurvey})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientVitalsItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+  let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    delete patient Vitals item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    vitals date: ${date},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientVitals (userId:\"${userId}\", patientId:\"${patientId}\",vitalsDate:\"${date}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientVitals;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientVitals._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientVitals);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientVitals})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientExaminationItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+  let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    delete patient Examination item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    examination date: ${date},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientExamination (userId:\"${userId}\", patientId:\"${patientId}\",examinationType:\"${props.type}\",examinationDate:\"${date}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientExamination;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientExamination._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientExamination);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientExamination})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientHistoryItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+  let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    delete patient History item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    history date: ${date},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientHistory (userId:\"${userId}\", patientId:\"${patientId}\",historyTitle:\"${props.title}\",historyDate:\"${date}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientHistory;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientHistory._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientHistory);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientHistory})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientAllergiesItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+
+  console.log(`
+    delete patient Allergies item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientAllergies (userId:\"${userId}\", patientId:\"${patientId}\",allergiesTitle:\"${props.title}\",allergiesType:\"${props.type}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientAllergies;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientAllergies._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientAllergies);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientAllergies})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientMedicationItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+
+  console.log(`
+    delete patient Medication item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientMedication (userId:\"${userId}\", patientId:\"${patientId}\",medicationTitle:\"${props.title}\",medicationType:\"${props.type}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientMedication;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientMedication._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientMedication);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientMedication})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientInvestigationItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+  let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    delete patient Investigation item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    investigation date: ${date},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientInvestigation (userId:\"${userId}\", patientId:\"${patientId}\",investigationDate:\"${date}\",investigationTitle:\"${props.title}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientInvestigation;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientInvestigation._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientInvestigation);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientInvestigation})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientDiagnosisItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+  let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    delete patient Diagnosis item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    diagnosis date: ${date}
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientDiagnosis (userId:\"${userId}\",patientId:\"${patientId}\",diagnosisDate:\"${date}\",diagnosisTitle:\"${props.title}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientDiagnosis;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientDiagnosis._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientDiagnosis);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientDiagnosis})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientTreatmentItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+  let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    delete patient Treatment item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    treatment date: ${date},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientTreatment (userId:\"${userId}\", patientId:\"${patientId}\",treatmentDate:\"${date}\",treatmentTitle:\"${props.title}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientTreatment;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientTreatment._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientTreatment);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientTreatment})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientBillingItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+  let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    delete patient Billing item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    billing date: ${date},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientBilling (userId:\"${userId}\", patientId:\"${patientId}\",billingDate:\"${date}\",billingTitle:\"${props.title}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientBilling;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientBilling._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientBilling);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientBilling})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientAttachmentItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+
+  console.log(`
+    delete patient Attachment item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    `);
+
+    const requestBody = {
+      query: `
+       mutation {deletePatientAttachment (userId:\"${userId}\", patientId:\"${patientId}\",attachmentName:\"${props.name}\")
+       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientAttachment;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientAttachment._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientAttachment);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientAttachment})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientNoteItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+
+  console.log(`
+    delete patient Note item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    `);
+
+    const requestBody = {
+      query: `
+
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientNextOfKin;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientNextOfKin._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientNextOfKin);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientNextOfKin})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
+
+deletePatientTagItem = (props) => {
+
+  let token = this.context.token;
+  let userId = this.context.userId;
+  let patientId = this.state.selectedPatient._id;
+
+  console.log(`
+    delete patient Tag item:
+    props: ${JSON.stringify(props)},
+    token: ${token},
+    userId: ${userId},
+    patientId: ${patientId},
+    `);
+
+    const requestBody = {
+      query: `
+
+    `};
+
+        fetch('http://localhost:10000/graphql', {
+          method: 'POST',
+          body: JSON.stringify(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          }
+        })
+          .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!');
+            }
+            return res.json();
+          })
+          .then(resData => {
+            let deletedPatient = resData.data.deletePatientNextOfKin;
+            console.log(deletedPatient);
+
+            const updatedPatientId = resData.data.deletePatientNextOfKin._id;
+            const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+            const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+            const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+            console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+            this.state.patients.push(resData.data.deletePatientNextOfKin);
+            this.context.patients = this.state.patients;
+            const responseAlert = JSON.stringify(resData.data).slice(2,25);
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientNextOfKin})
+            this.fetchPatients();
+
+          })
+          .catch(err => {
+            console.log(err);
+          });
+}
 
 
   updatePatientSpecial (event) {
@@ -2464,7 +3409,23 @@ modalConfirmSearchNameHandler = (event) => {
         onGetVisit={this.getPatientVisit}
         visit={this.context.visit}
         fetchUsers={this.fetchUsers}
+        consultantDelete={this.deletePatientConsultantItem}
         insuranceDelete={this.deletePatientInsuranceItem}
+        nextOfKinDelete={this.deletePatientNextOfKinItem}
+        complaintDelete={this.deletePatientComplaintItem}
+        surveyDelete={this.deletePatientSurveyItem}
+        vitalsDelete={this.deletePatientVitalsItem}
+        examinationDelete={this.deletePatientExaminationItem}
+        historyDelete={this.deletePatientHistoryItem}
+        allergiesDelete={this.deletePatientAllergiesItem}
+        medicationDelete={this.deletePatientMedicationItem}
+        investigationDelete={this.deletePatientInvestigationItem}
+        diagnosisDelete={this.deletePatientDiagnosisItem}
+        treatmentDelete={this.deletePatientTreatmentItem}
+        billingDelete={this.deletePatientBillingItem}
+        attachmentDelete={this.deletePatientAttachmentItem}
+        noteDelete={this.deletePatientNoteItem}
+        tagDelete={this.deletePatientTagItem}
         />
     )}
     </Tab>

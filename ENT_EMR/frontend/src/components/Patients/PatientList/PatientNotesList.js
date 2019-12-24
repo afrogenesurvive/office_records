@@ -12,6 +12,8 @@ const patientNotesList = props => {
         key={note}
         userId={props.authUserId}
         note={note}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
       />
     );
   });

@@ -28,6 +28,9 @@ const patientConsultantList = props => {
         referenceId={consultantId}
         referenceName={consultantName}
         referenceRole={consultantRole}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        consultant={consultant}
       />
     );
   });

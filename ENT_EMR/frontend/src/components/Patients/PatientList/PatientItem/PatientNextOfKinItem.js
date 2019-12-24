@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 import './UserItem.css';
 
@@ -16,6 +17,11 @@ const patientNextOfKinItem = props => (
         Phone: {props.phone}
       </p>
     </div>
+    { props.canDelete === true && (
+      <Button variant="danger" onClick={props.onDelete.bind(this, props.nextOfKin)}>
+        Delete
+      </Button>
+    )}
   </li>
 );
 

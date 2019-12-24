@@ -12,6 +12,8 @@ const patientTagsList = props => {
         key={tag}
         userId={props.authUserId}
         tag={tag}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
       />
     );
   });

@@ -15,6 +15,9 @@ const patientSurveyList = props => {
         date={patientSurveyDate}
         description={survey.description}
         attachment={survey.attachment}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        survey={survey}
       />
     );
   });

@@ -19,6 +19,9 @@ const patientTreatmentList = props => {
         frequency={treatment.frequency}
         type={treatment.type}
         attachment={treatment.attachment}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        treatment={treatment}
       />
     );
   });

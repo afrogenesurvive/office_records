@@ -14,6 +14,9 @@ const patientMedicationList = props => {
         type={medication.type}
         description={medication.description}
         attachment={medication.attachment}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
+        medication={medication}
       />
     );
   });
