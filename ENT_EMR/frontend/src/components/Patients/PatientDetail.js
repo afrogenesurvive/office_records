@@ -54,13 +54,13 @@ const PatientDetail = (props) => {
   const patientAttachments = patient.attachments;
   const patientNotes = patient.notes;
   const patientTags = patient.tags;
-  const patientRegistrationDate = new Date(patient.registrationDate.substr(0,10)*1000).toLocaleString();
-  const patientDob = new Date(patient.dob.substr(0,10)*1000).toLocaleString();
-  const patientReferralDate = new Date(patient.referralDate*1000).toUTCString();
-  // const patientReferralDate = new Date(patient.referralDate.substr(0,10)*1000).toLocaleString();
+  const patientRegistrationDate = new Date(patient.registrationDate.substr(0,10)*1000).toISOString().slice(0,10);
+  const patientDob = new Date(patient.dob.substr(0,10)*1000).toISOString().slice(0,10);
+  // const patientReferralDate = new Date(patient.referralDate*1000).toUTCString();
+  const patientReferralDate = new Date(patient.referralDate.substr(0,10)*1000).toISOString().slice(0,10);
   let patientExpirationDate = undefined;
   if (patient.expirationDate !== null)
-  {patientExpirationDate = new Date(patient.expirationDate.substr(0,10)*1000).toLocaleString();}
+  {patientExpirationDate = new Date(patient.expirationDate.substr(0,10)*1000).toISOString().slice(0,10);}
   else {patientExpirationDate = patient.expirationDate;}
   // let visit = "noVisit";
   // if (props.visit) {

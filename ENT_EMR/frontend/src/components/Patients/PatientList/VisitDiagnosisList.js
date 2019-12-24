@@ -9,7 +9,7 @@ const visitDiagnosisList = props => {
   let diagnosis = undefined;
   if (props.diagnosis) {
   diagnosis = props.diagnosis.map(diagnosisItem => {
-    const visitDiagnosisDate = new Date(diagnosisItem.date.substr(0,10)*1000).toLocaleString();
+    const visitDiagnosisDate = new Date(diagnosisItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const diagnosisAttachment = diagnosisItem.attachment;
     console.log(`
       visitDiagnosisDate: ${visitDiagnosisDate},

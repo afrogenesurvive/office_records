@@ -20,8 +20,8 @@ const UserDetail = (props) => {
   const userLeave = user.leave;
   const userAttachment = user.attachments;
   const authSelectedUser = JSON.stringify(props.AuthContext.selectedUser);
-  const userEmploymentDate = new Date(user.employmentDate.substr(0,10)*1000).toLocaleString();
-  const userTerminationDate = new Date(user.terminationDate.substr(0,10)*1000).toLocaleString();
+  const userEmploymentDate = new Date(user.employmentDate.substr(0,10)*1000).toISOString().slice(0,10);
+  const userTerminationDate = new Date(user.terminationDate.substr(0,10)*1000).toISOString().slice(0,10);
 
   // console.log("user attendance:  ", userAttendance, authSelectedUser.slice(0,5) === '{"_id' , authSelectedUser.slice(0,5));
   console.log("UserDetail.props.authUserId:  ",authUserId, "  UserDetail.props.user:  ", {...user});

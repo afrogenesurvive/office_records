@@ -6,7 +6,7 @@ import './UserList.css';
 const patientComplaintList = props => {
   console.log("patient complaintlist props", props.patientComplaint);
   const patientComplaint = props.patientComplaint.map(complaint => {
-    const patientComplaintDate = new Date(complaint.date.substr(0,10)*1000).toLocaleString();
+    const patientComplaintDate = new Date(complaint.date.substr(0,10)*1000).toISOString().slice(0,10);
     return (
       <PatientComplaintItem
         key={complaint.date}

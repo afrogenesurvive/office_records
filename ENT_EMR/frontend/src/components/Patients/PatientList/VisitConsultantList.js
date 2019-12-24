@@ -9,7 +9,7 @@ const visitConsultantList = props => {
   let consultant = undefined;
   if (props.consultant) {
   consultant = props.consultant.map(consultantItem => {
-    const visitConsultantDate = new Date(consultantItem.date.substr(0,10)*1000).toLocaleString();
+    const visitConsultantDate = new Date(consultantItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const consultantReference = consultantItem.reference;
     console.log(`
       visitConsultantDate: ${visitConsultantDate},

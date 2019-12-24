@@ -6,7 +6,7 @@ import './UserList.css';
 const appointmentTodayList = props => {
   console.log("patient Today list props", props.appointmentToday);
   const appointmentToday = props.appointmentToday.map(appointment => {
-    const appointmentTodayDate = new Date(appointment.date*1000).toUTCString();
+    const appointmentTodayDate = new Date(appointment.date.substr(0,10)*1000).toISOString().slice(0,10);
     return (
       <AppointmentTodayItem
         key={appointment.date}

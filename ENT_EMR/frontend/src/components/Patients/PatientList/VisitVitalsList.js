@@ -9,7 +9,7 @@ const visitVitalsList = props => {
   if (props.vitals) {
 
     vitals = props.vitals.map(vitalsItem => {
-      const visitVitalsDate = new Date(vitalsItem.date.substr(0,10)*1000).toLocaleString();
+      const visitVitalsDate = new Date(vitalsItem.date.substr(0,10)*1000).toISOString().slice(0,10);
       const vitalsUrine = vitalsItem.urine;
       console.log(`
         visitVitalsDate: ${visitVitalsDate},

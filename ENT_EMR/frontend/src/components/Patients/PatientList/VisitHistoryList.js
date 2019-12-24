@@ -9,7 +9,7 @@ const visitHistoryList = props => {
   let history = undefined;
   if (props.history) {
   history = props.history.map(historyItem => {
-    const visitHistoryDate = new Date(historyItem.date.substr(0,10)*1000).toLocaleString();
+    const visitHistoryDate = new Date(historyItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const historyAttachment = historyItem.attachment;
     console.log(`
       visitHistoryDate: ${visitHistoryDate},

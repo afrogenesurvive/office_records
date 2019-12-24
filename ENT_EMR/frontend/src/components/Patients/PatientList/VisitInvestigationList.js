@@ -9,7 +9,7 @@ const visitInvestigationList = props => {
   let investigation = undefined;
   if (props.investigation) {
   investigation = props.investigation.map(investigationItem => {
-    const visitInvestigationDate = new Date(investigationItem.date.substr(0,10)*1000).toLocaleString();
+    const visitInvestigationDate = new Date(investigationItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const investigationAttachment = investigationItem.attachment;
     console.log(`
       visitInvestigationDate: ${visitInvestigationDate},

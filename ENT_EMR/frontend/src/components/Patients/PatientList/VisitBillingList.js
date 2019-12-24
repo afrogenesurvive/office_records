@@ -9,7 +9,7 @@ const visitBillingList = props => {
   let billing = undefined;
   if (props.billing) {
   billing = props.billing.map(billingItem => {
-    const visitBillingDate = new Date(billingItem.date.substr(0,10)*1000).toLocaleString();
+    const visitBillingDate = new Date(billingItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const billingAttachment = billingItem.attachment;
     console.log(`
       visitBillingDate: ${visitBillingDate},
