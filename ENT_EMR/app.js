@@ -19,8 +19,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(isAuth);
-
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
@@ -41,18 +39,22 @@ app.use(
   })
 );
 
-// run react build***
-// app.use(express.static(path.join(__dirname, 'build')));
-// app.get('/', function(req, res) {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
-
-
 // mongoose.connect('mongodb://localhost:27017/ent_emr_dev',{useNewUrlParser: true, useUnifiedTopology: true})
 mongoose.connect(process.env.MONGO_URI,{useNewUrlParser: true, useUnifiedTopology: true})
+// mongoose.connect("mongodb+srv://ent_emr_admin:0tolaryngologY@cluster0-5iwfn.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
-    app.listen(10000);
+    console.log("DB connected. App is listening...");
+    app.listen(8080);
+    // app.listen(10000);
   })
   .catch(err => {
     console.log(err);
+});
+
+app.use(
+  // express.static(path.join(__dirname, "client/build"))
+  express.static(path.join(__dirname, "./frontend/build"))
+);
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
