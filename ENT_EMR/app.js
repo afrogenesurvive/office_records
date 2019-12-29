@@ -40,8 +40,8 @@ app.use(
 );
 
 // mongoose.connect('mongodb://localhost:27017/ent_emr_dev',{useNewUrlParser: true, useUnifiedTopology: true})
-mongoose.connect(process.env.MONGO_URI,{useNewUrlParser: true, useUnifiedTopology: true})
-// mongoose.connect("mongodb+srv://ent_emr_admin:0tolaryngologY@cluster0-5iwfn.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
+// mongoose.connect(process.env.MONGO_URI,{useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect("mongodb+srv://ent_emr_admin:0tolaryngologY@cluster0-5iwfn.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
     console.log("DB connected. App is listening...");
     app.listen(8080);
