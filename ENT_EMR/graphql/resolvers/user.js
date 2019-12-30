@@ -10,6 +10,7 @@ const util = require('util');
 const { transformUser } = require('./merge');
 const { dateToString } = require('../../helpers/date');
 const { pocketVariables } = require('../../helpers/pocketVars');
+const { s3fs } = require('../../helpers/s3fs');
 
 const multer  = require('multer');
 const upload = multer({ dest: './uploads/' });
@@ -321,6 +322,18 @@ module.exports = {
       console.log(`
         userAttachmentObject: ${userAttachmentObject}
         `);
+
+        // FIX ME!!!
+        // s3fs.params = {
+        //   localFile: "some/local/file",
+        //
+        //   s3Params: {
+        //     Bucket: "s3 bucket name",
+        //     Key: "some/remote/file",
+        //   },
+        // }
+        // s3fs.upload()
+
       const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attachments: userAttachmentObject}},{new: true})
       return {
         ...user._doc,
