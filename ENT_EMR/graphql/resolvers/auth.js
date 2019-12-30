@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { s3fs } = require('../../helpers/s3fs');
 
 const User = require('../../models/user');
 
@@ -7,6 +8,7 @@ const { pocketVariables } = require('../../helpers/pocketVars');
 
 module.exports = {
   login: async ({ email, password }) => {
+
 
     const user = await User.findOne({ email: email });
     if (!user) {
