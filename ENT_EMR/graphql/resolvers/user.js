@@ -336,17 +336,6 @@ module.exports = {
         userAttachmentObject: ${userAttachmentObject}
         `);
 
-        // FIX ME!!!
-        // s3fs.params = {
-        //   localFile: "some/local/file",
-        //
-        //   s3Params: {
-        //     Bucket: "s3 bucket name",
-        //     Key: "some/remote/file",
-        //   },
-        // }
-        // s3fs.upload()
-
       const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attachments: userAttachmentObject}},{new: true})
       return {
         ...user._doc,

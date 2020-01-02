@@ -1,6 +1,6 @@
 {
   "name": "ent_emr_dev",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@react-pdf/renderer": "^1.6.8",
@@ -13,6 +13,7 @@
     "react-bootstrap": "^1.0.0-beta.14",
     "react-datepicker": "^2.10.1",
     "react-dom": "^16.11.0",
+    "react-file-viewer": "^1.2.1",
     "react-router-dom": "^5.1.2",
     "react-s3": "^1.3.1",
     "react-scripts": "^3.3.0",

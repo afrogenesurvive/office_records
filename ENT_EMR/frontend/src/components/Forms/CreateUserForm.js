@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 // import FormCheck from 'react-bootstrap/FormCheck'
 // import { NavLink } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion';
-import AuthContext from '../../context/auth-context';
+// import AuthContext from '../../context/auth-context';
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -58,13 +58,13 @@ return (
 <Form.Row>
 <Form.Group as={Col} controlId="formGridDob">
   <Form.Label>D.O.B</Form.Label>
-  <Form.Control type="date" placeholder="dob"/>
+  <Form.Control type="date" placeholder="Date of Birth"/>
 </Form.Group>
 
   {
     // <DatePicker className="calendarDob"
-    //   selected={startDate}
-    //   onChange={date => setStartDate(date)}
+    //   selected={AuthContext._currentValue.fancyDate}
+    //   onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e}}
     // />
   }
 

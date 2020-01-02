@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-// import Form from 'react-bootstrap/Form';
+import S3 from 'react-aws-s3';
+import S3FileUpload from 'react-s3';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -439,8 +441,6 @@ class PatientsPage extends Component {
 
         this.state.patients.push(resData.data.updatePatient);
 
-        // FIX ME!!!
-        // Add everywhere update are found
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatient})
         this.fetchPatients();
@@ -768,6 +768,27 @@ updatePatientComplaintHandler = (event) => {
   let complaintAttachmentName = event.target.formGridComplaintAttachmentName.value;
   let complaintAttachmentFormat = event.target.formGridComplaintAttachmentFormat.value;
   let complaintAttachmentPath = event.target.formGridComplaintAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: complaintAttachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const patientComplaint = { complaintTitle, complaintDate, complaintDescription, complaintAnamnesis, complaintAttachmentName, complaintAttachmentFormat, complaintAttachmentPath };
   console.log(`
@@ -848,6 +869,27 @@ updatePatientSurveyHandler = (event) => {
   let surveyAttachmentName = event.target.formGridSurveyAttachmentName.value;
   let surveyAttachmentFormat = event.target.formGridSurveyAttachmentFormat.value;
   let surveyAttachmentPath = event.target.formGridSurveyAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: surveyAttachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const patientSurvey = { surveyDate, surveyTitle, surveyDescription, surveyAttachmentName, surveyAttachmentFormat, surveyAttachmentPath };
   console.log(`
@@ -1017,6 +1059,27 @@ updatePatientExaminationHandler = (event) => {
   let examinationAttachmentName = event.target.formGridExaminationAttachmentName.value;
   let examinationAttachmentFormat = event.target.formGridExaminationAttachmentFormat.value;
   let examinationAttachmentPath = event.target.formGridExaminationAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: examinationAttachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const patientExamination = { examinationArea, examinationGeneral, examinationType, examinationMeasure, examinationValue, examinationAttachmentName, examinationAttachmentFormat, examinationAttachmentPath };
 
@@ -1104,6 +1167,27 @@ updatePatientHistoryHandler = (event) => {
   let historyAttachmentName = event.target.formGridHistoryAttachmentName.value;
   let historyAttachmentFormat = event.target.formGridHistoryAttachmentFormat.value;
   let historyAttachmentPath = event.target.formGridHistoryAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: historyAttachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const patientHistory = { historyType, historyDate, historyTitle, historyDescription, historyAttachmentName, historyAttachmentFormat, historyAttachmentPath };
   console.log(`
@@ -1190,6 +1274,27 @@ updatePatientAllergiesHandler = (event) => {
   let allergiesAttachmentName = event.target.formGridAllergiesAttachmentName.value;
   let allergiesAttachmentFormat = event.target.formGridAllergiesAttachmentFormat.value;
   let allergiesAttachmentPath = event.target.formGridAllergiesAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: allergiesAttachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const patientAllergies = { allergiesTitle, allergiesType, allergiesDescription, allergiesAttachmentName, allergiesAttachmentFormat, allergiesAttachmentPath };
 
@@ -1272,6 +1377,27 @@ updatePatientMedicationHandler = (event) => {
   let medicationAttachmentName = event.target.formGridMedicationAttachmentName.value;
   let medicationAttachmentFormat = event.target.formGridMedicationAttachmentFormat.value;
   let medicationAttachmentPath = event.target.formGridMedicationAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: medicationAttachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const patientMedication = { medicationTitle, medicationType, medicationDescription, medicationAttachmentName, medicationAttachmentFormat, medicationAttachmentPath };
 
@@ -1359,6 +1485,27 @@ updatePatientInvestigationHandler = (event) => {
   let investigationAttachmentName = event.target.formGridInvestigationAttachmentName.value;
   let investigationAttachmentFormat = event.target.formGridInvestigationAttachmentFormat.value;
   let investigationAttachmentPath = event.target.formGridInvestigationAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: investigationAttachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const patientInvestigation = { investigationDate, investigationTitle, investigationType, investigationDescription, investigationAttachmentName, investigationAttachmentFormat, investigationAttachmentPath };
 
@@ -1442,6 +1589,27 @@ updatePatientDiagnosisHandler = (event) => {
   let diagnosisAttachmentName = event.target.formGridDiagnosisAttachmentName.value;
   let diagnosisAttachmentFormat = event.target.formGridDiagnosisAttachmentFormat.value;
   let diagnosisAttachmentPath = event.target.formGridDiagnosisAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: diagnosisAttachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const patientDiagnosis = { diagnosisDate, diagnosisTitle, diagnosisType, diagnosisDescription, diagnosisAttachmentName, diagnosisAttachmentFormat, diagnosisAttachmentPath };
 
@@ -1532,6 +1700,28 @@ updatePatientTreatmentHandler = (event) => {
   let treatmentAttachmentName = event.target.formGridTreatmentAttachmentName.value;
   let treatmentAttachmentFormat = event.target.formGridTreatmentAttachmentFormat.value;
   let treatmentAttachmentPath = event.target.formGridTreatmentAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: treatmentAttachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+
 
   const patientTreatment = { treatmentDate, treatmentTitle, treatmentDescription, treatmentDose, treatmentFrequency, treatmentType, treatmentAttachmentName, treatmentAttachmentFormat, treatmentAttachmentPath };
 
@@ -1620,6 +1810,27 @@ updatePatientBillingHandler = (event) => {
   let billingAttachmentName = event.target.formGridBillingAttachmentName.value;
   let billingAttachmentFormat = event.target.formGridBillingAttachmentFormat.value;
   let billingAttachmentPath = event.target.formGridBillingAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: billingAttachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const patientBilling = { billingDate, billingTitle, billingType, billingDescription, billingAmount, billingPaid, billingNotes, billingAttachmentName, billingAttachmentFormat, billingAttachmentPath };
 
@@ -1705,6 +1916,27 @@ updatePatientAttachmentHandler = (event) => {
     let attachmentName = event.target.formGridPatientAttachmentName.value;
     let attachmentFormat = event.target.formGridPatientAttachmentFormat.value;
     let attachmentPath = event.target.formGridPatientAttachmentPath.value;
+    let file = AuthContext._currentValue.file;
+
+    console.log(`
+      uploading to s3...
+      file.name: ${file.name},
+      AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+      `);
+    const config = {
+      bucketName: 'ent-emr-bucket',
+      dirName: attachmentPath,
+      region: 'us-east-2',
+      accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+      secretAccessKey: "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",
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
     if (
       attachmentName.trim().length === 0 ||
@@ -1790,9 +2022,9 @@ updatePatientNoteHandler = (event) => {
     this.setState({userAlert: "adding patient note"});
 
     const requestBody = {
-                    query:`
-                    mutation {updatePatientNotes(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{notes:"${note}"})
-                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+              query:`
+              mutation {updatePatientNotes(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{notes:"${note}"})
+              {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
             `}
 
     fetch('http://localhost:10000/graphql', {

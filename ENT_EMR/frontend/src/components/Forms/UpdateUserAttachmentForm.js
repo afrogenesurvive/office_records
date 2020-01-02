@@ -18,14 +18,14 @@ return (
 <div className="UpdateFormContainer">
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
-  <Form.Group as={Col} controlId="formGridAttachmentName">
-    <Form.Label>Filename</Form.Label>
-    <Form.Control type="text" placeholder="Filename"/>
-  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridAttachmentFormat">
     <Form.Label>Format</Form.Label>
     <Form.Control type="string" placeholder="File format"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridAttachmentPath">
     <Form.Label>File path</Form.Label>
     <Form.Control type="string" placeholder="File path"/>
@@ -36,6 +36,11 @@ return (
   </Form.Group>
 {
   // (e) => console.log(e.target.files[0])
+
+  // <Form.Group as={Col} controlId="formGridAttachmentName">
+  //   <Form.Label>Filename</Form.Label>
+  //   <Form.Control type="text" placeholder="Filename"/>
+  // </Form.Group>
 }
 </Form.Row>
 

@@ -418,25 +418,21 @@ class UsersPage extends Component {
         selectedUserId = null;
     }
 
-    console.log("UpdateUserAttendanceFormData:  ", event.target.formGridAttendanceDate.value);
+    console.log("UpdateUserAttendanceFormData:  ", AuthContext._currentValue.fancyDate);
 
     this.setState({ updating: false , userUpdateField: null });
 
-    let attendanceDate = event.target.formGridAttendanceDate.value;
+    // FIX ME!!!
+    let attendanceDate = AuthContext._currentValue.fancyDate;
     let attendanceStatus = event.target.formGridAttendanceStatus.value;
     let attendanceDescription = event.target.formGridAttendanceDescription.value;
 
-    if (attendanceDate.trim().length === 0) {
+    if (
+    // attendanceDate.trim().length === 0 ||
+    attendanceStatus.trim().length === 0
+    ){
       console.log("blank fields detected!!!...filling w/ previous data...");
-      attendanceDate = this.context.selectedUser.attendanceDate;
-    }
-    if (attendanceStatus.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      attendanceStatus = this.context.selectedUser.attendanceStatus;
-    }
-    if (attendanceDescription.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
-      attendanceDescription = this.context.selectedUser.attendanceDescription;
+      return
     }
 
     const userAttendance = { attendanceDate, attendanceStatus, attendanceDescription }
@@ -514,7 +510,7 @@ class UsersPage extends Component {
 
     this.setState({ updating: false , userUpdateField: null });
 
-    let attachmentName = event.target.formGridAttachmentName.value;
+    // let attachmentName = event.target.formGridAttachmentName.value;
     let attachmentFormat = event.target.formGridAttachmentFormat.value;
     let attachmentPath = event.target.formGridAttachmentPath.value;
     let file = AuthContext._currentValue.file;
@@ -534,10 +530,14 @@ class UsersPage extends Component {
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
 
-ReactS3Client
-    .uploadFile(file, newFileName)
-    .then(data => {console.log(data);this.setState({userAlert: "upload success"});})
-    .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+    // FIX ME !!!
+    // add wherever attachments are found
+    const attachmentName = newFileName;
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
     if (
       attachmentName.trim().length === 0 ||
