@@ -273,6 +273,7 @@ input UserInput {
   attachmentName: String
   attachmentFormat: String
   attachmentPath: String
+  attachmentFile: String
   attendanceDate: String
   attendanceStatus: String
   attendanceDescription: String

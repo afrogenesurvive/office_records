@@ -19,6 +19,7 @@ export default React.createContext({
     appointmentsInProgress: null,
     userAlert: null,
     visit: null,
+    file: null,
     login: (token, userId, tokenExpiration) => {},
     logout: () => {}
 });
