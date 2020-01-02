@@ -314,6 +314,19 @@ module.exports = {
       //   throw new Error('Not the creator! No edit permission');
       // }
       // else {
+      s3fs.params = {
+        localFile: args.userInput.attachmentFile,
+        s3Params: {
+          Bucket: "ent-emr-bucket",
+          Key: "/uploads/"
+        }
+      };
+
+      s3fs.operation = "upload";
+      console.log(`
+        s3fs.params: ${util.inspect(s3fs.params)},
+        `);
+
       const userAttachmentObject = {
         name: args.userInput.attachmentName,
         format: args.userInput.attachmentFormat,

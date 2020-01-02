@@ -151,6 +151,7 @@ class AppointmentsPage extends Component {
 
     const token = this.context.token;
 
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -295,6 +296,7 @@ class AppointmentsPage extends Component {
 
     const token = this.context.token;
 
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -370,7 +372,7 @@ class AppointmentsPage extends Component {
         `
       }
 
-
+      // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -436,6 +438,7 @@ class AppointmentsPage extends Component {
         {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
         `};
 
+      // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -510,6 +513,7 @@ class AppointmentsPage extends Component {
 
       const token = this.context.token;
 
+      // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -558,6 +562,7 @@ class AppointmentsPage extends Component {
 
       const token = this.context.token;
 
+      // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -606,6 +611,7 @@ class AppointmentsPage extends Component {
 
       const token = this.context.token;
 
+      // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -656,6 +662,7 @@ class AppointmentsPage extends Component {
 
       const token = this.context.token;
 
+      // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -705,6 +712,7 @@ class AppointmentsPage extends Component {
 
       const token = this.context.token;
 
+      // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -756,6 +764,7 @@ class AppointmentsPage extends Component {
             {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
         `};
 
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -801,6 +810,7 @@ class AppointmentsPage extends Component {
             {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
         `};
 
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -846,6 +856,7 @@ class AppointmentsPage extends Component {
             {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
         `};
 
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -901,6 +912,7 @@ class AppointmentsPage extends Component {
           {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
         `};
 
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -979,6 +991,7 @@ class AppointmentsPage extends Component {
         `
     };
 
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -1021,6 +1034,7 @@ class AppointmentsPage extends Component {
         `
     };
 
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),

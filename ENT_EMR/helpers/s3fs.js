@@ -29,16 +29,29 @@ let params = {
 };
 const s3fs = {
   test: "s3fs connected...",
+  operation: null,
   params: {},
-  upload: upload(),
-  download: download(),
+  // upload: upload(),
+  // download: download(),
   // upload: upload,
   // download: download
 }
 
-if (s3fs.params !== {}){
-   params = s3fs.params;
-}
+   if (s3fs.operation === "upload") {
+     params = s3fs.params;
+     console.log(`
+       upload to s3 resolver...
+       `);
+     upload();
+   }
+   if (s3fs.operation === "download") {
+     params = s3fs.params;
+     console.log(`
+       download s3 resolver...
+       `);
+     download();
+   }
+
 
 function upload () {
   console.log(`
@@ -47,13 +60,16 @@ function upload () {
     `);
   const uploader = client.uploadFile(params);
   uploader.on('error', function(err) {
+    s3fs.operation = null;
     console.error("unable to upload:", err.stack);
   });
   uploader.on('progress', function() {
+    s3fs.operation = null;
     console.log("progress", uploader.progressMd5Amount,
               uploader.progressAmount, uploader.progressTotal);
   });
   uploader.on('end', function() {
+    s3fs.operation = null;
     console.log("done uploading");
   });
 }
@@ -66,12 +82,15 @@ function download () {
     `);
   const downloader = client.downloadFile(params);
   downloader.on('error', function(err) {
+    s3fs.operation = null;
     console.error("unable to download:", err.stack);
   });
   downloader.on('progress', function() {
+    s3fs.operation = null;
     console.log("progress", downloader.progressAmount, downloader.progressTotal);
   });
   downloader.on('end', function() {
+    s3fs.operation = null;
     console.log("done downloading");
   });
 }

@@ -44,7 +44,7 @@ mongoose.connect('mongodb://localhost:27017/ent_emr_dev',{useNewUrlParser: true,
 // mongoose.connect(process.env.MONGO_URI,{useNewUrlParser: true, useUnifiedTopology: true})
 // mongoose.connect("mongodb+srv://ent_emr_admin:0tolaryngologY@cluster0-5iwfn.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
-    console.log("DB connected...");
+    console.log("DB connected...", );
     app.listen(10000);
   })
   .catch(err => {
@@ -72,7 +72,7 @@ mongoose.connect('mongodb://localhost:27017/ent_emr_dev',{useNewUrlParser: true,
 //   // express.static(path.join(__dirname, "client/build"))
 //   express.static(path.join(__dirname, "./frontend/build"))
 // );
-// app.get('/', function(req, res) {
+// app.get('/*', function(req, res) {
 //   res.send("Hello World!");
 //   res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
 // });

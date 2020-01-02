@@ -4,15 +4,15 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion'
 // import FormCheck from 'react-bootstrap/FormCheck'
-// import AuthContext from '../../context/auth-context';
+import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const UpdateUserAttachmentForm = (props) => {
 
-console.log("UpdateUserLeaveForm.props:  ", {...props});
+console.log("UpdateUserAttachmentForm.props:  ", {...props}, " AuthContext: ", AuthContext);
 const {...user} = props.user;
-console.log("UpdateUserLeaveForm.props.user:  ", {...user});
-
+console.log("UpdateUserAttachmentForm.props.user:  ", {...user});
+let file = null;
 
 return (
 <div className="UpdateFormContainer">
@@ -30,7 +30,13 @@ return (
     <Form.Label>File path</Form.Label>
     <Form.Control type="string" placeholder="File path"/>
   </Form.Group>
-
+  <Form.Group as={Col} controlId="formGridAttachmentFile">
+    <Form.Label>File</Form.Label>
+    <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>
+  </Form.Group>
+{
+  // (e) => console.log(e.target.files[0])
+}
 </Form.Row>
 
 
