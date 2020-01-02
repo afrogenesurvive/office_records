@@ -4,8 +4,10 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion'
 // import FormCheck from 'react-bootstrap/FormCheck'
-// import AuthContext from '../../context/auth-context';
+import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const UpdateUserAttendanceForm = (props) => {
 
@@ -21,8 +23,17 @@ return (
 <Form.Row>
   <Form.Group as={Col} controlId="formGridAttendanceDate">
     <Form.Label>Date</Form.Label>
-    <Form.Control type="date" placeholder="Attendance Date"/>
+    <DatePicker className="calendarDob"
+      selected={AuthContext._currentValue.fancyDate}
+      onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e}}
+    />
   </Form.Group>
+  {
+    // <DatePicker className="calendarDob"
+    //   selected={AuthContext._currentValue.fancyDate}
+    //   onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e}}
+    // />
+  }
   <Form.Group as={Col} controlId="formGridAttendanceStatus">
     <Form.Label>Status</Form.Label>
     <Form.Control type="text" placeholder="Attendance Status"/>
@@ -45,9 +56,7 @@ return (
 )}
 
 {props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="2" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
+  <Button variant="success" type="submit">Add Attendance</Button>
 )}
 
 </Form>

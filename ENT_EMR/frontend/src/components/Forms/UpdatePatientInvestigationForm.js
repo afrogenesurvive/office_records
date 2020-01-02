@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion'
 // import FormCheck from 'react-bootstrap/FormCheck'
-// import AuthContext from '../../context/auth-context';
+import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const UpdatePatientInvestigationForm = (props) => {
@@ -56,6 +56,10 @@ return (
   <Form.Group as={Col} controlId="formGridInvestigationAttachmentPath">
     <Form.Label>InvestigationAttachmentPath</Form.Label>
     <Form.Control type="text" placeholder="InvestigationAttachmentPath"/>
+  </Form.Group>
+  <Form.Group as={Col} controlId="formGridInvestigationAttachmentFile">
+    <Form.Label>File</Form.Label>
+    <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>
   </Form.Group>
   </Form.Row>
 

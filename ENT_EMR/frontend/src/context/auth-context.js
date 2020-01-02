@@ -20,6 +20,8 @@ export default React.createContext({
     userAlert: null,
     visit: null,
     file: null,
+    fancyDate: null,
+
     login: (token, userId, tokenExpiration) => {},
     logout: () => {}
 });

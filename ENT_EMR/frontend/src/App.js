@@ -66,6 +66,7 @@ class App extends Component {
               userAlert: "",
               visit: null,
               file: null,
+              fancyDate: null,
               login: this.login,
               logout: this.logout
             }}

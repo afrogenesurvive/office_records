@@ -1,3 +1,5 @@
+import S3 from 'react-aws-s3';
+import S3FileUpload from 'react-s3';
 import React, { Component } from 'react';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
 import Container from 'react-bootstrap/Container';
@@ -439,6 +441,27 @@ class ThisUserPage extends Component {
   let attachmentName = event.target.formGridAttachmentName.value;
   let attachmentFormat = event.target.formGridAttachmentFormat.value;
   let attachmentPath = event.target.formGridAttachmentPath.value;
+  let file = AuthContext._currentValue.file;
+
+  console.log(`
+    uploading to s3...
+    file.name: ${file.name},
+    AuthContext._currentValue.file: ${AuthContext._currentValue.file},
+    `);
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: attachmentPath,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const newFileName = file.name;
+
+  ReactS3Client
+      .uploadFile(file, newFileName)
+      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
 
   if (
