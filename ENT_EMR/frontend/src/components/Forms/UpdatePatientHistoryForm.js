@@ -37,10 +37,7 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridHistoryAttachmentName">
-    <Form.Label>HistoryAttachmentName</Form.Label>
-    <Form.Control type="text" placeholder="HistoryAttachmentName"/>
-  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridHistoryAttachmentFormat">
     <Form.Label>HistoryAttachmentFormat</Form.Label>
     <Form.Control type="text" placeholder="HistoryAttachmentFormat"/>
@@ -70,6 +67,10 @@ return (
 
 </Form>
 {
+  // <Form.Group as={Col} controlId="formGridHistoryAttachmentName">
+  //   <Form.Label>HistoryAttachmentName</Form.Label>
+  //   <Form.Control type="text" placeholder="HistoryAttachmentName"/>
+  // </Form.Group>
   // <AuthContext.Consumer>
 // </AuthContext.Consumer>
 }

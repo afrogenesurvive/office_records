@@ -73,6 +73,9 @@ const thisUserProfile = (props) => {
       <Card.Text>
         Post Office : {userAddress.postOffice}
       </Card.Text>
+      <Button variant="warning" onClick={props.onCreatePdf.bind(this, user)}>
+        Create Pdf
+      </Button>
     </Card.Body>
     </Card>
     </Tab>
@@ -107,6 +110,7 @@ const thisUserProfile = (props) => {
         authUserId={authUserId}
         canDelete={props.canDelete}
         onDelete={props.attachmentDelete}
+        onViewAttachment={props.onViewAttachment}
       />
     </Tab>
   </Tabs>

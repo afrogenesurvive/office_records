@@ -8,6 +8,10 @@
   align-items: center;
 }
 
+.listButton {
+  float: right;
+}
+
 .users__list-item h1 {
   margin: 0;
   font-size: 1.5rem;

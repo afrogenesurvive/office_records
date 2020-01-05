@@ -91,6 +91,7 @@ const PatientVisit = (props) => {
       <VisitComplaintList
         complaint={complaint}
         authUserId={props.authUserId}
+        onViewAttachment={props.onViewAttachment}
         />
       </Card.Body>
       </Card>
@@ -104,6 +105,7 @@ const PatientVisit = (props) => {
       <VisitExaminationList
         examination={examination}
         authUserId={props.authUserId}
+        onViewAttachment={props.onViewAttachment}
         />
       </Card.Body>
       </Card>
@@ -117,6 +119,7 @@ const PatientVisit = (props) => {
       <VisitSurveyList
         survey={survey}
         authUserId={props.authUserId}
+        onViewAttachment={props.onViewAttachment}
         />
       </Card.Body>
       </Card>
@@ -143,6 +146,7 @@ const PatientVisit = (props) => {
       <VisitHistoryList
         history={history}
         authUserId={props.authUserId}
+        onViewAttachment={props.onViewAttachment}
         />
       </Card.Body>
       </Card>
@@ -156,6 +160,7 @@ const PatientVisit = (props) => {
       <VisitInvestigationList
         investigation={investigation}
         authUserId={props.authUserId}
+        onViewAttachment={props.onViewAttachment}
         />
       </Card.Body>
       </Card>
@@ -169,6 +174,7 @@ const PatientVisit = (props) => {
       <VisitDiagnosisList
         diagnosis={diagnosis}
         authUserId={props.authUserId}
+        onViewAttachment={props.onViewAttachment}
         />
       </Card.Body>
       </Card>
@@ -182,6 +188,7 @@ const PatientVisit = (props) => {
       <VisitTreatmentList
         treatment={treatment}
         authUserId={props.authUserId}
+        onViewAttachment={props.onViewAttachment}
         />
       </Card.Body>
       </Card>
@@ -195,6 +202,7 @@ const PatientVisit = (props) => {
       <VisitBillingList
         billing={billing}
         authUserId={props.authUserId}
+        onViewAttachment={props.onViewAttachment}
         />
       </Card.Body>
       </Card>

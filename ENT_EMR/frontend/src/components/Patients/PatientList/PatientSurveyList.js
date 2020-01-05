@@ -18,6 +18,7 @@ const patientSurveyList = props => {
         canDelete={props.canDelete}
         onDelete={props.onDelete}
         survey={survey}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });

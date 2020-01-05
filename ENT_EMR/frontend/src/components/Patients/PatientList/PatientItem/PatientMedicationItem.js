@@ -24,6 +24,9 @@ const patientMedicationItem = props => (
         Delete
       </Button>
     )}
+    <Button variant="info" onClick={props.onViewAttachment.bind(this, props.attachment)}>
+      View
+    </Button>
   </li>
 );
 

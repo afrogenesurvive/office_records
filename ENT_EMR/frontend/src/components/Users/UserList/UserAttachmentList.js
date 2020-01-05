@@ -16,6 +16,7 @@ const userAttachmentList = props => {
         canDelete={props.canDelete}
         onDelete={props.onDelete}
         attachment={attachment}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });

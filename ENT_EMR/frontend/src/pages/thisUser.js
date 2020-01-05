@@ -12,6 +12,9 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
 import AlertBox from '../components/AlertBox';
+import AttachmentViewer from '../components/AttachmentViewer';
+import PdfCreator from '../components/PdfCreator';
+
 import UpdateUserFieldForm from '../components/Forms/UpdateUserFieldForm';
 import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceForm';
 import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentForm';
@@ -31,6 +34,11 @@ class ThisUserPage extends Component {
     userUpdateField: null,
     userAlert: null,
     canDelete: null,
+    showAttachment: false,
+    createPdf: false,
+    pdfData: null,
+    showThisAttachmentFile: null,
+    showThisAttachmentType: null,
   };
   isActive = true;
 
@@ -423,22 +431,22 @@ class ThisUserPage extends Component {
 
   const token = this.context.token;
   const userId = this.context.userId;
-  let selectedUserId = this.context.selectedUser._id;
+  // let selectedUserId = this.context.selectedUser._id;
   // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
   //   console.log("Not the creator or Admin! No edit permission!!");
   //   selectedUserId = null;
   // }
-  if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
-    console.log("Not the creator or Admin! No edit permission!!");
-    this.setState({userAlert: "Not the creator or Admin! No edit permission!!"})
-      selectedUserId = null;
-  }
+  // if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
+  //   console.log("Not the creator or Admin! No edit permission!!");
+  //   this.setState({userAlert: "Not the creator or Admin! No edit permission!!"})
+  //     selectedUserId = null;
+  // }
 
-  console.log("UpdateUserAttachmentFormData:  ", event.target.formGridAttachmentName.value);
+  console.log("UpdateUserAttachmentFormData:  ");
 
   this.setState({ updating: false , userUpdateField: null });
 
-  let attachmentName = event.target.formGridAttachmentName.value;
+  // let attachmentName = event.target.formGridAttachmentName.value;
   let attachmentFormat = event.target.formGridAttachmentFormat.value;
   let attachmentPath = event.target.formGridAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -457,6 +465,7 @@ class ThisUserPage extends Component {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const attachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -477,12 +486,12 @@ class ThisUserPage extends Component {
   console.log(`
     adding user attendance item...
     userId: ${userId},
-    selectedUserId: ${selectedUserId}
+    selectedUserId: ${userId}
     attachmentName: ${attachmentName},
     attachmentFormat: ${attachmentFormat},
     attachmentPath: ${attachmentPath}
     `);
-    this.setState({userAlert: "adding user attendance item..."})
+    this.setState({userAlert: "adding user attachment item..."})
 
     const requestBody = {
       query:`
@@ -518,7 +527,7 @@ class ThisUserPage extends Component {
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({ userAlert: responseAlert})
-        this.fetchUsers();
+        this.getThisUser();
       })
       .catch(err => {
         console.log(err);
@@ -584,42 +593,193 @@ class ThisUserPage extends Component {
     let token = this.context.token;
     let userId = this.context.userId;
     let selectedUserId = this.state.selectedUser._id;
+    let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
     console.log(`
       delete user Attendance item:
       props: ${JSON.stringify(props)},
       token: ${token},
       userId: ${userId},
-      selectedUserId: ${selectedUserId},
+      selectedUserId: ${userId},
+      attandance date: ${date},
       `);
+
+      const requestBody = {
+        query: `
+         mutation{deleteUserAttendance(userId:\"${userId}\",selectedUserId:\"${userId}\",attendanceDate:\"${date}\")
+         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+      `};
+
+          // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+          fetch('http://localhost:10000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token
+            }
+          })
+            .then(res => {
+              if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Failed!');
+              }
+              return res.json();
+            })
+            .then(resData => {
+              let deletedUser = resData.data.deleteUserAttendance;
+              console.log("resData.data:  ",resData.data.deleteUserAttendance);
+
+              const updatedUserId = resData.data.deleteUserAttendance._id;
+              const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+              const updatedUserPos = this.state.users.indexOf(updatedUser);
+              const slicedArray = this.state.users.splice(updatedUserPos, 1);
+              console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+              this.state.users.push(resData.data.deleteUserAttendance);
+              this.context.users = this.state.users;
+              const responseAlert = JSON.stringify(resData.data).slice(2,25);
+              this.setState({ userAlert: responseAlert})
+              // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserAttendance})
+              this.fetchUsers();
+
+            })
+            .catch(err => {
+              console.log(err);
+            });
   }
+
   deleteUserLeaveItem = (props) => {
 
     let token = this.context.token;
     let userId = this.context.userId;
-    let selectedUserId = this.state.selectedUser._id;
 
     console.log(`
       delete user Leave item:
       props: ${JSON.stringify(props)},
       token: ${token},
       userId: ${userId},
-      selectedUserId: ${selectedUserId},
+      selectedUserId: ${userId},
       `);
+
+      const requestBody = {
+        query: `
+         mutation{deleteUserLeave(userId:\"${userId}\",selectedUserId:\"${userId}\",leaveTitle:\"${props.title}\")
+         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+      `};
+
+          // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+          fetch('http://localhost:10000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token
+            }
+          })
+            .then(res => {
+              if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Failed!');
+              }
+              return res.json();
+            })
+            .then(resData => {
+              let deletedUser = resData.data.deleteUserLeave;
+              console.log(deletedUser);
+
+              const updatedUserId = resData.data.deleteUserLeave._id;
+              const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+              const updatedUserPos = this.state.users.indexOf(updatedUser);
+              const slicedArray = this.state.users.splice(updatedUserPos, 1);
+              console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+              this.state.users.push(resData.data.deleteUserLeave);
+              this.context.users = this.state.users;
+              const responseAlert = JSON.stringify(resData.data).slice(2,25);
+              this.setState({ userAlert: responseAlert})
+              // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserLeave})
+
+            })
+            .catch(err => {
+              console.log(err);
+            });
   }
+
   deleteUserAttachmentItem = (props) => {
 
     let token = this.context.token;
     let userId = this.context.userId;
-    let selectedUserId = this.state.selectedUser._id;
 
     console.log(`
       delete user Attachment item:
       props: ${JSON.stringify(props)},
       token: ${token},
       userId: ${userId},
-      selectedUserId: ${selectedUserId},
+      selectedUserId: ${userId},
       `);
+
+      console.log(`
+        deleting from s3...
+        file.name: ${props.name},
+        `);
+
+      const config = {
+        bucketName: 'ent-emr-bucket',
+        dirName: props.path,
+        region: 'us-east-2',
+        accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+        secretAccessKey: "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",
+      }
+      const ReactS3Client = new S3(config);
+      const filename = props.name;
+      // const attachmentName = newFileName;
+      //
+      S3FileUpload
+      .deleteFile(filename, config)
+      .then(response => console.log(response))
+      .catch(err => console.error(err))
+
+
+      const requestBody = {
+        query: `
+         mutation{deleteUserAttachment(userId:\"${userId}\",selectedUserId:\"${userId}\",attachmentName:\"${props.name}\")
+         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+      `};
+
+          // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+          fetch('http://localhost:10000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token
+            }
+          })
+            .then(res => {
+              if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Failed!');
+              }
+              return res.json();
+            })
+            .then(resData => {
+              let deletedUser = resData.data.deleteUserAttachment;
+              console.log(deletedUser);
+
+              const updatedUserId = resData.data.deleteUserAttachment._id;
+              const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+              const updatedUserPos = this.state.users.indexOf(updatedUser);
+              const slicedArray = this.state.users.splice(updatedUserPos, 1);
+              console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
+
+              this.state.users.push(resData.data.deleteUserAttachment);
+              this.context.users = this.state.users;
+              const responseAlert = JSON.stringify(resData.data).slice(2,25);
+              this.setState({ userAlert: responseAlert})
+              // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserAttachment})
+
+            })
+            .catch(err => {
+              console.log(err);
+            });
   }
 
 
@@ -627,6 +787,47 @@ class ThisUserPage extends Component {
     console.log("special field to update:  ", event.target.value);
     const field = event.target.value;
     this.setState({ userUpdateField: field});
+  }
+
+  onViewAttachment = (attachment) => {
+    console.log(`
+      setting up attachment viewer...
+      attachment: ${JSON.stringify(attachment)}
+      `);
+      this.setState({showAttachment: true})
+
+      const file = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+attachment.path+"/"+attachment.name;
+      const type = attachment.format;
+
+      this.setState({showThisAttachmentFile: file, showThisAttachmentType: type})
+  }
+
+  closeAttachmentView = () => {
+    console.log(`
+      closing attachment viewer...
+      `);
+      this.setState({showAttachment: false})
+  }
+
+  createPdf = (user) => {
+    console.log(`
+        creating pdf...
+        user: ${JSON.stringify(user)}
+      `);
+
+      const pdfData = {
+        title: user.name,
+        body: user.dob,
+      };
+
+    this.setState({createPdf: true, pdfData: pdfData})
+  }
+
+  closePdfCreator = () => {
+    console.log(`
+      closing pdf creator...
+      `);
+      this.setState({createPdf: false, pdfData: null})
   }
 
 
@@ -637,6 +838,22 @@ class ThisUserPage extends Component {
   render() {
     return (
       <React.Fragment>
+
+      {this.state.showAttachment === true && (
+        <AttachmentViewer
+          onCloseAttachmentView={this.closeAttachmentView}
+          attachmentFile={this.state.showThisAttachmentFile}
+          attachmentType={this.state.showThisAttachmentType}
+        />
+      )}
+
+      {this.state.createPdf === true && (
+          <PdfCreator
+            pdfData={this.state.pdfData}
+            onClosePdfCreator={this.closePdfCreator}
+          />
+      )}
+
       <Row>
       <Col md={3} className="MasterCol1">
       <AlertBox
@@ -662,6 +879,8 @@ class ThisUserPage extends Component {
                 attendanceDelete={this.deleteUserAttendanceItem}
                 leaveDelete={this.deleteUserLeaveItem}
                 attachmentDelete={this.deleteUserAttachmentItem}
+                onViewAttachment={this.onViewAttachment}
+                onCreatePdf={this.createPdf}
               />
             )}
           </Tab>

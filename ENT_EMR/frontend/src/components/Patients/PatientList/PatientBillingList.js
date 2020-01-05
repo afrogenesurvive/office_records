@@ -22,6 +22,7 @@ const patientBillingList = props => {
         canDelete={props.canDelete}
         onDelete={props.onDelete}
         billing={billing}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });

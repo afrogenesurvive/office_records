@@ -10,7 +10,6 @@ const util = require('util');
 const { transformUser } = require('./merge');
 const { dateToString } = require('../../helpers/date');
 const { pocketVariables } = require('../../helpers/pocketVars');
-const { s3fs } = require('../../helpers/s3fs');
 
 const multer  = require('multer');
 const upload = multer({ dest: './uploads/' });
@@ -314,18 +313,6 @@ module.exports = {
       //   throw new Error('Not the creator! No edit permission');
       // }
       // else {
-      s3fs.params = {
-        localFile: args.userInput.attachmentFile,
-        s3Params: {
-          Bucket: "ent-emr-bucket",
-          Key: "/uploads/"
-        }
-      };
-
-      s3fs.operation = "upload";
-      console.log(`
-        s3fs.params: ${util.inspect(s3fs.params)},
-        `);
 
       const userAttachmentObject = {
         name: args.userInput.attachmentName,

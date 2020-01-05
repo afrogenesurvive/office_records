@@ -41,10 +41,7 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridAllergiesAttachmentName">
-    <Form.Label>AllergiesAttachmentName</Form.Label>
-    <Form.Control type="text" placeholder="AllergiesAttachmentName"/>
-  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridAllergiesAttachmentFormat">
     <Form.Label>AllergiesAttachmentFormat</Form.Label>
     <Form.Control type="text" placeholder="AllergiesAttachmentFormat"/>
@@ -74,6 +71,10 @@ return (
 
 </Form>
 {
+  // <Form.Group as={Col} controlId="formGridAllergiesAttachmentName">
+  //   <Form.Label>AllergiesAttachmentName</Form.Label>
+  //   <Form.Control type="text" placeholder="AllergiesAttachmentName"/>
+  // </Form.Group>
   // <AuthContext.Consumer>
 // </AuthContext.Consumer>
 }

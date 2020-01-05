@@ -37,10 +37,7 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridDiagnosisAttachmentName">
-    <Form.Label>DiagnosisAttachmentName</Form.Label>
-    <Form.Control type="text" placeholder="DiagnosisAttachmentName"/>
-  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridDiagnosisAttachmentFormat">
     <Form.Label>DiagnosisAttachmentFormat</Form.Label>
     <Form.Control type="text" placeholder="DiagnosisAttachmentFormat"/>
@@ -70,6 +67,10 @@ return (
 
 </Form>
 {
+  // <Form.Group as={Col} controlId="formGridDiagnosisAttachmentName">
+  //   <Form.Label>DiagnosisAttachmentName</Form.Label>
+  //   <Form.Control type="text" placeholder="DiagnosisAttachmentName"/>
+  // </Form.Group>
   // <AuthContext.Consumer>
 // </AuthContext.Consumer>
 }

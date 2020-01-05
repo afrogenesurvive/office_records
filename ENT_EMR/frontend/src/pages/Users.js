@@ -1,6 +1,8 @@
 import S3 from 'react-aws-s3';
 import S3FileUpload from 'react-s3';
 import React, { Component } from 'react';
+// import FileViewer from 'react-file-viewer';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -21,6 +23,8 @@ import AuthContext from '../context/auth-context';
 
 import SidebarPage from './Sidebar';
 import AlertBox from '../components/AlertBox';
+import AttachmentViewer from '../components/AttachmentViewer';
+import PdfCreator from '../components/PdfCreator';
 
 import CreateUserForm from '../components/Forms/CreateUserForm';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
@@ -33,6 +37,7 @@ import SearchUserIdForm from '../components/Forms/SearchUserIdForm';
 import SearchUserNameForm from '../components/Forms/SearchUserNameForm';
 import SearchUserAttendanceDateForm from '../components/Forms/SearchUserAttendanceDateForm';
 import SearchUserLeaveDateRangeForm from '../components/Forms/SearchUserLeaveDateRangeForm';
+
 import './Users.css';
 
 class UsersPage extends Component {
@@ -52,6 +57,11 @@ class UsersPage extends Component {
     canDelete: null,
     userAlert: null,
     file: null,
+    showAttachment: false,
+    showThisAttachmentFile: null,
+    showThisAttachmentType: null,
+    createPdf: false,
+    pdfData: null,
   };
   isActive = true;
 
@@ -506,7 +516,7 @@ class UsersPage extends Component {
         selectedUserId = null;
     }
 
-    console.log("UpdateUserAttachmentFormData:  ", event.target.formGridAttachmentName.value);
+    console.log("UpdateUserAttachmentFormData:  ");
 
     this.setState({ updating: false , userUpdateField: null });
 
@@ -529,9 +539,6 @@ class UsersPage extends Component {
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
-
-    // FIX ME !!!
-    // add wherever attachments are found
     const attachmentName = newFileName;
 
     ReactS3Client
@@ -1297,6 +1304,28 @@ deleteUserAttachmentItem = (props) => {
     selectedUserId: ${selectedUserId},
     `);
 
+    console.log(`
+      deleting from s3...
+      file.name: ${props.name},
+      `);
+
+    const config = {
+      bucketName: 'ent-emr-bucket',
+      dirName: props.path,
+      region: 'us-east-2',
+      accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+      secretAccessKey: "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",
+    }
+    const ReactS3Client = new S3(config);
+    const filename = props.name;
+    // const attachmentName = newFileName;
+    //
+    S3FileUpload
+    .deleteFile(filename, config)
+    .then(response => console.log(response))
+    .catch(err => console.error(err))
+
+
     const requestBody = {
       query: `
        mutation{deleteUserAttachment(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",attachmentName:\"${props.name}\")
@@ -1362,17 +1391,46 @@ updateUserSpecial (event) {
     });
   };
 
-  // handleFile = (e) => {
-  //   e.preventDefault();
-  //   const file = e.target.files[0];
-  //   console.log(`
-  //     handling file @ users component...
-  //     file: ${file},
-  //     `);
-  //
-  //     this.setState({file: e})
-  // }
+  onViewAttachment = (attachment) => {
+    console.log(`
+      setting up attachment viewer...
+      attachment: ${JSON.stringify(attachment)}
+      `);
+      this.setState({showAttachment: true})
 
+      const file = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+attachment.path+"/"+attachment.name;
+      const type = attachment.format;
+
+      this.setState({showThisAttachmentFile: file, showThisAttachmentType: type})
+  }
+
+  closeAttachmentView = () => {
+    console.log(`
+      closing attachment viewer...
+      `);
+      this.setState({showAttachment: false})
+  }
+
+  createPdf = (user) => {
+    console.log(`
+        creating pdf...
+        user: ${JSON.stringify(user)}
+      `);
+
+      const pdfData = {
+        title: user.name,
+        body: user.dob,
+      };
+
+    this.setState({createPdf: true, pdfData: pdfData})
+  }
+
+  closePdfCreator = () => {
+    console.log(`
+      closing pdf creator...
+      `);
+      this.setState({createPdf: false, pdfData: null})
+  }
 
   userSearchClearlHandler () {
     console.log("clearing user search results");
@@ -1388,18 +1446,32 @@ updateUserSpecial (event) {
     return (
 
     <React.Fragment>
+    {this.state.showAttachment === true && (
+      <AttachmentViewer
+        onCloseAttachmentView={this.closeAttachmentView}
+        attachmentFile={this.state.showThisAttachmentFile}
+        attachmentType={this.state.showThisAttachmentType}
+      />
+    )}
 
-
+    {this.state.createPdf === true && (
+        <PdfCreator
+          pdfData={this.state.pdfData}
+          onClosePdfCreator={this.closePdfCreator}
+        />
+    )}
 
     <Accordion>
 
     <Row>
 
     <Col md={3} className="MasterCol1">
+
     <AlertBox
       authUserId={this.context.userId}
       alert={this.state.userAlert}
     />
+
     <SidebarPage/>
 
     </Col>
@@ -1429,6 +1501,8 @@ updateUserSpecial (event) {
                       attendanceDelete={this.deleteUserAttendanceItem}
                       leaveDelete={this.deleteUserLeaveItem}
                       attachmentDelete={this.deleteUserAttachmentItem}
+                      onViewAttachment={this.onViewAttachment}
+                      onCreatePdf={this.createPdf}
                       />
                     )}
             </Tab>

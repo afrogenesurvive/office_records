@@ -26,9 +26,11 @@ const visitExaminationList = props => {
         value={examinationItem.value}
         description={examinationItem.description}
         followUp={examinationItem.followUp}
+        attachment={examinationItem.attachment}
         attachmentName={examinationAttachment.name}
         attachmentFormat={examinationAttachment.format}
         attachmentPath={examinationAttachment.path}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });
@@ -37,3 +39,5 @@ const visitExaminationList = props => {
 };
 }
 export default visitExaminationList;
+
+// onViewAttachment={props.onViewAttachment}

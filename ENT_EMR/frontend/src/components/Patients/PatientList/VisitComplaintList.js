@@ -22,9 +22,11 @@ const visitComplaintList = props => {
         title={complaintItem.title}
         description={complaintItem.description}
         anamnesis={complaintItem.anamnesis}
+        attachment={complaintItem.attachment}
         attachmentName={complaintAttachment.name}
         attachmentFormat={complaintAttachment.format}
         attachmentPath={complaintAttachment.path}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });
@@ -34,3 +36,5 @@ const visitComplaintList = props => {
 }
 
 export default visitComplaintList;
+
+// onViewAttachment={props.onViewAttachment}

@@ -22,9 +22,11 @@ const visitDiagnosisList = props => {
         type={diagnosisItem.type}
         title={diagnosisItem.title}
         description={diagnosisItem.description}
+        attachment={diagnosisItem.attachment}
         attachmentName={diagnosisAttachment.name}
         attachmentFormat={diagnosisAttachment.format}
         attachmentPath={diagnosisAttachment.path}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });
@@ -33,3 +35,5 @@ const visitDiagnosisList = props => {
 };
 }
 export default visitDiagnosisList;
+
+// onViewAttachment={props.onViewAttachment}

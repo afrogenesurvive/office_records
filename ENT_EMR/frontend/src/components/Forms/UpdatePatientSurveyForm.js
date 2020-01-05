@@ -33,10 +33,7 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridSurveyAttachmentName">
-    <Form.Label>SurveyAttachmentName</Form.Label>
-    <Form.Control type="text" placeholder="SurveyAttachmentName"/>
-  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridSurveyAttachmentFormat">
     <Form.Label>SurveyAttachmentFormat</Form.Label>
     <Form.Control type="text" placeholder="SurveyAttachmentFormat"/>
@@ -66,6 +63,10 @@ return (
 
 </Form>
 {
+  // <Form.Group as={Col} controlId="formGridSurveyAttachmentName">
+  //   <Form.Label>SurveyAttachmentName</Form.Label>
+  //   <Form.Control type="text" placeholder="SurveyAttachmentName"/>
+  // </Form.Group>
   // <AuthContext.Consumer>
 // </AuthContext.Consumer>
 }
