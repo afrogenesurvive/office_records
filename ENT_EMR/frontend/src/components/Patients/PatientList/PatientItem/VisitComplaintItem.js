@@ -1,7 +1,7 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 import './UserItem.css';
-
 
 const VisitComplaintItem = props => (
   <li key={props.userId} className="users__list-item">
@@ -30,7 +30,11 @@ const VisitComplaintItem = props => (
       <p>
         Path: {props.attachmentPath}
       </p>
+      <Button variant="info" onClick={props.onViewAttachment.bind(this, props.attachment)}>
+        View
+      </Button>
     </div>
+
   </li>
 );
 

@@ -19,10 +19,7 @@ return (
 <Form onSubmit={props.onConfirm}>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridPatientAttachmentName">
-    <Form.Label>PatientAttachmentName</Form.Label>
-    <Form.Control type="text" placeholder="PatientAttachmentName"/>
-  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridPatientAttachmentFormat">
     <Form.Label>PatientAttachmentFormat</Form.Label>
     <Form.Control type="text" placeholder="PatientAttachmentFormat"/>
@@ -48,13 +45,14 @@ return (
 )}
 
 {props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
+  <Button variant="success" type="submit">Add</Button>
 )}
 
 </Form>
-{
+{// <Form.Group as={Col} controlId="formGridPatientAttachmentName">
+//   <Form.Label>PatientAttachmentName</Form.Label>
+//   <Form.Control type="text" placeholder="PatientAttachmentName"/>
+// </Form.Group>
   // <AuthContext.Consumer>
 // </AuthContext.Consumer>
 }

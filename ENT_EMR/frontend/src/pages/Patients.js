@@ -23,6 +23,8 @@ import SearchPatientNameForm from '../components/Forms/SearchPatientNameForm';
 import SearchPatientVisitForm from '../components/Forms/SearchPatientVisitForm';
 
 import AlertBox from '../components/AlertBox';
+import AttachmentViewer from '../components/AttachmentViewer';
+import PdfCreator from '../components/PdfCreator';
 
 import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import UpdatePatientForm from '../components/Forms/UpdatePatientForm';
@@ -64,6 +66,11 @@ class PatientsPage extends Component {
     canDelete: null,
     visit: null,
     userAlert: null,
+    showAttachment: false,
+    showThisAttachmentFile: null,
+    showThisAttachmentType: null,
+    createPdf: false,
+    pdfData: null,
   };
   isActive = true;
 
@@ -765,7 +772,7 @@ updatePatientComplaintHandler = (event) => {
   let complaintDate = event.target.formGridComplaintDate.value;
   let complaintDescription = event.target.formGridComplaintDescription.value;
   let complaintAnamnesis = event.target.formGridComplaintAnamnesis.value;
-  let complaintAttachmentName = event.target.formGridComplaintAttachmentName.value;
+  // let complaintAttachmentName = event.target.formGridComplaintAttachmentName.value;
   let complaintAttachmentFormat = event.target.formGridComplaintAttachmentFormat.value;
   let complaintAttachmentPath = event.target.formGridComplaintAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -784,6 +791,7 @@ updatePatientComplaintHandler = (event) => {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const complaintAttachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -866,7 +874,7 @@ updatePatientSurveyHandler = (event) => {
   let surveyDate = event.target.formGridSurveyDate.value;
   let surveyTitle = event.target.formGridSurveyTitle.value;
   let surveyDescription = event.target.formGridSurveyDescription.value;
-  let surveyAttachmentName = event.target.formGridSurveyAttachmentName.value;
+  // let surveyAttachmentName = event.target.formGridSurveyAttachmentName.value;
   let surveyAttachmentFormat = event.target.formGridSurveyAttachmentFormat.value;
   let surveyAttachmentPath = event.target.formGridSurveyAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -885,6 +893,7 @@ updatePatientSurveyHandler = (event) => {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const surveyAttachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1056,7 +1065,7 @@ updatePatientExaminationHandler = (event) => {
   let examinationValue = event.target.formGridExaminationValue.value;
   let examinationDescription = event.target.formGridExaminationDescription.value;
   let examinationFollowUp = event.target.formGridExaminationFollowUp.value;
-  let examinationAttachmentName = event.target.formGridExaminationAttachmentName.value;
+  // let examinationAttachmentName = event.target.formGridExaminationAttachmentName.value;
   let examinationAttachmentFormat = event.target.formGridExaminationAttachmentFormat.value;
   let examinationAttachmentPath = event.target.formGridExaminationAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -1075,6 +1084,7 @@ updatePatientExaminationHandler = (event) => {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const examinationAttachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1164,7 +1174,7 @@ updatePatientHistoryHandler = (event) => {
   let historyDate = event.target.formGridHistoryDate.value;
   let historyTitle = event.target.formGridHistoryTitle.value;
   let historyDescription = event.target.formGridHistoryDescription.value;
-  let historyAttachmentName = event.target.formGridHistoryAttachmentName.value;
+  // let historyAttachmentName = event.target.formGridHistoryAttachmentName.value;
   let historyAttachmentFormat = event.target.formGridHistoryAttachmentFormat.value;
   let historyAttachmentPath = event.target.formGridHistoryAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -1183,6 +1193,7 @@ updatePatientHistoryHandler = (event) => {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const historyAttachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1271,7 +1282,7 @@ updatePatientAllergiesHandler = (event) => {
     allergiesType = event.target.formGridAllergiesTypeSelect.value;
   }
   let allergiesDescription = event.target.formGridAllergiesDescription.value;
-  let allergiesAttachmentName = event.target.formGridAllergiesAttachmentName.value;
+  // let allergiesAttachmentName = event.target.formGridAllergiesAttachmentName.value;
   let allergiesAttachmentFormat = event.target.formGridAllergiesAttachmentFormat.value;
   let allergiesAttachmentPath = event.target.formGridAllergiesAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -1290,6 +1301,7 @@ updatePatientAllergiesHandler = (event) => {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const allergiesAttachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1374,7 +1386,7 @@ updatePatientMedicationHandler = (event) => {
   let medicationTitle = event.target.formGridMedicationTitle.value;
   let medicationType = event.target.formGridMedicationType.value;
   let medicationDescription = event.target.formGridMedicationDescription.value;
-  let medicationAttachmentName = event.target.formGridMedicationAttachmentName.value;
+  // let medicationAttachmentName = event.target.formGridMedicationAttachmentName.value;
   let medicationAttachmentFormat = event.target.formGridMedicationAttachmentFormat.value;
   let medicationAttachmentPath = event.target.formGridMedicationAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -1393,6 +1405,7 @@ updatePatientMedicationHandler = (event) => {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const medicationAttachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1482,7 +1495,7 @@ updatePatientInvestigationHandler = (event) => {
     investigationType = event.target.formGridInvestigationTypeSelect.value;
   }
   let investigationDescription = event.target.formGridInvestigationDescription.value;
-  let investigationAttachmentName = event.target.formGridInvestigationAttachmentName.value;
+  // let investigationAttachmentName = event.target.formGridInvestigationAttachmentName.value;
   let investigationAttachmentFormat = event.target.formGridInvestigationAttachmentFormat.value;
   let investigationAttachmentPath = event.target.formGridInvestigationAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -1501,6 +1514,7 @@ updatePatientInvestigationHandler = (event) => {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const investigationAttachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1586,7 +1600,7 @@ updatePatientDiagnosisHandler = (event) => {
   let diagnosisTitle = event.target.formGridDiagnosisTitle.value;
   let diagnosisType = event.target.formGridDiagnosisType.value;
   let diagnosisDescription = event.target.formGridDiagnosisDescription.value;
-  let diagnosisAttachmentName = event.target.formGridDiagnosisAttachmentName.value;
+  // let diagnosisAttachmentName = event.target.formGridDiagnosisAttachmentName.value;
   let diagnosisAttachmentFormat = event.target.formGridDiagnosisAttachmentFormat.value;
   let diagnosisAttachmentPath = event.target.formGridDiagnosisAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -1605,6 +1619,7 @@ updatePatientDiagnosisHandler = (event) => {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const diagnosisAttachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1697,7 +1712,7 @@ updatePatientTreatmentHandler = (event) => {
   } else {
     treatmentType = event.target.formGridTreatmentTypeSelect.value;
   }
-  let treatmentAttachmentName = event.target.formGridTreatmentAttachmentName.value;
+  // let treatmentAttachmentName = event.target.formGridTreatmentAttachmentName.value;
   let treatmentAttachmentFormat = event.target.formGridTreatmentAttachmentFormat.value;
   let treatmentAttachmentPath = event.target.formGridTreatmentAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -1716,6 +1731,7 @@ updatePatientTreatmentHandler = (event) => {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const treatmentAttachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1807,7 +1823,7 @@ updatePatientBillingHandler = (event) => {
   let billingAmount = event.target.formGridBillingAmount.value;
   let billingPaid = event.target.formGridBillingPaid.value;
   let billingNotes = event.target.formGridBillingNotes.value;
-  let billingAttachmentName = event.target.formGridBillingAttachmentName.value;
+  // let billingAttachmentName = event.target.formGridBillingAttachmentName.value;
   let billingAttachmentFormat = event.target.formGridBillingAttachmentFormat.value;
   let billingAttachmentPath = event.target.formGridBillingAttachmentPath.value;
   let file = AuthContext._currentValue.file;
@@ -1826,6 +1842,7 @@ updatePatientBillingHandler = (event) => {
   }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
+  const billingAttachmentName = newFileName;
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1908,12 +1925,11 @@ updatePatientAttachmentHandler = (event) => {
 
     console.log(`
         UpdatePatientAttachmentFormData:
-        ${event.target.formGridPatientAttachmentName.value}
       `);
 
     this.setState({ updating: false , patientUpdateField: null });
 
-    let attachmentName = event.target.formGridPatientAttachmentName.value;
+    // let attachmentName = event.target.formGridPatientAttachmentName.value;
     let attachmentFormat = event.target.formGridPatientAttachmentFormat.value;
     let attachmentPath = event.target.formGridPatientAttachmentPath.value;
     let file = AuthContext._currentValue.file;
@@ -1932,6 +1948,7 @@ updatePatientAttachmentHandler = (event) => {
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
+    const attachmentName = newFileName;
 
     ReactS3Client
         .uploadFile(file, newFileName)
@@ -1953,7 +1970,7 @@ updatePatientAttachmentHandler = (event) => {
     const requestBody = {
                     query:`
                     mutation {updatePatientAttachment(userId:"${userId}",patientId:"${selectedPatientId}",patientInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentFormat}"})
-                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+                    {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,date,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
             `}
 
     fetch('http://localhost:10000/graphql', {
@@ -3413,6 +3430,27 @@ deletePatientAttachmentItem = (props) => {
   let patientId = this.state.selectedPatient._id;
 
   console.log(`
+    deleting from s3...
+    file.name: ${props.name},
+    `);
+
+  const config = {
+    bucketName: 'ent-emr-bucket',
+    dirName: props.path,
+    region: 'us-east-2',
+    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
+    secretAccessKey: "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",
+  }
+  const ReactS3Client = new S3(config);
+  const filename = props.name;
+  // const attachmentName = newFileName;
+  //
+  S3FileUpload
+  .deleteFile(filename, config)
+  .then(response => console.log(response))
+  .catch(err => console.error(err))
+
+  console.log(`
     delete patient Attachment item:
     props: ${JSON.stringify(props)},
     token: ${token},
@@ -3584,6 +3622,47 @@ deletePatientTagItem = (props) => {
 
   }
 
+  onViewAttachment = (attachment) => {
+    console.log(`
+      setting up attachment viewer...
+      attachment: ${JSON.stringify(attachment)}
+      `);
+      this.setState({showAttachment: true})
+
+      const file = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+attachment.path+"/"+attachment.name;
+      const type = attachment.format;
+
+      this.setState({showThisAttachmentFile: file, showThisAttachmentType: type})
+  }
+
+  closeAttachmentView = () => {
+    console.log(`
+      closing attachment viewer...
+      `);
+      this.setState({showAttachment: false})
+  }
+
+  createPdf = (patient) => {
+    console.log(`
+        creating pdf...
+        user: ${JSON.stringify(patient)}
+      `);
+
+      const pdfData = {
+        title: patient.name,
+        body: patient.dob,
+      };
+
+    this.setState({createPdf: true, pdfData: pdfData})
+  }
+
+  closePdfCreator = () => {
+    console.log(`
+      closing pdf creator...
+      `);
+      this.setState({createPdf: false, pdfData: null} )
+  }
+
 
   showDetailHandler = patientId => {
 
@@ -3605,6 +3684,20 @@ deletePatientTagItem = (props) => {
     return (
 
     <React.Fragment>
+    {this.state.showAttachment === true && (
+      <AttachmentViewer
+        onCloseAttachmentView={this.closeAttachmentView}
+        attachmentFile={this.state.showThisAttachmentFile}
+        attachmentType={this.state.showThisAttachmentType}
+      />
+    )}
+
+    {this.state.createPdf === true && (
+        <PdfCreator
+          pdfData={this.state.pdfData}
+          onClosePdfCreator={this.closePdfCreator}
+        />
+    )}
 
     <Accordion>
 
@@ -3659,6 +3752,8 @@ deletePatientTagItem = (props) => {
         attachmentDelete={this.deletePatientAttachmentItem}
         noteDelete={this.deletePatientNoteItem}
         tagDelete={this.deletePatientTagItem}
+        onViewAttachment={this.onViewAttachment}
+        onCreatePdf={this.createPdf}
         />
     )}
     </Tab>

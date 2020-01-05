@@ -56,10 +56,7 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridBillingAttachmentName">
-    <Form.Label>BillingAttachmentName</Form.Label>
-    <Form.Control type="text" placeholder="BillingAttachmentName"/>
-  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridBillingAttachmentFormat">
     <Form.Label>BillingAttachmentFormat</Form.Label>
     <Form.Control type="text" placeholder="BillingAttachmentFormat"/>
@@ -89,6 +86,10 @@ return (
 
 </Form>
 {
+  // <Form.Group as={Col} controlId="formGridBillingAttachmentName">
+  //   <Form.Label>BillingAttachmentName</Form.Label>
+  //   <Form.Control type="text" placeholder="BillingAttachmentName"/>
+  // </Form.Group>
   // <AuthContext.Consumer>
 // </AuthContext.Consumer>
 }

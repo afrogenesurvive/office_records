@@ -41,10 +41,7 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridComplaintAttachmentName">
-    <Form.Label>ComplaintAttachmentName</Form.Label>
-    <Form.Control type="text" placeholder="complaintAttachmentName"/>
-  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridComplaintAttachmentFormat">
     <Form.Label>ComplaintAttachmentFormat</Form.Label>
     <Form.Control type="text" placeholder="complaintAttachmentFormat"/>
@@ -70,6 +67,10 @@ return (
 
 </Form>
 {
+  // <Form.Group as={Col} controlId="formGridComplaintAttachmentName">
+  //   <Form.Label>ComplaintAttachmentName</Form.Label>
+  //   <Form.Control type="text" placeholder="complaintAttachmentName"/>
+  // </Form.Group>
   // <AuthContext.Consumer>
 // </AuthContext.Consumer>
 }

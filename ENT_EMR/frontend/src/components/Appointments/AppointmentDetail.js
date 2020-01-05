@@ -87,6 +87,9 @@ const AppointmentDetail = (props) => {
         Delete Appointment !!??
       </Button>
     )}
+    <Button variant="warning" onClick={props.onCreatePdf.bind(this, appointment)}>
+      Create Pdf
+    </Button>
   </Card>
     </div>
 

@@ -13,6 +13,7 @@ import Card from 'react-bootstrap/Card';
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
 import AlertBox from '../components/AlertBox';
+import PdfCreator from '../components/PdfCreator';
 
 import AppointmentList from '../components/Appointments/AppointmentList/AppointmentList';
 import AppointmentDetail from '../components/Appointments/AppointmentDetail';
@@ -46,6 +47,8 @@ class AppointmentsPage extends Component {
     appointmentSearchQuery: null,
     canDelete: null,
     userAlert: null,
+    createPdf: false,
+    pdfData: null,
   };
   isActive = true;
 
@@ -1064,6 +1067,26 @@ class AppointmentsPage extends Component {
 
   }
 
+  createPdf = (appointment) => {
+    console.log(`
+        creating pdf...
+        user: ${JSON.stringify(appointment)}
+      `);
+
+      const pdfData = {
+        title: appointment.title,
+        body: appointment.date,
+      };
+
+    this.setState({createPdf: true, pdfData: pdfData})
+  }
+
+  closePdfCreator = () => {
+    console.log(`
+      closing pdf creator...
+      `);
+      this.setState({createPdf: false, pdfData: null})
+  }
 
   componentWillUnmount() {
     this.isActive = false;
@@ -1072,6 +1095,13 @@ class AppointmentsPage extends Component {
   render() {
     return (
       <React.Fragment>
+
+      {this.state.createPdf === true && (
+          <PdfCreator
+            pdfData={this.state.pdfData}
+            onClosePdfCreator={this.closePdfCreator}
+          />
+      )}
 
       <Accordion>
 
@@ -1110,6 +1140,7 @@ class AppointmentsPage extends Component {
                       onEdit={this.startUpdateAppointmentHandler}
                       canDelete={this.state.canDelete}
                       onDelete={this.modalDeleteHandler}
+                      onCreatePdf={this.createPdf}
                   />
                 )}
               </Tab>

@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { s3fs } = require('../../helpers/s3fs');
 
 const User = require('../../models/user');
 

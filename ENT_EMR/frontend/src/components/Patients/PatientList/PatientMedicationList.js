@@ -17,6 +17,7 @@ const patientMedicationList = props => {
         canDelete={props.canDelete}
         onDelete={props.onDelete}
         medication={medication}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });

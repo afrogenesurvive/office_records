@@ -22,9 +22,11 @@ const visitInvestigationList = props => {
         type={investigationItem.type}
         title={investigationItem.title}
         description={investigationItem.description}
+        attachment={investigationItem.attachment}
         attachmentName={investigationAttachment.name}
         attachmentFormat={investigationAttachment.format}
         attachmentPath={investigationAttachment.path}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });
@@ -34,3 +36,5 @@ const visitInvestigationList = props => {
 };
 
 export default visitInvestigationList;
+
+// onViewAttachment={props.onViewAttachment}

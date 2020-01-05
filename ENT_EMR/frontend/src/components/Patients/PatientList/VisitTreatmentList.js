@@ -24,9 +24,11 @@ const visitTreatmentList = props => {
         description={treatmentItem.description}
         dose={treatmentItem.dose}
         frequency={treatmentItem.frequency}
+        attachment={treatmentItem.attachment}
         attachmentName={treatmentAttachment.name}
         attachmentFormat={treatmentAttachment.format}
         attachmentPath={treatmentAttachment.path}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });
@@ -36,3 +38,5 @@ const visitTreatmentList = props => {
 };
 
 export default visitTreatmentList;
+
+// onViewAttachment={props.onViewAttachment}

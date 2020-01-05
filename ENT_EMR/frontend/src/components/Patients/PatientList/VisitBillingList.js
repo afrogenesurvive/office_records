@@ -25,9 +25,11 @@ const visitBillingList = props => {
         amount={billingItem.amount}
         paid={billingItem.paid}
         notes={billingItem.notes}
+        attachment={billingItem.attachment}
         attachmentName={billingAttachment.name}
         attachmentFormat={billingAttachment.format}
         attachmentPath={billingAttachment.path}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });
@@ -36,3 +38,5 @@ const visitBillingList = props => {
 };
 }
 export default visitBillingList;
+
+// onViewAttachment={props.onViewAttachment}

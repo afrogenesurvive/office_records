@@ -76,10 +76,7 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridExaminationAttachmentName">
-    <Form.Label>ExaminationAttachmentName</Form.Label>
-    <Form.Control type="text" placeholder="ExaminationAttachmentName"/>
-  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridExaminationAttachmentFormat">
     <Form.Label>ExaminationAttachmentFormat</Form.Label>
     <Form.Control type="text" placeholder="ExaminationAttachmentFormat"/>
@@ -109,6 +106,10 @@ return (
 
 </Form>
 {
+  // <Form.Group as={Col} controlId="formGridExaminationAttachmentName">
+  //   <Form.Label>ExaminationAttachmentName</Form.Label>
+  //   <Form.Control type="text" placeholder="ExaminationAttachmentName"/>
+  // </Form.Group>
   // <AuthContext.Consumer>
 // </AuthContext.Consumer>
 }

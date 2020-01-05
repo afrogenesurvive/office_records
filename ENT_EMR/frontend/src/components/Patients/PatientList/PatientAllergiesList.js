@@ -18,6 +18,7 @@ const patientAllergiesList = props => {
         canDelete={props.canDelete}
         onDelete={props.onDelete}
         allergies={allergies}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });

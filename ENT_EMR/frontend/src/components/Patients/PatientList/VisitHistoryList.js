@@ -21,9 +21,11 @@ const visitHistoryList = props => {
         date={visitHistoryDate}
         title={historyItem.title}
         description={historyItem.description}
+        attachment={historyItem.attachment}
         attachmentName={historyAttachment.name}
         attachmentFormat={historyAttachment.format}
         attachmentPath={historyAttachment.path}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });
@@ -32,3 +34,5 @@ const visitHistoryList = props => {
 };
 }
 export default visitHistoryList;
+
+  // onViewAttachment={props.onViewAttachment}

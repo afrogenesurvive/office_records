@@ -62,6 +62,9 @@ const UserDetail = (props) => {
             Delete Staff !!??
           </Button>
         )}
+        <Button variant="warning" onClick={props.onCreatePdf.bind(this, user)}>
+          Create Pdf
+        </Button>
       </Card.Body>
       </Card>
       </Tab>
@@ -87,6 +90,7 @@ const UserDetail = (props) => {
           authUserId={props.AuthContext.userId}
           canDelete={props.canDelete}
           onDelete={props.attachmentDelete}
+          onViewAttachment={props.onViewAttachment}
         />
       </Tab>
     </Tabs>

@@ -17,10 +17,13 @@ const userAttachmentItem = props => (
 
     </div>
     { props.canDelete === true && (
-      <Button variant="danger" onClick={props.onDelete.bind(this, props.attachment)}>
+      <Button variant="danger"  className="listButton" onClick={props.onDelete.bind(this, props.attachment)}>
         Delete
       </Button>
     )}
+    <Button variant="info"  className="listButton" onClick={props.onViewAttachment.bind(this, props.attachment)}>
+      View
+    </Button>
   </li>
 );
 

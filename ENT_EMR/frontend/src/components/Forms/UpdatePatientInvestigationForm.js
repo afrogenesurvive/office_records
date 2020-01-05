@@ -45,10 +45,7 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridInvestigationAttachmentName">
-    <Form.Label>InvestigationAttachmentName</Form.Label>
-    <Form.Control type="text" placeholder="InvestigationAttachmentName"/>
-  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridInvestigationAttachmentFormat">
     <Form.Label>InvestigationAttachmentFormat</Form.Label>
     <Form.Control type="text" placeholder="InvestigationAttachmentFormat"/>
@@ -78,6 +75,10 @@ return (
 
 </Form>
 {
+  // <Form.Group as={Col} controlId="formGridInvestigationAttachmentName">
+  //   <Form.Label>InvestigationAttachmentName</Form.Label>
+  //   <Form.Control type="text" placeholder="InvestigationAttachmentName"/>
+  // </Form.Group>
   // <AuthContext.Consumer>
 // </AuthContext.Consumer>
 }

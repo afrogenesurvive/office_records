@@ -65,7 +65,7 @@ class AuthPage extends Component {
         return res.json();
       })
       .then(resData => {
-        const responseAlert = JSON.stringify(resData.data).slice(0,8)
+        const responseAlert = JSON.stringify(resData.data).slice(2,25)
         console.log(`
           resData slice: ${responseAlert},
           resData: ${JSON.stringify(resData.data)},

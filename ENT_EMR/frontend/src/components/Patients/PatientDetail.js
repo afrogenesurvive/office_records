@@ -57,7 +57,10 @@ const PatientDetail = (props) => {
   const patientRegistrationDate = new Date(patient.registrationDate.substr(0,10)*1000).toISOString().slice(0,10);
   const patientDob = new Date(patient.dob.substr(0,10)*1000).toISOString().slice(0,10);
   // const patientReferralDate = new Date(patient.referralDate*1000).toUTCString();
-  const patientReferralDate = new Date(patient.referralDate.substr(0,10)*1000).toISOString().slice(0,10);
+  let patientReferralDate = patient.referralDate;
+  if (patient.referralDate) {
+    patientReferralDate = new Date(patient.referralDate.substr(0,10)*1000).toISOString().slice(0,10);
+  }
   let patientExpirationDate = undefined;
   if (patient.expirationDate !== null)
   {patientExpirationDate = new Date(patient.expirationDate.substr(0,10)*1000).toISOString().slice(0,10);}
@@ -180,6 +183,9 @@ const PatientDetail = (props) => {
           Delete Patient !!??
         </Button>
       )}
+      <Button variant="warning" onClick={props.onCreatePdf.bind(this, patient)}>
+        Create Pdf
+      </Button>
       </Card.Body>
       </Card>
       </Tab>
@@ -241,6 +247,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.complaintDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="Survey" title="Survey">
@@ -252,6 +259,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.surveyDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="Vitals" title="Vitals">
@@ -274,6 +282,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.examinationDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="History" title="History">
@@ -285,6 +294,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.historyDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="Allergies" title="Allergies">
@@ -296,6 +306,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.allergiesDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="Medication" title="Medication">
@@ -307,6 +318,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.medicationDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="Investigation" title="Investigation">
@@ -318,6 +330,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.investigationDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="Diagnosis" title="Diagnosis">
@@ -329,6 +342,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.diagnosisDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="Treatment" title="Treatment">
@@ -340,6 +354,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.treatmentDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="Billing" title="Billing">
@@ -351,6 +366,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.billingDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="Attachments" title="Attachments">
@@ -362,6 +378,7 @@ const PatientDetail = (props) => {
         authUserId={props.authUserId}
         canDelete={props.canDelete}
         onDelete={props.attachmentDelete}
+        onViewAttachment={props.onViewAttachment}
         />
       </Tab>
       <Tab eventKey="Notes" title="Notes">
@@ -400,6 +417,7 @@ const PatientDetail = (props) => {
         <PatientVisit
           authUserId={props.authUserId}
           visit={props.visit}
+          onViewAttachment={props.onViewAttachment}
           />
         )}
       </Tab>

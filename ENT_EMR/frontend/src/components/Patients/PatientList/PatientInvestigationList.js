@@ -19,6 +19,7 @@ const patientInvestigationList = props => {
         canDelete={props.canDelete}
         onDelete={props.onDelete}
         investigation={investigation}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });

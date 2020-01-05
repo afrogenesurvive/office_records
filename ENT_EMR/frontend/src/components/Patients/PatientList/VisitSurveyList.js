@@ -21,9 +21,11 @@ const visitSurveyList = props => {
         date={visitSurveyDate}
         title={surveyItem.title}
         description={surveyItem.description}
+        attachment={surveyItem.attachment}
         attachmentName={surveyAttachment.name}
         attachmentFormat={surveyAttachment.format}
         attachmentPath={surveyAttachment.path}
+        onViewAttachment={props.onViewAttachment}
       />
     );
   });
@@ -33,3 +35,5 @@ const visitSurveyList = props => {
 };
 
 export default visitSurveyList;
+
+// onViewAttachment={props.onViewAttachment}
