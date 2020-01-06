@@ -17,4 +17,13 @@
   width: 60vw;
   background: white;
   padding: 2rem;
+  overflow: scroll;
+}
+
+.attachmentViewerTitle {
+  margin: .5rem;
+}
+
+.attachmentViewerCloseButton {
+  margin: 1rem;
 }

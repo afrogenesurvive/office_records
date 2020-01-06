@@ -4,6 +4,9 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import AppointmentNoteList from './AppointmentList/AppointmentNoteList';
 
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import './PatientDetail.css';
 
 const AppointmentDetail = (props) => {
@@ -18,78 +21,105 @@ const AppointmentDetail = (props) => {
     <div className="PatientDetailBox">
     <Card className="PatientDetailCard">
     <Card.Body>
-      <Card.Title>Appointment Details</Card.Title>
-      <Card.Text>
-        ID: {appointment._id}
-      </Card.Text>
-      <Card.Text>
-        Date: {appointmentDate}
-      </Card.Text>
-      <Card.Text>
-        Time: {appointment.time}
-      </Card.Text>
-      <Card.Text>
-        SeenTime: {appointment.seenTime}
-      </Card.Text>
-      <Card.Text>
-        CheckinTime: {appointment.checkinTime}
-      </Card.Text>
-      <Card.Text>
-        Title: {appointment.title}
-      </Card.Text>
-      <Card.Text>
-        Type: {appointment.type}
-      </Card.Text>
-      <Card.Text>
-        Patient Name: {appointment.patient.name}
-      </Card.Text>
-      <Card.Text>
-        Patient Phone: {appointment.patient.phone}
-      </Card.Text>
-      <Card.Text>
-        Patient Email: {appointment.patient.email}
-      </Card.Text>
-      <Card.Text>
-        Description: {appointment.description}
-      </Card.Text>
-      <Card.Text>
-        Location: {appointment.location}
-      </Card.Text>
-      <Card.Text>
-        In-Progress?: {appointment.inProgress}
-      </Card.Text>
-      {appointment.important === true &&(
-        <p>Appointment is In-Progress</p>
-      )}
-      <Card.Text>
-        Attended?: {appointment.attended}
-      </Card.Text>
-      {appointment.attended === true &&(
-        <p>Patient Checked In</p>
-      )}
-      <Card.Text>
-        Important?:
-      </Card.Text>
-      {appointment.important === true &&(
-        <p>High Prioity Appointment</p>
-      )}
-      <Card.Text>
-      Notes:
-      </Card.Text>
+      <Card.Title><span className="ul">Appointment Details</span></Card.Title>
+
+      <Row className="detailCardRow">
+        <Col md={6} className="detailCardCol">
+          <Card.Text>
+            <span className="bold">ID :</span> {appointment._id}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Date :</span> {appointmentDate}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Time :</span> {appointment.time}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">SeenTime :</span> {appointment.seenTime}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">CheckinTime :</span> {appointment.checkinTime}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Title :</span> {appointment.title}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Type :</span> {appointment.type}
+          </Card.Text>
+
+        </Col>
+
+        <Col md={6} className="detailCardCol">
+          <Card.Text>
+            <span className="bold">Patient Name :</span> {appointment.patient.name}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Patient Phone :</span> {appointment.patient.phone}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Patient Email :</span> {appointment.patient.email}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Description :</span> {appointment.description}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Location :</span> {appointment.location}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">In-Progress ?</span> {appointment.inProgress}
+          </Card.Text>
+          {appointment.important === true &&(
+            <p>Yes</p>
+          )}
+          <Card.Text>
+            <span className="bold">Attended ?</span> {appointment.attended}
+          </Card.Text>
+          {appointment.attended === true &&(
+            <p>Yes</p>
+          )}
+          <Card.Text>
+            <span className="bold">Important ?</span>
+          </Card.Text>
+          {appointment.important === true &&(
+            <p>Yes</p>
+          )}
+
+        </Col>
+
+      </Row>
+
+      <Row className="detailCardRow">
+        <Col className="detailCardCol">
+        <Card.Text>
+        <span className="bold">Notes :</span>
+        </Card.Text>
+        </Col>
+      </Row>
+
+      <Row className="detailCardRow">
+        <Col md={6} className="detailCardCol">
+          { props.canDelete === true && (
+            <Button variant="danger" onClick={props.onDelete}>
+              Delete Appointment !!??
+            </Button>
+          )}
+        </Col>
+
+        <Col md={6} className="detailCardCol">
+          <Button variant="warning" onClick={props.onCreatePdf.bind(this, appointment)}>
+            Create Pdf
+          </Button>
+        </Col>
+      </Row>
+
       <AppointmentNoteList
         appointmentNote={appointmentNote}
         authUserId={props.authUserId}
         />
 
     </Card.Body>
-    { props.canDelete === true && (
-      <Button variant="danger" onClick={props.onDelete}>
-        Delete Appointment !!??
-      </Button>
-    )}
-    <Button variant="warning" onClick={props.onCreatePdf.bind(this, appointment)}>
-      Create Pdf
-    </Button>
+
+
   </Card>
     </div>
 

@@ -526,7 +526,7 @@ class ThisUserPage extends Component {
         this.state.users.push(resData.data.updateUserAttachment);
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+        // this.setState({ userAlert: responseAlert})
         this.getThisUser();
       })
       .catch(err => {
@@ -640,7 +640,7 @@ class ThisUserPage extends Component {
               const responseAlert = JSON.stringify(resData.data).slice(2,25);
               this.setState({ userAlert: responseAlert})
               // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserAttendance})
-              this.fetchUsers();
+              // this.fetchUsers();
 
             })
             .catch(err => {
@@ -796,7 +796,7 @@ class ThisUserPage extends Component {
       `);
       this.setState({showAttachment: true})
 
-      const file = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+attachment.path+"/"+attachment.name;
+      const file = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+attachment.path+"/"+attachment.name+"."+attachment.format;
       const type = attachment.format;
 
       this.setState({showThisAttachmentFile: file, showThisAttachmentType: type})
@@ -868,9 +868,8 @@ class ThisUserPage extends Component {
       <Col md={9} className="MasterCol2">
         <Container className="containerProfile">
         <Tabs defaultActiveKey="Detail" id="uncontrolled-tab-example2">
-          <Tab eventKey="" title="Edit:" disabled>
-          </Tab>
-          <Tab eventKey="Detail" title="Detail">
+
+          <Tab eventKey="Detail" title="Your Staff Data">
           {this.state.user !== null && (
               <ThisUserProfile
                 user={this.state.user}
@@ -885,8 +884,13 @@ class ThisUserPage extends Component {
             )}
           </Tab>
 
-          <Tab eventKey="Demographics" title="Demographics">
-          <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Demographics</Button>
+          {
+          //   <Tab eventKey="" title="Edit Your Data:" disabled>
+          // </Tab>
+        }
+
+          <Tab eventKey="Demographics" title="Edit Demographics">
+          <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Demographics</Button>
           {this.state.updating === true && (
             <UpdateUserForm
             canCancelProfile
@@ -900,14 +904,14 @@ class ThisUserPage extends Component {
           )}
           </Tab>
 
-          <Tab eventKey="userEditField" title="Single Field">
+          <Tab eventKey="userEditField" title="Edit Single Field">
           {this.state.selectedUser === null && (
-            <Button variant="outline-warning" size="lg">
+            <Button variant="outline-warning" size="lg" className="confirmEditButton">
               Select a Staff member from the Master List below
             </Button>
           )}
           {this.state.selectedUser !== null && (
-            <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Field</Button>
+            <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit a Single Field</Button>
           )}
           {this.state.updating &&
             this.state.selectedUser !== null
@@ -924,8 +928,8 @@ class ThisUserPage extends Component {
           )}
           </Tab>
 
-          <Tab eventKey="Atttendance" title="Atttendance">
-            <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecialProfile.bind(this)}>Attendance</Button>
+          <Tab eventKey="Atttendance" title="Add Atttendance">
+            <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attendance' onClick={this.updateUserSpecialProfile.bind(this)}>Add Attendance</Button>
             {this.state.userUpdateField === 'attendance' && (
               <UpdateUserAttendanceForm
               authUserId={this.context.userId}
@@ -939,8 +943,8 @@ class ThisUserPage extends Component {
             )}
           </Tab>
 
-          <Tab eventKey="Leave" title="Leave">
-            <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecialProfile.bind(this)}>Leave</Button>
+          <Tab eventKey="Leave" title="Add Leave">
+            <Button variant="outline-primary" size="lg" className="confirmEditButton" value='leave' onClick={this.updateUserSpecialProfile.bind(this)}>Add Leave</Button>
             {this.state.userUpdateField === 'leave' && (
               <UpdateUserLeaveForm
               authUserId={this.context.userId}
@@ -954,8 +958,8 @@ class ThisUserPage extends Component {
             )}
           </Tab>
 
-          <Tab eventKey="Attachment" title="Attachment">
-          <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecialProfile.bind(this)}>Attachment</Button>
+          <Tab eventKey="Attachment" title="Add Attachment">
+          <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attachments' onClick={this.updateUserSpecialProfile.bind(this)}>Add Attachment</Button>
           {this.state.userUpdateField === 'attachments' && (
             <UpdateUserAttachmentForm
             authUserId={this.context.userId}

@@ -16,8 +16,8 @@ const AttachmentViewer = (props) =>{
 return (
   <div className="attachmentViewerBg">
     <div className="attachmentViewer">
-    <p>AttachmentViewer</p>
-    <Button variant="danger" onClick={props.onCloseAttachmentView}>
+    <h5 className="attachmentViewerTitle">AttachmentViewer</h5>
+    <Button variant="danger" className="attachmentViewerCloseButton" onClick={props.onCloseAttachmentView}>
       close
     </Button>
     {props.attachmentFile && (

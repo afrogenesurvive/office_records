@@ -1,8 +1,9 @@
 /* css */
 .sidebarContainer {
   width: 100%;
-  height: 90vh;
-  margin: 7rem .5rem;
+  height: 85vh;
+  margin-top: 7rem;
+  margin-left:  .5rem;
   /* position: fixed; */
   /* left: 0; */
   /* top: 10vh; */
@@ -16,7 +17,23 @@
   overflow: scroll;
 }
 
-.apptSidebarRow {
-  height: 25rem;
+.apptSidebarCol {
+  max-height: 25rem;
   overflow: scroll;
+}
+
+.sidebarCard {
+  margin: .5rem auto;
+}
+
+.sidebarRow1 {
+  /* margin-top: 10rem; */
+}
+
+.apptSidebarTitle {
+  margin: .5rem;
+}
+
+.cardTitle {
+  text-decoration: underline;
 }

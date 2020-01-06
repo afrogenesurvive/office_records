@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import UserAttendanceList from './UserList/UserAttendanceList';
 import UserLeaveList from './UserList/UserLeaveList';
@@ -30,41 +32,56 @@ const UserDetail = (props) => {
     <div className={"UserDetailBox1"}>
 
     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="tab">
-      <Tab eventKey="" title="Details:" disabled>
-      </Tab>
+
       <Tab eventKey="Demographics" title="Demographics">
       <Card className="UserDetailCard">
       <Card.Body>
-        <Card.Title>User Details</Card.Title>
-        <Card.Text>
-          ID: {user._id}
-        </Card.Text>
-        <Card.Text>
-          Name: {user.name}
-        </Card.Text>
-        <Card.Text>
-          Email: {user.email}
-        </Card.Text>
-        <Card.Text>
-          Phone: {user.phone}
-        </Card.Text>
-        <Card.Text>
-          Role: {user.role}
-        </Card.Text>
-        <Card.Text>
-          Start Date: {userEmploymentDate}
-        </Card.Text>
-        <Card.Text>
-          End Date: {userTerminationDate}
-        </Card.Text>
-        { props.canDelete === true && (
-          <Button variant="danger" onClick={props.onDelete}>
-            Delete Staff !!??
-          </Button>
-        )}
-        <Button variant="warning" onClick={props.onCreatePdf.bind(this, user)}>
-          Create Pdf
-        </Button>
+        <Card.Title><span className="ul">User Details</span></Card.Title>
+        <Row className="detailCardRow">
+          <Col className="detailCardCol">
+            <Card.Text>
+              <span className="bold">ID :</span> {user._id}
+            </Card.Text>
+            <Card.Text>
+              <span className="bold">Name :</span> {user.name}
+            </Card.Text>
+            <Card.Text>
+              <span className="bold">Email :</span> {user.email}
+            </Card.Text>
+            <Card.Text>
+              <span className="bold">Phone :</span> {user.phone}
+            </Card.Text>
+            <Card.Text>
+              <span className="bold">Role :</span> {user.role}
+            </Card.Text>
+          </Col>
+
+          <Col className="detailCardCol">
+            <Card.Text>
+              <span className="bold">Start Date:</span> {userEmploymentDate}
+            </Card.Text>
+            <Card.Text>
+              <span className="bold">Start Date:</span> {userTerminationDate}
+            </Card.Text>
+          </Col>
+        </Row>
+
+        <Row className="detailCardRow">
+          <Col className="detailCardCol">
+            { props.canDelete === true && (
+              <Button variant="danger" onClick={props.onDelete}>
+                Delete Staff !!??
+              </Button>
+            )}
+          </Col>
+
+          <Col>
+            <Button variant="warning" onClick={props.onCreatePdf.bind(this, user)}>
+              Create Pdf
+            </Button>
+          </Col>
+        </Row>
+
       </Card.Body>
       </Card>
       </Tab>

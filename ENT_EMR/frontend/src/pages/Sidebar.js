@@ -50,21 +50,21 @@ class SidebarPage extends Component {
     return (
       <React.Fragment>
       <Container className="sidebarContainer">
-      <Row className="">
+      <Row className="sidebarRow1">
       <Col md={12} className="">
 
       <Card border="primary" className="sidebarCard">
       <Card.Body>
-        <Card.Title>You</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">ID:</Card.Subtitle>
+        <Card.Title className="cardTitle">You</Card.Title>
+        <Card.Subtitle className="mb-2">ID:</Card.Subtitle>
         <Card.Text>
           {this.context.user._id}
         </Card.Text>
-        <Card.Subtitle className="mb-2 text-muted">Name:</Card.Subtitle>
+        <Card.Subtitle className="mb-2">Name:</Card.Subtitle>
         <Card.Text>
           {this.context.user.name}
         </Card.Text>
-        <Card.Subtitle className="mb-2 text-muted">Role:</Card.Subtitle>
+        <Card.Subtitle className="mb-2">Role:</Card.Subtitle>
         <Card.Text>
           {this.context.user.role}
         </Card.Text>
@@ -73,16 +73,16 @@ class SidebarPage extends Component {
 
       <Card border="secondary" className="sidebarCard">
       <Card.Body>
-        <Card.Title>Selection</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">Staff:</Card.Subtitle>
+        <Card.Title className="cardTitle">Selection</Card.Title>
+        <Card.Subtitle className="mb-2">Staff:</Card.Subtitle>
         <Card.Text>
           {this.context.selectedUser.name}
         </Card.Text>
-        <Card.Subtitle className="mb-2 text-muted">Patient:</Card.Subtitle>
+        <Card.Subtitle className="mb-2">Patient:</Card.Subtitle>
         <Card.Text>
           {this.context.selectedPatient.name}
         </Card.Text>
-        <Card.Subtitle className="mb-2 text-muted">Appointment:</Card.Subtitle>
+        <Card.Subtitle className="mb-2">Appointment:</Card.Subtitle>
         <Card.Text>
           {this.context.selectedAppointment.title}
         </Card.Text>
@@ -90,9 +90,9 @@ class SidebarPage extends Component {
       </Card>
       </Col>
       </Row>
-      <Row className="">
-      <Col md={12} className="apptSidebarRow">
-      <p>Appointments Today</p>
+      <Row className="sidebarRow2">
+      <Col md={12} className="apptSidebarCol">
+      <h6 className="apptSidebarTitle">Appointments Today</h6>
       {this.context.appointmentsToday === null && (
         <Button variant="outline-warning">
           Check the Appointments page to load
@@ -110,7 +110,7 @@ class SidebarPage extends Component {
       </Row>
       <Row className="apptSidebarRow">
       <Col md={12} className="">
-      <p>Appointments InProgress</p>
+      <h6 className="apptSidebarTitle">Appointments InProgress</h6>
       {this.context.appointmentsToday === null && (
         <Button variant="outline-warning">
           Check the Appointments page to load

@@ -24,7 +24,7 @@
   padding: 0;
 }
 .containerProfile {
-  height: 90vh;
+  height: 85vh;
   /* width: 50vw; */
   margin-top: 5rem;
   width: 100%;
@@ -103,4 +103,8 @@
   height: 100%;
   text-align: center;
   margin: 0 auto;
+}
+
+.confirmEditButton {
+  margin: 3rem 15rem;
 }
