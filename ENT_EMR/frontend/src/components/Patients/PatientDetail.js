@@ -89,8 +89,7 @@ const PatientDetail = (props) => {
     <div className="PatientDetailBox1">
 
     <Tabs defaultActiveKey="Demographics" id="uncontrolled-tab-example" className="tab">
-      <Tab eventKey="" title="Details:" disabled>
-      </Tab>
+      
       <Tab eventKey="Demographics" title="Demographics">
       <Card className="PatientDetailCard">
       <Card.Body>

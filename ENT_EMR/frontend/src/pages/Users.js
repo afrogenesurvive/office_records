@@ -1481,7 +1481,7 @@ updateUserSpecial (event) {
         <Container className="containerCombinedDetail">
           <Tabs defaultActiveKey="userDetail" id="uncontrolled-tab-example">
 
-            <Tab eventKey="userDetail" title="Selected Staff Data">
+            <Tab eventKey="userDetail" title="Selected Staff Data:">
                   {this.state.selectedUser === null && (
                     <Button variant="outline-warning" size="lg" className="confirmEditButton">
                       Select a Staff member from the Master List
@@ -1507,7 +1507,7 @@ updateUserSpecial (event) {
             </Tab>
 
             { this.context.user.role === "admin" && (
-              <Tab eventKey="userCreate" title="New">
+              <Tab eventKey="userCreate" title="Create New">
               <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startCreateUserHandler} >Create a NEW Staff Profile</Button>
               {this.state.creating && (
                 <CreateUserForm
@@ -1659,7 +1659,7 @@ updateUserSpecial (event) {
             <Tab eventKey="userEditLeave" title="Leave">
             {this.state.selectedUser === null && (
               <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                Select a Staff member from the Master List below
+                Select a Staff member from the Master List
               </Button>
             )}
 
@@ -1701,7 +1701,7 @@ updateUserSpecial (event) {
             <Tab eventKey="userEditAttachment" title="Attachment">
             {this.state.selectedUser === null && (
               <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                Select a Staff member from the Master List below
+                Select a Staff member from the Master List
               </Button>
             )}
 
@@ -1742,7 +1742,7 @@ updateUserSpecial (event) {
             </Tab>
 
 
-            <Tab eventKey="MasterList" title="Master List">
+            <Tab eventKey="MasterList" title="MASTER LIST">
             <Container className="containerUserMasterList">
             <Row className="searchListRow">
             <Button variant="primary" size="sm" onClick={this.fetchUsersAsc}>
@@ -1777,7 +1777,12 @@ updateUserSpecial (event) {
             <Tabs defaultActiveKey="Field" id="uncontrolled-tab-example">
             <Tab eventKey="Search" title="Search:" disabled>
             </Tab>
-            <Tab eventKey="Field" title="Field:">
+            <Tab eventKey="Field" title="Search by Field:">
+            {this.state.searching !== true && (
+              <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                Click the 'Search' Button start
+              </Button>
+            )}
             {this.state.searching === true && (
               <SearchUserForm
               authUserId={this.context.userId}
@@ -1789,7 +1794,12 @@ updateUserSpecial (event) {
                 user={this.context.selectedUser}
               />)}
             </Tab>
-            <Tab eventKey="Id" title="Id:">
+            <Tab eventKey="Id" title="Search by Id:">
+            {this.state.searching !== true && (
+              <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                Click the 'Search' Button start
+              </Button>
+            )}
             {this.state.searching === true && (
               <SearchUserIdForm
               authUserId={this.context.userId}
@@ -1802,7 +1812,12 @@ updateUserSpecial (event) {
               />
               )}
             </Tab>
-            <Tab eventKey="Attendance" title="Attendance:">
+            <Tab eventKey="Attendance" title="Search by Attendance:">
+            {this.state.searching !== true && (
+              <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                Click the 'Search' Button start
+              </Button>
+            )}
             {this.state.searching === true && (
               <SearchUserAttendanceDateForm
               authUserId={this.context.userId}
@@ -1815,7 +1830,12 @@ updateUserSpecial (event) {
               />
               )}
             </Tab>
-            <Tab eventKey="Leave" title="Leave:">
+            <Tab eventKey="Leave" title="Search by Leave:">
+            {this.state.searching !== true && (
+              <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                Click the 'Search' Button start
+              </Button>
+            )}
             {this.state.searching === true && (
               <SearchUserLeaveDateRangeForm
               authUserId={this.context.userId}
@@ -1828,7 +1848,12 @@ updateUserSpecial (event) {
               />
               )}
             </Tab>
-            <Tab eventKey="Name" title="Name:">
+            <Tab eventKey="Name" title="Search by Name:">
+            {this.state.searching !== true && (
+              <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                Click the 'Search' Button start
+              </Button>
+            )}
             {this.state.searching === true && (
               <SearchUserNameForm
               authUserId={this.context.userId}
@@ -1866,6 +1891,7 @@ updateUserSpecial (event) {
               </Card>
             </Row>
             <Row className="searchListRow">
+
             {this.state.searchUsers !== [] && (
               <SearchUserList
                 searchUsers={this.state.searchUsers}
