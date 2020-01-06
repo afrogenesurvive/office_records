@@ -3713,13 +3713,13 @@ deletePatientTagItem = (props) => {
 
     <Col md={9} className="MasterCol2">
     <Container className="containerCombinedDetail">
-    <Tabs defaultActiveKey="" id="uncontrolled-tab-example">
+    <Tabs defaultActiveKey="patientDetail" id="uncontrolled-tab-example">
     <Tab eventKey="" title="Edit:" disabled>
     </Tab>
     <Tab eventKey="patientDetail" title="Details">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.isLoading === false &&

@@ -1480,12 +1480,11 @@ updateUserSpecial (event) {
 
         <Container className="containerCombinedDetail">
           <Tabs defaultActiveKey="userDetail" id="uncontrolled-tab-example">
-          <Tab eventKey="Edit" title="Edit:" disabled>
-          </Tab>
-            <Tab eventKey="userDetail" title="Details">
+
+            <Tab eventKey="userDetail" title="Selected Staff Data">
                   {this.state.selectedUser === null && (
-                    <Button variant="outline-warning" size="lg">
-                      Select a Staff member from the Master List below
+                    <Button variant="outline-warning" size="lg" className="confirmEditButton">
+                      Select a Staff member from the Master List
                     </Button>
                   )}
                   {this.state.isLoading === false &&
@@ -1509,7 +1508,7 @@ updateUserSpecial (event) {
 
             { this.context.user.role === "admin" && (
               <Tab eventKey="userCreate" title="New">
-              <Button variant="outline-primary" onClick={this.startCreateUserHandler} >Create</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startCreateUserHandler} >Create a NEW Staff Profile</Button>
               {this.state.creating && (
                 <CreateUserForm
                   authUserId={this.context.userId}
@@ -1526,29 +1525,29 @@ updateUserSpecial (event) {
 
             <Tab eventKey="userEditDemographics" title="Demographics">
             {this.state.selectedUser === null && (
-              <Button variant="outline-warning" size="lg">
-                Select a Staff member from the Master List below
+              <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                Select a Staff member from the Master List
               </Button>
             )}
             {this.state.selectedUser !== null &&
               this.context.user.role === "admin"
               && (
-              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Demographics as Admin</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Demographics as Admin</Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id === this.context.user._id
               && (
-              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Demographics (your profile)</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Demographics</Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id === this.context.user._id && (
-              <Button variant="outline-danger" size="lg">
+              <Button variant="outline-danger" className="confirmEditButton" size="lg">
                 Your Profile
               </Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id !== this.context.user._id && (
-              <Button variant="outline-danger" size="lg">
+              <Button variant="outline-danger" className="confirmEditButton" size="lg">
                 Not my profile
               </Button>
             )}
@@ -1570,30 +1569,30 @@ updateUserSpecial (event) {
 
             <Tab eventKey="userEditField" title="Single Field">
             {this.state.selectedUser === null && (
-              <Button variant="outline-warning" size="lg">
-                Select a Staff member from the Master List below
+              <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                Select a Staff member from the Master List
               </Button>
             )}
 
             {this.state.selectedUser !== null &&
               this.context.user.role === "admin"
               && (
-              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Field as Admin</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Field as Admin</Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id === this.context.user._id
               && (
-              <Button variant="outline-primary" onClick={this.startUpdateUserHandler}>Edit Field (your profile)</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit a Single Field</Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id === this.context.user._id && (
-              <Button variant="outline-danger" size="lg">
+              <Button variant="outline-success" className="confirmEditButton" size="lg">
                 Your Profile
               </Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id !== this.context.user._id && (
-              <Button variant="outline-danger" size="lg">
+              <Button variant="outline-danger" className="confirmEditButton" size="lg">
                 Not my profile
               </Button>
             )}
@@ -1614,7 +1613,7 @@ updateUserSpecial (event) {
 
             <Tab eventKey="userEditAttendance" title="Attendance">
             {this.state.selectedUser === null && (
-              <Button variant="outline-warning" size="lg">
+              <Button variant="outline-warning" className="confirmEditButton" size="lg">
                 Select a Staff member from the Master List below
               </Button>
             )}
@@ -1622,22 +1621,22 @@ updateUserSpecial (event) {
             {this.state.selectedUser !== null &&
               this.context.user.role === "admin"
               && (
-              <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance as Admin</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance as Admin</Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id === this.context.user._id
               && (
-              <Button variant="outline-primary" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance (your profile)</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance</Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id === this.context.user._id && (
-              <Button variant="outline-danger" size="lg">
+              <Button variant="outline-success" className="confirmEditButton" size="lg">
                 Your Profile
               </Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id !== this.context.user._id && (
-              <Button variant="outline-danger" size="lg">
+              <Button variant="outline-danger" className="confirmEditButton" size="lg">
                 Not my profile
               </Button>
             )}
@@ -1659,7 +1658,7 @@ updateUserSpecial (event) {
 
             <Tab eventKey="userEditLeave" title="Leave">
             {this.state.selectedUser === null && (
-              <Button variant="outline-warning" size="lg">
+              <Button variant="outline-warning" className="confirmEditButton" size="lg">
                 Select a Staff member from the Master List below
               </Button>
             )}
@@ -1667,22 +1666,22 @@ updateUserSpecial (event) {
             {this.state.selectedUser !== null &&
               this.context.user.role === "admin"
               && (
-              <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave as Admin</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave as Admin</Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id === this.context.user._id
               && (
-              <Button variant="outline-primary" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave (your profile)</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave</Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id === this.context.user._id && (
-              <Button variant="outline-danger" size="lg">
+              <Button variant="outline-success" className="confirmEditButton" size="lg">
                 Your Profile
               </Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id !== this.context.user._id && (
-              <Button variant="outline-danger" size="lg">
+              <Button variant="outline-danger" className="confirmEditButton" size="lg">
                 Not my profile
               </Button>
             )}
@@ -1701,7 +1700,7 @@ updateUserSpecial (event) {
             </Tab>
             <Tab eventKey="userEditAttachment" title="Attachment">
             {this.state.selectedUser === null && (
-              <Button variant="outline-warning" size="lg">
+              <Button variant="outline-warning" className="confirmEditButton" size="lg">
                 Select a Staff member from the Master List below
               </Button>
             )}
@@ -1709,22 +1708,22 @@ updateUserSpecial (event) {
             {this.state.selectedUser !== null &&
               this.context.user.role === "admin"
               && (
-              <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment as Admin</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment as Admin</Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id === this.context.user._id
               && (
-              <Button variant="outline-primary" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment (your profile)</Button>
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment</Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id === this.context.user._id && (
-              <Button variant="outline-danger" size="lg">
+              <Button variant="outline-success" className="confirmEditButton" size="lg">
                 Your Profile
               </Button>
             )}
             {this.state.selectedUser !== null &&
               this.state.selectedUser._id !== this.context.user._id && (
-              <Button variant="outline-danger" size="lg">
+              <Button variant="outline-danger" className="confirmEditButton" size="lg">
                 Not my profile
               </Button>
             )}

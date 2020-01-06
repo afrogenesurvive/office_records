@@ -1126,7 +1126,7 @@ class AppointmentsPage extends Component {
               <Tab eventKey="appointmentDetail" title="Details">
                   {this.state.selectedAppointment === null && (
                     <Button variant="outline-warning" size="lg">
-                      Select an Appointment from the Master List below
+                      Select an Appointment from the Master List
                     </Button>
                   )}
                   {
@@ -1166,7 +1166,7 @@ class AppointmentsPage extends Component {
               <Tab eventKey="appointmentEditBasic" title="Basic">
               {this.state.selectedAppointment === null && (
                 <Button variant="outline-warning" size="lg">
-                  Select an Appointment from the Master List below
+                  Select an Appointment from the Master List
                 </Button>
               )}
               {this.state.selectedAppointment !== null && (
@@ -1214,7 +1214,7 @@ class AppointmentsPage extends Component {
               <Tab eventKey="appointmentEditPatient" title="Patient">
               {this.state.selectedAppointment === null && (
                 <Button variant="outline-warning" size="lg">
-                  Select an Appointment from the Master List below
+                  Select an Appointment from the Master List
                 </Button>
               )}
               {this.state.selectedAppointment !== null && (

@@ -6,7 +6,11 @@ import Accordion from 'react-bootstrap/Accordion';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import AuthContext from '../../context/auth-context';
+
 
 import PatientAppointmentList from './PatientList/PatientAppointmentList';
 import PatientInsuranceList from './PatientList/PatientInsuranceList';
@@ -90,102 +94,121 @@ const PatientDetail = (props) => {
       <Tab eventKey="Demographics" title="Demographics">
       <Card className="PatientDetailCard">
       <Card.Body>
-      <Card.Title>Patient Details:</Card.Title>
-      <Card.Text>
-        ID: {patient._id}
-      </Card.Text>
-      <Card.Text>
-        Title: {patient.title}
-      </Card.Text>
-      <Card.Text>
-        Name: {patient.name}
-      </Card.Text>
-      <Card.Text>
-        Address:
-      </Card.Text>
-      <Card.Text>
-        Street No: {patient.address.number}
-      </Card.Text>
-      <Card.Text>
-        Street Name: {patient.address.street}
-      </Card.Text>
-      <Card.Text>
-        Town: {patient.address.town}
-      </Card.Text>
-      <Card.Text>
-        Parish: {patient.address.parish}
-      </Card.Text>
-      <Card.Text>
-        PO: {patient.address.postOffice}
-      </Card.Text>
-      <Card.Text>
-        D.O.B: {patientDob}
-      </Card.Text>
-      <Card.Text>
-        Age: {patient.age}
-      </Card.Text>
-      <Card.Text>
-        Gender: {patient.gender}
-      </Card.Text>
-      <Card.Text>
-        Phone: {patient.contact.phone}
-      </Card.Text>
-      <Card.Text>
-        Email: {patient.contact.email}
-      </Card.Text>
-      <Card.Text>
-        Reg Date: {patientRegistrationDate}
-      </Card.Text>
-      <Card.Text>
-        Ref Date: {patientReferralDate}
-      </Card.Text>
-      <Card.Text>
-        Exp Date: {patientExpirationDate}
-      </Card.Text>
-      <Card.Text>
-        Job Position: {patient.occupation.role}
-      </Card.Text>
-      <Card.Text>
-        Employer: {patient.occupation.employer}
-      </Card.Text>
-      <Card.Text>
-        Employer Phone: {patient.occupation.contact.phone}
-      </Card.Text>
-      <Card.Text>
-        Employer Email: {patient.occupation.contact.email}
-      </Card.Text>
-      <Card.Text>
-        Referring Doctor:
-      </Card.Text>
-      <Card.Text>
-        Name: {patient.referringDoctor.name}
-      </Card.Text>
-      <Card.Text>
-        Phone: {patient.referringDoctor.phone}
-      </Card.Text>
-      <Card.Text>
-        Email: {patient.referringDoctor.email}
-      </Card.Text>
-      <Card.Text>
-        Attending Physician:
-      </Card.Text>
-      <Card.Text>
-        Name: {patient.attendingPhysician.name}
-      </Card.Text>
-      <Card.Text>
-        Phone: {patient.attendingPhysician.phone}
-      </Card.Text>
-      <Card.Text>
-        Email: {patient.attendingPhysician.email}
-      </Card.Text>
-      { props.canDelete === true && (
-        <Button variant="danger" onClick={props.onDelete}>
-          Delete Patient !!??
-        </Button>
-      )}
-      <Button variant="warning" onClick={props.onCreatePdf.bind(this, patient)}>
-        Create Pdf
-      </Button>
+      <Card.Title><span className="ul">Patient Details</span></Card.Title>
+      <Row className="detailCardRow">
+        <Col md={4} className="detailCardCol">
+          <Card.Text>
+            <span className="bold">ID :</span> {patient._id}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Title :</span> {patient.title}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Name :</span> {patient.name}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">D.O.B :</span> {patientDob}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Age :</span> {patient.age}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Gender :</span> {patient.gender}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Reg Date :</span> {patientRegistrationDate}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Ref Date :</span> {patientReferralDate}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Exp Date :</span> {patientExpirationDate}
+          </Card.Text>
+        </Col>
+
+        <Col md={4} className="detailCardCol">
+          <Card.Text>
+            <span className="bold">Phone :</span> {patient.contact.phone}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Email :</span> {patient.contact.email}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Address :</span>
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Street No :</span> {patient.address.number}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Street Name :</span> {patient.address.street}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Town :</span> {patient.address.town}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Parish :</span> {patient.address.parish}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">PO :</span> {patient.address.postOffice}
+          </Card.Text>
+        </Col>
+
+        <Col md={4} className="detailCardCol">
+          <Card.Text>
+            <span className="bold">Job Position :</span> {patient.occupation.role}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Employer :</span> {patient.occupation.employer}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Employer Phone :</span> {patient.occupation.contact.phone}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Employer Email :</span> {patient.occupation.contact.email}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Referring Doctor :</span>
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Name :</span> {patient.referringDoctor.name}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Phone :</span> {patient.referringDoctor.phone}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Email :</span> {patient.referringDoctor.email}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Attending Physician :</span>
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Name :</span> {patient.attendingPhysician.name}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Phone :</span> {patient.attendingPhysician.phone}
+          </Card.Text>
+          <Card.Text>
+            <span className="bold">Email :</span> {patient.attendingPhysician.email}
+          </Card.Text>
+        </Col>
+      </Row>
+
+      <Row className="detailCardRow">
+        <Col className="detailCardCol">
+          { props.canDelete === true && (
+            <Button variant="danger" onClick={props.onDelete}>
+              Delete Patient !!??
+            </Button>
+          )}
+        </Col>
+
+        <Col className="detailCardCol">
+          <Button variant="warning" onClick={props.onCreatePdf.bind(this, patient)}>
+            Create Pdf
+          </Button>
+        </Col>
+      </Row>
+
       </Card.Body>
       </Card>
       </Tab>
