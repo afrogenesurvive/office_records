@@ -3714,11 +3714,10 @@ deletePatientTagItem = (props) => {
     <Col md={9} className="MasterCol2">
     <Container className="containerCombinedDetail">
     <Tabs defaultActiveKey="patientDetail" id="uncontrolled-tab-example">
-    <Tab eventKey="" title="Edit:" disabled>
-    </Tab>
-    <Tab eventKey="patientDetail" title="Details">
+
+    <Tab eventKey="patientDetail" title="Selected Patient Data:">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
         Select a Patient from the Master List
       </Button>
     )}
@@ -3758,8 +3757,8 @@ deletePatientTagItem = (props) => {
     )}
     </Tab>
 
-    <Tab eventKey="patientCreate" title="Create">
-    <Button variant="outline-primary" onClick={this.startCreatePatientHandler} >Create</Button>
+    <Tab eventKey="patientCreate" title="Create New">
+    <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startCreatePatientHandler} >Create NEW Patient Profile</Button>
     {
       this.state.creating && (
         <CreatePatientForm
@@ -3772,14 +3771,14 @@ deletePatientTagItem = (props) => {
     )}
     </Tab>
 
-    <Tab eventKey="patientEditDemographics" title="Demographics">
+    <Tab eventKey="patientEditDemographics" title="Edit Demographics">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" onClick={this.startUpdatePatientHandler}>Edit Demographics</Button>
+      <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdatePatientHandler}>Edit Demographics</Button>
     )}
     {this.state.updating &&
       this.state.selectedPatient !== null
@@ -3796,14 +3795,14 @@ deletePatientTagItem = (props) => {
     )}
     </Tab>
 
-    <Tab eventKey="patientEditField" title="Single Field">
+    <Tab eventKey="patientEditField" title="Edit a Single Field">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" onClick={this.startUpdatePatientHandler}>Edit Field</Button>
+      <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdatePatientHandler}>Edit a Single Field</Button>
     )}
     {this.state.updating &&
       this.state.selectedPatient !== null
@@ -3820,14 +3819,14 @@ deletePatientTagItem = (props) => {
     )}
     </Tab>
 
-    <Tab eventKey="patientEditConsultant" title="Consultant">
+    <Tab eventKey="patientEditConsultant" title="Add Consultant">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
         Select a Patient from the Master List below
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='consultant' onClick={this.updatePatientSpecial.bind(this)}>Add Consultant</Button>
+      <Button variant="outline-primary" value='consultant' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add a Consultant</Button>
     )}
     {this.state.patientUpdateField === 'consultant' &&
     this.state.selectedPatient !== null
@@ -3855,20 +3854,20 @@ deletePatientTagItem = (props) => {
     this.state.selectedPatient !== null &&
     (
       <Row>
-      <Button variant="outline-warning" size="lg">
-        Select a doctor from the Staff page
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select someone from the Staff page
       </Button>
       </Row>
     )}
     </Tab>
-    <Tab eventKey="patientEditInsurance" title="Insurance">
+    <Tab eventKey="patientEditInsurance" title="Add Insurance">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='insurance' onClick={this.updatePatientSpecial.bind(this)}>Add Insurance</Button>
+      <Button variant="outline-primary" value='insurance' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Insurance</Button>
     )}
     {this.state.patientUpdateField === 'insurance' &&
     this.state.selectedPatient !== null
@@ -3884,14 +3883,14 @@ deletePatientTagItem = (props) => {
       />
     )}
     </Tab>
-    <Tab eventKey="patientEditNextOfKin" title="NextOfKin">
+    <Tab eventKey="patientEditNextOfKin" title="Add NextOfKin">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='nextOfKin' onClick={this.updatePatientSpecial.bind(this)}>Add NextOfKin</Button>
+      <Button variant="outline-primary" value='nextOfKin' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add NextOfKin</Button>
     )}
     {this.state.patientUpdateField === 'nextOfKin' &&
     this.state.selectedPatient !== null
@@ -3907,14 +3906,14 @@ deletePatientTagItem = (props) => {
             />
     )}
     </Tab>
-    <Tab eventKey="patientEditComplaint" title="Complaint">
+    <Tab eventKey="patientEditComplaint" title="Add Complaint">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='complaint' onClick={this.updatePatientSpecial.bind(this)}>Add Complaint</Button>
+      <Button variant="outline-primary" value='complaint' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Complaint</Button>
     )}
     {this.state.patientUpdateField === 'complaint' &&
     this.state.selectedPatient !== null
@@ -3930,14 +3929,14 @@ deletePatientTagItem = (props) => {
             />
     )}
     </Tab>
-    <Tab eventKey="patientEditSurvey" title="Survey">
+    <Tab eventKey="patientEditSurvey" title="Add Survey">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='survey' onClick={this.updatePatientSpecial.bind(this)}>Add Survey</Button>
+      <Button variant="outline-primary" value='survey' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Survey</Button>
     )}
     {this.state.patientUpdateField === 'survey' &&
     this.state.selectedPatient !== null
@@ -3953,14 +3952,14 @@ deletePatientTagItem = (props) => {
             />
     )}
     </Tab>
-    <Tab eventKey="patientEditVitals" title="Vitals">
+    <Tab eventKey="patientEditVitals" title="Add Vitals">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='vitals' onClick={this.updatePatientSpecial.bind(this)}>Add Vitals</Button>
+      <Button variant="outline-primary" value='vitals' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Vitals</Button>
     )}
     {this.state.patientUpdateField === 'vitals' &&
     this.state.selectedPatient !== null
@@ -3976,14 +3975,14 @@ deletePatientTagItem = (props) => {
             />
     )}
     </Tab>
-    <Tab eventKey="patientEditExamination" title="Examination">
+    <Tab eventKey="patientEditExamination" title="Add Examination">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='examintion' onClick={this.updatePatientSpecial.bind(this)}>Add Examination</Button>
+      <Button variant="outline-primary" value='examintion' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Examination</Button>
     )}
     {this.state.patientUpdateField === 'examintion' &&
     this.state.selectedPatient !== null
@@ -3999,14 +3998,14 @@ deletePatientTagItem = (props) => {
             />
     )}
     </Tab>
-    <Tab eventKey="patientEditHistory" title="History">
+    <Tab eventKey="patientEditHistory" title="Add History">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='history' onClick={this.updatePatientSpecial.bind(this)}>Add History</Button>
+      <Button variant="outline-primary" value='history' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add History</Button>
     )}
     {this.state.patientUpdateField === 'history' &&
     this.state.selectedPatient !== null
@@ -4022,14 +4021,14 @@ deletePatientTagItem = (props) => {
       />
     )}
     </Tab>
-    <Tab eventKey="patientEditAllergies" title="Allergies">
+    <Tab eventKey="patientEditAllergies" title="Add Allergies">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='allergies' onClick={this.updatePatientSpecial.bind(this)}>Add Allergies</Button>
+      <Button variant="outline-primary" value='allergies' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Allergies</Button>
     )}
     {this.state.patientUpdateField === 'allergies' &&
     this.state.selectedPatient !== null
@@ -4045,14 +4044,14 @@ deletePatientTagItem = (props) => {
             />
     )}
     </Tab>
-    <Tab eventKey="patientEditMedication" title="Medication">
+    <Tab eventKey="patientEditMedication" title="Add Medication">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='medication' onClick={this.updatePatientSpecial.bind(this)}>Add Medication</Button>
+      <Button variant="outline-primary" value='medication' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Medication</Button>
     )}
     {this.state.patientUpdateField === 'medication' &&
     this.state.selectedPatient !== null
@@ -4068,14 +4067,14 @@ deletePatientTagItem = (props) => {
       />
     )}
     </Tab>
-    <Tab eventKey="patientEditInvestigation" title="Investigation">
+    <Tab eventKey="patientEditInvestigation" title="Add Investigation">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='investigation' onClick={this.updatePatientSpecial.bind(this)}>Add Investigation</Button>
+      <Button variant="outline-primary" value='investigation' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Investigation</Button>
     )}
     {this.state.patientUpdateField === 'investigation' &&
     this.state.selectedPatient !== null
@@ -4091,14 +4090,14 @@ deletePatientTagItem = (props) => {
             />
     )}
     </Tab>
-    <Tab eventKey="patientEditDiagnosis" title="Diagnosis">
+    <Tab eventKey="patientEditDiagnosis" title="Add Diagnosis">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='diagnosis' onClick={this.updatePatientSpecial.bind(this)}>Add Diagnosis</Button>
+      <Button variant="outline-primary" value='diagnosis' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Diagnosis</Button>
     )}
     {this.state.patientUpdateField === 'diagnosis' &&
     this.state.selectedPatient !== null
@@ -4114,14 +4113,14 @@ deletePatientTagItem = (props) => {
             />
     )}
     </Tab>
-    <Tab eventKey="patientEditTreatment" title="Treatment">
+    <Tab eventKey="patientEditTreatment" title="Add Treatment">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='treatment' onClick={this.updatePatientSpecial.bind(this)}>Add Treatment</Button>
+      <Button variant="outline-primary" value='treatment' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Treatment</Button>
     )}
     {this.state.patientUpdateField === 'treatment' &&
     this.state.selectedPatient !== null
@@ -4137,14 +4136,14 @@ deletePatientTagItem = (props) => {
             />
     )}
     </Tab>
-    <Tab eventKey="patientEditBilling" title="Billing">
+    <Tab eventKey="patientEditBilling" title="Add Billing">
     {this.state.selectedPatient === null && (
       <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='billing' onClick={this.updatePatientSpecial.bind(this)}>Add Billing</Button>
+      <Button variant="outline-primary" value='billing' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Billing</Button>
     )}
     {this.state.patientUpdateField === 'billing' &&
     this.state.selectedPatient !== null
@@ -4161,14 +4160,14 @@ deletePatientTagItem = (props) => {
     )}
     </Tab>
 
-    <Tab eventKey="patientEditAttachment" title="Attachment">
+    <Tab eventKey="patientEditAttachment" title="Add Attachment">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='attachment' onClick={this.updatePatientSpecial.bind(this)}>Add Attachment</Button>
+      <Button variant="outline-primary" value='attachment' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Attachment</Button>
     )}
     {this.state.patientUpdateField === 'attachment' &&
     this.state.selectedPatient !== null
@@ -4184,14 +4183,14 @@ deletePatientTagItem = (props) => {
             />
           )}
     </Tab>
-    <Tab eventKey="patientEditNote" title="Note">
+    <Tab eventKey="patientEditNote" title="Add Note">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='notes' onClick={this.updatePatientSpecial.bind(this)}>Add Note</Button>
+      <Button variant="outline-primary" value='notes' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Note</Button>
     )}
     {this.state.patientUpdateField === 'notes' &&
     this.state.selectedPatient !== null
@@ -4207,14 +4206,14 @@ deletePatientTagItem = (props) => {
             />
           )}
     </Tab>
-    <Tab eventKey="patientEditTag" title="Tag">
+    <Tab eventKey="patientEditTag" title="Add Tag">
     {this.state.selectedPatient === null && (
-      <Button variant="outline-warning" size="lg">
-        Select a Patient from the Master List below
+      <Button variant="outline-warning" size="lg" className="confirmEditButton">
+        Select a Patient from the Master List
       </Button>
     )}
     {this.state.selectedPatient !== null && (
-      <Button variant="outline-primary" value='tags' onClick={this.updatePatientSpecial.bind(this)}>Add Tag</Button>
+      <Button variant="outline-primary" value='tags' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Tag</Button>
     )}
     {this.state.patientUpdateField === 'tags' &&
     this.state.selectedPatient !== null
@@ -4231,7 +4230,7 @@ deletePatientTagItem = (props) => {
           )}
     </Tab>
 
-    <Tab eventKey="MasterList" title="Master List">
+    <Tab eventKey="MasterList" title="MASTER LIST">
     <Container className="containerUserMasterList">
     <Row className="searchListRow">
     <Button variant="primary" size="sm" onClick={this.fetchPatientsAsc}>
@@ -4266,7 +4265,12 @@ deletePatientTagItem = (props) => {
     <Tabs defaultActiveKey="Field" id="uncontrolled-tab-example">
     <Tab eventKey="Search" title="Search:" disabled>
     </Tab>
-    <Tab eventKey="Field" title="Field:">
+    <Tab eventKey="Field" title="Search by Field:">
+    {this.state.searching !== true && (
+      <Button variant="outline-warning" className="confirmEditButton" size="lg">
+        Click the 'Search' Button start
+      </Button>
+    )}
     {this.state.searching === true && (
       <SearchPatientForm
       authUserId={this.context.userId}
@@ -4279,7 +4283,12 @@ deletePatientTagItem = (props) => {
       />
     )}
     </Tab>
-    <Tab eventKey="Id" title="Id:">
+    <Tab eventKey="Id" title="Search by Id:">
+    {this.state.searching !== true && (
+      <Button variant="outline-warning" className="confirmEditButton" size="lg">
+        Click the 'Search' Button start
+      </Button>
+    )}
     {this.state.searching === true && (
       <SearchPatientIdForm
       authUserId={this.context.userId}
@@ -4307,7 +4316,12 @@ deletePatientTagItem = (props) => {
     // )}
     // </Tab>
   }
-    <Tab eventKey="Name" title="Name:">
+    <Tab eventKey="Name" title="Search by Name:">
+    {this.state.searching !== true && (
+      <Button variant="outline-warning" className="confirmEditButton" size="lg">
+        Click the 'Search' Button start
+      </Button>
+    )}
     {this.state.searching === true && (
       <SearchPatientNameForm
       authUserId={this.context.userId}
