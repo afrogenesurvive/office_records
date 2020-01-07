@@ -12,7 +12,7 @@ return (
 <div className="SearchFormContainer">
   <Form onSubmit={props.onConfirm}>
   <Form.Group controlId="formBasicId">
-  <Form.Label>Id</Form.Label>
+  <Form.Label>Patient Id</Form.Label>
   <Form.Control type="text" placeholder="Id"/>
   </Form.Group>
 

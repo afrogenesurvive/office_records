@@ -42,6 +42,7 @@ class AppointmentsPage extends Component {
     appointments: [],
     isLoading: false,
     selectedAppointment: null,
+    selectedPatient: null,
     appointmentUpdateField: null,
     appointmentSearchField: null,
     appointmentSearchQuery: null,
@@ -65,6 +66,11 @@ class AppointmentsPage extends Component {
     if (this.context.user.name === 'admin579'){
       this.setState({canDelete: true})
     }
+    // this.setState({selectedPatient: this.context.selectedPatient});
+    // console.log(`
+    //   context.selectedPatient: ${JSON.stringify(this.context.selectedPatient)},
+    //   state.selectedPatient: ${JSON.stringify(this.state.selectedPatient)},
+    //   `);
   }
 
 
@@ -792,6 +798,7 @@ class AppointmentsPage extends Component {
         if (this.isActive) {
           this.setState({ appointments: appointments, isLoading: false });
         }
+
       })
       .catch(err => {
         console.log(err);
@@ -1058,6 +1065,14 @@ class AppointmentsPage extends Component {
 
         const responseAlert = JSON.stringify(resData.data).slice(2,15);
         this.setState({userAlert: responseAlert});
+
+        if (this.state.selectedPatient === {} || this.context.selectedstate === null) {
+          this.setState({userAlert: "No Patient Selected"})
+        }
+        console.log(`
+          context.selectedPatient: ${JSON.stringify(this.context.selectedPatient)},
+          state.selectedPatient: ${JSON.stringify(this.state.selectedPatient)},
+          `);
       })
       .catch(err => {
         console.log(err);
@@ -1121,11 +1136,9 @@ class AppointmentsPage extends Component {
 
           <Container className="containerCombinedDetail">
             <Tabs defaultActiveKey="appointmentDetail" id="uncontrolled-tab-example">
-            <Tab eventKey="Edit" title="Edit:" disabled>
-            </Tab>
-              <Tab eventKey="appointmentDetail" title="Details">
+              <Tab eventKey="appointmentDetail" title="Selected Appointment Data">
                   {this.state.selectedAppointment === null && (
-                    <Button variant="outline-warning" size="lg">
+                    <Button variant="outline-warning" size="lg" className="confirmEditButton">
                       Select an Appointment from the Master List
                     </Button>
                   )}
@@ -1145,8 +1158,8 @@ class AppointmentsPage extends Component {
                 )}
               </Tab>
 
-              <Tab eventKey="appointmentCreate" title="New">
-              <Button variant="outline-primary" onClick={this.startCreateAppointmentHandler} >Create</Button>
+              <Tab eventKey="appointmentCreate" title="Create New">
+              <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startCreateAppointmentHandler} >Create New</Button>
               {
                 this.state.creating &&
                 this.context.selectedPatient._id !== null
@@ -1163,14 +1176,14 @@ class AppointmentsPage extends Component {
               )}
               </Tab>
 
-              <Tab eventKey="appointmentEditBasic" title="Basic">
+              <Tab eventKey="appointmentEditBasic" title="Edit Basic Data">
               {this.state.selectedAppointment === null && (
-                <Button variant="outline-warning" size="lg">
+                <Button variant="outline-warning" size="lg" className="confirmEditButton">
                   Select an Appointment from the Master List
                 </Button>
               )}
               {this.state.selectedAppointment !== null && (
-                <Button variant="outline-primary" onClick={this.startUpdateAppointmentHandler}>Edit Basic</Button>
+                <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateAppointmentHandler}>Edit Basic Data</Button>
               )}
               {this.state.updating &&
                 this.state.selectedAppointment !== null
@@ -1187,14 +1200,14 @@ class AppointmentsPage extends Component {
               )}
               </Tab>
 
-              <Tab eventKey="appointmentEditField" title="Single Field">
+              <Tab eventKey="appointmentEditField" title="Edit a Single Field">
               {this.state.selectedAppointment === null && (
-                <Button variant="outline-warning" size="lg">
-                  Select a Patient from the Master List below
+                <Button variant="outline-warning" size="lg" className="confirmEditButton">
+                  Select an Appointment from the Master List
                 </Button>
               )}
               {this.state.selectedAppointment !== null && (
-                <Button variant="outline-primary" onClick={this.startUpdateAppointmentHandler}>Edit Field</Button>
+                <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateAppointmentHandler}>Edit a Single Field</Button>
               )}
               {this.state.updating &&
                 this.state.selectedAppointment !== null
@@ -1211,21 +1224,29 @@ class AppointmentsPage extends Component {
               )}
               </Tab>
 
-              <Tab eventKey="appointmentEditPatient" title="Patient">
+              <Tab eventKey="appointmentEditPatient" title="Change Patient">
               {this.state.selectedAppointment === null && (
-                <Button variant="outline-warning" size="lg">
+                <Button variant="outline-warning" size="lg" className="confirmEditButton">
                   Select an Appointment from the Master List
                 </Button>
               )}
               {this.state.selectedAppointment !== null && (
-                <Button variant="outline-primary" value='patient' onClick={this.updateAppointmentSpecial.bind(this)}>Change Patient:</Button>
+                <Button variant="outline-primary" size="lg" className="confirmEditButton" value='patient' onClick={this.updateAppointmentSpecial.bind(this)}>Change Patient:</Button>
               )}
+              {this.state.selecteAppointment !== null &&
+                this.context.selectedPatient === null &&
+                this.state.appointmentUpdateField === "patient" && (
+                  <Button variant="outline-warning" size="lg" className="confirmEditButton">
+                    Select someone from the Patients page
+                  </Button>
+                )}
               {this.state.selectedAppointment !== null &&
-              this.context.selectedPatient !== null && (
+                this.context.selectedPatient !== null &&
+                this.state.appointmentUpdateField === "patient" && (
                 <Row>
                 <Col md={8} className="updateUserColAdd">
-                <p>Add Patient: {this.context.selectedPatient.name}</p>
-                <p> To Appointment: {this.state.selectedAppointment.title} ??</p>
+                <p><span className="bold">Add Patient :</span> {this.context.selectedPatient.name}</p>
+                <p><span className="bold">To Appointment :</span> {this.state.selectedAppointment.title}  <span className="bold">On :</span> {new Date(this.state.selecteAppointment.date.substr(0,10)*1000).toISOString().slice(0,10)} <span className="bold">At :</span> {this.state.selecteAppointment.time} ??</p>
                 <Button variant="success" onClick={this.updateAppointmentPatientHandler}>
                   Yes
                 </Button>
@@ -1234,7 +1255,7 @@ class AppointmentsPage extends Component {
               )}
               </Tab>
 
-              <Tab eventKey="MasterList" title="Master List">
+              <Tab eventKey="MasterList" title="MASTER LIST">
               <Container className="containerUserMasterList">
               <Row className="searchListRow">
               <Button variant="primary" size="sm" onClick={this.fetchAppointmentsAsc}>
@@ -1268,7 +1289,12 @@ class AppointmentsPage extends Component {
               <Tabs defaultActiveKey="Field" id="uncontrolled-tab-example">
               <Tab eventKey="Search" title="Search:" disabled>
               </Tab>
-              <Tab eventKey="Field" title="Field:">
+              <Tab eventKey="Field" title="Search by Field:">
+              {this.state.searching !== true && (
+                <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                  Click the 'Search' Button start
+                </Button>
+              )}
               {this.state.searching === true && (
                 <SearchAppointmentForm
                 authUserId={this.context.userId}
@@ -1281,8 +1307,12 @@ class AppointmentsPage extends Component {
                 />
               )}
               </Tab>
-              <Tab eventKey="Id" title="Id:">
-                Search by ID
+              <Tab eventKey="Id" title="Search by Id:">
+              {this.state.searching !== true && (
+                <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                  Click the 'Search' Button start
+                </Button>
+              )}
                 {this.state.searching === true && (
                   <SearchAppointmentIdForm
                   authUserId={this.context.userId}
@@ -1295,8 +1325,12 @@ class AppointmentsPage extends Component {
                   />
                 )}
               </Tab>
-              <Tab eventKey="Patient" title="Patient:">
-                Search by Patient
+              <Tab eventKey="Patient" title="Search by Patient:">
+              {this.state.searching !== true && (
+                <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                  Click the 'Search' Button start
+                </Button>
+              )}
                 {this.state.searching === true && (
                   <SearchAppointmentPatientForm
                   authUserId={this.context.userId}
@@ -1309,8 +1343,12 @@ class AppointmentsPage extends Component {
                   />
                 )}
               </Tab>
-              <Tab eventKey="Date" title="Date:">
-                Search by Date
+              <Tab eventKey="Date" title="Search by Date:">
+              {this.state.searching !== true && (
+                <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                  Click the 'Search' Button start
+                </Button>
+              )}
                 {this.state.searching === true && (
                   <SearchAppointmentDateForm
                   authUserId={this.context.userId}
@@ -1323,8 +1361,12 @@ class AppointmentsPage extends Component {
                   />
                 )}
               </Tab>
-              <Tab eventKey="Date Range" title="Date Range:">
-                Search by Date Range
+              <Tab eventKey="Date Range" title="Search by Date Range:">
+              {this.state.searching !== true && (
+                <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                  Click the 'Search' Button start
+                </Button>
+              )}
                 {this.state.searching === true && (
                   <SearchAppointmentDateRangeForm
                   authUserId={this.context.userId}

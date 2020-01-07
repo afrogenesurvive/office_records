@@ -19,11 +19,11 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridAllergiesTitle">
-    <Form.Label>AllergiesTitle</Form.Label>
+    <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="AllergiesTitle"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridAllergiesTypeSelect">
-    <Form.Label>AllergiesType Options</Form.Label>
+    <Form.Label>Type Options</Form.Label>
     <Form.Control as="select">
     <option>select</option>
     <option>food</option>
@@ -31,11 +31,11 @@ return (
     </Form.Control>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridAllergiesType">
-    <Form.Label>AllergiesType</Form.Label>
+    <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="AllergiesType"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridAllergiesDescription">
-    <Form.Label>AllergiesDescription</Form.Label>
+    <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="AllergiesDescription"/>
   </Form.Group>
   </Form.Row>
@@ -43,11 +43,11 @@ return (
   <Form.Row>
 
   <Form.Group as={Col} controlId="formGridAllergiesAttachmentFormat">
-    <Form.Label>AllergiesAttachmentFormat</Form.Label>
+    <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="AllergiesAttachmentFormat"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridAllergiesAttachmentPath">
-    <Form.Label>AllergiesAttachmentPath</Form.Label>
+    <Form.Label>Attachment Path</Form.Label>
     <Form.Control type="text" placeholder="AllergiesAttachmentPath"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridAllergiesAttachmentFile">

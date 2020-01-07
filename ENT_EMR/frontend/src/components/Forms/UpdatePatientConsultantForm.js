@@ -19,7 +19,7 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridConsultantDate">
-    <Form.Label>ConsultantDate</Form.Label>
+    <Form.Label>Consultation Date</Form.Label>
     <Form.Control type="date" placeholder="ConsultantDate"/>
   </Form.Group>
   </Form.Row>

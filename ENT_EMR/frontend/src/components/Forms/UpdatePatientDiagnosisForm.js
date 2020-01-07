@@ -19,19 +19,19 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridDiagnosisDate">
-    <Form.Label>DiagnosisDate</Form.Label>
+    <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="DiagnosisDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridDiagnosisTitle">
-    <Form.Label>DiagnosisTitle</Form.Label>
+    <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="DiagnosisTitle"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridDiagnosisType">
-    <Form.Label>DiagnosisType</Form.Label>
+    <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="DiagnosisType"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridDiagnosisDescription">
-    <Form.Label>DiagnosisDescription</Form.Label>
+    <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="DiagnosisDescription"/>
   </Form.Group>
   </Form.Row>
@@ -39,11 +39,11 @@ return (
   <Form.Row>
 
   <Form.Group as={Col} controlId="formGridDiagnosisAttachmentFormat">
-    <Form.Label>DiagnosisAttachmentFormat</Form.Label>
+    <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="DiagnosisAttachmentFormat"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridDiagnosisAttachmentPath">
-    <Form.Label>DiagnosisAttachmentPath</Form.Label>
+    <Form.Label>Attachment Path</Form.Label>
     <Form.Control type="text" placeholder="DiagnosisAttachmentPath"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridDiagnosisAttachmentFile">

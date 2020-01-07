@@ -18,7 +18,7 @@ return (
 <Form.Control type="date" placeholder="Appointment Date Range"/>
 </Form.Group>
 <Form.Group controlId="formBasicEndDate">
-<Form.Label>Appointment EndDate</Form.Label>
+<Form.Label>Appointment End Date</Form.Label>
 <Form.Control type="date" placeholder="Appointment Date Range"/>
 </Form.Group>
 

@@ -19,34 +19,34 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridTreatmentDate">
-    <Form.Label>TreatmentDate</Form.Label>
+    <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="TreatmentDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentTitle">
-    <Form.Label>TreatmentTitle</Form.Label>
+    <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="TreatmentTitle"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentType">
-    <Form.Label>TreatmentType</Form.Label>
+    <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="TreatmentType"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentDescription">
-    <Form.Label>TreatmentDescription</Form.Label>
+    <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="TreatmentDescription"/>
   </Form.Group>
   </Form.Row>
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridTreatmentDose">
-    <Form.Label>TreatmentDose</Form.Label>
+    <Form.Label>Dose</Form.Label>
     <Form.Control type="text" placeholder="TreatmentDose"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentFrequency">
-    <Form.Label>TreatmentFrequency</Form.Label>
+    <Form.Label>Frequency</Form.Label>
     <Form.Control type="text" placeholder="TreatmentFrequency"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentTypeSelect">
-    <Form.Label>TreatmentType Options</Form.Label>
+    <Form.Label>Type Options</Form.Label>
     <Form.Control as="select">
     <option>select</option>
     <option>procedure</option>
@@ -54,7 +54,7 @@ return (
     </Form.Control>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentType">
-    <Form.Label>TreatmentType</Form.Label>
+    <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="TreatmentType"/>
   </Form.Group>
   </Form.Row>
@@ -62,11 +62,11 @@ return (
   <Form.Row>
 
   <Form.Group as={Col} controlId="formGridTreatmentAttachmentFormat">
-    <Form.Label>TreatmentAttachmentFormat</Form.Label>
+    <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="TreatmentAttachmentFormat"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentAttachmentPath">
-    <Form.Label>TreatmentAttachmentPath</Form.Label>
+    <Form.Label>Attachment Path</Form.Label>
     <Form.Control type="text" placeholder="TreatmentAttachmentPath"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentAttachmentFile">

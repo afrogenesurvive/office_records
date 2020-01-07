@@ -7,38 +7,50 @@ import './UserItem.css';
 const patientExaminationItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p>
-      Date: {props.date}
+      <h6 className="userItemHeading"> Date:</h6>
+      <p className="userItemText">
+      {props.date}
       </p>
-      <p>
-      General: {props.general}
+      <h6 className="userItemHeading"> General:</h6>
+      <p className="userItemText">
+      {props.general}
       </p>
-      <p>
-      Area: {props.area}
+      <h6 className="userItemHeading"> Area:</h6>
+      <p className="userItemText">
+      {props.area}
       </p>
-      <p>
-        Type: {props.type}
+      <h6 className="userItemHeading"> Type:</h6>
+      <p className="userItemText">
+      {props.type}
       </p>
-      <p>
-        Measure: {props.measure}
+      <h6 className="userItemHeading"> Measure:</h6>
+      <p className="userItemText">
+      {props.measure}
       </p>
-      <p>
-        Value: {props.value}
+      <h6 className="userItemHeading"> Value:</h6>
+      <p className="userItemText">
+      {props.value}
       </p>
-      <p>
-        Description: {props.description}
+      <h6 className="userItemHeading"> Description:</h6>
+      <p className="userItemText">
+      {props.description}
       </p>
-      <p>
-        FollowUp?: {props.followUp}
+      <h6 className="userItemHeading"> Follow Up ?</h6>
+      <p className="userItemText">
+      {props.followUp}
       </p>
-      <p>
-        Attachment : {props.attachment.name}
+
+      <h6 className="userItemHeading"> Attachment:</h6>
+      <p className="userItemText">
+      {props.attachment.name}
       </p>
-      <p>
-        Attachment Format: {props.attachment.format}
+      <h6 className="userItemHeading"> Format:</h6>
+      <p className="userItemText">
+      {props.attachment.format}
       </p>
-      <p>
-        Attachment Path: {props.attachment.path}
+      <h6 className="userItemHeading"> Path:</h6>
+      <p className="userItemText">
+      {props.attachment.path}
       </p>
     </div>
     { props.canDelete === true && (

@@ -19,11 +19,11 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridExaminationDate">
-    <Form.Label>ExaminationDate</Form.Label>
+    <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="ExaminationDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationAreaSelect">
-    <Form.Label>ExaminationArea Options</Form.Label>
+    <Form.Label>Area Options</Form.Label>
     <Form.Control as="select">
     <option>select</option>
     <option>nose</option>
@@ -37,37 +37,37 @@ return (
     </Form.Control>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationArea">
-    <Form.Label>ExaminationArea</Form.Label>
+    <Form.Label>Area</Form.Label>
     <Form.Control type="text" placeholder="ExaminationArea"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationGeneral">
-    <Form.Label>ExaminationGeneral</Form.Label>
+    <Form.Label>General</Form.Label>
     <Form.Control type="text" placeholder="ExaminationGeneral"/>
   </Form.Group>
   </Form.Row>
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridExaminationType">
-    <Form.Label>ExaminationType</Form.Label>
+    <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="ExaminationType"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationMeasure">
-    <Form.Label>ExaminationMeasure</Form.Label>
+    <Form.Label>Measure</Form.Label>
     <Form.Control type="text" placeholder="ExaminationMeasure"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationValue">
-    <Form.Label>ExaminationValue</Form.Label>
+    <Form.Label>Value</Form.Label>
     <Form.Control type="text" placeholder="ExaminationValue"/>
   </Form.Group>
   </Form.Row>
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridExaminationDescription">
-    <Form.Label>ExaminationDescription</Form.Label>
+    <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="ExaminationDescription"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationFollowUp">
-    <Form.Label>ExaminationFollowUp</Form.Label>
+    <Form.Label>FollowUp ?</Form.Label>
     <Form.Control as="select">
       <option>true</option>
       <option>false</option>
@@ -78,11 +78,11 @@ return (
   <Form.Row>
 
   <Form.Group as={Col} controlId="formGridExaminationAttachmentFormat">
-    <Form.Label>ExaminationAttachmentFormat</Form.Label>
+    <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="ExaminationAttachmentFormat"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationAttachmentPath">
-    <Form.Label>ExaminationAttachmentPath</Form.Label>
+    <Form.Label>Attachment Path</Form.Label>
     <Form.Control type="text" placeholder="ExaminationAttachmentPath"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationAttachmentFile">

@@ -46,15 +46,15 @@ return (
   <Form.Control type="date" placeholder="Date" />
 </Form.Group>
 <Form.Group as={Col} controlId="formGridTime">
-  <Form.Label>Time</Form.Label>
+  <Form.Label>Scheduled Time</Form.Label>
     <Form.Control type="time" placeholder="Time" />
 </Form.Group>
 <Form.Group as={Col} controlId="formGridCheckinTime">
-  <Form.Label>CheckinTime</Form.Label>
+  <Form.Label>Check-in Time</Form.Label>
     <Form.Control type="time" placeholder="CheckinTime" />
 </Form.Group>
 <Form.Group as={Col} controlId="formGridSeenTime">
-  <Form.Label>SeenTime</Form.Label>
+  <Form.Label>Seen Time</Form.Label>
     <Form.Control type="time" placeholder="SeenTime" />
 </Form.Group>
 </Form.Row>
@@ -66,7 +66,7 @@ return (
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridInProgress">
-      <Form.Label>InProgress</Form.Label>
+      <Form.Label>In Progress ?</Form.Label>
       <Form.Control as="select">
         <option>false</option>
         <option>true</option>
@@ -74,7 +74,7 @@ return (
     </Form.Group>
 
     <Form.Group as={Col} controlId="formGridAttended">
-          <Form.Label>Attended</Form.Label>
+          <Form.Label>Attended ?</Form.Label>
           <Form.Control as="select">
             <option>false</option>
             <option>true</option>
@@ -82,7 +82,7 @@ return (
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridImportant">
-              <Form.Label>Important</Form.Label>
+              <Form.Label>Important ?</Form.Label>
               <Form.Control as="select">
                 <option>false</option>
                 <option>true</option>

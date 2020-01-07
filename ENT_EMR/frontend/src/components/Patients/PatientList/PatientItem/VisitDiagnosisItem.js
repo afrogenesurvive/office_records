@@ -7,30 +7,34 @@ import './UserItem.css';
 const VisitDiagnosisItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p>
-        Date: {props.date}
-      </p>
-      <p>
-        Type: {props.type}
-      </p>
-      <p>
-        Title: {props.title}
-      </p>
-      <p>
-        Description: {props.description}
-      </p>
-      <p>
-        Attachment:
-      </p>
-      <p>
-        Name: {props.attachmentName}
-      </p>
-      <p>
-        Format: {props.attachmentFormat}
-      </p>
-      <p>
-        Path: {props.attachmentPath}
-      </p>
+    <h6 className="userItemHeading"> Title:</h6>
+    <p className="userItemText">
+    {props.title}
+    </p>
+    <h6 className="userItemHeading"> Date:</h6>
+    <p className="userItemText">
+    {props.date}
+    </p>
+    <h6 className="userItemHeading"> Type:</h6>
+    <p className="userItemText">
+    {props.type}
+    </p>
+    <h6 className="userItemHeading"> Description:</h6>
+    <p className="userItemText">
+    {props.description}
+    </p>
+    <h6 className="userItemHeading"> Name:</h6>
+    <p className="userItemText">
+    {props.attachmentName}
+    </p>
+    <h6 className="userItemHeading"> Format:</h6>
+    <p className="userItemText">
+    {props.attachmentFormat}
+    </p>
+    <h6 className="userItemHeading"> Path:</h6>
+    <p className="userItemText">
+    {props.attachmentPath}
+    </p>
       <Button variant="info" onClick={props.onViewAttachment.bind(this, props.attachment)}>
         View
       </Button>

@@ -19,15 +19,15 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridInvestigationDate">
-    <Form.Label>InvestigationDate</Form.Label>
+    <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="InvestigationDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridInvestigationTitle">
-    <Form.Label>InvestigationTitle</Form.Label>
+    <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="InvestigationTitle"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridInvestigationTypeSelect">
-    <Form.Label>InvestigationType Options</Form.Label>
+    <Form.Label>Type Options</Form.Label>
     <Form.Control as="select">
     <option>select</option>
     <option>procedure</option>
@@ -35,11 +35,11 @@ return (
     </Form.Control>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridInvestigationType">
-    <Form.Label>InvestigationType</Form.Label>
+    <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="InvestigationType"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridInvestigationDescription">
-    <Form.Label>InvestigationDescription</Form.Label>
+    <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="InvestigationDescription"/>
   </Form.Group>
   </Form.Row>
@@ -47,11 +47,11 @@ return (
   <Form.Row>
 
   <Form.Group as={Col} controlId="formGridInvestigationAttachmentFormat">
-    <Form.Label>InvestigationAttachmentFormat</Form.Label>
+    <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="InvestigationAttachmentFormat"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridInvestigationAttachmentPath">
-    <Form.Label>InvestigationAttachmentPath</Form.Label>
+    <Form.Label>Attachment Path</Form.Label>
     <Form.Control type="text" placeholder="InvestigationAttachmentPath"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridInvestigationAttachmentFile">

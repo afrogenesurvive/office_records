@@ -8,7 +8,7 @@ const AlertBox = (props) => {
 
   let alert = "Alerts shown here";
   if (props.alert !== null) {
-    console.log("alert incoming!!");
+    // console.log("alert incoming!!");
     alert = '"'+props.alert+'"';
   }
 

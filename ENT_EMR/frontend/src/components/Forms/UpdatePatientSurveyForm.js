@@ -19,15 +19,15 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridSurveyDate">
-    <Form.Label>SurveyDate</Form.Label>
+    <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="SurveyDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridSurveyTitle">
-    <Form.Label>SurveyTitle</Form.Label>
+    <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="SurveyTitle"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridSurveyDescription">
-    <Form.Label>SurveyDescription</Form.Label>
+    <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="SurveyDescription"/>
   </Form.Group>
   </Form.Row>
@@ -35,11 +35,11 @@ return (
   <Form.Row>
 
   <Form.Group as={Col} controlId="formGridSurveyAttachmentFormat">
-    <Form.Label>SurveyAttachmentFormat</Form.Label>
+    <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="SurveyAttachmentFormat"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridSurveyAttachmentPath">
-    <Form.Label>SurveyAttachmentPath</Form.Label>
+    <Form.Label>Attachment Path</Form.Label>
     <Form.Control type="text" placeholder="SurveyAttachmentPath"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridSurveyAttachmentFile">

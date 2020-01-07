@@ -19,19 +19,19 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridInsuranceCompany">
-    <Form.Label>insuranceCompany</Form.Label>
+    <Form.Label>Company</Form.Label>
     <Form.Control type="text" placeholder="insuranceCompany"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridInsuranceNumber">
-    <Form.Label>insuranceNumber</Form.Label>
+    <Form.Label>Number</Form.Label>
     <Form.Control type="number" placeholder="insuranceNumber"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridInsuranceDescription">
-    <Form.Label>insuranceDescription</Form.Label>
+    <Form.Label>Description</Form.Label>
     <Form.Control type="text" placeholder="insuranceDescription"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridInsuranceExpiry">
-    <Form.Label>insuranceExpiry</Form.Label>
+    <Form.Label>Expiry</Form.Label>
     <Form.Control type="date" placeholder="insuranceExpiry"/>
   </Form.Group>
 
@@ -40,11 +40,11 @@ return (
 <Form.Row>
 
 <Form.Group as={Col} controlId="formGridInsuranceSubscriberCompany">
-  <Form.Label>insuranceSubscriberCompany</Form.Label>
+  <Form.Label>Subscriber Company</Form.Label>
   <Form.Control type="text" placeholder="insuranceSubscriberCompany"/>
 </Form.Group>
 <Form.Group as={Col} controlId="formGridInsuranceSubscriberDescription">
-  <Form.Label>insuranceSubscriberDescription</Form.Label>
+  <Form.Label>Description</Form.Label>
   <Form.Control tas="textarea" rows="3" placeholder="insuranceSubscriberDescription"/>
 </Form.Group>
 

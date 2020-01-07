@@ -27,7 +27,7 @@ return (
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridAttachmentPath">
-    <Form.Label>File path</Form.Label>
+    <Form.Label>Path</Form.Label>
     <Form.Control type="string" placeholder="File path"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridAttachmentFile">
