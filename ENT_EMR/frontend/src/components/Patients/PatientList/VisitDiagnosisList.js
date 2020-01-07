@@ -31,7 +31,7 @@ const visitDiagnosisList = props => {
     );
   });
 
-  return <ul className="user__list1">{diagnosis}</ul>;
+  return <ul className="user__list1_detail">{diagnosis}</ul>;
 };
 }
 export default visitDiagnosisList;

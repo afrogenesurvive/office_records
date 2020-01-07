@@ -35,10 +35,10 @@ const AppointmentDetail = (props) => {
             <span className="bold">Time :</span> {appointment.time}
           </Card.Text>
           <Card.Text>
-            <span className="bold">SeenTime :</span> {appointment.seenTime}
+            <span className="bold">Seen Time :</span> {appointment.seenTime}
           </Card.Text>
           <Card.Text>
-            <span className="bold">CheckinTime :</span> {appointment.checkinTime}
+            <span className="bold">Check-in Time :</span> {appointment.checkinTime}
           </Card.Text>
           <Card.Text>
             <span className="bold">Title :</span> {appointment.title}
@@ -54,10 +54,10 @@ const AppointmentDetail = (props) => {
             <span className="bold">Patient Name :</span> {appointment.patient.name}
           </Card.Text>
           <Card.Text>
-            <span className="bold">Patient Phone :</span> {appointment.patient.phone}
+            <span className="bold">Patient Phone :</span> {appointment.patient.contact.phone}
           </Card.Text>
           <Card.Text>
-            <span className="bold">Patient Email :</span> {appointment.patient.email}
+            <span className="bold">Patient Email :</span> {appointment.patient.contact.email}
           </Card.Text>
           <Card.Text>
             <span className="bold">Description :</span> {appointment.description}

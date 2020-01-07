@@ -24,7 +24,7 @@ const patientHistoryList = props => {
     );
   });
 
-  return <ul className="user__list1">{patientHistory}</ul>;
+  return <ul className="user__list1_detail">{patientHistory}</ul>;
 };
 
 export default patientHistoryList;

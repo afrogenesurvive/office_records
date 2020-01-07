@@ -37,7 +37,7 @@ const visitVitalsList = props => {
   }
 
 
-  return <ul className="user__list1">{vitals}</ul>;
+  return <ul className="user__list1_detail">{vitals}</ul>;
 };
 
 export default visitVitalsList;

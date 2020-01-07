@@ -7,7 +7,7 @@ import './UserList.css';
 
 const searchUserList = props => {
   console.log(" search user list:  ", props.searchUsers);
-  
+
   const searchUsers = props.searchUsers.map(user => {
     return (
       <React.Fragment>
@@ -23,7 +23,7 @@ const searchUserList = props => {
       </React.Fragment>
     );
   });
-  return <ul className="user__list1">{searchUsers}</ul>;
+  return <ul className="user__list1_master">{searchUsers}</ul>;
 };
 
 export default searchUserList;

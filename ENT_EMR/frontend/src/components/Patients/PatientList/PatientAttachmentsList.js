@@ -22,7 +22,7 @@ const patientAttachmentsList = props => {
     );
   });
 
-  return <ul className="user__list1">{patientAttachments}</ul>;
+  return <ul className="user__list1_detail">{patientAttachments}</ul>;
 };
 
 export default patientAttachmentsList;

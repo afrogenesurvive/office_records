@@ -22,7 +22,7 @@ const searchPatientList = props => {
     );
   });
 
-  return <ul className="user__list1">{searchPatients}</ul>;
+  return <ul className="user__list1_master">{searchPatients}</ul>;
 };
 
 export default searchPatientList;

@@ -24,7 +24,7 @@ const appointmentList = props => {
     );
   });
 
-  return <ul className="user__list1">{appointment}</ul>;
+  return <ul className="user__list1_master">{appointment}</ul>;
 };
 
 export default appointmentList;

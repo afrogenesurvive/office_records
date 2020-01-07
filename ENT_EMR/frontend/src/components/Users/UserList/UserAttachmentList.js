@@ -21,7 +21,7 @@ const userAttachmentList = props => {
     );
   });
 
-  return <ul className="user__list1">{userAttachment}</ul>;
+  return <ul className="user__list1_detail">{userAttachment}</ul>;
 };
 
 export default userAttachmentList;

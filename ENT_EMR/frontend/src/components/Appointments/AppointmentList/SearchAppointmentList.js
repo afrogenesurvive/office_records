@@ -21,7 +21,7 @@ const searchAppointmentList = props => {
     );
   });
 
-  return <ul className="user__list1">{searchAppointments}</ul>;
+  return <ul className="user__list1_master">{searchAppointments}</ul>;
 };
 
 export default searchAppointmentList;

@@ -26,7 +26,7 @@ const visitConsultantList = props => {
     );
   });
 
-  return <ul className="user__list1">{consultant}</ul>;
+  return <ul className="user__list1_detail">{consultant}</ul>;
 };
 }
 export default visitConsultantList;
