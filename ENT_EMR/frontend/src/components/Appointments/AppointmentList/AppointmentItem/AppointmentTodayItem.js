@@ -4,7 +4,7 @@ import './UserItem.css';
 
 
 const appointmentTodayItem = props => (
-  <li key={props.userId} className="users__list-item">
+  <li key={props.userId} className="users__list-item_master">
     <div>
       <p>
         Time: {props.time}

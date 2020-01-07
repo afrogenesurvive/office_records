@@ -34,7 +34,7 @@ const visitTreatmentList = props => {
   });
 }
 
-  return <ul className="user__list1">{treatment}</ul>;
+  return <ul className="user__list1_master">{treatment}</ul>;
 };
 
 export default visitTreatmentList;

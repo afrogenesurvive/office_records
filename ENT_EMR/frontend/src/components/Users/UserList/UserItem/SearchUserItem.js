@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import './UserItem.css';
 
 const searchUserItem = props => (
-  <li key={props.userId} className="users__list-item">
+  <li key={props.userId} className="users__list-item_master">
     <div>
       <p className="userItemHeading"> Name:</p>
       <p className="userItemText">

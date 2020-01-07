@@ -1,10 +1,11 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
+
 import './UserItem.css';
 
 const searchPatientItem = props => (
-  <li key={props.patientId} className="users__list-item">
+  <li key={props.patientId} className="users__list-item_detail">
   <div>
     <h5 className="userItemHeading"> Name:</h5>
     <p className="userItemText">

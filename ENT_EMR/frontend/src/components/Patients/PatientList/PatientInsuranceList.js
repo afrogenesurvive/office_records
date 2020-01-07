@@ -23,7 +23,7 @@ const patientInsuranceList = props => {
     );
   });
 
-  return <ul className="user__list1">{patientInsurance}</ul>;
+  return <ul className="user__list1_detail">{patientInsurance}</ul>;
 };
 
 export default patientInsuranceList;

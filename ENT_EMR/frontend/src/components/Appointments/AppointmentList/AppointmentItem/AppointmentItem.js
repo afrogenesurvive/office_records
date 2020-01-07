@@ -6,7 +6,7 @@ import './UserItem.css';
 
 const appointmentItem = props => (
 
-  <li key={props.appointmentId} className="users__list-item">
+  <li key={props.appointmentId} className="users__list-item_master">
     <div>
     <h5 className="userItemHeading">Patient:</h5>
     <p className="userItemText">

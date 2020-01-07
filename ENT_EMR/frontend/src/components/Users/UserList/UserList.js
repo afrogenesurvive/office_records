@@ -4,7 +4,7 @@ import UserItem from './UserItem/UserItem';
 import './UserList.css';
 
 const userList = props => {
-  
+
   const users = props.users.map(user => {
     return (
       <UserItem
@@ -19,7 +19,7 @@ const userList = props => {
     );
   });
 
-  return <ul className="user__list1">{users}</ul>;
+  return <ul className="user__list1_master">{users}</ul>;
 };
 
 export default userList;

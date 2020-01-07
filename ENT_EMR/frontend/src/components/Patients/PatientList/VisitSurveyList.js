@@ -31,7 +31,7 @@ const visitSurveyList = props => {
   });
 }
 
-  return <ul className="user__list1">{survey}</ul>;
+  return <ul className="user__list1_detail">{survey}</ul>;
 };
 
 export default visitSurveyList;

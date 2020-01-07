@@ -10,6 +10,10 @@ import Button from 'react-bootstrap/Button';
 import SidebarPage from './Sidebar';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import TabContainer from 'react-bootstrap/TabContainer';
+import TabContent from 'react-bootstrap/TabContent';
+import TabPane from 'react-bootstrap/TabPane';
+import Nav from 'react-bootstrap/Nav';
 
 import AlertBox from '../components/AlertBox';
 import AttachmentViewer from '../components/AttachmentViewer';
@@ -867,112 +871,144 @@ class ThisUserPage extends Component {
 
       <Col md={9} className="MasterCol2">
         <Container className="containerProfile">
-        <Tabs defaultActiveKey="Detail" id="uncontrolled-tab-example2">
 
-          <Tab eventKey="Detail" title="Your Staff Data">
-          {this.state.user !== null && (
-              <ThisUserProfile
-                user={this.state.user}
-                authUserId={this.context.userId}
-                canDelete={this.state.canDelete}
-                attendanceDelete={this.deleteUserAttendanceItem}
-                leaveDelete={this.deleteUserLeaveItem}
-                attachmentDelete={this.deleteUserAttachmentItem}
-                onViewAttachment={this.onViewAttachment}
-                onCreatePdf={this.createPdf}
-              />
-            )}
-          </Tab>
+        <Tab.Container id="left-tabs-example" defaultActiveKey="Detail">
+          <Row>
+            <Col sm={2}>
+              <Nav variant="pills" className="flex-column">
+                <Nav.Item>
+                  <Nav.Link eventKey="Detail">You</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="disabled" disabled>Edit:</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="Demographics">Demographics</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="userEditField">Single Field</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="disabled" disabled>Add:</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="Attandance">Attendance</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="Attachment">Attachment</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="Leave">Leave</Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Col>
+            <Col sm={10}>
+              <Tab.Content>
+                <Tab.Pane eventKey="Detail">
+                  {this.state.user !== null && (
+                      <ThisUserProfile
+                        user={this.state.user}
+                        authUserId={this.context.userId}
+                        canDelete={this.state.canDelete}
+                        attendanceDelete={this.deleteUserAttendanceItem}
+                        leaveDelete={this.deleteUserLeaveItem}
+                        attachmentDelete={this.deleteUserAttachmentItem}
+                        onViewAttachment={this.onViewAttachment}
+                        onCreatePdf={this.createPdf}
+                      />
+                    )}
+                </Tab.Pane>
 
-          {
-          //   <Tab eventKey="" title="Edit Your Data:" disabled>
-          // </Tab>
-        }
+                <Tab.Pane eventKey="Demographics">
+                  <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Demographics</Button>
+                  {this.state.updating === true && (
+                    <UpdateUserForm
+                    canCancelProfile
+                      canConfirm
+                      onCancel={this.modalCancelHandler}
+                      onConfirm={this.modalConfirmUpdateHandler}
+                      confirmText="Confirm"
+                      user={this.state.user}
+                      authUserId={this.context.userId}
+                    />
+                  )}
+                </Tab.Pane>
 
-          <Tab eventKey="Demographics" title="Edit Demographics">
-          <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Demographics</Button>
-          {this.state.updating === true && (
-            <UpdateUserForm
-            canCancelProfile
-              canConfirm
-              onCancel={this.modalCancelHandler}
-              onConfirm={this.modalConfirmUpdateHandler}
-              confirmText="Confirm"
-              user={this.state.user}
-              authUserId={this.context.userId}
-            />
-          )}
-          </Tab>
+                <Tab.Pane eventKey="userEditField">
+                  {this.state.selectedUser === null && (
+                    <Button variant="outline-warning" size="lg" className="confirmEditButton">
+                      Select a Staff member from the Master List
+                    </Button>
+                  )}
+                  {this.state.selectedUser !== null && (
+                    <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit a Single Field</Button>
+                  )}
+                  {this.state.updating &&
+                    this.state.selectedUser !== null
+                    && (
+                      <UpdateUserFieldForm
+                        authUserId={this.context.userId}
+                        canCancel
+                        canConfirm
+                        onCancel={this.modalCancelHandler}
+                        onConfirm={this.modalConfirmUpdateFieldHandler}
+                        confirmText="Confirm"
+                        user={this.state.selectedUser}
+                      />
+                  )}
+                </Tab.Pane>
 
-          <Tab eventKey="userEditField" title="Edit Single Field">
-          {this.state.selectedUser === null && (
-            <Button variant="outline-warning" size="lg" className="confirmEditButton">
-              Select a Staff member from the Master List below
-            </Button>
-          )}
-          {this.state.selectedUser !== null && (
-            <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit a Single Field</Button>
-          )}
-          {this.state.updating &&
-            this.state.selectedUser !== null
-            && (
-              <UpdateUserFieldForm
-                authUserId={this.context.userId}
-                canCancel
-                canConfirm
-                onCancel={this.modalCancelHandler}
-                onConfirm={this.modalConfirmUpdateFieldHandler}
-                confirmText="Confirm"
-                user={this.state.selectedUser}
-              />
-          )}
-          </Tab>
+                <Tab.Pane eventKey="Attandance">
+                  <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attendance' onClick={this.updateUserSpecialProfile.bind(this)}>Add Attendance</Button>
+                  {this.state.userUpdateField === 'attendance' && (
+                    <UpdateUserAttendanceForm
+                    authUserId={this.context.userId}
+                    canCancelProfile
+                      canConfirm
+                      onCancel={this.modalCancelHandler}
+                      onConfirm={this.updateUserAttendanceHandler}
+                      confirmText="Confirm"
+                      user={this.state.selectedUser}
+                    />
+                  )}
+                </Tab.Pane>
 
-          <Tab eventKey="Atttendance" title="Add Atttendance">
-            <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attendance' onClick={this.updateUserSpecialProfile.bind(this)}>Add Attendance</Button>
-            {this.state.userUpdateField === 'attendance' && (
-              <UpdateUserAttendanceForm
-              authUserId={this.context.userId}
-              canCancelProfile
-                canConfirm
-                onCancel={this.modalCancelHandler}
-                onConfirm={this.updateUserAttendanceHandler}
-                confirmText="Confirm"
-                user={this.state.selectedUser}
-              />
-            )}
-          </Tab>
+                <Tab.Pane eventKey="Attachment">
+                  <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attachments' onClick={this.updateUserSpecialProfile.bind(this)}>Add Attachment</Button>
+                  {this.state.userUpdateField === 'attachments' && (
+                    <UpdateUserAttachmentForm
+                    authUserId={this.context.userId}
+                    canCancelProfile
+                      canConfirm
+                      onCancel={this.modalCancelHandler}
+                      onConfirm={this.updateUserAttachmentHandler}
+                      confirmText="Confirm"
+                      user={this.state.selectedUser}
+                    />
+                  )}
+                </Tab.Pane>
 
-          <Tab eventKey="Leave" title="Add Leave">
-            <Button variant="outline-primary" size="lg" className="confirmEditButton" value='leave' onClick={this.updateUserSpecialProfile.bind(this)}>Add Leave</Button>
-            {this.state.userUpdateField === 'leave' && (
-              <UpdateUserLeaveForm
-              authUserId={this.context.userId}
-              canCancelProfile
-                canConfirm
-                onCancel={this.modalCancelHandler}
-                onConfirm={this.updateUserLeaveHandler}
-                confirmText="Confirm"
-                user={this.state.selectedUser}
-              />
-            )}
-          </Tab>
+                <Tab.Pane eventKey="Leave">
+                  <Button variant="outline-primary" size="lg" className="confirmEditButton" value='leave' onClick={this.updateUserSpecialProfile.bind(this)}>Add Leave</Button>
+                  {this.state.userUpdateField === 'leave' && (
+                    <UpdateUserLeaveForm
+                    authUserId={this.context.userId}
+                    canCancelProfile
+                      canConfirm
+                      onCancel={this.modalCancelHandler}
+                      onConfirm={this.updateUserLeaveHandler}
+                      confirmText="Confirm"
+                      user={this.state.selectedUser}
+                    />
+                  )}
+                </Tab.Pane>
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
 
-          <Tab eventKey="Attachment" title="Add Attachment">
-          <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attachments' onClick={this.updateUserSpecialProfile.bind(this)}>Add Attachment</Button>
-          {this.state.userUpdateField === 'attachments' && (
-            <UpdateUserAttachmentForm
-            authUserId={this.context.userId}
-            canCancelProfile
-              canConfirm
-              onCancel={this.modalCancelHandler}
-              onConfirm={this.updateUserAttachmentHandler}
-              confirmText="Confirm"
-              user={this.state.selectedUser}
-            />
-          )}
-          </Tab>
-        </Tabs>
+
+
         </Container>
       </Col>
       </Row>

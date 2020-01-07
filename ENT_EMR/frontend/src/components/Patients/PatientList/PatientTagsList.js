@@ -18,7 +18,7 @@ const patientTagsList = props => {
     );
   });
 
-  return <ul className="user__list1">{patientTags}</ul>;
+  return <ul className="user__list1_master">{patientTags}</ul>;
 };
 
 export default patientTagsList;

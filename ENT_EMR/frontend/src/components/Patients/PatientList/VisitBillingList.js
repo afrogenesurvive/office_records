@@ -34,7 +34,7 @@ const visitBillingList = props => {
     );
   });
 
-  return <ul className="user__list1">{billing}</ul>;
+  return <ul className="user__list1_detail">{billing}</ul>;
 };
 }
 export default visitBillingList;

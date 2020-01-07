@@ -30,7 +30,7 @@ const visitHistoryList = props => {
     );
   });
 
-  return <ul className="user__list1">{history}</ul>;
+  return <ul className="user__list1_detail">{history}</ul>;
 };
 }
 export default visitHistoryList;

@@ -32,7 +32,7 @@ const visitInvestigationList = props => {
   });
 }
 
-  return <ul className="user__list1">{investigation}</ul>;
+  return <ul className="user__list1_detail">{investigation}</ul>;
 };
 
 export default visitInvestigationList;

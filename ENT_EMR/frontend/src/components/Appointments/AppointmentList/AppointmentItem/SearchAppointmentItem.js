@@ -5,7 +5,7 @@ import React from 'react';
 import './UserItem.css';
 
 const searchAppointmentItem = props => (
-  <li key={props.appointmentId} className="users__list-item">
+  <li key={props.appointmentId} className="users__list-item_master">
     <div>
       <h1> Title: {props.title}</h1>
       <p>

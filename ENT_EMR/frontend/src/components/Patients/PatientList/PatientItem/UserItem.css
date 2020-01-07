@@ -1,4 +1,4 @@
-.users__list-item {
+.users__list-item_detail {
   margin: 1rem 0;
   padding: .5rem;
   /* border: 1px solid #5101d1; */
@@ -10,9 +10,21 @@
   /* width: 30vw; */
 }
 
+.users__list-item_master {
+  margin: 1rem 0;
+  padding: .5rem;
+  border: 1px solid #5101d1;
+  /* box-shadow: 5px 5px 3px 2px #888888; */
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 30vw; */
+}
+
 .listButton {
-  float: left;
-  margin: .5rem 2rem;
+  float: right;
+  margin: .5rem 1rem
 }
 
 .users__list-item h1 {

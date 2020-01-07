@@ -1,58 +1,90 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 import './UserItem.css';
 
 
 const VisitBillingItem = props => (
-  <li key={props.userId} className="users__list-item">
+  <li key={props.userId} className="users__list-item_detail">
     <div>
-      <h6 className="userItemHeading"> Title:</h6>
-      <p className="userItemText">
-      {props.title}
-      </p>
-      <h6 className="userItemHeading"> Type:</h6>
-      <p className="userItemText">
-      {props.type}
-      </p>
-      <h6 className="userItemHeading"> Date:</h6>
-      <p className="userItemText">
-      {props.date}
-      </p>
-      <h6 className="userItemHeading"> Description:</h6>
-      <p className="userItemText">
-      {props.description}
-      </p>
-      <h6 className="userItemHeading"> Amount:</h6>
-      <p className="userItemText">
-      {props.amount}
-      </p>
-      <h6 className="userItemHeading"> Paid ?</h6>
-      <p className="userItemText">
-      {props.paid}
-      </p>
-      <h6 className="userItemHeading"> Notes:</h6>
-      <p className="userItemText">
-      {props.notes}
-      </p>
-      <p>
-        Attachment:
-      </p>
-      <h6 className="userItemHeading"> Name:</h6>
-      <p className="userItemText">
-      {props.attachmentName}
-      </p>
-      <h6 className="userItemHeading"> Format:</h6>
-      <p className="userItemText">
-      {props.attachmentFormat}
-      </p>
-      <h6 className="userItemHeading"> Path:</h6>
-      <p className="userItemText">
-      {props.attachmentPath}
-      </p>
-      <Button variant="info" onClick={props.onViewAttachment.bind(this, props.attachment)}>
-        View
-      </Button>
+    <Card className="card">
+        <Card.Body>
+          <Card.Title>
+            Billing
+          </Card.Title>
+
+          <Card.Text>
+          <ul className="cardUl">
+            <li className="cardLi">
+            <h6 className="userItemHeading"> Title:</h6>
+            <p className="userItemText">
+            {props.title}
+            </p>
+            </li>
+            <li className="cardLi">
+            <h6 className="userItemHeading"> Type:</h6>
+            <p className="userItemText">
+            {props.type}
+            </p>
+            </li>
+            <li className="cardLi">
+            <h6 className="userItemHeading"> Date:</h6>
+            <p className="userItemText">
+            {props.date}
+            </p>
+            </li>
+            <li className="cardLi">
+            <h6 className="userItemHeading"> Description:</h6>
+            <p className="userItemText">
+            {props.description}
+            </p>
+            </li>
+            <li className="cardLi">
+            <h6 className="userItemHeading"> Amount:</h6>
+            <p className="userItemText">
+            {props.amount}
+            </p>
+            </li>
+            <li className="cardLi">
+            <h6 className="userItemHeading"> Paid ?</h6>
+            <p className="userItemText">
+            {props.paid}
+            </p>
+            </li>
+            <li className="cardLi">
+            <h6 className="userItemHeading"> Notes:</h6>
+            <p className="userItemText">
+            {props.notes}
+            </p>
+            </li>
+            <li className="cardLi">
+            <h6 className="userItemHeading"> Attachment Name:</h6>
+            <p className="userItemText">
+            {props.attachmentName}
+            </p>
+            </li>
+            <li className="cardLi">
+            <h6 className="userItemHeading"> Format:</h6>
+            <p className="userItemText">
+            {props.attachmentFormat}
+            </p>
+            </li>
+            <li className="cardLi">
+            <h6 className="userItemHeading"> Path:</h6>
+            <p className="userItemText">
+            {props.attachmentPath}
+            </p>
+            </li>
+          </ul>
+          </Card.Text>
+          <Card.Link href="">
+          <Button variant="info" onClick={props.onViewAttachment.bind(this, props.attachment)}>
+            View
+          </Button>
+          </Card.Link>
+        </Card.Body>
+      </Card>
     </div>
   </li>
 );

@@ -4,7 +4,7 @@ import './UserItem.css';
 
 
 const appointmentNoteItem = props => (
-  <li key={props.userId} className="users__list-item">
+  <li key={props.userId} className="users__list-item_master">
     <div>
       <p>
         Note: {props.note}
