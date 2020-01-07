@@ -7,26 +7,32 @@ import './UserItem.css';
 const VisitSurveyItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p>
-        Date: {props.date}
+      <h6 className="userItemHeading"> Date:</h6>
+      <p className="userItemText">
+      {props.date}
       </p>
-      <p>
-        Title: {props.title}
+      <h6 className="userItemHeading"> Title:</h6>
+      <p className="userItemText">
+      {props.title}
       </p>
-      <p>
-        Description: {props.description}
+      <h6 className="userItemHeading"> Description:</h6>
+      <p className="userItemText">
+      {props.description}
       </p>
       <p>
         Attachment:
       </p>
-      <p>
-        Name: {props.attachmentName}
+      <h6 className="userItemHeading"> Name:</h6>
+      <p className="userItemText">
+      {props.attachmentName}
       </p>
-      <p>
-        Format: {props.attachmentFormat}
+      <h6 className="userItemHeading"> Format:</h6>
+      <p className="userItemText">
+      {props.attachmentFormat}
       </p>
-      <p>
-        Path: {props.attachmentPath}
+      <h6 className="userItemHeading"> Path:</h6>
+      <p className="userItemText">
+      {props.attachmentPath}
       </p>
     </div>
     <Button variant="info" onClick={props.onViewAttachment.bind(this, props.attachment)}>

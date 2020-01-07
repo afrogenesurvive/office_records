@@ -21,14 +21,14 @@ return (
   <Form.Row>
 
   <Form.Group as={Col} controlId="formGridPatientAttachmentFormat">
-    <Form.Label>PatientAttachmentFormat</Form.Label>
+    <Form.Label>Format</Form.Label>
     <Form.Control type="text" placeholder="PatientAttachmentFormat"/>
   </Form.Group>
   </Form.Row>
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridPatientAttachmentPath">
-    <Form.Label>PatientAttachmentPath</Form.Label>
+    <Form.Label>Path</Form.Label>
     <Form.Control type="text" placeholder="PatientAttachmentPath"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridAttachmentFile">

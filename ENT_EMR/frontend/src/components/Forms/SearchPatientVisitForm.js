@@ -13,7 +13,7 @@ return (
   <Form onSubmit={props.onGetVisit}>
 
   <Form.Group controlId="formBasicVisitDate">
-  <Form.Label>VisitDate</Form.Label>
+  <Form.Label>Visit Date</Form.Label>
   <Form.Control type="date" placeholder="VisitDate"/>
   </Form.Group>
 

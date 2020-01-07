@@ -7,15 +7,18 @@ import './UserItem.css';
 const patientAttachmentItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p>
-        Name: {props.name}
-      </p>
-      <p>
-        Format: {props.format}
-      </p>
-      <p>
-        Path: {props.path}
-      </p>
+    <h6 className="userItemHeading"> Name:</h6>
+    <p className="userItemText">
+    {props.name}
+    </p>
+    <h6 className="userItemHeading"> Format:</h6>
+    <p className="userItemText">
+    {props.format}
+    </p>
+    <h6 className="userItemHeading"> Path:</h6>
+    <p className="userItemText">
+    {props.path}
+    </p>
     </div>
     { props.canDelete === true && (
       <Button variant="danger" onClick={props.onDelete.bind(this, props.attachment)}>

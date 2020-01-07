@@ -7,7 +7,13 @@
     list-style: none;
     padding: 0;
     overflow: scroll;
+    /* columns: 2; */
+    /* break-inside: avoid; */
   }
+
+.user__list1:first-child {
+    margin-top: 0;
+}
 
 .userAttendanceList {
   width: 10%;

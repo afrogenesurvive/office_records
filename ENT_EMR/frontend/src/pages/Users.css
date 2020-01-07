@@ -108,3 +108,10 @@
 .confirmEditButton {
   margin: 3rem 15rem;
 }
+
+.bold {
+  font-weight: bold;
+}
+.ul {
+  text-decoration: underline;
+}

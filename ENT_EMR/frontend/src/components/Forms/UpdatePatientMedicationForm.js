@@ -19,15 +19,15 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridMedicationTitle">
-    <Form.Label>MedicationTitle</Form.Label>
+    <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="MedicationTitle"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridMedicationType">
-    <Form.Label>MedicationType</Form.Label>
+    <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="MedicationType"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridMedicationDescription">
-    <Form.Label>MedicationDescription</Form.Label>
+    <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="MedicationDescription"/>
   </Form.Group>
   </Form.Row>
@@ -35,11 +35,11 @@ return (
   <Form.Row>
 
   <Form.Group as={Col} controlId="formGridMedicationAttachmentFormat">
-    <Form.Label>MedicationAttachmentFormat</Form.Label>
+    <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="MedicationAttachmentFormat"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridMedicationAttachmentPath">
-    <Form.Label>MedicationAttachmentPath</Form.Label>
+    <Form.Label>Attachment Path</Form.Label>
     <Form.Control type="text" placeholder="MedicationAttachmentPath"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridMedicationAttachmentFile">

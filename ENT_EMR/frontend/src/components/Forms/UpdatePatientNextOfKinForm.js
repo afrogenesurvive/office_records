@@ -19,15 +19,15 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridNextOfKinName">
-    <Form.Label>NextOfKinName</Form.Label>
+    <Form.Label>Name</Form.Label>
     <Form.Control type="text" placeholder="NextOfKinName"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridNextOfKinPhone">
-    <Form.Label>NextOfKinPhone</Form.Label>
+    <Form.Label>Phone</Form.Label>
     <Form.Control type="number" placeholder="NextOfKinPhone"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridNextOfKinEmail">
-    <Form.Label>NextOfKinEmail</Form.Label>
+    <Form.Label>Email</Form.Label>
     <Form.Control type="email" placeholder="NextOfKinEmail"/>
   </Form.Group>
 

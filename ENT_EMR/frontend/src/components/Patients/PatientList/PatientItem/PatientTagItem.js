@@ -7,9 +7,10 @@ import './UserItem.css';
 const patientTagItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p>
-      Tag: {props.tag}
-      </p>
+    <h6 className="userItemHeading"> Tag:</h6>
+    <p className="userItemText">
+    {props.tag}
+    </p>
     </div>
     { props.canDelete === true && (
       <Button variant="danger" onClick={props.onDelete.bind(this, props.tag)}>

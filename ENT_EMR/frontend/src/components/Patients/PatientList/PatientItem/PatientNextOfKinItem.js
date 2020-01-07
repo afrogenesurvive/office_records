@@ -7,15 +7,18 @@ import './UserItem.css';
 const patientNextOfKinItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p>
-      Name: {props.name}
-      </p>
-      <p>
-        Email: {props.email}
-      </p>
-      <p>
-        Phone: {props.phone}
-      </p>
+    <h6 className="userItemHeading"> Name:</h6>
+    <p className="userItemText">
+    {props.name}
+    </p>
+    <h6 className="userItemHeading"> Email:</h6>
+    <p className="userItemText">
+    {props.email}
+    </p>
+    <h6 className="userItemHeading"> Phone:</h6>
+    <p className="userItemText">
+    {props.phone}
+    </p>
     </div>
     { props.canDelete === true && (
       <Button variant="danger" onClick={props.onDelete.bind(this, props.nextOfKin)}>

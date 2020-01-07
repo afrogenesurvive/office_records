@@ -81,28 +81,28 @@ return (
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridAddressNumber">
-  <Form.Label>addressNumber</Form.Label>
+  <Form.Label>Street No.</Form.Label>
   <Form.Control type="number" placeholder="addressNumber"/>
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridAddressStreet">
-  <Form.Label>addressStreet</Form.Label>
+  <Form.Label>Street Name</Form.Label>
   <Form.Control type="text" placeholder="addressStreet"/>
 </Form.Group>
 
 <Form.Group as={Col} controlId="formGridAddressTown">
-  <Form.Label>addressTown</Form.Label>
+  <Form.Label>Town</Form.Label>
   <Form.Control type="text" placeholder="addressTown"/>
 </Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridAddressParish">
-  <Form.Label>addressParish</Form.Label>
+  <Form.Label>Parish</Form.Label>
   <Form.Control type="text" placeholder="addressParish"/>
 </Form.Group>
 <Form.Group as={Col} controlId="formGridAddressPostOffice">
-  <Form.Label>addressPostOffice</Form.Label>
+  <Form.Label>Post Office</Form.Label>
   <Form.Control type="text" placeholder="addressPostOffice"/>
 </Form.Group>
 </Form.Row>

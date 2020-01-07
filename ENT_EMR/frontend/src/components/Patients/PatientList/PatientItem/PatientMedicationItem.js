@@ -6,17 +6,29 @@ import './UserItem.css';
 const patientMedicationItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p>
-        Title: {props.title}
+      <h6 className="userItemHeading"> Title:</h6>
+      <p className="userItemText">
+      {props.title}
       </p>
-      <p>
-        Type: {props.type}
+      <h6 className="userItemHeading"> Type:</h6>
+      <p className="userItemText">
+      {props.type}
       </p>
-      <p>
-        Description: {props.description}
+      <h6 className="userItemHeading"> Description:</h6>
+      <p className="userItemText">
+      {props.description}
       </p>
-      <p>
-        Attachment: {props.attachment.name}
+      <h6 className="userItemHeading"> Attachment:</h6>
+      <p className="userItemText">
+      {props.attachment.name}
+      </p>
+      <h6 className="userItemHeading"> Format:</h6>
+      <p className="userItemText">
+      {props.attachment.format}
+      </p>
+      <h6 className="userItemHeading"> Path:</h6>
+      <p className="userItemText">
+      {props.attachment.path}
       </p>
     </div>
     { props.canDelete === true && (

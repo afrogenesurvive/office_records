@@ -1,13 +1,13 @@
-
-
 .users__list-item {
   margin: 1rem 0;
   padding: .5rem;
-  border: 1px solid #5101d1;
+  /* border: 1px solid #5101d1; */
+  box-shadow: 5px 5px 3px 2px #888888;
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* width: 30vw; */
 }
 
 .listButton {
@@ -37,4 +37,17 @@
 .userItemText, .itemText{
   display: inline-block;
   margin: 0 1rem;
+}
+
+.card {
+  /* width: 20rem; */
+}
+
+.cardUl {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+.cardLi {
+  padding: 0;
 }

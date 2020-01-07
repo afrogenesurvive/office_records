@@ -19,19 +19,19 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridHistoryType">
-    <Form.Label>HistoryType</Form.Label>
+    <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="HistoryType"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridHistoryDate">
-    <Form.Label>HistoryDate</Form.Label>
+    <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="HistoryDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridHistoryTitle">
-    <Form.Label>HistoryTitle</Form.Label>
+    <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="HistoryTitle"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridHistoryDescription">
-    <Form.Label>HistoryDescription</Form.Label>
+    <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="HistoryDescription"/>
   </Form.Group>
   </Form.Row>
@@ -39,11 +39,11 @@ return (
   <Form.Row>
 
   <Form.Group as={Col} controlId="formGridHistoryAttachmentFormat">
-    <Form.Label>HistoryAttachmentFormat</Form.Label>
+    <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="HistoryAttachmentFormat"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridHistoryAttachmentPath">
-    <Form.Label>HistoryAttachmentPath</Form.Label>
+    <Form.Label>Attachment Path</Form.Label>
     <Form.Control type="text" placeholder="HistoryAttachmentPath"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridHistoryAttachmentFile">

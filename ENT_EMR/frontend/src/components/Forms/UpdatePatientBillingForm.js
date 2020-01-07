@@ -19,37 +19,37 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridBillingDate">
-    <Form.Label>BillingDate</Form.Label>
+    <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="BillingDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridBillingTitle">
-    <Form.Label>BillingTitle</Form.Label>
+    <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="BillingTitle"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridBillingType">
-    <Form.Label>BillingType</Form.Label>
+    <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="BillingType"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridBillingDescription">
-    <Form.Label>BillingDescription</Form.Label>
+    <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="BillingDescription"/>
   </Form.Group>
   </Form.Row>
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridBillingAmount">
-    <Form.Label>BillingAmount</Form.Label>
+    <Form.Label>Amount</Form.Label>
     <Form.Control type="text" placeholder="BillingAmount"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridBillingPaid">
-        <Form.Label>BillingPaid</Form.Label>
+        <Form.Label>Paid ?</Form.Label>
         <Form.Control as="select">
           <option>true</option>
           <option>false</option>
         </Form.Control>
       </Form.Group>
       <Form.Group as={Col} controlId="formGridBillingNotes">
-        <Form.Label>BillingNotes</Form.Label>
+        <Form.Label>Notes</Form.Label>
         <Form.Control as="textarea" rows="3" placeholder="BillingNotes"/>
       </Form.Group>
 
@@ -58,11 +58,11 @@ return (
   <Form.Row>
 
   <Form.Group as={Col} controlId="formGridBillingAttachmentFormat">
-    <Form.Label>BillingAttachmentFormat</Form.Label>
+    <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="BillingAttachmentFormat"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridBillingAttachmentPath">
-    <Form.Label>BillingAttachmentPath</Form.Label>
+    <Form.Label>Attachment Path</Form.Label>
     <Form.Control type="text" placeholder="BillingAttachmentPath"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridBillingAttachmentFile">

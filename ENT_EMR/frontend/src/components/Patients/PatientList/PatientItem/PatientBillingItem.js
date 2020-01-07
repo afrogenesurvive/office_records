@@ -7,36 +7,46 @@ import './UserItem.css';
 const patientBillingItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p>
-        Title: {props.title}
-      </p>
-      <p>
-        Type: {props.type}
-      </p>
-      <p>
-        Date: {props.date}
-      </p>
-      <p>
-        Description: {props.description}
-      </p>
-      <p>
-        Amount: {props.amount}
-      </p>
-      <p>
-        Paid: {props.paid}
-      </p>
-      <p>
-        Notes: {props.notes}
-      </p>
-      <p>
-        Attachment: {props.attachment.name}
-      </p>
-      <p>
-        Attachment Format: {props.attachment.format}
-      </p>
-      <p>
-        Attachment Path: {props.attachment.path}
-      </p>
+    <h6 className="userItemHeading"> Title:</h6>
+    <p className="userItemText">
+    {props.title}
+    </p>
+    <h6 className="userItemHeading"> Type:</h6>
+    <p className="userItemText">
+    {props.type}
+    </p>
+    <h6 className="userItemHeading"> Date:</h6>
+    <p className="userItemText">
+    {props.date}
+    </p>
+    <h6 className="userItemHeading"> Description:</h6>
+    <p className="userItemText">
+    {props.description}
+    </p>
+    <h6 className="userItemHeading"> Amount:</h6>
+    <p className="userItemText">
+    {props.amount}
+    </p>
+    <h6 className="userItemHeading"> Paid ?</h6>
+    <p className="userItemText">
+    {props.paid}
+    </p>
+    <h6 className="userItemHeading"> Notes:</h6>
+    <p className="userItemText">
+    {props.notes}
+    </p>
+    <h6 className="userItemHeading"> Attachment:</h6>
+    <p className="userItemText">
+    {props.attachment.name}
+    </p>
+    <h6 className="userItemHeading"> Format:</h6>
+    <p className="userItemText">
+    {props.attachment.format}
+    </p>
+    <h6 className="userItemHeading"> Path:</h6>
+    <p className="userItemText">
+    {props.attachment.path}
+    </p>
     </div>
     { props.canDelete === true && (
       <Button variant="danger" onClick={props.onDelete.bind(this, props.billing)}>

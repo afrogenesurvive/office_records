@@ -1,23 +1,50 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card'
 import './UserItem.css';
 
 const userAttendanceItem = props => (
   <li key={props.userId} className="users__list-item">
     <div>
-      <p> Date: {props.date}</p>
-      <p>
-        Status: {props.status}
-      </p>
-      <p>
-        Description: {props.description}
-      </p>
+
+    <Card className="card">
+      <Card.Body>
+        <Card.Title>
+          Attendance
+        </Card.Title>
+
+        <Card.Text>
+        <ul className="cardUl">
+          <li className="cardLi">
+          <h6 className="userItemHeading"> Date:</h6>
+          <p className="userItemText">
+          {props.date}
+          </p>
+          </li>
+          <li>
+          <h6 className="userItemHeading"> Status:</h6>
+          <p className="userItemText">
+          {props.status}
+          </p>
+          </li>
+          <li>
+          <h6 className="userItemHeading"> Description:</h6>
+          <p className="userItemText">
+          {props.description}
+          </p>
+          </li>
+        </ul>
+        </Card.Text>
+        <Card.Link href="">
+        { props.canDelete === true && (
+          <Button variant="danger" onClick={props.onDelete.bind(this, props.attendance)}>
+            Delete
+          </Button>
+        )}
+        </Card.Link>
+      </Card.Body>
+    </Card>
     </div>
-    { props.canDelete === true && (
-      <Button variant="danger" onClick={props.onDelete.bind(this, props.attendance)}>
-        Delete
-      </Button>
-    )}
   </li>
 );
 

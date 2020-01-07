@@ -19,61 +19,61 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridVitalsDate">
-    <Form.Label>VitalsDate</Form.Label>
+    <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="VitalsDate"/>
   </Form.Group>
 
   <Form.Group as={Col} controlId="formGridVitalsPr">
-    <Form.Label>VitalsPr</Form.Label>
+    <Form.Label>Pulse rate (unit)</Form.Label>
     <Form.Control type="number" placeholder="VitalsPr"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridVitalsBp1">
-    <Form.Label>VitalsBp1</Form.Label>
+    <Form.Label>Blood pressure 1 </Form.Label>
     <Form.Control type="number" placeholder="VitalsBp1"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridVitalsBp2">
-    <Form.Label>VitalsBp2</Form.Label>
+    <Form.Label>Blood pressure 2</Form.Label>
     <Form.Control type="number" placeholder="VitalsBp2"/>
   </Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridVitalsRr">
-  <Form.Label>VitalsRr</Form.Label>
+  <Form.Label>Respiratory rate (unit)</Form.Label>
   <Form.Control type="number" placeholder="VitalsRr"/>
 </Form.Group>
 <Form.Group as={Col} controlId="formGridVitalsTemp">
-  <Form.Label>VitalsTemp</Form.Label>
+  <Form.Label>Temperature (unit) </Form.Label>
   <Form.Control type="number" placeholder="VitalsTemp"/>
 </Form.Group>
 <Form.Group as={Col} controlId="formGridVitalsPs02">
-  <Form.Label>VitalsPs02</Form.Label>
+  <Form.Label>02 saturation (unit)</Form.Label>
   <Form.Control type="number" placeholder="VitalsPs02"/>
 </Form.Group>
 </Form.Row>
 
 <Form.Row>
   <Form.Group as={Col} controlId="formGridVitalsHeight">
-    <Form.Label>VitalsHeight</Form.Label>
+    <Form.Label>Height (unit)</Form.Label>
     <Form.Control type="number" placeholder="VitalsHeight"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridVitalsWeight">
-    <Form.Label>VitalsWeight</Form.Label>
+    <Form.Label>Weight (unit)</Form.Label>
     <Form.Control type="number" placeholder="VitalsWeight"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridVitalsBmi">
-    <Form.Label>VitalsBmi</Form.Label>
+    <Form.Label>Bmi</Form.Label>
     <Form.Control type="number" placeholder="VitalsBmi"/>
   </Form.Group>
 </Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridVitalsUrineType">
-  <Form.Label>VitalsUrineType</Form.Label>
+  <Form.Label>Urine type</Form.Label>
   <Form.Control type="text" placeholder="VitalsUrineType"/>
 </Form.Group>
 <Form.Group as={Col} controlId="formGridVitalsUrineValue">
-  <Form.Label>VitalsUrineValue</Form.Label>
+  <Form.Label>Urine value</Form.Label>
   <Form.Control type="text" placeholder="VitalsUrineValue"/>
 </Form.Group>
 </Form.Row>
