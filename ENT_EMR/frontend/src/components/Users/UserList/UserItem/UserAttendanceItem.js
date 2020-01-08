@@ -16,19 +16,19 @@ const userAttendanceItem = props => (
         <Card.Text>
         <ul className="cardUl">
           <li className="cardLi">
-          <h6 className="userItemHeading"> Date:</h6>
+          <p className="userItemHeading"> Date:</p>
           <p className="userItemText">
           {props.date}
           </p>
           </li>
           <li>
-          <h6 className="userItemHeading"> Status:</h6>
+          <p className="userItemHeading"> Status:</p>
           <p className="userItemText">
           {props.status}
           </p>
           </li>
           <li>
-          <h6 className="userItemHeading"> Description:</h6>
+          <p className="userItemHeading"> Description:</p>
           <p className="userItemText">
           {props.description}
           </p>

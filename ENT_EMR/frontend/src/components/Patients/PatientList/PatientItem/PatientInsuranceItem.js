@@ -17,37 +17,37 @@ const patientInsuranceItem = props => (
           <Card.Text>
           <ul className="cardUl">
             <li className="cardLi">
-            <h6 className="userItemHeading"> Company:</h6>
+            <p className="userItemHeading"> Company:</p>
             <p className="userItemText">
             {props.company}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Number:</h6>
+            <p className="userItemHeading"> Number:</p>
             <p className="userItemText">
             {props.number}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Description:</h6>
+            <p className="userItemHeading"> Description:</p>
             <p className="userItemText">
             {props.description}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Expiry:</h6>
+            <p className="userItemHeading"> Expiry:</p>
             <p className="userItemText">
             {props.expiry}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Subscriber Company:</h6>
+            <p className="userItemHeading"> Subscriber Company:</p>
             <p className="userItemText">
             {props.subscriber.company}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Subscriber Description:</h6>
+            <p className="userItemHeading"> Subscriber Description:</p>
             <p className="userItemText">
             {props.subscriber.description}
             </p>

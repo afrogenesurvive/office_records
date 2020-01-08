@@ -17,25 +17,25 @@ const patientConsultantItem = props => (
           <Card.Text>
           <ul className="cardUl">
             <li className="cardLi">
-            <h6 className="userItemHeading"> Date:</h6>
+            <p className="userItemHeading"> Date:</p>
             <p className="userItemText">
             {props.date}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> ID:</h6>
+            <p className="userItemHeading"> ID:</p>
             <p className="userItemText">
             {props.referenceId}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Name:</h6>
+            <p className="userItemHeading"> Name:</p>
             <p className="userItemText">
             {props.name}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Role:</h6>
+            <p className="userItemHeading"> Role:</p>
             <p className="userItemText">
             {props.role}
             </p>

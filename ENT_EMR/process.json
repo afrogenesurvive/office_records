@@ -1,7 +1,0 @@
-{
-  "env": {
-      "MONGO_USER": "ent_emr_admin",
-      "MONGO_PASSWORD": "0tolaryngologY",
-      "MONGO_URI": "mongodb+srv://ent_emr_admin:0tolaryngologY@cluster0-5iwfn.mongodb.net/test?retryWrites=true&w=majority"
-  }
-}

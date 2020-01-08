@@ -23,10 +23,10 @@ return (
 <Form.Row>
   <Form.Group as={Col} controlId="formGridAttendanceDate">
     <Form.Label>Date</Form.Label>
-    <DatePicker className="calendarDob"
-      selected={AuthContext._currentValue.fancyDate}
-      onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e}}
-    />
+    <Form.Control type="date" placeholder="Date"/>
+  </Form.Group>
+  <Form.Group id="formGridTodayCheckbox">
+    <Form.Check type="checkbox" label="Today" />
   </Form.Group>
   {
     // <DatePicker className="calendarDob"

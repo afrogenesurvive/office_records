@@ -54,6 +54,7 @@ class ThisUserPage extends Component {
 
   componentDidMount() {
     this.getThisUser();
+    // this.getCreds();
     if (this.context.user.name === 'admin579'){
       this.setState({canDelete: true})
     }
@@ -193,7 +194,7 @@ class ThisUserPage extends Component {
 
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({ userAlert: responseAlert, user: updatedUser})
-        this.fetchUsers();
+        this.getThisUser();
       })
       .catch(err => {
         console.log(err);
@@ -252,7 +253,7 @@ class ThisUserPage extends Component {
             this.context.users = this.state.users;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            this.fetchUsers();
+            this.getThisUser();
           })
           .catch(err => {
             console.log(err);
@@ -274,6 +275,8 @@ class ThisUserPage extends Component {
     this.setState({ updating: false , userUpdateField: null });
 
     let attendanceDate = event.target.formGridAttendanceDate.value;
+    // let attendanceDate = event.target.formGridTodayCheckbox.value;
+    // create today's date object
     let attendanceStatus = event.target.formGridAttendanceStatus.value;
     let attendanceDescription = event.target.formGridAttendanceDescription.value;
 
@@ -331,7 +334,8 @@ class ThisUserPage extends Component {
           this.context.users = this.state.users;
           const responseAlert = JSON.stringify(resData.data).slice(2,25);
           this.setState({ userAlert: responseAlert})
-          this.fetchUsers();
+          this.getThisUser();
+
         })
         .catch(err => {
           console.log(err);
@@ -422,7 +426,8 @@ class ThisUserPage extends Component {
           this.context.users = this.state.users;
           const responseAlert = JSON.stringify(resData.data).slice(2,25);
           this.setState({ userAlert: responseAlert})
-          this.fetchUsers();
+          this.getThisUser();
+
         })
         .catch(err => {
           console.log(err);
@@ -586,6 +591,47 @@ class ThisUserPage extends Component {
       });
   }
 
+  getCreds() {
+    this.setState({ isLoading: true });
+    const requestBody = {
+      query: `
+      query {getCreds
+        {atlas{user,pw,db},s3{bucketName,region,accessKeyId,secretAccessKey},jwt{encode}}}
+        `};
+
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.context.token
+      }})
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log("resdata..." + JSON.stringify(resData));
+        const creds = resData.data.getCreds;
+        if (this.isActive) {
+
+          this.setState({ isLoading: false });
+
+          this.context.creds = creds;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({userAlert: err});
+        if (this.isActive) {
+          this.setState({ isLoading: false });
+        }
+      });
+  }
+
 
   modalCancelHandler = () => {
     this.setState({ updating: false  });
@@ -644,7 +690,8 @@ class ThisUserPage extends Component {
               const responseAlert = JSON.stringify(resData.data).slice(2,25);
               this.setState({ userAlert: responseAlert})
               // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserAttendance})
-              // this.fetchUsers();
+              this.getThisUser();
+
 
             })
             .catch(err => {
@@ -701,6 +748,8 @@ class ThisUserPage extends Component {
               const responseAlert = JSON.stringify(resData.data).slice(2,25);
               this.setState({ userAlert: responseAlert})
               // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserLeave})
+              this.getThisUser();
+
 
             })
             .catch(err => {
@@ -779,6 +828,7 @@ class ThisUserPage extends Component {
               const responseAlert = JSON.stringify(resData.data).slice(2,25);
               this.setState({ userAlert: responseAlert})
               // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserAttachment})
+              this.getThisUser();
 
             })
             .catch(err => {
