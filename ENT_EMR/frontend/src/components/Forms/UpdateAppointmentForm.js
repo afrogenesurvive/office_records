@@ -39,6 +39,11 @@ return (
   <Form.Label>Date</Form.Label>
   <Form.Control type="date" placeholder={appointment.date} />
 </Form.Group>
+<Form.Group as={Col} controlId="formGridDateTodayCheckbox">
+  <Form.Label>Today's Date?</Form.Label>
+  <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+</Form.Group>
+
 <Form.Group as={Col} controlId="formGridTime">
   <Form.Label>Scheduled Time</Form.Label>
     <Form.Control type="time" placeholder={appointment.time}/>

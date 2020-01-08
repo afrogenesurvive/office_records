@@ -83,10 +83,20 @@ return (
   <Form.Label>Registration Date</Form.Label>
   <Form.Control type="date" placeholder="Registration Date"/>
 </Form.Group>
+<Form.Group as={Col} controlId="formGridRegistrationDateTodayCheckbox">
+  <Form.Label>Today's Date?</Form.Label>
+  <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+</Form.Group>
+
 <Form.Group as={Col} controlId="formGridReferralDate">
   <Form.Label>Referral Date</Form.Label>
   <Form.Control type="date" placeholder="Referral Date"/>
 </Form.Group>
+<Form.Group as={Col} controlId="formGridReferralDateTodayCheckbox">
+  <Form.Label>Today's Date?</Form.Label>
+  <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+</Form.Group>
+
 <Form.Group as={Col} controlId="formGridExpirationDate">
   <Form.Label>Expiration Date</Form.Label>
   <Form.Control type="date" placeholder="Expiration Date"/>

@@ -67,12 +67,21 @@ return (
   <Form.Label>Employment Date</Form.Label>
   <Form.Control type="date" placeholder={user.employmentDate}/>
 </Form.Group>
+<Form.Group as={Col} controlId="formGridEmploymentDateTodayCheckbox">
+  <Form.Label>Today's Date</Form.Label>
+  <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+</Form.Group>
 
 <Form.Group as={Col} controlId="formGridTerminationDate">
   <Form.Label>Termination Date</Form.Label>
   <Form.Control type="date" placeholder={user.terminationDate}/>
 </Form.Group>
+<Form.Group as={Col} controlId="formGridTerminationDateTodayCheckbox">
+  <Form.Label>Today's Date</Form.Label>
+  <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+</Form.Group>
 </Form.Row>
+
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridAddressNumber">

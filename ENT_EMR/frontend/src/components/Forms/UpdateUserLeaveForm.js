@@ -30,9 +30,19 @@ return (
     <Form.Label>Start Date</Form.Label>
     <Form.Control type="date" placeholder="Start Date"/>
   </Form.Group>
+
+  <Form.Group as={Col} controlId="formGridLeaveStartDateTodayCheckbox">
+    <Form.Label>Today's Date?</Form.Label>
+    <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+  </Form.Group>
+
   <Form.Group as={Col} controlId="formGridLeaveEndDate">
     <Form.Label>End Date</Form.Label>
     <Form.Control type="date" placeholder="End Date"/>
+  </Form.Group>
+  <Form.Group as={Col} controlId="formGridLeaveEndDateTodayCheckbox">
+    <Form.Label>Today's Date?</Form.Label>
+    <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
 
 </Form.Row>

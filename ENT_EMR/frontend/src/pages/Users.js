@@ -116,7 +116,12 @@ class UsersPage extends Component {
     let addressTown = event.target.formGridAddressTown.value;
     let addressParish = event.target.formGridAddressParish.value;
     let addressPostOffice = event.target.formGridAddressPostOffice.value;
+
     let employmentDate = event.target.formGridEmploymentDate.value;
+    if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
+      employmentDate = new Date().toISOString().slice(0,10);
+    }
+
     let terminationDate = event.target.formGridTerminationDate.value;
 
     if (
@@ -231,8 +236,16 @@ class UsersPage extends Component {
     let addressTown = event.target.formGridAddressTown.value;
     let addressParish = event.target.formGridAddressParish.value;
     let addressPostOffice = event.target.formGridAddressPostOffice.value;
+
     let employmentDate = event.target.formGridEmploymentDate.value;
+    if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
+      employmentDate = new Date().toISOString().slice(0,10);
+    }
+
     let terminationDate = event.target.formGridTerminationDate.value;
+    if (event.target.formGridTerminationDateTodayCheckbox.checked === true) {
+      terminationDate = new Date().toISOString().slice(0,10);
+    }
 
     if (email.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -432,17 +445,21 @@ class UsersPage extends Component {
         selectedUserId = null;
     }
 
-    console.log("UpdateUserAttendanceFormData:  ", AuthContext._currentValue.fancyDate);
+    console.log("UpdateUserAttendanceFormData:  ", );
 
     this.setState({ updating: false , userUpdateField: null });
 
-    // FIX ME!!!
-    let attendanceDate = AuthContext._currentValue.fancyDate;
+
+    let attendanceDate = event.target.formGridAttendanceDate.value;
+    if (event.target.formGridAttendanceDateTodayCheckbox.checked === true) {
+      attendanceDate = new Date().toISOString().slice(0,10);
+    }
+
     let attendanceStatus = event.target.formGridAttendanceStatus.value;
     let attendanceDescription = event.target.formGridAttendanceDescription.value;
 
     if (
-    // attendanceDate.trim().length === 0 ||
+    attendanceDate.trim().length === 0 ||
     attendanceStatus.trim().length === 0
     ){
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -535,11 +552,11 @@ class UsersPage extends Component {
       AuthContext._currentValue.file: ${AuthContext._currentValue.file},
       `);
     const config = {
-      bucketName: 'ent-emr-bucket',
+      bucketName: this.context.creds.s3.bucketName,
       dirName: attachmentPath,
-      region: 'us-east-2',
-      accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-      secretAccessKey: "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",
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -636,8 +653,16 @@ class UsersPage extends Component {
 
     let leaveType = event.target.formGridLeaveType.value;
     let leaveTitle = event.target.formGridLeaveTitle.value;
+
     let leaveStartDate = event.target.formGridLeaveStartDate.value;
+    if (event.target.formGridLeaveStartDateTodayCheckbox.checked === true) {
+      leaveStartDate = new Date().toISOString().slice(0,10);
+    }
+
     let leaveEndDate = event.target.formGridLeaveEndDate.value;
+    if (event.target.formGridLeaveEndDateTodayCheckbox.checked === true) {
+      leaveEndDate = new Date().toISOString().slice(0,10);
+    }
 
     if (
       leaveType.trim().length === 0 ||
@@ -840,7 +865,10 @@ class UsersPage extends Component {
 
     console.log("SearchUserAttendanceDateFormData:");
 
-    const attendanceDate = event.target.formBasicDate.value;
+    let attendanceDate = event.target.formBasicDate.value;
+    if (event.target.formBasicDateTodayCheckbox.checked === true) {
+      attendanceDate = new Date().toISOString().slice(0,10);
+    }
 
     const requestBody = {
       query: `

@@ -125,8 +125,16 @@ class PatientsPage extends Component {
     let addressPostOffice = event.target.formGridAddressPostOffice.value;
     let contactPhone = event.target.formGridContactPhone.value;
     let contactEmail = event.target.formGridContactEmail.value;
+
     let registrationDate = event.target.formGridRegistrationDate.value;
+    if (event.target.formGridRegistrationDateTodayCheckbox.checked === true) {
+      registrationDate = new Date().toISOString().slice(0,10);
+    }
     let referralDate = event.target.formGridReferralDate.value;
+    if (event.target.formGridReferralDateTodayCheckbox.checked === true) {
+      referralDate = new Date().toISOString().slice(0,10);
+    }
+
     let expirationDate = event.target.formGridExpirationDate.value;
     let attendingPhysicianName = event.target.formGridAttendingPhysicianName.value;
     let attendingPhysicianEmail = event.target.formGridAttendingPhysicianEmail.value;
@@ -281,9 +289,22 @@ class PatientsPage extends Component {
     let addressPostOffice = event.target.formGridAddressPostOffice.value;
     let contactPhone = event.target.formGridContactPhone.value;
     let contactEmail = event.target.formGridContactEmail.value;
+
     let registrationDate = event.target.formGridRegistrationDate.value;
+    if (event.target.formGridRegistrationDateTodayCheckbox.checked === true) {
+      registrationDate = new Date().toISOString().slice(0,10);
+    }
+
     let referralDate = event.target.formGridReferralDate.value;
+    if (event.target.formGridReferralDateTodayCheckbox.checked === true) {
+      referralDate = new Date().toISOString().slice(0,10);
+    }
+
     let expirationDate = event.target.formGridExpirationDate.value;
+    if (event.target.formGridExpirationDateTodayCheckbox.checked === true) {
+      expirationDate = new Date().toISOString().slice(0,10);
+    }
+
     let attendingPhysicianName = event.target.formGridAttendingPhysicianName.value;
     let attendingPhysicianEmail = event.target.formGridAttendingPhysicianEmail.value;
     let attendingPhysicianPhone = event.target.formGridAttendingPhysicianPhone.value;
@@ -553,6 +574,9 @@ updatePatientConsultantHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let consultantDate = event.target.formGridConsultantDate.value;
+  if (event.target.formGridConsultantDateTodayCheckbox.checked === true) {
+    consultantDate = new Date().toISOString().slice(0,10);
+  }
 
   const patientConsultant = { consultantDate, patientConsultantReference };
   console.log(`
@@ -622,7 +646,9 @@ updatePatientInsuranceHandler = (event) => {
 
   let insuranceCompany = event.target.formGridInsuranceCompany.value;
   let insuranceNumber = event.target.formGridInsuranceNumber.value;
+
   let insuranceExpiry = event.target.formGridInsuranceExpiry.value;
+
   let insuranceDescription = event.target.formGridInsuranceDescription.value;
   let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany.value;
   let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
@@ -773,7 +799,12 @@ updatePatientComplaintHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let complaintTitle = event.target.formGridComplaintTitle.value;
+
   let complaintDate = event.target.formGridComplaintDate.value;
+  if (event.target.formGridComplaintDateTodayCheckbox.checked === true) {
+    complaintDate = new Date().toISOString().slice(0,10);
+  }
+
   let complaintDescription = event.target.formGridComplaintDescription.value;
   let complaintAnamnesis = event.target.formGridComplaintAnamnesis.value;
   // let complaintAttachmentName = event.target.formGridComplaintAttachmentName.value;
@@ -786,13 +817,14 @@ updatePatientComplaintHandler = (event) => {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: complaintAttachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: complaintAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const complaintAttachmentName = newFileName;
@@ -876,6 +908,10 @@ updatePatientSurveyHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let surveyDate = event.target.formGridSurveyDate.value;
+  if (event.target.formGridSurveyDateTodayCheckbox.checked === true) {
+    surveyDate = new Date().toISOString().slice(0,10);
+  }
+
   let surveyTitle = event.target.formGridSurveyTitle.value;
   let surveyDescription = event.target.formGridSurveyDescription.value;
   // let surveyAttachmentName = event.target.formGridSurveyAttachmentName.value;
@@ -888,13 +924,15 @@ updatePatientSurveyHandler = (event) => {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: surveyAttachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: surveyAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const surveyAttachmentName = newFileName;
@@ -977,6 +1015,10 @@ updatePatientVitalsHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let vitalsDate = event.target.formGridVitalsDate.value;
+  if (event.target.formGridVitalsDateTodayCheckbox.checked === true) {
+    vitalsDate = new Date().toISOString().slice(0,10);
+  }
+
   let vitalsPr = event.target.formGridVitalsPr.value;
   let vitalsBp1 = event.target.formGridVitalsBp1.value;
   let vitalsBp2 = event.target.formGridVitalsBp2.value;
@@ -1057,6 +1099,10 @@ updatePatientExaminationHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let examinationDate = event.target.formGridExaminationDate.value;
+  if (event.target.formGridExaminationDateTodayCheckbox.checked === true) {
+    examinationDate = new Date().toISOString().slice(0,10);
+  }
+
   let examinationGeneral = event.target.formGridExaminationGeneral.value;
   let examinationArea = undefined;
   if (event.target.formGridExaminationAreaSelect === "select") {
@@ -1079,13 +1125,13 @@ updatePatientExaminationHandler = (event) => {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: examinationAttachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: examinationAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const examinationAttachmentName = newFileName;
@@ -1175,7 +1221,12 @@ updatePatientHistoryHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let historyType = event.target.formGridHistoryType.value;
+
   let historyDate = event.target.formGridHistoryDate.value;
+  if (event.target.formGridHistoryDateTodayCheckbox.checked === true) {
+    historyDate = new Date().toISOString().slice(0,10);
+  }
+
   let historyTitle = event.target.formGridHistoryTitle.value;
   let historyDescription = event.target.formGridHistoryDescription.value;
   // let historyAttachmentName = event.target.formGridHistoryAttachmentName.value;
@@ -1188,13 +1239,13 @@ updatePatientHistoryHandler = (event) => {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: historyAttachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: historyAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const historyAttachmentName = newFileName;
@@ -1296,13 +1347,13 @@ updatePatientAllergiesHandler = (event) => {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: allergiesAttachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: allergiesAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const allergiesAttachmentName = newFileName;
@@ -1400,13 +1451,13 @@ updatePatientMedicationHandler = (event) => {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: medicationAttachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: medicationAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const medicationAttachmentName = newFileName;
@@ -1491,6 +1542,10 @@ updatePatientInvestigationHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let investigationDate = event.target.formGridInvestigationDate.value;
+  if (event.target.formGridInvestigationDateTodayCheckbox.checked === true) {
+    investigationDate = new Date().toISOString().slice(0,10);
+  }
+
   let investigationTitle = event.target.formGridInvestigationTitle.value;
   let investigationType = undefined;
   if (event.target.formGridInvestigationTypeSelect === "select") {
@@ -1509,13 +1564,13 @@ updatePatientInvestigationHandler = (event) => {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: investigationAttachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: investigationAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const investigationAttachmentName = newFileName;
@@ -1601,6 +1656,10 @@ updatePatientDiagnosisHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let diagnosisDate = event.target.formGridDiagnosisDate.value;
+  if (event.target.formGridDiagnosisDateTodayCheckbox.checked === true) {
+    diagnosisDate = new Date().toISOString().slice(0,10);
+  }
+
   let diagnosisTitle = event.target.formGridDiagnosisTitle.value;
   let diagnosisType = event.target.formGridDiagnosisType.value;
   let diagnosisDescription = event.target.formGridDiagnosisDescription.value;
@@ -1614,13 +1673,13 @@ updatePatientDiagnosisHandler = (event) => {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: diagnosisAttachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: diagnosisAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const diagnosisAttachmentName = newFileName;
@@ -1706,6 +1765,10 @@ updatePatientTreatmentHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let treatmentDate = event.target.formGridTreatmentDate.value;
+  if (event.target.formGridTreatmentDateTodayCheckbox.checked === true) {
+    treatmentDate = new Date().toISOString().slice(0,10);
+  }
+
   let treatmentTitle = event.target.formGridTreatmentTitle.value;
   let treatmentDescription = event.target.formGridTreatmentDescription.value;
   let treatmentDose = event.target.formGridTreatmentDose.value;
@@ -1726,13 +1789,13 @@ updatePatientTreatmentHandler = (event) => {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: treatmentAttachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: treatmentAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const treatmentAttachmentName = newFileName;
@@ -1821,6 +1884,10 @@ updatePatientBillingHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null });
 
   let billingDate = event.target.formGridBillingDate.value;
+  if (event.target.formGridBillingDateTodayCheckbox.checked === true) {
+    billingDate = new Date().toISOString().slice(0,10);
+  }
+
   let billingTitle = event.target.formGridBillingTitle.value;
   let billingType = event.target.formGridBillingType.value;
   let billingDescription = event.target.formGridBillingDescription.value;
@@ -1837,13 +1904,13 @@ updatePatientBillingHandler = (event) => {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: billingAttachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: billingAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const billingAttachmentName = newFileName;
@@ -1943,13 +2010,13 @@ updatePatientAttachmentHandler = (event) => {
       file.name: ${file.name},
       AuthContext._currentValue.file: ${AuthContext._currentValue.file},
       `);
-    const config = {
-      bucketName: 'ent-emr-bucket',
-      dirName: attachmentPath,
-      region: 'us-east-2',
-      accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-      secretAccessKey: "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",
-    }
+      const config = {
+        bucketName: this.context.creds.s3.bucketName,
+        dirName: attachmentPath,
+        region: this.context.creds.s3.region,
+        accessKeyId: this.context.creds.s3.accessKeyId,
+        secretAccessKey: this.context.creds.s3.secretAccessKey,
+      }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
     const attachmentName = newFileName;

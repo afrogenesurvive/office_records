@@ -17,6 +17,11 @@ return (
 <Form.Label>Appointment Date</Form.Label>
 <Form.Control type="date" placeholder="Appointment Date"/>
 </Form.Group>
+<Form.Group controlId="formBasicDateTodayCheckbox">
+  <Form.Label>Today's Date?</Form.Label>
+  <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+</Form.Group>
+
 
 {props.canCancel && (
   <Accordion.Toggle as={Button} variant="danger" eventKey="5" className="btn" onClick={props.onCancel}>
