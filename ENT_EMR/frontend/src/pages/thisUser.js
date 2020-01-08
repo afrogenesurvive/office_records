@@ -88,8 +88,16 @@ class ThisUserPage extends Component {
     let addressTown = event.target.formGridAddressTown.value;
     let addressParish = event.target.formGridAddressParish.value;
     let addressPostOffice = event.target.formGridAddressPostOffice.value;
+
     let employmentDate = event.target.formGridEmploymentDate.value;
+    if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
+      employmentDate = new Date().toISOString().slice(0,10);
+    }
+
     let terminationDate = event.target.formGridTerminationDate.value;
+    if (event.target.formGridTerminationDateTodayCheckbox.checked === true) {
+      terminationDate = new Date().toISOString().slice(0,10);
+    }
 
     if (email.trim().length === 0 ) {
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -270,13 +278,15 @@ class ThisUserPage extends Component {
     //   console.log("Not the creator or Admin! No edit permission!!");
     //   selectedUserId = null;
     // }
-    console.log("UpdateUserAttendanceFormData:  ", event.target.formGridAttendanceDate.value);
+    console.log("UpdateUserAttendanceFormData:  ", event.target.formGridAttendanceStatus.value);
 
     this.setState({ updating: false , userUpdateField: null });
 
     let attendanceDate = event.target.formGridAttendanceDate.value;
-    // let attendanceDate = event.target.formGridTodayCheckbox.value;
-    // create today's date object
+    if (event.target.formGridAttendanceDateTodayCheckbox.checked === true) {
+      attendanceDate = new Date().toISOString().slice(0,10);
+    }
+
     let attendanceStatus = event.target.formGridAttendanceStatus.value;
     let attendanceDescription = event.target.formGridAttendanceDescription.value;
 
@@ -360,8 +370,16 @@ class ThisUserPage extends Component {
 
     let leaveType = event.target.formGridLeaveType.value;
     let leaveTitle = event.target.formGridLeaveTitle.value;
+
     let leaveStartDate = event.target.formGridLeaveStartDate.value;
+    if (event.target.formGridLeaveStartDateTodayCheckbox.checked === true) {
+      leaveStartDate = new Date().toISOString().slice(0,10);
+    }
+
     let leaveEndDate = event.target.formGridLeaveEndDate.value;
+    if (event.target.formGridLeaveEndDateTodayCheckbox.checked === true) {
+      leaveEndDate = new Date().toISOString().slice(0,10);
+    }
 
     if (leaveType.trim().length === 0) {
       console.log("blank fields detected!!!...filling w/ previous data...");
@@ -465,13 +483,13 @@ class ThisUserPage extends Component {
     file.name: ${file.name},
     AuthContext._currentValue.file: ${AuthContext._currentValue.file},
     `);
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: attachmentPath,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: attachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const attachmentName = newFileName;

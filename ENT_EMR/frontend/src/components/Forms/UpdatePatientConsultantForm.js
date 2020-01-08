@@ -22,6 +22,11 @@ return (
     <Form.Label>Consultation Date</Form.Label>
     <Form.Control type="date" placeholder="ConsultantDate"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridConsultantDateTodayCheckbox">
+    <Form.Label>Today's Date?</Form.Label>
+    <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+  </Form.Group>
+
   </Form.Row>
 
 

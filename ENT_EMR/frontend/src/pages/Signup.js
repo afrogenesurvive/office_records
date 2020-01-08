@@ -34,8 +34,16 @@ class SignupPage extends Component {
     let addressTown = event.target.formGridAddressTown.value;
     let addressParish = event.target.formGridAddressParish.value;
     let addressPostOffice = event.target.formGridAddressPostOffice.value;
+
     let employmentDate = event.target.formGridEmploymentDate.value;
+    if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
+      employmentDate = new Date().toISOString().slice(0,10);
+    }
+
     let terminationDate = event.target.formGridTerminationDate.value;
+    if (event.target.formGridTerminationDateTodayCheckbox.checked === true) {
+      terminationDate = new Date().toISOString().slice(0,10);
+    }
 
     if (
       email.trim().length === 0 ||

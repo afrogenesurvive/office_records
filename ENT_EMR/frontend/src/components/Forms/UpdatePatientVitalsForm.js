@@ -22,6 +22,10 @@ return (
     <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="VitalsDate"/>
   </Form.Group>
+  <Form.Group as={Col} controlId="formGridVitalsDateTodayCheckbox">
+    <Form.Label>Today's Date?</Form.Label>
+    <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+  </Form.Group>
 
   <Form.Group as={Col} controlId="formGridVitalsPr">
     <Form.Label>Pulse rate (unit)</Form.Label>

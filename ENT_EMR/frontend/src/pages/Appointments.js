@@ -112,7 +112,11 @@ class AppointmentsPage extends Component {
       }
     const title = event.target.formGridTitle.value;
     const type = event.target.formGridType.value;
+
     const date = event.target.formGridDate.value;
+    if (event.target.formGridDateTodayCheckbox.checked === true) {
+      date = new Date().toISOString().slice(0,10);
+    }
     const time = event.target.formGridTime.value;
     const seenTime = event.target.formGridSeenTime.value;
     const checkinTime = event.target.formGridCheckinTime.value;
@@ -227,7 +231,12 @@ class AppointmentsPage extends Component {
     this.setState({ updating: false });
     let title = event.target.formGridTitle.value;
     let type = event.target.formGridType.value;
+
     let date = event.target.formGridDate.value;
+    if (event.target.formGridDateTodayCheckbox.checked === true) {
+      date = new Date().toISOString().slice(0,10);
+    }
+
     let time = event.target.formGridTime.value;
     let seenTime = event.target.formGridSeenTime.value;
     let checkinTime = event.target.formGridCheckinTime.value;
@@ -665,7 +674,11 @@ class AppointmentsPage extends Component {
 
       let userId = this.context.userId;
       this.setState({ searching: false });
+
       let appointmentDate = event.target.formBasicDate.value;
+      if (event.target.formBasicDateTodayCheckbox.checked === true) {
+        appointmentDate = new Date().toISOString().slice(0,10);
+      }
 
       const requestBody = {
         query: `

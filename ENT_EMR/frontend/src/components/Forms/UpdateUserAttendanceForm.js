@@ -25,8 +25,9 @@ return (
     <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="Date"/>
   </Form.Group>
-  <Form.Group id="formGridTodayCheckbox">
-    <Form.Check type="checkbox" label="Today" />
+  <Form.Group as={Col} controlId="formGridAttendanceDateTodayCheckbox">
+    <Form.Label>Today's Date?</Form.Label>
+    <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
   {
     // <DatePicker className="calendarDob"
