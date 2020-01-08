@@ -51,7 +51,25 @@ type AuthData {
   tokenExpiration: Int!
   error: String
 }
-
+type Creds {
+  atlas: AtlasCreds
+  s3: S3Creds
+  jwt: JwtCreds
+}
+type AtlasCreds {
+  user: String
+  pw: String
+  db: String
+}
+type S3Creds {
+  bucketName: String
+  region: String
+  accessKeyId: String
+  secretAccessKey: String
+}
+type JwtCreds {
+  encode: String
+}
 
 type Patient {
   _id: ID!
@@ -465,6 +483,7 @@ type RootQuery {
     getAppointmentWeekImportant(userId: ID!): [Appointment]
 
     login(email: String!, password: String!): AuthData!
+    getCreds: Creds!
 
 }
 

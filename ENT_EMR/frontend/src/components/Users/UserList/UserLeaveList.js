@@ -10,7 +10,6 @@ const userLeaveList = props => {
   const userLeave = props.userLeave.map(leave => {
     const userLeaveStartDate = new Date (leave.startDate.substr(0,10)*1000).toISOString().slice(0,10);
     const userLeaveEndDate = new Date (leave.endDate.substr(0,10)*1000).toISOString().slice(0,10);
-    // const userAttendanceDate = new Date (attendance.date.substr(0,10)*1000).toUTCString();
     return (
       <UserLeaveItem
         key={leave.type}

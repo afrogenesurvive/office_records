@@ -16,73 +16,73 @@ const VisitVitalsItem = props => (
           <Card.Text>
           <ul className="cardUl">
             <li className="cardLi">
-            <h6 className="userItemHeading"> date:</h6>
+            <p className="userItemHeading"> date:</p>
             <p className="userItemText">
             {props.date}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Pulse Rate:</h6>
+            <p className="userItemHeading"> Pulse Rate:</p>
             <p className="userItemText">
             {props.pr}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Blood Pressure 1:</h6>
+            <p className="userItemHeading"> Blood Pressure 1:</p>
             <p className="userItemText">
             {props.bp1}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Blood Pressure 2:</h6>
+            <p className="userItemHeading"> Blood Pressure 2:</p>
             <p className="userItemText">
             {props.bp2}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Resp Rate:</h6>
+            <p className="userItemHeading"> Resp Rate:</p>
             <p className="userItemText">
             {props.rr}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Temp:</h6>
+            <p className="userItemHeading"> Temp:</p>
             <p className="userItemText">
             {props.temp}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Sp02:</h6>
+            <p className="userItemHeading"> Sp02:</p>
             <p className="userItemText">
             {props.ps02}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Height:</h6>
+            <p className="userItemHeading"> Height:</p>
             <p className="userItemText">
             {props.height}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Weight:</h6>
+            <p className="userItemHeading"> Weight:</p>
             <p className="userItemText">
             {props.weight}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Bmi:</h6>
+            <p className="userItemHeading"> Bmi:</p>
             <p className="userItemText">
             {props.Bmi}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Urine Type:</h6>
+            <p className="userItemHeading"> Urine Type:</p>
             <p className="userItemText">
             {props.urineType}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Urine Value:</h6>
+            <p className="userItemHeading"> Urine Value:</p>
             <p className="userItemText">
             {props.urineValue}
             </p>

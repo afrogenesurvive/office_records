@@ -5,6 +5,7 @@ const graphQlSchema = require('./graphql/schema/index');
 const graphQlResolvers = require('./graphql/resolvers/index');
 
 const { pocketVariables } = require('./helpers/pocketVars');
+const { creds } = require('./helpers/this');
 
 const mongoose = require('mongoose');
 const mongodb = require('mongodb');
@@ -43,7 +44,9 @@ mongoose.connect('mongodb://localhost:27017/ent_emr_dev',{useNewUrlParser: true,
 // mongoose.connect(process.env.MONGO_URI,{useNewUrlParser: true, useUnifiedTopology: true})
 // mongoose.connect("mongodb+srv://ent_emr_admin:0tolaryngologY@cluster0-5iwfn.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
-    console.log("DB connected...", );
+    console.log(`
+      DB connected...
+      `);
     app.listen(10000);
   })
   .catch(err => {

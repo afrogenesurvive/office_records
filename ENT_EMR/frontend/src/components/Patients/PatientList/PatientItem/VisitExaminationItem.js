@@ -17,67 +17,67 @@ const VisitExaminationItem = props => (
           <Card.Text>
           <ul className="cardUl">
             <li className="cardLi">
-            <h6 className="userItemHeading"> Date:</h6>
+            <p className="userItemHeading"> Date:</p>
             <p className="userItemText">
             {props.date}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> General:</h6>
+            <p className="userItemHeading"> General:</p>
             <p className="userItemText">
             {props.general}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Area:</h6>
+            <p className="userItemHeading"> Area:</p>
             <p className="userItemText">
             {props.area}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Type:</h6>
+            <p className="userItemHeading"> Type:</p>
             <p className="userItemText">
             {props.type}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Measure:</h6>
+            <p className="userItemHeading"> Measure:</p>
             <p className="userItemText">
             {props.measure}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Value:</h6>
+            <p className="userItemHeading"> Value:</p>
             <p className="userItemText">
             {props.value}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Description:</h6>
+            <p className="userItemHeading"> Description:</p>
             <p className="userItemText">
             {props.description}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Follow Up ?</h6>
+            <p className="userItemHeading"> Follow Up ?</p>
             <p className="userItemText">
             {props.followUp}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Attachment Name:</h6>
+            <p className="userItemHeading"> Attachment Name:</p>
             <p className="userItemText">
             {props.attachmentName}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Format:</h6>
+            <p className="userItemHeading"> Format:</p>
             <p className="userItemText">
             {props.attachmentFormat}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Path:</h6>
+            <p className="userItemHeading"> Path:</p>
             <p className="userItemText">
             {props.attachmentPath}
             </p>

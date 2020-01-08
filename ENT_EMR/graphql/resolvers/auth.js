@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/user');
 
 const { pocketVariables } = require('../../helpers/pocketVars');
+const { creds } = require('../../helpers/this');
 
 module.exports = {
   login: async ({ email, password }) => {
@@ -24,5 +25,21 @@ module.exports = {
     pocketVariables.userId = user.id;
 
     return { userId: user.id, token: token, tokenExpiration: 2 };
+  },
+  getCreds: async (req) => {
+    console.log(`
+      retriveing creds...
+      creds: ${JSON.stringify(creds)}
+      `);
+
+    if (pocketVariables.isAuth !== true) {
+      throw new Error('Unauthenticated!');
+
+    }
+      return {
+        atlas: creds.atlas,
+        s3: creds.s3,
+        jwt: creds.jwt
+      };
   }
 };

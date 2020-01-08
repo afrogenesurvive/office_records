@@ -32,8 +32,36 @@ class App extends Component {
   };
 
   logout = () => {
-    this.setState({ token: null, userId: null });
+    this.setState({
+       token: null,
+       userId: null
+      });
     sessionStorage.clear();
+    this.context = {
+      token: null,
+      userId: null,
+      user: {},
+      users:[],
+      selectedUser: {},
+      selectedPatient: {},
+      selectedAppointment: {},
+      patient: {},
+      appointment: {},
+      appointmentPatientId: null,
+      userUpdateField: null,
+      patientUpdateField: null,
+      appointmentUpdateField: null,
+      appointmentsToday: null,
+      appointmentsWeekImportant: null,
+      appointmentsInProgress: null,
+      userAlert: "",
+      visit: null,
+      file: null,
+      fancyDate: null,
+      login: this.login,
+      logout: this.logout,
+      creds: null,
+    }
   };
 
 
@@ -68,7 +96,8 @@ class App extends Component {
               file: null,
               fancyDate: null,
               login: this.login,
-              logout: this.logout
+              logout: this.logout,
+              creds: null,
             }}
           >
             <MainNavigation />

@@ -17,19 +17,19 @@ const patientNextOfKinItem = props => (
           <Card.Text>
           <ul className="cardUl">
             <li className="cardLi">
-            <h6 className="userItemHeading"> Name:</h6>
+            <p className="userItemHeading"> Name:</p>
             <p className="userItemText">
             {props.name}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Email:</h6>
+            <p className="userItemHeading"> Email:</p>
             <p className="userItemText">
             {props.email}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Phone:</h6>
+            <p className="userItemHeading"> Phone:</p>
             <p className="userItemText">
             {props.phone}
             </p>

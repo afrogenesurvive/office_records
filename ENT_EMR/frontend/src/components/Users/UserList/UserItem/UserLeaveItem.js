@@ -17,19 +17,19 @@ const userLeaveItem = props => (
         <Card.Text>
         <ul className="cardUl">
           <li className="cardLi">
-          <h6 className="userItemHeading"> Type:</h6>
+          <p className="userItemHeading"> Type:</p>
           <p className="userItemText">
           {props.type}
           </p>
           </li>
           <li>
-          <h6 className="userItemHeading"> Start Date:</h6>
+          <p className="userItemHeading"> Start Date:</p>
           <p className="userItemText">
           {props.startDate}
           </p>
           </li>
           <li>
-          <h6 className="userItemHeading"> End Date:</h6>
+          <p className="userItemHeading"> End Date:</p>
           <p className="userItemText">
           {props.endDate}
           </p>

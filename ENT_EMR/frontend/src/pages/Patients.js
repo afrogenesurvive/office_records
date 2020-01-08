@@ -3614,6 +3614,7 @@ deletePatientTagItem = (props) => {
           })
           .catch(err => {
             console.log(err);
+            this.setState({ userAlert: err})
           });
 }
 

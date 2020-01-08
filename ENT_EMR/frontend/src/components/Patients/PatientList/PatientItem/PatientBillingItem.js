@@ -17,61 +17,61 @@ const patientBillingItem = props => (
           <Card.Text>
           <ul className="cardUl">
             <li className="cardLi">
-            <h6 className="userItemHeading"> Title:</h6>
+            <p className="userItemHeading"> Title:</p>
             <p className="userItemText">
             {props.title}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Type:</h6>
+            <p className="userItemHeading"> Type:</p>
             <p className="userItemText">
             {props.type}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Date:</h6>
+            <p className="userItemHeading"> Date:</p>
             <p className="userItemText">
             {props.date}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Description:</h6>
+            <p className="userItemHeading"> Description:</p>
             <p className="userItemText">
             {props.description}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Amount:</h6>
+            <p className="userItemHeading"> Amount:</p>
             <p className="userItemText">
             {props.amount}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Paid ?</h6>
+            <p className="userItemHeading"> Paid ?</p>
             <p className="userItemText">
             {props.paid}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Notes:</h6>
+            <p className="userItemHeading"> Notes:</p>
             <p className="userItemText">
             {props.notes}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Attachment:</h6>
+            <p className="userItemHeading"> Attachment:</p>
             <p className="userItemText">
             {props.attachment.name}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Format:</h6>
+            <p className="userItemHeading"> Format:</p>
             <p className="userItemText">
             {props.attachment.format}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Path:</h6>
+            <p className="userItemHeading"> Path:</p>
             <p className="userItemText">
             {props.attachment.path}
             </p>
@@ -91,7 +91,7 @@ const patientBillingItem = props => (
           </Button>
           </Card.Link>
         </Card.Body>
-      </Card>  
+      </Card>
     </div>
   </li>
 );

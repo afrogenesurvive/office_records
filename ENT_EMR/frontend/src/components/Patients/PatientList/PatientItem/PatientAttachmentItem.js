@@ -17,19 +17,19 @@ const patientAttachmentItem = props => (
           <Card.Text>
           <ul className="cardUl">
             <li className="cardLi">
-            <h6 className="userItemHeading"> Name:</h6>
+            <p className="userItemHeading"> Name:</p>
             <p className="userItemText">
             {props.name}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Format:</h6>
+            <p className="userItemHeading"> Format:</p>
             <p className="userItemText">
             {props.format}
             </p>
             </li>
             <li className="cardLi">
-            <h6 className="userItemHeading"> Path:</h6>
+            <p className="userItemHeading"> Path:</p>
             <p className="userItemText">
             {props.path}
             </p>
