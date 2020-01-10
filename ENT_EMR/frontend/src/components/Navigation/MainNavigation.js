@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 
 import AuthContext from '../../context/auth-context';
 import './MainNavigation.css';
@@ -12,7 +12,7 @@ const mainNavigation = props => (
       return (
         <header className="main-navigation">
           <div className="main-navigation__logo">
-            <h1>ENT EMR 0.1.1</h1>
+            <h1>ENT EMR 0.1.2</h1>
 
           </div>
           <nav className="main-navigation__items">

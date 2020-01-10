@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Accordion from 'react-bootstrap/Accordion';
+// import Accordion from 'react-bootstrap/Accordion';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Row from 'react-bootstrap/Row';
@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col';
 import UserAttendanceList from './UserList/UserAttendanceList';
 import UserLeaveList from './UserList/UserLeaveList';
 import UserAttachmentList from './UserList/UserAttachmentList';
-import AuthContext from '../../context/auth-context';
+// import AuthContext from '../../context/auth-context';
 
 import './UserDetail.css';
 
@@ -21,7 +21,7 @@ const UserDetail = (props) => {
   const userAttendance = user.attendance;
   const userLeave = user.leave;
   const userAttachment = user.attachments;
-  const authSelectedUser = JSON.stringify(props.AuthContext.selectedUser);
+  // const authSelectedUser = JSON.stringify(props.AuthContext.selectedUser);
   const userEmploymentDate = new Date(user.employmentDate.substr(0,10)*1000).toISOString().slice(0,10);
   const userTerminationDate = new Date(user.terminationDate.substr(0,10)*1000).toISOString().slice(0,10);
 

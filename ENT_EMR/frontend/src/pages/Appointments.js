@@ -142,7 +142,7 @@ class AppointmentsPage extends Component {
       return
     }
 
-    const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important };
+    // const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important };
     console.log(`
         creating appointment...
         title: ${title},
@@ -174,7 +174,7 @@ class AppointmentsPage extends Component {
       body: JSON.stringify(requestBody),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.context.token
+        Authorization: 'Bearer ' + token
       }
     })
       .then(res => {
@@ -219,7 +219,7 @@ class AppointmentsPage extends Component {
 
     const userId = this.context.userId;
     const appointmentId = this.context.selectedAppointment._id;
-    const selectedPatientId = this.context.selectedPatientId;
+    // const selectedPatientId = this.context.selectedPatientId;
     console.log(`
         userId: ${userId}
         appointmentd: ${appointmentId},
@@ -293,7 +293,7 @@ class AppointmentsPage extends Component {
       important  = this.context.selectedAppointment.important;
     }
 
-    const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important, };
+    // const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important, };
     console.log(`
         updating appointment...
         title: ${title},

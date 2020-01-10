@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 
 import UserAttendanceItem from './UserItem/UserAttendanceItem';
 import './UserList.css';

@@ -5,7 +5,7 @@ import './UserItem.css';
 
 
 const patientTagItem = props => (
-  <li key={props.userId} className="users__list-item_detail">
+  <li key={props.userId} className="users__list-item_master">
     <div>
     <h6 className="userItemHeading"> Tag:</h6>
     <p className="userItemText">

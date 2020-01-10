@@ -6,7 +6,7 @@ import './UserItem.css';
 
 
 const patientNoteItem = props => (
-  <li key={props.userId} className="users__list-item_detail">
+  <li key={props.userId} className="users__list-item_master">
     <div>
     <h6 className="userItemHeading"> Note:</h6>
     <p className="userItemText">

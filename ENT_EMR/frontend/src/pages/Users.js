@@ -149,7 +149,6 @@ class UsersPage extends Component {
 
     const token = this.context.token;
     const userId = this.context.userId;
-    const user = { email, password, name, role, dob, phone, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, employmentDate, terminationDate };
 
     console.log(`
       creating user...
@@ -303,7 +302,6 @@ class UsersPage extends Component {
       terminationDate = this.context.selectedUser.terminationDate;
     }
 
-    const user = { email, password, name, role, dob, phone, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, employmentDate, terminationDate };
     console.log(`
       updating user profile...
       userId: ${userId}
@@ -470,7 +468,6 @@ class UsersPage extends Component {
       return
     }
 
-    const userAttendance = { attendanceDate, attendanceStatus, attendanceDescription }
     console.log(`
       adding user attendance item...
       userId: ${userId},
@@ -581,7 +578,6 @@ class UsersPage extends Component {
       return
     }
 
-    const userAttachment = { attachmentName, attachmentFormat, attachmentPath }
     console.log(`
       adding user attachment item...
       userId: ${userId},
@@ -594,7 +590,7 @@ class UsersPage extends Component {
 
       const requestBody = {
         query:`
-          mutation{updateUserAttachment(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",userInput:{attachmentName:\"${attachmentName}\",attachmentFormat:\"${attachmentFormat}\",attachmentPath:\"${attachmentPath}\"})
+          mutation{updateUserAttachment(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentPath}"})
           {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
@@ -680,7 +676,6 @@ class UsersPage extends Component {
       return
     }
 
-    const userLeave = { leaveType, leaveTitle, leaveStartDate, leaveEndDate }
     console.log(`
       adding user leave item...
       userId: ${userId},
@@ -696,7 +691,7 @@ class UsersPage extends Component {
 
       const requestBody = {
         query:`
-          mutation{updateUserLeave(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",userInput:{leaveType:\"${leaveType}\",leaveTitle:\"${leaveTitle}\",leaveStartDate:\"${leaveStartDate}\",leaveEndDate:\"${leaveEndDate}\"})
+          mutation{updateUserLeave(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{leaveType:"${leaveType}",leaveTitle:"${leaveTitle}",leaveStartDate:"${leaveStartDate}",leaveEndDate:"${leaveEndDate}"})
           {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
@@ -970,8 +965,6 @@ class UsersPage extends Component {
 
   modalConfirmSearchNameHandler = (event) => {
     console.log("SearchUserNameFormData:", event.target.formBasicName.value);
-
-    let userId = this.context.userId;
     this.setState({ searching: false });
 
     let users = this.state.users;
@@ -1227,7 +1220,7 @@ deleteUserAttendanceItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation{deleteUserAttendance(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",attendanceDate:\"${date}\")
+       mutation{deleteUserAttendance(userId:"${userId}",selectedUserId:"${selectedUserId}",attendanceDate:"${date}")
        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
     `};
 
@@ -1247,7 +1240,6 @@ deleteUserAttendanceItem = (props) => {
             return res.json();
           })
           .then(resData => {
-            let deletedUser = resData.data.deleteUserAttendance;
             console.log("resData.data:  ",resData.data.deleteUserAttendance);
 
             const updatedUserId = resData.data.deleteUserAttendance._id;
@@ -1284,7 +1276,7 @@ deleteUserLeaveItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation{deleteUserLeave(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",leaveTitle:\"${props.title}\")
+       mutation{deleteUserLeave(userId:"${userId}",selectedUserId:"${selectedUserId}",leaveTitle:"${props.title}")
        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
     `};
 
@@ -1363,7 +1355,7 @@ deleteUserAttachmentItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation{deleteUserAttachment(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",attachmentName:\"${props.name}\")
+       mutation{deleteUserAttachment(userId:"${userId}",selectedUserId:"${selectedUserId}",attachmentName:"${props.name}")
        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
     `};
 
