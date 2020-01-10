@@ -1,6 +1,4 @@
 import React from 'react';
-import Accordion from 'react-bootstrap/Accordion';
-import Button from 'react-bootstrap/Button';
 
 import SearchPatientItem from './PatientItem/SearchPatientItem';
 import './UserList.css';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import S3 from 'react-aws-s3';
-import S3FileUpload from 'react-s3';
+// import S3FileUpload from 'react-s3';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
@@ -10,9 +10,9 @@ import Accordion from 'react-bootstrap/Accordion';
 import SidebarPage from './Sidebar';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import TabContainer from 'react-bootstrap/TabContainer';
-import TabContent from 'react-bootstrap/TabContent';
-import TabPane from 'react-bootstrap/TabPane';
+// import TabContainer from 'react-bootstrap/TabContainer';
+// import TabContent from 'react-bootstrap/TabContent';
+// import TabPane from 'react-bootstrap/TabPane';
 import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card';
 
@@ -24,7 +24,7 @@ import SearchPatientList from '../components/Patients/PatientList/SearchPatientL
 import SearchPatientForm from '../components/Forms/SearchPatientForm';
 import SearchPatientIdForm from '../components/Forms/SearchPatientIdForm';
 import SearchPatientNameForm from '../components/Forms/SearchPatientNameForm';
-import SearchPatientVisitForm from '../components/Forms/SearchPatientVisitForm';
+// import SearchPatientVisitForm from '../components/Forms/SearchPatientVisitForm';
 
 import AlertBox from '../components/AlertBox';
 import AttachmentViewer from '../components/AttachmentViewer';
@@ -185,7 +185,6 @@ class PatientsPage extends Component {
       return;
     }
 
-    const patient = { title, name, dob, age, gender, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, contactPhone, contactEmail, registrationDate, referralDate, expirationDate, attendingPhysicianName, attendingPhysicianEmail, attendingPhysicianPhone, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
     console.log(`
       creating patient...
       title: ${title},
@@ -217,7 +216,7 @@ class PatientsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation {createPatient(userId:\"${userId}\", patientInput:{title:\"${title}\",name:\"${name}\",dob:\"${dob}\",age:${age},gender:\"${gender}\",addressNumber:${addressNumber},addressStreet:\"${addressStreet}\",addressTown:\"${addressTown}\",addressParish:\"${addressParish}\",addressPostOffice:\"${addressPostOffice}\",contactPhone:\"${contactPhone}\",contactEmail:\"${contactEmail}\",registrationDate:\"${registrationDate}\",referralDate:\"${referralDate}\",expirationDate:\"${expirationDate}\",referringDoctorName:\"${referringDoctorName}\",referringDoctorEmail:\"${referringDoctorEmail}\",referringDoctorPhone:\"${referringDoctorPhone}\",attendingPhysicianName:\"${attendingPhysicianName}\",attendingPhysicianEmail:\"${attendingPhysicianEmail}\",attendingPhysicianPhone:\"${attendingPhysicianPhone}\",occupationRole:\"${occupationRole}\",occupationEmployer:\"${occupationEmployer}\",occupationEmployerContactPhone:\"${occupationEmployerContactPhone}\",occupationEmployerContactEmail:\"${occupationEmployerContactEmail}\"})
+          mutation {createPatient(userId:"${userId}", patientInput:{title:"${title}",name:"${name}",dob:"${dob}",age:${age},gender:"${gender}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",contactPhone:"${contactPhone}",contactEmail:"${contactEmail}",registrationDate:"${registrationDate}",referralDate:"${referralDate}",expirationDate:"${expirationDate}",referringDoctorName:"${referringDoctorName}",referringDoctorEmail:"${referringDoctorEmail}",referringDoctorPhone:"${referringDoctorPhone}",attendingPhysicianName:"${attendingPhysicianName}",attendingPhysicianEmail:"${attendingPhysicianEmail}",attendingPhysicianPhone:"${attendingPhysicianPhone}",occupationRole:"${occupationRole}",occupationEmployer:"${occupationEmployer}",occupationEmployerContactPhone:"${occupationEmployerContactPhone}",occupationEmployerContactEmail:"${occupationEmployerContactEmail}"})
           {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
         `};
 
@@ -412,7 +411,7 @@ class PatientsPage extends Component {
       occupationEmployerContactPhone = this.context.selectedPatient.occupation.contact.phone;
     }
 
-    const patient = { title, name, dob, age, gender, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, contactPhone, contactEmail, registrationDate, referralDate, expirationDate, attendingPhysicianName, attendingPhysicianEmail, attendingPhysicianPhone, referringDoctorName, referringDoctorEmail, referringDoctorPhone, occupationRole, occupationEmployer, occupationEmployerContactPhone, occupationEmployerContactEmail };
+
     console.log(`
       updating patient...
       title: ${title},
@@ -512,7 +511,7 @@ class PatientsPage extends Component {
 
       const requestBody = {
         query:`
-          mutation {updatePatientField(userId:\"${userId}\",patientId:\"${selectedPatientId}\",field:\"${field}\",query:\"${query}\")
+          mutation {updatePatientField(userId:"${userId}",patientId:"${selectedPatientId}",field:"${field}",query:"${query}")
           {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
         `};
 
@@ -581,7 +580,6 @@ updatePatientConsultantHandler = (event) => {
     consultantDate = new Date().toISOString().slice(0,10);
   }
 
-  const patientConsultant = { consultantDate, patientConsultantReference };
   console.log(`
     adding patient consultant item...
     userId: ${userId},
@@ -656,7 +654,7 @@ updatePatientInsuranceHandler = (event) => {
   let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany.value;
   let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
 
-  const patientInsurance = { insuranceCompany, insuranceNumber, insuranceExpiry, insuranceDescription, insuranceSubscriberCompany, insuranceSubscriberDescription };
+
   console.log(`
     adding patient insurance item...
     userId: ${userId},
@@ -732,7 +730,7 @@ updatePatientNextOfKinHandler = (event) => {
   let nextOfKinPhone = event.target.formGridNextOfKinPhone.value;
   let nextOfKinEmail = event.target.formGridNextOfKinEmail.value;
 
-  const patientNextOfKin = { nextOfKinName, nextOfKinPhone, nextOfKinEmail };
+
   console.log(`
     adding patient nextOfKin item...
     userId: ${userId},
@@ -838,7 +836,7 @@ updatePatientComplaintHandler = (event) => {
       .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
       .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
-  const patientComplaint = { complaintTitle, complaintDate, complaintDescription, complaintAnamnesis, complaintAttachmentName, complaintAttachmentFormat, complaintAttachmentPath };
+
   console.log(`
     adding patient complaint...
     userId: ${userId},
@@ -947,7 +945,7 @@ updatePatientSurveyHandler = (event) => {
       .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
       .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
-  const patientSurvey = { surveyDate, surveyTitle, surveyDescription, surveyAttachmentName, surveyAttachmentFormat, surveyAttachmentPath };
+
   console.log(`
     adding patient survey...
     userId: ${userId},
@@ -1036,7 +1034,6 @@ updatePatientVitalsHandler = (event) => {
   let vitalsUrineType = event.target.formGridVitalsUrineType.value;
   let vitalsUrineValue = event.target.formGridVitalsUrineValue.value;
 
-  const patientVitals = {  };
   console.log(`
     adding patient vitals...
     userId: ${userId},
@@ -1147,7 +1144,6 @@ updatePatientExaminationHandler = (event) => {
       .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
       .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
-  const patientExamination = { examinationArea, examinationGeneral, examinationType, examinationMeasure, examinationValue, examinationAttachmentName, examinationAttachmentFormat, examinationAttachmentPath };
 
   console.log(`
     adding patient examination...
@@ -1262,7 +1258,7 @@ updatePatientHistoryHandler = (event) => {
       .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
       .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
-  const patientHistory = { historyType, historyDate, historyTitle, historyDescription, historyAttachmentName, historyAttachmentFormat, historyAttachmentPath };
+
   console.log(`
     adding patient history...
     userId: ${userId},
@@ -1371,7 +1367,6 @@ updatePatientAllergiesHandler = (event) => {
       .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
       .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
-  const patientAllergies = { allergiesTitle, allergiesType, allergiesDescription, allergiesAttachmentName, allergiesAttachmentFormat, allergiesAttachmentPath };
 
   console.log(`
     adding patient allergies...
@@ -1476,7 +1471,6 @@ updatePatientMedicationHandler = (event) => {
       .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
       .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
-  const patientMedication = { medicationTitle, medicationType, medicationDescription, medicationAttachmentName, medicationAttachmentFormat, medicationAttachmentPath };
 
   console.log(`
     adding patient medication...
@@ -1590,7 +1584,6 @@ updatePatientInvestigationHandler = (event) => {
       .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
       .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
-  const patientInvestigation = { investigationDate, investigationTitle, investigationType, investigationDescription, investigationAttachmentName, investigationAttachmentFormat, investigationAttachmentPath };
 
   console.log(`
     adding patient investigation...
@@ -1700,7 +1693,6 @@ updatePatientDiagnosisHandler = (event) => {
       .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
       .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
-  const patientDiagnosis = { diagnosisDate, diagnosisTitle, diagnosisType, diagnosisDescription, diagnosisAttachmentName, diagnosisAttachmentFormat, diagnosisAttachmentPath };
 
   console.log(`
     adding patient diagnosis...
@@ -1818,8 +1810,6 @@ updatePatientTreatmentHandler = (event) => {
       .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
 
-  const patientTreatment = { treatmentDate, treatmentTitle, treatmentDescription, treatmentDose, treatmentFrequency, treatmentType, treatmentAttachmentName, treatmentAttachmentFormat, treatmentAttachmentPath };
-
   console.log(`
     adding patient treatment...
     userId: ${userId},
@@ -1933,7 +1923,6 @@ updatePatientBillingHandler = (event) => {
       .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
       .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
-  const patientBilling = { billingDate, billingTitle, billingType, billingDescription, billingAmount, billingPaid, billingNotes, billingAttachmentName, billingAttachmentFormat, billingAttachmentPath };
 
   console.log(`
     adding patient billing...
@@ -1954,7 +1943,7 @@ updatePatientBillingHandler = (event) => {
 
     const requestBody = {
       query:`
-        mutation {updatePatientBilling(userId:\"${userId}\", patientId:\"${selectedPatientId}\",patientInput:{billingDate:\"${billingDate}\",billingTitle:\"${billingTitle}\",billingType:\"${billingType}\",billingDescription:\"${billingDescription}\",billingAmount:${billingAmount},billingPaid:${billingPaid},billingNotes:\"${billingNotes}\",billingAttachmentName:\"${billingAttachmentName}\",billingAttachmentFormat:\"${billingAttachmentFormat}\",billingAttachmentPath:\"${billingAttachmentPath}\"})
+        mutation {updatePatientBilling(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{billingDate:"${billingDate}",billingTitle:"${billingTitle}",billingType:"${billingType}",billingDescription:"${billingDescription}",billingAmount:${billingAmount},billingPaid:${billingPaid},billingNotes:"${billingNotes}",billingAttachmentName:"${billingAttachmentName}",billingAttachmentFormat:"${billingAttachmentFormat}",billingAttachmentPath:"${billingAttachmentPath}"})
         {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `
     }
@@ -2270,9 +2259,6 @@ modalConfirmSearchHandler = (event) => {
     }
 
 
-
-    const search = { field, query }
-    console.log("Searching for Patient:  ", JSON.stringify(search));
     this.setState({userAlert: "Searching for Patient:  "});
 
     const requestBody = {
@@ -2326,7 +2312,7 @@ modalConfirmSearchIdHandler = (event) => {
 
   const requestBody = {
     query: `
-      query {getPatientId(userId:\"${userId}\",patientId:\"${patientId}\")
+      query {getPatientId(userId:"${userId}",patientId:"${patientId}")
       {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `}
 
@@ -2363,53 +2349,11 @@ modalConfirmSearchIdHandler = (event) => {
     });
 }
 
-modalConfirmSearchVisitHandler = (event) => {
-  console.log("SearchPatientVisitFormData");
-
-  let userId = this.context.userId;
-  this.setState({ searching: false });
-
-  const requestBody = {
-    query: `
-      {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{_id,title,time,location,date},consultant{date,reference{_id,name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
-    `}
-
-  const token = this.context.token;
-
-  fetch('http://localhost:10000/graphql', {
-    method: 'POST',
-    body: JSON.stringify(requestBody),
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
-    }
-  })
-    .then(res => {
-      if (res.status !== 200 && res.status !== 201) {
-        throw new Error('Failed!');
-      }
-      return res.json();
-    })
-    .then(resData => {
-      console.log("response data... " + JSON.stringify(resData));
-
-      const searchPatients = resData.data.getPatientId;
-
-      this.setState({ searchPatients: searchPatients})
-      console.log("state.searchPatients:  ", this.state.searchPatients);
-      // this.fetchUsers();
-    })
-    .catch(err => {
-      console.log(err);
-      this.setState({userAlert: err});
-    });
-
-}
 
 modalConfirmSearchNameHandler = (event) => {
   console.log("SearchPatientNameFormData:", event.target.formBasicName.value);
 
-  let userId = this.context.userId;
+  // let userId = this.context.userId;
   this.setState({ searching: false });
 
   let patients = this.state.patients;
@@ -2707,7 +2651,7 @@ modalConfirmSearchNameHandler = (event) => {
 
       const requestBody = {
         query: `
-         mutation {deletePatientInsurance (userId:\"${userId}\", patientId:\"${patientId}\",insuranceCompany:\"${props.company}\",insuranceNumber:"${props.number}")
+         mutation {deletePatientInsurance (userId:"${userId}", patientId:"${patientId}",insuranceCompany:"${props.company}",insuranceNumber:"${props.number}")
          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `};
 
@@ -2767,7 +2711,7 @@ modalConfirmSearchNameHandler = (event) => {
 
       const requestBody = {
         query: `
-         mutation {deletePatientConsultant (userId:\"${userId}\", patientId:\"${patientId}\",consultantId:\"${props.reference.id}\",consultantDate:\"${date}\")
+         mutation {deletePatientConsultant (userId:"${userId}", patientId:"${patientId}",consultantId:"${props.reference.id}",consultantDate:"${date}")
          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `};
 
@@ -2799,7 +2743,6 @@ modalConfirmSearchNameHandler = (event) => {
               this.context.patients = this.state.patients;
               const responseAlert = JSON.stringify(resData.data).slice(2,25);
               this.setState({ userAlert: responseAlert})
-              // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientConsultant})
               this.fetchPatients();
 
             })
@@ -2824,7 +2767,7 @@ deletePatientNextOfKinItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientNextOfKin (userId:\"${userId}\", patientId:\"${patientId}\",nextOfKinName:\"${props.name}\")
+       mutation {deletePatientNextOfKin (userId:"${userId}", patientId:"${patientId}",nextOfKinName:"${props.name}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -2856,7 +2799,6 @@ deletePatientNextOfKinItem = (props) => {
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientNextOfKin})
             this.fetchPatients();
 
           })
@@ -2883,7 +2825,7 @@ deletePatientComplaintItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientComplaint (userId:\"${userId}\", patientId:\"${patientId}\",complaintTitle:\"${props.title}\",complaintDate:\"${date}\")
+       mutation {deletePatientComplaint (userId:"${userId}", patientId:"${patientId}",complaintTitle:"${props.title}",complaintDate:"${date}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -2915,7 +2857,6 @@ deletePatientComplaintItem = (props) => {
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientComplaint})
             this.fetchPatients();
 
           })
@@ -2942,7 +2883,7 @@ deletePatientSurveyItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientSurvey (userId:\"${userId}\", patientId:\"${patientId}\",surveyTitle:\"${props.title}\",surveyDate:\"${date}\")
+       mutation {deletePatientSurvey (userId:"${userId}", patientId:"${patientId}",surveyTitle:"${props.title}",surveyDate:"${date}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -2974,7 +2915,6 @@ deletePatientSurveyItem = (props) => {
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientSurvey})
             this.fetchPatients();
 
           })
@@ -3001,7 +2941,7 @@ deletePatientVitalsItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientVitals (userId:\"${userId}\", patientId:\"${patientId}\",vitalsDate:\"${date}\")
+       mutation {deletePatientVitals (userId:"${userId}", patientId:"${patientId}",vitalsDate:"${date}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -3033,7 +2973,6 @@ deletePatientVitalsItem = (props) => {
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientVitals})
             this.fetchPatients();
 
           })
@@ -3060,7 +2999,7 @@ deletePatientExaminationItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientExamination (userId:\"${userId}\", patientId:\"${patientId}\",examinationType:\"${props.type}\",examinationDate:\"${date}\")
+       mutation {deletePatientExamination (userId:"${userId}", patientId:"${patientId}",examinationType:"${props.type}",examinationDate:"${date}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -3092,7 +3031,6 @@ deletePatientExaminationItem = (props) => {
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientExamination})
             this.fetchPatients();
 
           })
@@ -3119,7 +3057,7 @@ deletePatientHistoryItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientHistory (userId:\"${userId}\", patientId:\"${patientId}\",historyTitle:\"${props.title}\",historyDate:\"${date}\")
+       mutation {deletePatientHistory (userId:"${userId}", patientId:"${patientId}",historyTitle:"${props.title}",historyDate:"${date}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -3151,7 +3089,6 @@ deletePatientHistoryItem = (props) => {
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientHistory})
             this.fetchPatients();
 
           })
@@ -3176,7 +3113,7 @@ deletePatientAllergiesItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientAllergies (userId:\"${userId}\", patientId:\"${patientId}\",allergiesTitle:\"${props.title}\",allergiesType:\"${props.type}\")
+       mutation {deletePatientAllergies (userId:"${userId}", patientId:"${patientId}",allergiesTitle:"${props.title}",allergiesType:"${props.type}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -3208,7 +3145,6 @@ deletePatientAllergiesItem = (props) => {
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientAllergies})
             this.fetchPatients();
 
           })
@@ -3233,7 +3169,7 @@ deletePatientMedicationItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientMedication (userId:\"${userId}\", patientId:\"${patientId}\",medicationTitle:\"${props.title}\",medicationType:\"${props.type}\")
+       mutation {deletePatientMedication (userId:"${userId}", patientId:"${patientId}",medicationTitle:"${props.title}",medicationType:"${props.type}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -3264,8 +3200,7 @@ deletePatientMedicationItem = (props) => {
             this.state.patients.push(resData.data.deletePatientMedication);
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientMedication})
+            this.setState({ userAlert: responseAlert});
             this.fetchPatients();
 
           })
@@ -3292,7 +3227,7 @@ deletePatientInvestigationItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientInvestigation (userId:\"${userId}\", patientId:\"${patientId}\",investigationDate:\"${date}\",investigationTitle:\"${props.title}\")
+       mutation {deletePatientInvestigation (userId:"${userId}", patientId:"${patientId}",investigationDate:"${date}",investigationTitle:"${props.title}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -3324,7 +3259,6 @@ deletePatientInvestigationItem = (props) => {
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientInvestigation})
             this.fetchPatients();
 
           })
@@ -3351,7 +3285,7 @@ deletePatientDiagnosisItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientDiagnosis (userId:\"${userId}\",patientId:\"${patientId}\",diagnosisDate:\"${date}\",diagnosisTitle:\"${props.title}\")
+       mutation {deletePatientDiagnosis (userId:"${userId}",patientId:"${patientId}",diagnosisDate:"${date}",diagnosisTitle:"${props.title}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -3382,8 +3316,7 @@ deletePatientDiagnosisItem = (props) => {
             this.state.patients.push(resData.data.deletePatientDiagnosis);
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientDiagnosis})
+            this.setState({ userAlert: responseAlert});
             this.fetchPatients();
 
           })
@@ -3410,7 +3343,7 @@ deletePatientTreatmentItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientTreatment (userId:\"${userId}\", patientId:\"${patientId}\",treatmentDate:\"${date}\",treatmentTitle:\"${props.title}\")
+       mutation {deletePatientTreatment (userId:"${userId}", patientId:"${patientId}",treatmentDate:"${date}",treatmentTitle:"${props.title}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -3441,8 +3374,7 @@ deletePatientTreatmentItem = (props) => {
             this.state.patients.push(resData.data.deletePatientTreatment);
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientTreatment})
+            this.setState({ userAlert: responseAlert});
             this.fetchPatients();
 
           })
@@ -3469,7 +3401,7 @@ deletePatientBillingItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientBilling (userId:\"${userId}\", patientId:\"${patientId}\",billingDate:\"${date}\",billingTitle:\"${props.title}\")
+       mutation {deletePatientBilling (userId:"${userId}", patientId:"${patientId}",billingDate:"${date}",billingTitle:"${props.title}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -3500,8 +3432,7 @@ deletePatientBillingItem = (props) => {
             this.state.patients.push(resData.data.deletePatientBilling);
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientBilling})
+            this.setState({ userAlert: responseAlert});
             this.fetchPatients();
 
           })
@@ -3547,7 +3478,7 @@ deletePatientAttachmentItem = (props) => {
 
     const requestBody = {
       query: `
-       mutation {deletePatientAttachment (userId:\"${userId}\", patientId:\"${patientId}\",attachmentName:\"${props.name}\")
+       mutation {deletePatientAttachment (userId:"${userId}", patientId:"${patientId}",attachmentName:"${props.name}")
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
@@ -3578,8 +3509,7 @@ deletePatientAttachmentItem = (props) => {
             this.state.patients.push(resData.data.deletePatientAttachment);
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientAttachment})
+            this.setState({ userAlert: responseAlert});
             this.fetchPatients();
 
           })
@@ -3622,20 +3552,19 @@ deletePatientNoteItem = (props) => {
             return res.json();
           })
           .then(resData => {
-            let deletedPatient = resData.data.deletePatientNextOfKin;
+            let deletedPatient = resData.data.deletePatientNote;
             console.log(deletedPatient);
 
-            const updatedPatientId = resData.data.deletePatientNextOfKin._id;
+            const updatedPatientId = resData.data.deletePatientNote._id;
             const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
             const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
             const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
             console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
 
-            this.state.patients.push(resData.data.deletePatientNextOfKin);
+            this.state.patients.push(resData.data.deletePatientNote);
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientNextOfKin})
+            this.setState({ userAlert: responseAlert});
             this.fetchPatients();
 
           })
@@ -3678,20 +3607,19 @@ deletePatientTagItem = (props) => {
             return res.json();
           })
           .then(resData => {
-            let deletedPatient = resData.data.deletePatientNextOfKin;
+            let deletedPatient = resData.data.deletePatientTag;
             console.log(deletedPatient);
 
-            const updatedPatientId = resData.data.deletePatientNextOfKin._id;
+            const updatedPatientId = resData.data.deletePatientTag._id;
             const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
             const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
             const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
             console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
 
-            this.state.patients.push(resData.data.deletePatientNextOfKin);
+            this.state.patients.push(resData.data.deletePatientTag);
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.deletePatientNextOfKin})
+            this.setState({ userAlert: responseAlert});
             this.fetchPatients();
 
           })

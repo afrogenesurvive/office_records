@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Accordion from 'react-bootstrap/Accordion';
+// import Accordion from 'react-bootstrap/Accordion';
 import AppointmentNoteList from './AppointmentList/AppointmentNoteList';
 
 import Row from 'react-bootstrap/Row';
@@ -11,11 +11,10 @@ import './PatientDetail.css';
 
 const AppointmentDetail = (props) => {
   const {...appointment} = props.appointment;
-  const authUserId = props.authUserId;
+  // const authUserId = props.authUserId;
   const appointmentDate = new Date(appointment.date.substr(0,10)*1000).toISOString().slice(0,10);
   const appointmentNote = appointment.notes;
   const appointmentPatientContact = appointment.patient.contact;
-  const appointmentPatientConsultant = appointment.patient.consultant;
   console.log("appointmentPatientContact:  ", appointmentPatientContact.phone);
   console.log("AppointmentDetail.props.appointment:  ", {...appointment}, appointmentNote);
   return (

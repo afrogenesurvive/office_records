@@ -31,13 +31,13 @@ const patientConsultantItem = props => (
             <li className="cardLi">
             <p className="userItemHeading"> Name:</p>
             <p className="userItemText">
-            {props.name}
+            {props.referenceName}
             </p>
             </li>
             <li className="cardLi">
             <p className="userItemHeading"> Role:</p>
             <p className="userItemText">
-            {props.role}
+            {props.referenceRole}
             </p>
             </li>
           </ul>

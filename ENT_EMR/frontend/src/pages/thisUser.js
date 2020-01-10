@@ -1,5 +1,5 @@
 import S3 from 'react-aws-s3';
-import S3FileUpload from 'react-s3';
+// import S3FileUpload from 'react-s3';
 import React, { Component } from 'react';
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
 import Container from 'react-bootstrap/Container';
@@ -54,7 +54,7 @@ class ThisUserPage extends Component {
 
   componentDidMount() {
     this.getThisUser();
-    // this.getCreds();
+    this.getCreds();
     if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
@@ -177,7 +177,7 @@ class ThisUserPage extends Component {
 
     const requestBody = {
       query: `
-        mutation {updateUser(userId:\"${userId}\",selectedUserId:\"${userId}\",userInput: {email:\"${email}\",password:\"${password}\",name:\"${name}\",dob:\"${dob}\",addressNumber:${addressNumber},addressStreet:\"${addressStreet}\",addressTown:\"${addressTown}\",addressParish:\"${addressParish}\", addressPostOffice:\"${addressPostOffice}\",phone:\"${phone}\",role:\"${role}\",employmentDate:\"${employmentDate}\",terminationDate:\"${terminationDate}\"})
+        mutation {updateUser(userId:"${userId}",selectedUserId:"${userId}",userInput: {email:"${email}",password:"${password}",name:"${name}",dob:"${dob}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}", addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
@@ -232,7 +232,7 @@ class ThisUserPage extends Component {
 
         const requestBody = {
           query:`
-            mutation{updateUserField(userId:\"${userId}\",selectedUserId:\"${userId}\",field:\"${field}\",query:\"${query}\")
+            mutation{updateUserField(userId:"${userId}",selectedUserId:"${userId}",field:"${field}",query:"${query}")
             {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
           `};
 
@@ -526,7 +526,7 @@ class ThisUserPage extends Component {
 
     const requestBody = {
       query:`
-        mutation{updateUserAttachment(userId:\"${userId}\",selectedUserId:\"${userId}\",userInput:{attachmentName:\"${attachmentName}\",attachmentFormat:\"${attachmentFormat}\",attachmentPath:\"${attachmentPath}\"})
+        mutation{updateUserAttachment(userId:"${userId}",selectedUserId:"${userId}",userInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentPath}"})
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `};
 
@@ -678,7 +678,7 @@ class ThisUserPage extends Component {
 
       const requestBody = {
         query: `
-         mutation{deleteUserAttendance(userId:\"${userId}\",selectedUserId:\"${userId}\",attendanceDate:\"${date}\")
+         mutation{deleteUserAttendance(userId:"${userId}",selectedUserId:"${userId}",attendanceDate:"${date}")
          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `};
 
@@ -736,7 +736,7 @@ class ThisUserPage extends Component {
 
       const requestBody = {
         query: `
-         mutation{deleteUserLeave(userId:\"${userId}\",selectedUserId:\"${userId}\",leaveTitle:\"${props.title}\")
+         mutation{deleteUserLeave(userId:"${userId}",selectedUserId:"${userId}",leaveTitle:"${props.title}")
          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `};
 
@@ -816,7 +816,7 @@ class ThisUserPage extends Component {
 
       const requestBody = {
         query: `
-         mutation{deleteUserAttachment(userId:\"${userId}\",selectedUserId:\"${userId}\",attachmentName:\"${props.name}\")
+         mutation{deleteUserAttachment(userId:"${userId}",selectedUserId:"${userId}",attachmentName:"${props.name}")
          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `};
 
@@ -905,6 +905,7 @@ class ThisUserPage extends Component {
       `);
       this.setState({createPdf: false, pdfData: null})
   }
+
 
 
   componentWillUnmount() {

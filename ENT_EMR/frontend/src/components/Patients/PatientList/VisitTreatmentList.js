@@ -20,7 +20,6 @@ const visitTreatmentList = props => {
         date={visitTreatmentDate}
         type={treatmentItem.type}
         title={treatmentItem.title}
-        type={treatmentItem.type}
         description={treatmentItem.description}
         dose={treatmentItem.dose}
         frequency={treatmentItem.frequency}
