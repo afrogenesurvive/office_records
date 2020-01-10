@@ -160,11 +160,11 @@ module.exports = {
       throw new Error('Unauthenticated!');
     }
     try {
-      const attendanceDate = args.attendanceDate;
+      const attendanceDate = new Date(args.attendanceDate);
       console.log(`
         attendanceDate: ${attendanceDate},
         `);
-      const users = await User.find({'attendance.date': attendanceDate , 'attendance.status': 'present'});
+      const users = await User.find({'attendance.date': attendanceDate, 'attendance.status': ''});
       return users.map(user => {
         return transformUser(user);
       });
@@ -524,12 +524,13 @@ module.exports = {
       //   throw new Error('Not the creator! No edit permission');
       // }
       // else {
-      const attendanceDate = new Date(args.attendanceDate).toISOString();
+      const attendanceDate = args.attendanceDate;
+      // const attendanceDate = new Date(args.attendanceDate).toISOString();
       console.log(`
           attendanceDate: ${attendanceDate}
         `);
 
-        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { attendance: { date: new Date(attendanceDate) }}},{new: true})
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { attendance: { date: attendanceDate }}},{new: true})
         return {
           ...user._doc,
           _id: user.id,

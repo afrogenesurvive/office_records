@@ -38,10 +38,12 @@ return (
     <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="MedicationAttachmentFormat"/>
   </Form.Group>
-  <Form.Group as={Col} controlId="formGridMedicationAttachmentPath">
-    <Form.Label>Attachment Path</Form.Label>
-    <Form.Control type="text" placeholder="MedicationAttachmentPath"/>
-  </Form.Group>
+  {
+  //   <Form.Group as={Col} controlId="formGridAttachmentPath">
+  //   <Form.Label>Path</Form.Label>
+  //   <Form.Control type="string" placeholder="File path"/>
+  // </Form.Group>
+}
   <Form.Group as={Col} controlId="formGridMedicationAttachmentFile">
     <Form.Label>File</Form.Label>
     <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>

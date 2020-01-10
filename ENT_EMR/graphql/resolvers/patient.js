@@ -192,7 +192,7 @@ module.exports = {
       getPatientVisitDate...args: ${util.inspect(args)},
       isAuth: ${req.isAuth},
       `);
-    // 
+    //
     // if (!req.isAuth) {
     //   throw new Error('Unauthenticated!');
     // }

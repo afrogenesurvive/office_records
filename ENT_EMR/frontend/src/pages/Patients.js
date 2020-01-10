@@ -87,9 +87,12 @@ class PatientsPage extends Component {
 
   componentDidMount() {
     this.fetchPatients();
-    if (this.context.user.name === 'admin579'){
+    if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
+    // if (this.context.user.name === 'admin579'){
+    //   this.setState({canDelete: true})
+    // }
   }
 
 
@@ -809,7 +812,8 @@ updatePatientComplaintHandler = (event) => {
   let complaintAnamnesis = event.target.formGridComplaintAnamnesis.value;
   // let complaintAttachmentName = event.target.formGridComplaintAttachmentName.value;
   let complaintAttachmentFormat = event.target.formGridComplaintAttachmentFormat.value;
-  let complaintAttachmentPath = event.target.formGridComplaintAttachmentPath.value;
+  // let complaintAttachmentPath = event.target.formGridComplaintAttachmentPath.value;
+  let complaintAttachmentPath = "uploads/patients/"+selectedPatientId+"/complaints";
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -916,7 +920,8 @@ updatePatientSurveyHandler = (event) => {
   let surveyDescription = event.target.formGridSurveyDescription.value;
   // let surveyAttachmentName = event.target.formGridSurveyAttachmentName.value;
   let surveyAttachmentFormat = event.target.formGridSurveyAttachmentFormat.value;
-  let surveyAttachmentPath = event.target.formGridSurveyAttachmentPath.value;
+  let surveyAttachmentPath = "uploads/patients/"+selectedPatientId+"/surveys";
+  // let surveyAttachmentPath = event.target.formGridSurveyAttachmentPath.value;
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -1117,7 +1122,8 @@ updatePatientExaminationHandler = (event) => {
   let examinationFollowUp = event.target.formGridExaminationFollowUp.value;
   // let examinationAttachmentName = event.target.formGridExaminationAttachmentName.value;
   let examinationAttachmentFormat = event.target.formGridExaminationAttachmentFormat.value;
-  let examinationAttachmentPath = event.target.formGridExaminationAttachmentPath.value;
+  let examinationAttachmentPath = "uploads/patients/"+selectedPatientId+"/examinations";
+  // let examinationAttachmentPath = event.target.formGridExaminationAttachmentPath.value;
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -1231,7 +1237,8 @@ updatePatientHistoryHandler = (event) => {
   let historyDescription = event.target.formGridHistoryDescription.value;
   // let historyAttachmentName = event.target.formGridHistoryAttachmentName.value;
   let historyAttachmentFormat = event.target.formGridHistoryAttachmentFormat.value;
-  let historyAttachmentPath = event.target.formGridHistoryAttachmentPath.value;
+  let historyAttachmentPath = "uploads/patients/"+selectedPatientId+"/history";
+  // let historyAttachmentPath = event.target.formGridHistoryAttachmentPath.value;
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -1339,7 +1346,8 @@ updatePatientAllergiesHandler = (event) => {
   let allergiesDescription = event.target.formGridAllergiesDescription.value;
   // let allergiesAttachmentName = event.target.formGridAllergiesAttachmentName.value;
   let allergiesAttachmentFormat = event.target.formGridAllergiesAttachmentFormat.value;
-  let allergiesAttachmentPath = event.target.formGridAllergiesAttachmentPath.value;
+  let allergiesAttachmentPath = "uploads/patients/"+selectedPatientId+"/allergies";
+  // let allergiesAttachmentPath = event.target.formGridAllergiesAttachmentPath.value;
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -1443,7 +1451,8 @@ updatePatientMedicationHandler = (event) => {
   let medicationDescription = event.target.formGridMedicationDescription.value;
   // let medicationAttachmentName = event.target.formGridMedicationAttachmentName.value;
   let medicationAttachmentFormat = event.target.formGridMedicationAttachmentFormat.value;
-  let medicationAttachmentPath = event.target.formGridMedicationAttachmentPath.value;
+  let medicationAttachmentPath = "uploads/patients/"+selectedPatientId+"/medication";
+  // let medicationAttachmentPath = event.target.formGridMedicationAttachmentPath.value;
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -1556,7 +1565,8 @@ updatePatientInvestigationHandler = (event) => {
   let investigationDescription = event.target.formGridInvestigationDescription.value;
   // let investigationAttachmentName = event.target.formGridInvestigationAttachmentName.value;
   let investigationAttachmentFormat = event.target.formGridInvestigationAttachmentFormat.value;
-  let investigationAttachmentPath = event.target.formGridInvestigationAttachmentPath.value;
+  let investigationAttachmentPath = "uploads/patients/"+selectedPatientId+"/investigation";
+  // let investigationAttachmentPath = event.target.formGridInvestigationAttachmentPath.value;
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -1665,7 +1675,8 @@ updatePatientDiagnosisHandler = (event) => {
   let diagnosisDescription = event.target.formGridDiagnosisDescription.value;
   // let diagnosisAttachmentName = event.target.formGridDiagnosisAttachmentName.value;
   let diagnosisAttachmentFormat = event.target.formGridDiagnosisAttachmentFormat.value;
-  let diagnosisAttachmentPath = event.target.formGridDiagnosisAttachmentPath.value;
+  let diagnosisAttachmentPath = "uploads/patients/"+selectedPatientId+"/diagnosis";
+  // let diagnosisAttachmentPath = event.target.formGridDiagnosisAttachmentPath.value;
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -1781,7 +1792,8 @@ updatePatientTreatmentHandler = (event) => {
   }
   // let treatmentAttachmentName = event.target.formGridTreatmentAttachmentName.value;
   let treatmentAttachmentFormat = event.target.formGridTreatmentAttachmentFormat.value;
-  let treatmentAttachmentPath = event.target.formGridTreatmentAttachmentPath.value;
+  let treatmentAttachmentPath = "uploads/patients/"+selectedPatientId+"/treatment";
+  // let treatmentAttachmentPath = event.target.formGridTreatmentAttachmentPath.value;
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -1896,7 +1908,8 @@ updatePatientBillingHandler = (event) => {
   let billingNotes = event.target.formGridBillingNotes.value;
   // let billingAttachmentName = event.target.formGridBillingAttachmentName.value;
   let billingAttachmentFormat = event.target.formGridBillingAttachmentFormat.value;
-  let billingAttachmentPath = event.target.formGridBillingAttachmentPath.value;
+  let billingAttachmentPath = "uploads/patients/"+selectedPatientId+"/billing";
+  // let billingAttachmentPath = event.target.formGridBillingAttachmentPath.value;
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -2002,7 +2015,8 @@ updatePatientAttachmentHandler = (event) => {
 
     // let attachmentName = event.target.formGridPatientAttachmentName.value;
     let attachmentFormat = event.target.formGridPatientAttachmentFormat.value;
-    let attachmentPath = event.target.formGridPatientAttachmentPath.value;
+    let attachmentPath = "uploads/patients/"+selectedPatientId+"/attachments";
+    // let attachmentPath = event.target.formGridPatientAttachmentPath.value;
     let file = AuthContext._currentValue.file;
 
     console.log(`
@@ -2070,7 +2084,8 @@ updatePatientAttachmentHandler = (event) => {
             this.state.patients.push(resData.data.updatePatientAttachment);
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientAttachment})
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientAttachment})
             this.fetchPatients();
           })
           .catch(err => {
@@ -2141,7 +2156,8 @@ updatePatientNoteHandler = (event) => {
             this.state.patients.push(resData.data.updatePatientNotes);
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientNotes})
+            this.setState({ userAlert: responseAlert})
+            // this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientNotes})
             this.fetchPatients();
           })
           .catch(err => {
@@ -2211,7 +2227,7 @@ updatePatientTagHandler = (event) => {
             this.state.patients.push(resData.data.updatePatientTags);
             this.context.patients = this.state.patients;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientTags})
+            this.setState({ userAlert: responseAlert})
             this.fetchPatients();
           })
           .catch(err => {
@@ -3500,26 +3516,26 @@ deletePatientAttachmentItem = (props) => {
   let userId = this.context.userId;
   let patientId = this.state.selectedPatient._id;
 
-  console.log(`
-    deleting from s3...
-    file.name: ${props.name},
-    `);
-
-  const config = {
-    bucketName: 'ent-emr-bucket',
-    dirName: props.path,
-    region: 'us-east-2',
-    accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-    secretAccessKey: "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",
-  }
-  const ReactS3Client = new S3(config);
-  const filename = props.name;
-  // const attachmentName = newFileName;
+  // console.log(`
+  //   deleting from s3...
+  //   file.name: ${props.name},
+  //   `);
   //
-  S3FileUpload
-  .deleteFile(filename, config)
-  .then(response => console.log(response))
-  .catch(err => console.error(err))
+  //   const config = {
+  //     bucketName: this.context.creds.s3.bucketName,
+  //     dirName: props.path,
+  //     region: this.context.creds.s3.region,
+  //     accessKeyId: this.context.creds.s3.accessKeyId,
+  //     secretAccessKey: this.context.creds.s3.secretAccessKey,
+  //   }
+  // const ReactS3Client = new S3(config);
+  // const filename = props.name;
+  // // const attachmentName = newFileName;
+  // //
+  // S3FileUpload
+  // .deleteFile(filename, config)
+  // .then(response => console.log(response))
+  // .catch(err => console.error(err))
 
   console.log(`
     delete patient Attachment item:

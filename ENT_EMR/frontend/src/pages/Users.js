@@ -1,5 +1,5 @@
 import S3 from 'react-aws-s3';
-import S3FileUpload from 'react-s3';
+// import S3FileUpload from 'react-s3';
 import React, { Component } from 'react';
 // import FileViewer from 'react-file-viewer';
 
@@ -11,9 +11,9 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import TabContainer from 'react-bootstrap/TabContainer';
-import TabContent from 'react-bootstrap/TabContent';
-import TabPane from 'react-bootstrap/TabPane';
+// import TabContainer from 'react-bootstrap/TabContainer';
+// import TabContent from 'react-bootstrap/TabContent';
+// import TabPane from 'react-bootstrap/TabPane';
 import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card';
 
@@ -77,9 +77,12 @@ class UsersPage extends Component {
 
   componentDidMount() {
     this.fetchUsers();
-    if (this.context.user.name === 'admin579'){
+    if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
+    // if (this.context.user.name === 'admin579'){
+    //   this.setState({canDelete: true})
+    // }
   }
 
 
@@ -322,7 +325,7 @@ class UsersPage extends Component {
 
     const requestBody = {
       query: `
-      mutation {updateUser(userId:\"${userId}\",selectedUserId:\"${selectedUserId}\",userInput: {email:\"${email}\",password:\"${password}\",name:\"${name}\",dob:\"${dob}\",addressNumber:${addressNumber},addressStreet:\"${addressStreet}\",addressTown:\"${addressTown}\",addressParish:\"${addressParish}\", addressPostOffice:\"${addressPostOffice}\",phone:\"${phone}\",role:\"${role}\",employmentDate:\"${employmentDate}\",terminationDate:\"${terminationDate}\"})
+      mutation {updateUser(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput: {email:"${email}",password:"${password}",name:"${name}",dob:"${dob}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}", addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
       {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
@@ -349,7 +352,8 @@ class UsersPage extends Component {
         this.context.users = this.state.users;
 
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUser})
+        this.setState({ userAlert: responseAlert})
+        // this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUser})
         this.fetchUsers();
       })
       .catch(err => {
@@ -421,7 +425,7 @@ class UsersPage extends Component {
           this.state.users.push(resData.data.updateUserField);
           this.context.users = this.state.users;
           const responseAlert = JSON.stringify(resData.data).slice(2,25);
-          this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserField})
+          this.setState({ userAlert: responseAlert})
           this.fetchUsers();
         })
         .catch(err => {
@@ -511,7 +515,7 @@ class UsersPage extends Component {
           this.state.users.push(resData.data.updateUserAttendance);
           this.context.users = this.state.users;
           const responseAlert = JSON.stringify(resData.data).slice(2,25);
-          this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserAttendance})
+          this.setState({ userAlert: responseAlert})
           this.fetchUsers();
         })
         .catch(err => {
@@ -543,7 +547,8 @@ class UsersPage extends Component {
 
     // let attachmentName = event.target.formGridAttachmentName.value;
     let attachmentFormat = event.target.formGridAttachmentFormat.value;
-    let attachmentPath = event.target.formGridAttachmentPath.value;
+    let attachmentPath = "uploads/staff/"+selectedUserId+"/attachments";
+    // let attachmentPath = event.target.formGridAttachmentPath.value;
     let file = AuthContext._currentValue.file;
 
     console.log(`
@@ -620,7 +625,7 @@ class UsersPage extends Component {
           this.state.users.push(resData.data.updateUserAttachment);
           this.context.users = this.state.users;
           const responseAlert = JSON.stringify(resData.data).slice(2,25);
-          this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserAttachment})
+          this.setState({ userAlert: responseAlert})
           this.fetchUsers();
         })
         .catch(err => {
@@ -722,7 +727,7 @@ class UsersPage extends Component {
           this.state.users.push(resData.data.updateUserLeave);
           this.context.users = this.state.users;
           const responseAlert = JSON.stringify(resData.data).slice(2,25);
-          this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserLeave})
+          this.setState({ userAlert: responseAlert})
           this.fetchUsers();
         })
         .catch(err => {
@@ -1255,7 +1260,6 @@ deleteUserAttendanceItem = (props) => {
             this.context.users = this.state.users;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserAttendance})
             this.fetchUsers();
 
           })
@@ -1313,7 +1317,6 @@ deleteUserLeaveItem = (props) => {
             this.context.users = this.state.users;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserLeave})
             this.fetchUsers();
 
           })
@@ -1336,26 +1339,26 @@ deleteUserAttachmentItem = (props) => {
     selectedUserId: ${selectedUserId},
     `);
 
-    console.log(`
-      deleting from s3...
-      file.name: ${props.name},
-      `);
-
-    const config = {
-      bucketName: 'ent-emr-bucket',
-      dirName: props.path,
-      region: 'us-east-2',
-      accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-      secretAccessKey: "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",
-    }
-    const ReactS3Client = new S3(config);
-    const filename = props.name;
-    // const attachmentName = newFileName;
+    // console.log(`
+    //   deleting from s3...
+    //   file.name: ${props.name},
+    //   `);
     //
-    S3FileUpload
-    .deleteFile(filename, config)
-    .then(response => console.log(response))
-    .catch(err => console.error(err))
+    //   const config = {
+    //     bucketName: this.context.creds.s3.bucketName,
+    //     dirName: props.path,
+    //     region: this.context.creds.s3.region,
+    //     accessKeyId: this.context.creds.s3.accessKeyId,
+    //     secretAccessKey: this.context.creds.s3.secretAccessKey,
+    //   }
+    // const ReactS3Client = new S3(config);
+    // const filename = props.name;
+    // // const attachmentName = newFileName;
+    // //
+    // S3FileUpload
+    // .deleteFile(filename, config)
+    // .then(response => console.log(response))
+    // .catch(err => console.error(err))
 
 
     const requestBody = {
@@ -1393,7 +1396,6 @@ deleteUserAttachmentItem = (props) => {
             this.context.users = this.state.users;
             const responseAlert = JSON.stringify(resData.data).slice(2,25);
             this.setState({ userAlert: responseAlert})
-            // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserAttachment})
             this.fetchUsers();
 
           })

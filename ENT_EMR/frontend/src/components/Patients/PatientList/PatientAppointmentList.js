@@ -16,6 +16,7 @@ const patientAppointmentList = props => {
         userId={props.authUserId}
         type={appointment.type}
         date={patientAppointmentDate}
+        time={appointment.time}
         title={appointment.title}
         description={appointment.description}
         location={appointment.location}

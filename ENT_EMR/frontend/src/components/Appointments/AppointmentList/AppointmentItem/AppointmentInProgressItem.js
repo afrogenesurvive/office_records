@@ -7,13 +7,13 @@ const appointmentInProgressItem = props => (
   <li key={props.userId} className="users__list-item_master">
     <div>
       <p>
-        Time: {props.time}
+        <span className="bold">Time :</span> {props.time}
       </p>
       <p>
-        Title: {props.title}
+        <span className="bold">Title :</span> {props.title}
       </p>
       <p>
-        Date: {props.date}
+        <span className="bold">Date :</span> {props.inProgressDate}
       </p>
     </div>
   </li>

@@ -1,15 +1,15 @@
-import {parse, stringify} from 'flatted/esm';
+// import {parse, stringify} from 'flatted/esm';
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Accordion from 'react-bootstrap/Accordion';
+// import Accordion from 'react-bootstrap/Accordion';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import Form from 'react-bootstrap/Form';
+// import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import AuthContext from '../../context/auth-context';
+// import AuthContext from '../../context/auth-context';
 
 
 import PatientAppointmentList from './PatientList/PatientAppointmentList';
@@ -89,7 +89,7 @@ const PatientDetail = (props) => {
     <div className="PatientDetailBox1">
 
     <Tabs defaultActiveKey="Demographics" id="uncontrolled-tab-example" className="tab">
-      
+
       <Tab eventKey="Demographics" title="Demographics">
       <Card className="PatientDetailCard">
       <Card.Body>

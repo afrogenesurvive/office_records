@@ -9,7 +9,7 @@ const patientTreatmentList = props => {
     const patientTreatmentDate = new Date(treatment.date.substr(0,10)*1000).toISOString().slice(0,10);
     return (
       <PatientTreatmentItem
-        key={treatment.date}
+        key={treatment.title}
         userId={props.authUserId}
         date={patientTreatmentDate}
         title={treatment.title}
@@ -17,7 +17,6 @@ const patientTreatmentList = props => {
         description={treatment.description}
         dose={treatment.dose}
         frequency={treatment.frequency}
-        type={treatment.type}
         attachment={treatment.attachment}
         canDelete={props.canDelete}
         onDelete={props.onDelete}

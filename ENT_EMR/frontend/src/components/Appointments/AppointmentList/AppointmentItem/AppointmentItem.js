@@ -8,6 +8,10 @@ const appointmentItem = props => (
 
   <li key={props.appointmentId} className="users__list-item_master">
     <div>
+    <h5 className="userItemHeading">Title:</h5>
+    <p className="userItemText">
+      {props.title}
+    </p>
     <h5 className="userItemHeading">Patient:</h5>
     <p className="userItemText">
       {props.patient}

@@ -1,10 +1,10 @@
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
-import Accordion from 'react-bootstrap/Accordion';
+// import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 
 
@@ -13,7 +13,7 @@ import AppointmentInProgressList from '../components/Appointments/AppointmentLis
 
 // import Modal from '../components/Modal/Modal';
 // import Backdrop from '../components/Backdrop/Backdrop';
-import Spinner from '../components/Spinner/Spinner';
+// import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
 import './Sidebar.css';
 
@@ -25,12 +25,12 @@ class SidebarPage extends Component {
 
   static contextType = AuthContext;
 
-  constructor(props) {
-    super(props);
-    // this.appointmentsToday = this.context.appointmentsToday;
-    // this.appointmentsWeekImportant = this.context.appointmentsWeekImportant;
-    // this.appointmentsInprogress = this.context.appointmentsInprogress;
-  }
+  // constructor(props) {
+  //   super(props);
+  //   // this.appointmentsToday = this.context.appointmentsToday;
+  //   // this.appointmentsWeekImportant = this.context.appointmentsWeekImportant;
+  //   // this.appointmentsInprogress = this.context.appointmentsInprogress;
+  // }
 
 
 
@@ -92,7 +92,7 @@ class SidebarPage extends Component {
       </Row>
       <Row className="sidebarRow2">
       <Col md={12} className="apptSidebarCol">
-      <h6 className="apptSidebarTitle">Appointments Today</h6>
+      <h5 className="apptSidebarTitle">Appointments Today</h5>
       {this.context.appointmentsToday === null && (
         <Button variant="outline-warning">
           Check the Appointments page to load
@@ -110,7 +110,7 @@ class SidebarPage extends Component {
       </Row>
       <Row className="apptSidebarRow">
       <Col md={12} className="">
-      <h6 className="apptSidebarTitle">Appointments InProgress</h6>
+      <h5 className="apptSidebarTitle">Appointments InProgress</h5>
       {this.context.appointmentsToday === null && (
         <Button variant="outline-warning">
           Check the Appointments page to load

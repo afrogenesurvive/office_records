@@ -29,6 +29,12 @@ const patientAppointmentItem = props => (
             </p>
             </li>
             <li className="cardLi">
+            <p className="userItemHeading"> Time:</p>
+            <p className="userItemText">
+            {props.time}
+            </p>
+            </li>
+            <li className="cardLi">
             <p className="userItemHeading"> Title:</p>
             <p className="userItemText">
             {props.title}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 // import { NavLink } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion';
 // import AuthContext from '../../context/auth-context';
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
@@ -14,7 +14,6 @@ import './CreateUserForm.css';
 const CreateUserForm = (props) => {
 
   console.log("CreateUserForm...", {...props});
-  // const [startDate, setStartDate] = useState(new Date());
 return (
 <div className="CreateFormContainer">
 <Form onSubmit={props.onConfirm}>
