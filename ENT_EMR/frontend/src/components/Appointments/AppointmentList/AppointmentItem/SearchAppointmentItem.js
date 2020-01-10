@@ -7,9 +7,14 @@ import './UserItem.css';
 const searchAppointmentItem = props => (
   <li key={props.appointmentId} className="users__list-item_master">
     <div>
-      <h1> Title: {props.title}</h1>
       <p>
-        Type: {props.type}
+      <span className="bold">Title :</span> {props.title}
+      </p>
+      <p>
+        <span className="bold">Date :</span> {props.resultDate}
+      </p>
+      <p>
+        <span className="bold">Time :</span> {props.time}
       </p>
 
     </div>

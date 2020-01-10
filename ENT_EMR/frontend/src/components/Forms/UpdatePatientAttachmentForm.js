@@ -27,10 +27,12 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridPatientAttachmentPath">
-    <Form.Label>Path</Form.Label>
-    <Form.Control type="text" placeholder="PatientAttachmentPath"/>
-  </Form.Group>
+  {
+  //   <Form.Group as={Col} controlId="formGridAttachmentPath">
+  //   <Form.Label>Path</Form.Label>
+  //   <Form.Control type="string" placeholder="File path"/>
+  // </Form.Group>
+}
   <Form.Group as={Col} controlId="formGridAttachmentFile">
     <Form.Label>File</Form.Label>
     <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>

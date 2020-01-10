@@ -55,9 +55,12 @@ class ThisUserPage extends Component {
   componentDidMount() {
     this.getThisUser();
     // this.getCreds();
-    if (this.context.user.name === 'admin579'){
+    if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
+    // if (this.context.user.name === 'admin579'){
+    //   this.setState({canDelete: true})
+    // }
   }
 
   startUpdateUserHandler = () => {
@@ -475,7 +478,8 @@ class ThisUserPage extends Component {
 
   // let attachmentName = event.target.formGridAttachmentName.value;
   let attachmentFormat = event.target.formGridAttachmentFormat.value;
-  let attachmentPath = event.target.formGridAttachmentPath.value;
+  let attachmentPath = "uploads/staff/"+userId+"/attachments";
+  // let attachmentPath = event.target.formGridAttachmentPath.value;
   let file = AuthContext._currentValue.file;
 
   console.log(`
@@ -788,26 +792,26 @@ class ThisUserPage extends Component {
       selectedUserId: ${userId},
       `);
 
-      console.log(`
-        deleting from s3...
-        file.name: ${props.name},
-        `);
-
-      const config = {
-        bucketName: 'ent-emr-bucket',
-        dirName: props.path,
-        region: 'us-east-2',
-        accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-        secretAccessKey: "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",
-      }
-      const ReactS3Client = new S3(config);
-      const filename = props.name;
-      // const attachmentName = newFileName;
+      // console.log(`
+      //   deleting from s3...
+      //   file.name: ${props.name},
+      //   `);
       //
-      S3FileUpload
-      .deleteFile(filename, config)
-      .then(response => console.log(response))
-      .catch(err => console.error(err))
+      //   const config = {
+      //     bucketName: this.context.creds.s3.bucketName,
+      //     dirName: props.path,
+      //     region: this.context.creds.s3.region,
+      //     accessKeyId: this.context.creds.s3.accessKeyId,
+      //     secretAccessKey: this.context.creds.s3.secretAccessKey,
+      //   }
+      // const ReactS3Client = new S3(config);
+      // const filename = props.name;
+      // // const attachmentName = newFileName;
+      // //
+      // S3FileUpload
+      // .deleteFile(filename, config)
+      // .then(response => console.log(response))
+      // .catch(err => console.error(err))
 
 
       const requestBody = {

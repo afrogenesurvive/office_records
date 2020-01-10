@@ -7,11 +7,12 @@ const appointmentTodayList = props => {
   console.log("patient Today list props", props.appointmentToday);
   const appointmentToday = props.appointmentToday.map(appointment => {
     const appointmentTodayDate = new Date(appointment.date.substr(0,10)*1000).toISOString().slice(0,10);
+    console.log("appointmentTodayDate", appointmentTodayDate);
     return (
       <AppointmentTodayItem
-        key={appointment.date}
+        key={appointment.title}
         userId={props.authUserId}
-        date={appointmentTodayDate}
+        todayDate={appointmentTodayDate}
         title={appointment.title}
         date={appointment.date}
         time={appointment.time}

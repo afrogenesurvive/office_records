@@ -14,8 +14,9 @@ const AppointmentDetail = (props) => {
   const authUserId = props.authUserId;
   const appointmentDate = new Date(appointment.date.substr(0,10)*1000).toISOString().slice(0,10);
   const appointmentNote = appointment.notes;
+  const appointmentPatientContact = appointment.patient.contact;
   const appointmentPatientConsultant = appointment.patient.consultant;
-  console.log("appointmentPatientConsultant:  ", appointmentPatientConsultant);
+  console.log("appointmentPatientContact:  ", appointmentPatientContact.phone);
   console.log("AppointmentDetail.props.appointment:  ", {...appointment}, appointmentNote);
   return (
     <div className="PatientDetailBox">
@@ -54,10 +55,10 @@ const AppointmentDetail = (props) => {
             <span className="bold">Patient Name :</span> {appointment.patient.name}
           </Card.Text>
           <Card.Text>
-            <span className="bold">Patient Phone :</span> {appointment.patient.contact.phone}
+            <span className="bold">Patient Phone :</span> {appointmentPatientContact.phone}
           </Card.Text>
           <Card.Text>
-            <span className="bold">Patient Email :</span> {appointment.patient.contact.email}
+            <span className="bold">Patient Email :</span> {appointmentPatientContact.email}
           </Card.Text>
           <Card.Text>
             <span className="bold">Description :</span> {appointment.description}
@@ -68,7 +69,7 @@ const AppointmentDetail = (props) => {
           <Card.Text>
             <span className="bold">In-Progress ?</span> {appointment.inProgress}
           </Card.Text>
-          {appointment.important === true &&(
+          {appointment.inProgress === true &&(
             <p>Yes</p>
           )}
           <Card.Text>

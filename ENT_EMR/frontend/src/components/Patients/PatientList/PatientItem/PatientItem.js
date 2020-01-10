@@ -11,9 +11,13 @@ const patientItem = props => (
     <p className="userItemText">
       {props.name}
     </p>
-    <h5 className="userItemHeading"> Reg Date:</h5>
+    <h5 className="userItemHeading"> Age:</h5>
     <p className="userItemText">
-      {props.registrationDate}
+      {props.age}
+    </p>
+    <h5 className="userItemHeading"> Gender:</h5>
+    <p className="userItemText">
+      {props.gender}
     </p>
   </div>
   <div>

@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
@@ -8,9 +8,9 @@ import Accordion from 'react-bootstrap/Accordion';
 import SidebarPage from './Sidebar';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import TabContainer from 'react-bootstrap/TabContainer';
-import TabContent from 'react-bootstrap/TabContent';
-import TabPane from 'react-bootstrap/TabPane';
+// import TabContainer from 'react-bootstrap/TabContainer';
+// import TabContent from 'react-bootstrap/TabContent';
+// import TabPane from 'react-bootstrap/TabPane';
 import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card';
 
@@ -21,7 +21,7 @@ import PdfCreator from '../components/PdfCreator';
 
 import AppointmentList from '../components/Appointments/AppointmentList/AppointmentList';
 import AppointmentDetail from '../components/Appointments/AppointmentDetail';
-import PatientDetail from '../components/Patients/PatientDetail';
+// import PatientDetail from '../components/Patients/PatientDetail';
 import Spinner from '../components/Spinner/Spinner';
 import AuthContext from '../context/auth-context';
 import SearchAppointmentList from '../components/Appointments/AppointmentList/SearchAppointmentList';
@@ -67,7 +67,7 @@ class AppointmentsPage extends Component {
     this.fetchAppointments();
     this.fetchAppointmentToday();
     this.fetchAppointmentInProgress();
-    if (this.context.user.name === 'admin579'){
+    if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
     // this.setState({selectedPatient: this.context.selectedPatient});
@@ -113,7 +113,7 @@ class AppointmentsPage extends Component {
     const title = event.target.formGridTitle.value;
     const type = event.target.formGridType.value;
 
-    const date = event.target.formGridDate.value;
+    let date = event.target.formGridDate.value;
     if (event.target.formGridDateTodayCheckbox.checked === true) {
       date = new Date().toISOString().slice(0,10);
     }
@@ -161,7 +161,7 @@ class AppointmentsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation {createAppointment(userId:\"${userId}\",patientId:\"${selectedPatientId}\",appointmentInput:{title:\"${title}\",type:\"${type}\",date:\"${date}\",time:\"${time}\",seenTime:\"${seenTime}\",checkinTime:\"${checkinTime}\",location:\"${location}\",description:\"${description}\",inProgress:${inProgress},attended:${attended},important:${important},})
+          mutation {createAppointment(userId:"${userId}",patientId:"${selectedPatientId}",appointmentInput:{title:"${title}",type:"${type}",date:"${date}",time:"${time}",seenTime:"${seenTime}",checkinTime:"${checkinTime}",location:"${location}",description:"${description}",inProgress:${inProgress},attended:${attended},important:${important},})
           {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important}}
         `,
     };
@@ -188,14 +188,15 @@ class AppointmentsPage extends Component {
         const responseAlert = JSON.stringify(resData.data).slice(2,15);
         this.setState({userAlert: responseAlert});
 
-        this.setState(prevState => {
-          const updatedAppointments = [...prevState.appointments];
-          updatedAppointments.push(resData.data.createAppointment);
-
-          return { appointments: updatedAppointments };
-        });
+        this.state.appointments.push(resData.data.createAppointment);
+        // this.setState(prevState => {
+        //   const updatedAppointments = [...prevState.appointments];
+        //   updatedAppointments.push(resData.data.createAppointment);
+        //
+        //   return { appointments: updatedAppointments };
+        // });
         this.context.appointments = this.state.appointments;
-        // this.fetchAppointments();
+        this.fetchAppointments();
 
       })
       .catch(err => {
@@ -311,7 +312,7 @@ class AppointmentsPage extends Component {
 
     const requestBody = {
       query: `
-      mutation {updateAppointment(userId:\"${userId}\",appointmentId:\"${appointmentId}\",appointmentInput:{title:\"${title}\",type:\"${type}\",date:\"${date}\",time:\"${time}\",seenTime:\"${seenTime}\",checkinTime:\"${checkinTime}\",location:\"${location}\",description:\"${description}\",inProgress:${inProgress},attended:${attended},important:${important},})
+      mutation {updateAppointment(userId:"${userId}",appointmentId:"${appointmentId}",appointmentInput:{title:"${title}",type:"${type}",date:"${date}",time:"${time}",seenTime:"${seenTime}",checkinTime:"${checkinTime}",location:"${location}",description:"${description}",inProgress:${inProgress},attended:${attended},important:${important},})
       {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
         `
     };
@@ -344,7 +345,7 @@ class AppointmentsPage extends Component {
 
         this.state.appointments.push(resData.data.updateAppointment);
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert, selectedAppointment: resData.data.updateAppointment})
+        this.setState({ userAlert: responseAlert})
         this.fetchAppointments();
 
       })
@@ -389,7 +390,7 @@ class AppointmentsPage extends Component {
 
       const requestBody = {
         query:`
-        mutation {updateAppointmentPatient(userId:\"${userId}\",appointmentId:\"${selectedAppointmentId}\",patientId:\"${selectedPatientId}\")
+        mutation {updateAppointmentPatient(userId:"${userId}",appointmentId:"${selectedAppointmentId}",patientId:"${selectedPatientId}")
         {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title},consultant{reference{_id,name,role}}},inProgress,attended,important}}
         `
       }
@@ -420,7 +421,7 @@ class AppointmentsPage extends Component {
 
           this.state.appointments.push(resData.data.updateAppointmentPatient);
           const responseAlert = JSON.stringify(resData.data).slice(2,25);
-          this.setState({ userAlert: responseAlert, selectedAppointment: resData.data.updateAppointmentPatient})
+          this.setState({ userAlert: responseAlert})
           this.fetchAppointments();
 
         })
@@ -434,6 +435,7 @@ class AppointmentsPage extends Component {
 
 
   modalConfirmUpdateFieldHandler = (event) => {
+    event.preventDefault();
 
     const token = this.context.token;
     const userId = this.context.userId;
@@ -456,7 +458,7 @@ class AppointmentsPage extends Component {
 
       const requestBody = {
         query:`
-        mutation {updateAppointmentField(userId:\"${userId}\",appointmentId:\"${selectedAppointmentId}\",field:\"${field}\",query:\"${query}\")
+        mutation {updateAppointmentField(userId:"${userId}",appointmentId:"${selectedAppointmentId}",field:"${field}",query:"${query}")
         {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
         `};
 
@@ -478,6 +480,10 @@ class AppointmentsPage extends Component {
         .then(resData => {
           console.log("response data... " + JSON.stringify(resData.data.updateAppointmentField));
 
+          const responseAlert = JSON.stringify(resData.data).slice(2,25);
+          this.setState({ userAlert: responseAlert})
+          // this.setState({ userAlert: responseAlert, selectedAppointment: resData.data.updateAppointmentField})
+
           const updatedAppointmentId = resData.data.updateAppointmentField._id;
           const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
           const updatedAppointmentPos = this.state.appointments.indexOf(updatedAppointment);
@@ -486,8 +492,7 @@ class AppointmentsPage extends Component {
 
           this.state.appointments.push(resData.data.updateAppointmentField);
           this.context.appointments = this.state.appointments;
-          const responseAlert = JSON.stringify(resData.data).slice(2,25);
-          this.setState({ userAlert: responseAlert, selectedAppointment: resData.data.updateAppointmentField})
+
           this.fetchAppointments();
         })
         .catch(err => {
@@ -758,10 +763,10 @@ class AppointmentsPage extends Component {
           const responseAlert = JSON.stringify(resData.data).slice(2,15);
           this.setState({userAlert: responseAlert});
 
-          const searchApointments = resData.data.getApointmentId;
+          const searchAppointments = resData.data.getAppointmentDateRange;
 
-          this.setState({ searchApointments: searchApointments})
-          console.log("state.searchApointments:  ", this.state.searchApointments);
+          this.setState({ searchAppointments: searchAppointments})
+          console.log("state.searchApointments:  ", this.state.searchAppointments);
           // this.fetchUsers();
         })
         .catch(err => {
@@ -1057,7 +1062,7 @@ class AppointmentsPage extends Component {
 
     const requestBody = {
       query: `
-          query {getAppointmentField(userId:\"${userId}\",field:\"inProgress\",query:\"true\"){_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+          query {getAppointmentField(userId:"${userId}",field:"inProgress",query:"true"){_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
         `
     };
 

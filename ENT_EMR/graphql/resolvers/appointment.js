@@ -46,7 +46,8 @@ module.exports = {
     }
 
     try {
-      const appointments = await Appointment.find({}).sort({ date: 1 })
+      const appointments = await Appointment.find({})
+      .sort({ date: 1 })
       .populate('patient')
       .populate('patient.consultant');
 
@@ -68,7 +69,8 @@ module.exports = {
     }
 
     try {
-      const appointments = await Appointment.find({}).sort({ date: -1 })
+      const appointments = await Appointment.find({})
+      .sort({ date: -1 })
       .populate('patient')
       .populate('patient.consultant');
 
@@ -147,6 +149,7 @@ module.exports = {
         patient: ${util.inspect(patient)}
         `);
       const appointments = await Appointment.find({patient: patient})
+      .sort({ date: 1 })
       .populate('patient')
       .populate('patient.consultant')
       .populate('patient.appointments');
@@ -175,6 +178,7 @@ module.exports = {
       console.log("startDate:  ", startDate, "endDate:  ", endDate);
 
       const appointments = await Appointment.find({'date': {'$gt' : startDate, '$lt': endDate}})
+      .sort({ date: 1 })
       .populate('patient');
 
         return appointments.map(appointment => {
@@ -197,6 +201,7 @@ module.exports = {
     try {
 
       const appointments = await Appointment.find({'date': {'$eq' : args.date}})
+      .sort({ time: 1 })
       .populate('patient');
 
         return appointments.map(appointment => {
@@ -221,11 +226,12 @@ module.exports = {
       let today = new Date();
       let tomorrow = new Date(Date.now() + 1*24*60*60*1000);
       let yesterday = new Date(Date.now() - 1*24*60*60*1000);
-      console.log("Yesterday:  ", today);
+      console.log("Today:  ", today);
       console.log("Tomorrow:  ",tomorrow);
       console.log("Yesterday:  ",yesterday);
 
-      const appointments = await Appointment.find({'date': {'$gt' : today, '$lt': tomorrow}})
+      const appointments = await Appointment.find({'date': {'$gt' : yesterday, '$lt' : tomorrow}})
+      .sort({ time: 1 })
       .populate('patient');
 
         return appointments.map(appointment => {
@@ -253,6 +259,7 @@ module.exports = {
       console.log("weekLater:  ",weekLater);
 
       const appointments = await Appointment.find({'date': {'$gte' : today, '$lt': weekLater}})
+      .sort({ date: 1 })
       .populate('patient');
 
         return appointments.map(appointment => {
@@ -278,6 +285,7 @@ module.exports = {
       console.log("weekLater:  ",weekLater);
 
       const appointments = await Appointment.find({'date': {'$gte' : today, '$lt': weekLater},important: true})
+      .sort({ date: 1 })
       .populate('patient');
 
         return appointments.map(appointment => {

@@ -11,6 +11,8 @@ const patientList = props => {
         key={patient._id}
         _id={patient._id}
         name={patient.name}
+        age={patient.age}
+        gender={patient.gender}
         registrationDate={patientRegistrationDate}
         onDetail={props.onViewDetail}
       />

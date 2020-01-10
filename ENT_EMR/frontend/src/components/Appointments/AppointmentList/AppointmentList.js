@@ -12,7 +12,7 @@ const appointmentList = props => {
 
     return (
       <AppointmentItem
-        key={appointment._id}
+        key={appointment.title}
         userId={appointment.authUserId}
         _id={appointment._id}
         title={appointment.title}

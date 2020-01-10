@@ -9,9 +9,9 @@ const appointmentInProgressList = props => {
     const appointmentInProgressDate = new Date(appointment.date.substr(0,10)*1000).toISOString().slice(0,10);
     return (
       <AppointmentInProgressItem
-        key={appointment.date}
+        key={appointment.title}
         userId={props.authUserId}
-        date={appointmentInProgressDate}
+        inProgressDate={appointmentInProgressDate}
         title={appointment.title}
         date={appointment.date}
         time={appointment.time}
