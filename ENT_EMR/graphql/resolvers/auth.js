@@ -29,7 +29,6 @@ module.exports = {
   getCreds: async (req) => {
     console.log(`
       retriveing creds...
-      creds: ${JSON.stringify(creds)}
       `);
 
     if (pocketVariables.isAuth !== true) {

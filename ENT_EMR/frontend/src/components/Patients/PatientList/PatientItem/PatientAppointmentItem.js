@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 import './UserItem.css';
 
@@ -14,7 +15,7 @@ const patientAppointmentItem = props => (
             Appointment
           </Card.Title>
 
-          <Card.Text>
+          
           <ul className="cardUl">
             <li className="cardLi">
             <p className="userItemHeading"> Type:</p>
@@ -53,7 +54,14 @@ const patientAppointmentItem = props => (
             </p>
             </li>
           </ul>
-          </Card.Text>
+          
+          <Card.Link href="">
+          { props.canDelete === true && (
+            <Button variant="danger" onClick={props.onDelete.bind(this, props.appointment)}>
+              Delete
+            </Button>
+          )}
+          </Card.Link>
         </Card.Body>
       </Card>
     </div>

@@ -14,7 +14,7 @@ const patientTreatmentItem = props => (
             Treatment
           </Card.Title>
 
-          <Card.Text>
+          
           <ul className="cardUl">
             <li className="cardLi">
             <p className="userItemHeading"> Title:</p>
@@ -71,7 +71,7 @@ const patientTreatmentItem = props => (
             </p>
             </li>
           </ul>
-          </Card.Text>
+          
           <Card.Link href="">
           { props.canDelete === true && (
             <Button variant="danger" onClick={props.onDelete.bind(this, props.treatment)}>

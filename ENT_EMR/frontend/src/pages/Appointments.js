@@ -293,7 +293,6 @@ class AppointmentsPage extends Component {
       important  = this.context.selectedAppointment.important;
     }
 
-    // const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important, };
     console.log(`
         updating appointment...
         title: ${title},

@@ -156,16 +156,16 @@ class PatientsPage extends Component {
       // title.trim().length === 0 ||
       // name.trim().length === 0 ||
       // dob.trim().length === 0 ||
-      // age.trim().length === 0 ||
+      age.trim().length === 0 ||
       // gender.trim().length === 0 ||
-      // addressNumber.trim().length === 0 ||
-      // addressStreet.trim().length === 0 ||
+      addressNumber.trim().length === 0 ||
+      addressStreet.trim().length === 0 ||
       // addressTown.trim().length === 0 ||
       // addressParish.trim().length === 0 ||
       // addressPostOffice.trim().length === 0 ||
-      contactPhone.trim().length === 0
+      contactPhone.trim().length === 0 ||
       // contactEmail.trim().length === 0 ||
-      // registrationDate.trim().length === 0 ||
+      registrationDate.trim().length === 0
       // referralDate.trim().length === 0 ||
       // expirationDate.trim().length === 0 ||
       // attendingPhysicianName.trim().length === 0 ||
@@ -180,8 +180,8 @@ class PatientsPage extends Component {
       // occupationEmployerContactEmail.trim().length === 0
 
     ) {
-      console.log("patient must have at least a Name and Contact Number!!!...Please try again...");
-      this.setState({userAlert: "patient requires Name and Contact Number!!!... Try again..."});
+      console.log("patient must have at least: Name, Age, Contact Number, Street Name & Number and Registration Date!!!...Please try again...");
+      this.setState({userAlert: "patient must have at least: Name, Age, Contact Number, Street Name & Number and Registration Date!!!...Please try again..."});
       return;
     }
 
@@ -216,8 +216,8 @@ class PatientsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation {createPatient(userId:"${userId}", patientInput:{title:"${title}",name:"${name}",dob:"${dob}",age:${age},gender:"${gender}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",contactPhone:"${contactPhone}",contactEmail:"${contactEmail}",registrationDate:"${registrationDate}",referralDate:"${referralDate}",expirationDate:"${expirationDate}",referringDoctorName:"${referringDoctorName}",referringDoctorEmail:"${referringDoctorEmail}",referringDoctorPhone:"${referringDoctorPhone}",attendingPhysicianName:"${attendingPhysicianName}",attendingPhysicianEmail:"${attendingPhysicianEmail}",attendingPhysicianPhone:"${attendingPhysicianPhone}",occupationRole:"${occupationRole}",occupationEmployer:"${occupationEmployer}",occupationEmployerContactPhone:"${occupationEmployerContactPhone}",occupationEmployerContactEmail:"${occupationEmployerContactEmail}"})
-          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+        mutation {createPatient(userId:"${userId}", patientInput:{title:"${title}",name:"${name}",dob:"${dob}",age:${age},gender:"${gender}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",contactPhone:"${contactPhone}",contactEmail:"${contactEmail}",registrationDate:"${registrationDate}",referralDate:"${referralDate}",expirationDate:"${expirationDate}",referringDoctorName:"${referringDoctorName}",referringDoctorEmail:"${referringDoctorEmail}",referringDoctorPhone:"${referringDoctorPhone}",attendingPhysicianName:"${attendingPhysicianName}",attendingPhysicianEmail:"${attendingPhysicianEmail}",attendingPhysicianPhone:"${attendingPhysicianPhone}",occupationRole:"${occupationRole}",occupationEmployer:"${occupationEmployer}",occupationEmployerContactPhone:"${occupationEmployerContactPhone}",occupationEmployerContactEmail:"${occupationEmployerContactEmail}"})
+        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
         `};
 
     const token = this.context.token;
@@ -2693,6 +2693,64 @@ modalConfirmSearchNameHandler = (event) => {
 
   }
 
+  deletePatientAppointmentItem = (props) => {
+
+    let token = this.context.token;
+    let userId = this.context.userId;
+    let patientId = this.state.selectedPatient._id;
+    let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+
+    console.log(`
+      delete patient appointment item:
+      props: ${JSON.stringify(props)},
+      token: ${token},
+      userId: ${userId},
+      patientId: ${patientId},
+      appointment date: ${date},
+      `);
+
+      const requestBody = {
+        query: `
+         mutation {deletePatientAppointment (userId:"${userId}", patientId:"${patientId}",appointmentId:"${props._id}",appointmentDate:"${date}")
+         {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
+      `};
+
+          fetch('http://localhost:10000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token
+            }
+          })
+            .then(res => {
+              if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Failed!');
+              }
+              return res.json();
+            })
+            .then(resData => {
+              let deletedPatient = resData.data.deletePatientAppointment;
+              console.log(deletedPatient);
+
+              const updatedPatientId = resData.data.deletePatientAppointment._id;
+              const updatedPatient = this.state.patients.find(e => e._id === updatedPatientId);
+              const updatedPatientPos = this.state.patients.indexOf(updatedPatient);
+              const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
+              console.log("updatedPatient:  ", JSON.stringify(updatedPatient),"  updatedPatientPos:  ", updatedPatientPos, "  slicedArray:  ", slicedArray);
+
+              this.state.patients.push(resData.data.deletePatientAppointment);
+              this.context.patients = this.state.patients;
+              const responseAlert = JSON.stringify(resData.data).slice(2,25);
+              this.setState({ userAlert: responseAlert})
+              this.fetchPatients();
+
+            })
+            .catch(err => {
+              console.log(err);
+            });
+}
+
   deletePatientConsultantItem = (props) => {
 
     let token = this.context.token;
@@ -3839,6 +3897,7 @@ deletePatientTagItem = (props) => {
                   onGetVisit={this.getPatientVisit}
                   visit={this.context.visit}
                   fetchUsers={this.fetchUsers}
+                  appointmentDelete={this.deletePatientAppointmentItem}
                   consultantDelete={this.deletePatientConsultantItem}
                   insuranceDelete={this.deletePatientInsuranceItem}
                   nextOfKinDelete={this.deletePatientNextOfKinItem}

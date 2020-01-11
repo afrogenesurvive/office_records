@@ -502,7 +502,7 @@ type RootMutation {
     deleteUserAttendance(userId: ID!, selectedUserId: ID!, attendanceDate: String!): User
     deleteUserAttachment(userId: ID!, selectedUserId: ID!, attachmentName: String!): User
 
-    createPatient(userId: ID!, patientInput: PatientInput!): Patient
+    createPatient(userId: ID!, patientInput: PatientInput): Patient
     updatePatient(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientField(userId: ID!, patientId: ID!, field: String!, query: String!): Patient
     updatePatientAppointment(userId: ID!, patientId: ID!, appointmentId: ID!): Patient

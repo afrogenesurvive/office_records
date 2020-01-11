@@ -73,9 +73,9 @@ const PatientDetail = (props) => {
   // if (props.visit) {
   //   visit = props.visit;
   // }
-  const token = props.token;
-  const userId = props.authUserId;
-  const patientId = patient._id;
+  // const token = props.token;
+  // const userId = props.authUserId;
+  // const patientId = patient._id;
 
   console.log("PatientDetail.props.patient:  ", {...patient});
   // console.log("patientExamination[1].date:  ", new Date(patientExamination[1].date.substr(0,10)*1000).toISOString());
@@ -219,6 +219,8 @@ const PatientDetail = (props) => {
       <PatientAppointmentList
       patientAppointment={patientAppointment}
       authUserId={props.authUserId}
+      canDelete={props.canDelete}
+      onDelete={props.appointmentDelete}
       />
       </Tab>
 

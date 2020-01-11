@@ -2,7 +2,6 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Accordion from 'react-bootstrap/Accordion'
 // import FormCheck from 'react-bootstrap/FormCheck'
 // import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
@@ -48,30 +47,19 @@ return (
 
 
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="2" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" onClick={props.onCancel}>Cancel</Button>
 )}
 {props.canCancelProfile && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="5" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  // <Accordion.Toggle as={Button} variant="success" eventKey="2" className="btn" type="submit">
-  // Submit
-  // </Accordion.Toggle>
   <Button variant="success" type="submit">
   Submit
   </Button>
 )}
 
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

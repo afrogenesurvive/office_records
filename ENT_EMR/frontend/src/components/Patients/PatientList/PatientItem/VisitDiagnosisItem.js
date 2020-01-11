@@ -14,7 +14,7 @@ const VisitDiagnosisItem = props => (
             Diagnosis
           </Card.Title>
 
-          <Card.Text>
+          
           <ul className="cardUl">
             <li className="cardLi">
             <p className="userItemHeading"> Title:</p>
@@ -59,7 +59,7 @@ const VisitDiagnosisItem = props => (
             </p>
             </li>
           </ul>
-          </Card.Text>
+          
           <Card.Link href="">
           <Button variant="info" onClick={props.onViewAttachment.bind(this, props.attachment)}>
             View
