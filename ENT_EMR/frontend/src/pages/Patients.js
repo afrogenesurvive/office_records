@@ -222,8 +222,8 @@ class PatientsPage extends Component {
 
     const token = this.context.token;
 
-    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    // fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -450,7 +450,7 @@ class PatientsPage extends Component {
 
     const token = this.context.token;
 
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -515,7 +515,8 @@ class PatientsPage extends Component {
           {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
         `};
 
-      fetch('http://localhost:10000/graphql', {
+
+      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -595,7 +596,8 @@ updatePatientConsultantHandler = (event) => {
       `
     };
 
-      fetch('http://localhost:10000/graphql', {
+
+      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -675,7 +677,8 @@ updatePatientInsuranceHandler = (event) => {
       `
     };
 
-      fetch('http://localhost:10000/graphql', {
+
+      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -748,7 +751,8 @@ updatePatientNextOfKinHandler = (event) => {
       `
     };
 
-      fetch('http://localhost:10000/graphql', {
+
+      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -858,7 +862,8 @@ updatePatientComplaintHandler = (event) => {
       `
     }
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -966,7 +971,8 @@ updatePatientSurveyHandler = (event) => {
       `
     }
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1048,7 +1054,8 @@ updatePatientVitalsHandler = (event) => {
       `
     }
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1170,7 +1177,8 @@ updatePatientExaminationHandler = (event) => {
       `
     }
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1280,7 +1288,8 @@ updatePatientHistoryHandler = (event) => {
       `
     }
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1388,7 +1397,8 @@ updatePatientAllergiesHandler = (event) => {
       `
     }
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1492,7 +1502,8 @@ updatePatientMedicationHandler = (event) => {
       `
     }
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1606,7 +1617,8 @@ updatePatientInvestigationHandler = (event) => {
       `
     }
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1715,7 +1727,8 @@ updatePatientDiagnosisHandler = (event) => {
       `
     }
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1832,7 +1845,8 @@ updatePatientTreatmentHandler = (event) => {
         {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `}
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1948,7 +1962,8 @@ updatePatientBillingHandler = (event) => {
       `
     }
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -2047,7 +2062,8 @@ updatePatientAttachmentHandler = (event) => {
                     {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,date,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
             `}
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -2119,7 +2135,8 @@ updatePatientNoteHandler = (event) => {
               {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
             `}
 
-    fetch('http://localhost:10000/graphql', {
+
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -2190,7 +2207,7 @@ updatePatientTagHandler = (event) => {
     this.setState({userAlert: "adding patient tag"});
 
 
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -2271,7 +2288,7 @@ modalConfirmSearchHandler = (event) => {
 
     const token = this.context.token;
 
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -2318,7 +2335,7 @@ modalConfirmSearchIdHandler = (event) => {
 
   const token = this.context.token;
 
-  fetch('http://localhost:10000/graphql', {
+  fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     method: 'POST',
     body: JSON.stringify(requestBody),
     headers: {
@@ -2437,7 +2454,7 @@ modalConfirmSearchNameHandler = (event) => {
         `
     };
 
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -2486,7 +2503,7 @@ modalConfirmSearchNameHandler = (event) => {
         `
     };
 
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -2536,7 +2553,7 @@ modalConfirmSearchNameHandler = (event) => {
         `
     };
 
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -2594,7 +2611,7 @@ modalConfirmSearchNameHandler = (event) => {
         `
     };
 
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -2655,7 +2672,7 @@ modalConfirmSearchNameHandler = (event) => {
          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `};
 
-          fetch('http://localhost:10000/graphql', {
+          fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -2715,7 +2732,7 @@ modalConfirmSearchNameHandler = (event) => {
          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `};
 
-          fetch('http://localhost:10000/graphql', {
+          fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -2773,7 +2790,7 @@ modalConfirmSearchNameHandler = (event) => {
          {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
       `};
 
-          fetch('http://localhost:10000/graphql', {
+          fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -2829,7 +2846,7 @@ deletePatientNextOfKinItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -2887,7 +2904,7 @@ deletePatientComplaintItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -2945,7 +2962,7 @@ deletePatientSurveyItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3003,7 +3020,7 @@ deletePatientVitalsItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3061,7 +3078,7 @@ deletePatientExaminationItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3119,7 +3136,7 @@ deletePatientHistoryItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3175,7 +3192,7 @@ deletePatientAllergiesItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3231,7 +3248,7 @@ deletePatientMedicationItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3289,7 +3306,7 @@ deletePatientInvestigationItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3347,7 +3364,7 @@ deletePatientDiagnosisItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3405,7 +3422,7 @@ deletePatientTreatmentItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3463,7 +3480,7 @@ deletePatientBillingItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3540,7 +3557,7 @@ deletePatientAttachmentItem = (props) => {
        {_id,title,name,dob,age,gender,address{number,street,town,parish,postOffice},registrationDate,referralDate,expirationDate,attendingPhysician{name,email,phone},referringDoctor{name,email,phone},contact{phone,email},occupation{role,employer,contact{phone,email}},appointments{title,time,location},consultant{date,reference{name,role}},insurance{company,number,description,expiry,subscriber{company,description}},nextOfKin{name,contact{phone,email}},complaints{date,title,description,anamnesis,attachment{name,format,path}},surveys{date,title,description,attachment{name,format,path}},vitals{date,pr,bp1,bp2,rr,temp,ps02,height,weight,bmi,urine{type,value}},examination{date,general,area,type,measure,value,description,followUp,attachment{name,format,path}},history{type,date,title,description,attachment{name,format,path}},allergies{type,title,description,attachment{name,format,path}},medication{title,type,description,attachment{name,format,path}},investigation{date,type,title,description,attachment{name,format,path}},diagnosis{date,type,title,description,attachment{name,format,path}},treatment{date,type,title,description,dose,frequency,attachment{name,format,path}},billing{date,title,type,description,amount,paid,attachment{name,format,path},notes},attachments{name,format,path},notes,tags}}
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3595,7 +3612,7 @@ deletePatientNoteItem = (props) => {
 
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -3650,7 +3667,7 @@ deletePatientTagItem = (props) => {
 
     `};
 
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
