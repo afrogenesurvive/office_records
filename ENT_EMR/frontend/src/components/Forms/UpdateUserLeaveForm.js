@@ -49,27 +49,19 @@ return (
 
 
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="2" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" onClick={props.onCancel}>Cancel</Button>
 )}
 {props.canCancelProfile && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="5" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="2" className="btn" type="submit">
+  <Button variant="primary" type="submit">
   Submit
-  </Accordion.Toggle>
+  </Button>
 )}
 
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

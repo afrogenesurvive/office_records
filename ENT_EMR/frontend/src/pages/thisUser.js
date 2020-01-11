@@ -180,8 +180,8 @@ class ThisUserPage extends Component {
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
-    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    // fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -235,8 +235,8 @@ class ThisUserPage extends Component {
             {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
           `};
 
-        // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-        fetch('http://localhost:10000/graphql', {
+        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+        // fetch('http://localhost:10000/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -320,8 +320,8 @@ class ThisUserPage extends Component {
           {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
-      // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-      fetch('http://localhost:10000/graphql', {
+      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      // fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -419,8 +419,8 @@ class ThisUserPage extends Component {
           {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
-      // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-      fetch('http://localhost:10000/graphql', {
+      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      // fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -529,8 +529,8 @@ class ThisUserPage extends Component {
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `};
 
-    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    // fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -576,8 +576,8 @@ class ThisUserPage extends Component {
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
-    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    // fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -620,8 +620,8 @@ class ThisUserPage extends Component {
         {atlas{user,pw,db},s3{bucketName,region,accessKeyId,secretAccessKey},jwt{encode}}}
         `};
 
-    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-    fetch('http://localhost:10000/graphql', {
+    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    // fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -675,14 +675,14 @@ class ThisUserPage extends Component {
       `);
 
       const requestBody = {
-        query: `
+        query:`
          mutation{deleteUserAttendance(userId:"${userId}",selectedUserId:"${userId}",attendanceDate:"${date}")
          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
-       }
-      `};
+        }
+       `};
 
-          // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-          fetch('http://localhost:10000/graphql', {
+          fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+          // fetch('http://localhost:10000/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -697,7 +697,7 @@ class ThisUserPage extends Component {
               return res.json();
             })
             .then(resData => {
-              let deletedUser = resData.data.deleteUserAttendance;
+              // let deletedUser = resData.data.deleteUserAttendance;
               console.log("resData.data:  ",resData.data.deleteUserAttendance);
 
               const updatedUserId = resData.data.deleteUserAttendance._id;
@@ -717,6 +717,7 @@ class ThisUserPage extends Component {
             })
             .catch(err => {
               console.log(err);
+              this.setState({userAlert: err});
             });
   }
 
@@ -734,13 +735,13 @@ class ThisUserPage extends Component {
       `);
 
       const requestBody = {
-        query: `
+        query:`
          mutation{deleteUserLeave(userId:"${userId}",selectedUserId:"${userId}",leaveTitle:"${props.title}")
          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `};
 
-          // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-          fetch('http://localhost:10000/graphql', {
+          fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+          // fetch('http://localhost:10000/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -755,8 +756,8 @@ class ThisUserPage extends Component {
               return res.json();
             })
             .then(resData => {
-              let deletedUser = resData.data.deleteUserLeave;
-              console.log(deletedUser);
+              // let deletedUser = resData.data.deleteUserLeave;
+              // console.log(deletedUser);
 
               const updatedUserId = resData.data.deleteUserLeave._id;
               const updatedUser = this.state.users.find(e => e._id === updatedUserId);
@@ -769,12 +770,13 @@ class ThisUserPage extends Component {
               const responseAlert = JSON.stringify(resData.data).slice(2,25);
               this.setState({ userAlert: responseAlert})
               // this.setState({ userAlert: responseAlert, selectedUser: resData.data.deleteUserLeave})
-              this.getThisUser();
+              // this.getThisUser();
 
 
             })
             .catch(err => {
               console.log(err);
+              this.setState({userAlert: err});
             });
   }
 
@@ -814,13 +816,13 @@ class ThisUserPage extends Component {
 
 
       const requestBody = {
-        query: `
+        query:`
          mutation{deleteUserAttachment(userId:"${userId}",selectedUserId:"${userId}",attachmentName:"${props.name}")
          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `};
 
-          // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-          fetch('http://localhost:10000/graphql', {
+          fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+          // fetch('http://localhost:10000/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -835,8 +837,8 @@ class ThisUserPage extends Component {
               return res.json();
             })
             .then(resData => {
-              let deletedUser = resData.data.deleteUserAttachment;
-              console.log(deletedUser);
+              // let deletedUser = resData.data.deleteUserAttachment;
+              // console.log(deletedUser);
 
               const updatedUserId = resData.data.deleteUserAttachment._id;
               const updatedUser = this.state.users.find(e => e._id === updatedUserId);
