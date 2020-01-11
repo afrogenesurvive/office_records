@@ -15,7 +15,7 @@ const patientAllergiesItem = props => (
             Allergy
           </Card.Title>
 
-          <Card.Text>
+          
           <ul className="cardUl">
             <li className="cardLi">
             <p className="userItemHeading"> Title:</p>
@@ -54,7 +54,7 @@ const patientAllergiesItem = props => (
             </p>
             </li>
           </ul>
-          </Card.Text>
+          
           <Card.Link href="">
           { props.canDelete === true && (
             <Button variant="danger" onClick={props.onDelete.bind(this, props.allergies)}>

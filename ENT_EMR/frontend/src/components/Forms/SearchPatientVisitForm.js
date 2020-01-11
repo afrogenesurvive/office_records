@@ -1,7 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Accordion from 'react-bootstrap/Accordion'
 // import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
@@ -18,9 +17,7 @@ return (
   </Form.Group>
 
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="10" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
@@ -29,13 +26,6 @@ return (
   </Button>
 )}
 
-{
-// <AuthContext.Consumer>
-// </AuthContext.Consumer>
-
-
-// populate feilds with user object fields
-}
 </Form>
 </div>
 

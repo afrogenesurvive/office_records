@@ -5,14 +5,14 @@ import UpdateUserForm from '../components/Forms/UpdateUserForm';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Accordion from 'react-bootstrap/Accordion';
+
 import Button from 'react-bootstrap/Button';
 import SidebarPage from './Sidebar';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import TabContainer from 'react-bootstrap/TabContainer';
-import TabContent from 'react-bootstrap/TabContent';
-import TabPane from 'react-bootstrap/TabPane';
+
+
+
 import Nav from 'react-bootstrap/Nav';
 
 import AlertBox from '../components/AlertBox';
@@ -25,7 +25,7 @@ import UpdateUserAttachmentForm from '../components/Forms/UpdateUserAttachmentFo
 import UpdateUserLeaveForm from '../components/Forms/UpdateUserLeaveForm';
 
 import ThisUserProfile from '../components/Users/thisUserProfile';
-import Spinner from '../components/Spinner/Spinner';
+
 import AuthContext from '../context/auth-context';
 import './Users.css';
 
@@ -156,7 +156,6 @@ class ThisUserPage extends Component {
     }
 
 
-    const user = { email, password, name, role, dob, phone, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, employmentDate, terminationDate };
     console.log(`
       updating user profile...
       userId: ${userId}
@@ -306,7 +305,7 @@ class ThisUserPage extends Component {
       attendanceDescription = this.context.selectedUser.attendanceDescription;
     }
 
-    const userAttendance = { attendanceDate, attendanceStatus, attendanceDescription }
+
     console.log(`
       adding user attendance item...
       userId: ${userId},
@@ -401,7 +400,7 @@ class ThisUserPage extends Component {
       leaveEndDate = this.context.selectedUser.leaveEndDate;
     }
 
-    const userLeave = { leaveType, leaveTitle, leaveStartDate, leaveEndDate }
+
     console.log(`
       adding user attendance item...
       userId: ${userId},
@@ -557,7 +556,7 @@ class ThisUserPage extends Component {
         this.state.users.push(resData.data.updateUserAttachment);
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        // this.setState({ userAlert: responseAlert})
+        this.setState({ userAlert: responseAlert})
         this.getThisUser();
       })
       .catch(err => {
@@ -636,7 +635,7 @@ class ThisUserPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("resdata..." + JSON.stringify(resData));
+        // console.log("resdata..." + JSON.stringify(resData));
         const creds = resData.data.getCreds;
         if (this.isActive) {
 
@@ -664,7 +663,6 @@ class ThisUserPage extends Component {
 
     let token = this.context.token;
     let userId = this.context.userId;
-    let selectedUserId = this.state.selectedUser._id;
     let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
     console.log(`
@@ -679,7 +677,8 @@ class ThisUserPage extends Component {
       const requestBody = {
         query: `
          mutation{deleteUserAttendance(userId:"${userId}",selectedUserId:"${userId}",attendanceDate:"${date}")
-         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
+       }
       `};
 
           // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {

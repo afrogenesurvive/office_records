@@ -101,9 +101,6 @@ class UsersPage extends Component {
   };
 
   modalConfirmHandler = (event) => {
-    console.log(`
-      event: ${JSON.stringify(event)},
-      `);
 
     console.log("CreateUserFormData:  ", event.target.formGridEmail.value);
 
@@ -139,8 +136,7 @@ class UsersPage extends Component {
       addressTown.trim().length === 0 ||
       addressParish.trim().length === 0 ||
       addressPostOffice.trim().length === 0 ||
-      employmentDate.trim().length === 0 ||
-      terminationDate.trim().length === 0
+      employmentDate.trim().length === 0
     ) {
       console.log("blank fields detected!!!...Please try again...");
       this.setState({userAlert: "blank fields detected!!!...Please try again..."});
@@ -170,15 +166,14 @@ class UsersPage extends Component {
 
     const requestBody = {
       query: `
-          mutation {
-            createUser(userInput: {email:"${email}",password:"${password}",name:"${name}",role:"${role}",dob:"${dob}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}",addressPostOffice:"${addressPostOffice}",phone:"${phone}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
-            {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
-          }
-        `
-    };
+          mutation {createUser(userInput: {email:"${email}",password:"${password}",name:"${name}",dob:"${dob}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}", addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
+          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
+        }
+        `};
 
-    fetch('http://localhost:10000/graphql', {
+
     // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -194,16 +189,17 @@ class UsersPage extends Component {
       })
       .then(resData => {
         console.log("create user response data... " + JSON.stringify(resData.data.createUser));
-        const responseAlert = JSON.stringify(resData.data).slice(0,8);
-        this.setState({userAlert: responseAlert});
 
+        // this.state.users.push(resData.data.createUser)
         this.setState(prevState => {
           const updatedUsers = [...prevState.users];
           updatedUsers.push(resData.data.createUser);
 
           return { users: updatedUsers };
         });
-        this.context.users = this.state.users;
+        this.context.users.push(resData.data.createUser);
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        this.setState({userAlert: responseAlert});
       })
       .catch(err => {
         console.log(err);
@@ -1152,7 +1148,7 @@ modalDeleteHandler = () => {
   const requestBody = {
     query: `
         mutation {
-          deleteUser(userId: ${userId}, selectedUserId: ${selectedUserId})
+          deleteUser(userId: "${userId}", selectedUserId: "${selectedUserId}")
           {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
         }
       `};
@@ -1186,8 +1182,9 @@ modalDeleteHandler = () => {
       const slicedArray = this.state.users.splice(deletedUserPos, 1);
       console.log("deletedUser:  ", JSON.stringify(deletedUser),"  deletedUserPos:  ", deletedUserPos, "  slicedArray:  ", slicedArray);
 
-      this.setState({ deleting: false, selectedUser: null });
-      this.context.selectedUser = null;
+      this.setState({ deleting: false });
+      // this.setState({ deleting: false, selectedUser: null });
+      // this.context.selectedUser = null;
 
       this.fetchUsers();
 

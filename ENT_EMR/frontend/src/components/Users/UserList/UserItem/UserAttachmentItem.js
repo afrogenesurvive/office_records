@@ -15,7 +15,7 @@ const userAttachmentItem = props => (
           Attachment
         </Card.Title>
 
-        <Card.Text>
+        
         <ul className="cardUl">
           <li className="cardLi">
           <p className="userItemHeading"> Name:</p>
@@ -36,7 +36,7 @@ const userAttachmentItem = props => (
           </p>
           </li>
         </ul>
-        </Card.Text>
+        
         <Card.Link href="">
         { props.canDelete === true && (
           <Button variant="danger"  className="listButton" onClick={props.onDelete.bind(this, props.attachment)}>

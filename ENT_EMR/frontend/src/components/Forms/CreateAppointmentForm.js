@@ -3,8 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
-import Alert from 'react-bootstrap/Alert'
-import TimeField from 'react-simple-timefield';
+import Alert from 'react-bootstrap/Alert';
 // import FormCheck from 'react-bootstrap/FormCheck'
 // import { NavLink } from 'react-router-dom';
 import AuthContext from '../../context/auth-context';

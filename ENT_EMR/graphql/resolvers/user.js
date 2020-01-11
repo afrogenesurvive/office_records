@@ -530,7 +530,7 @@ module.exports = {
           attendanceDate: ${attendanceDate}
         `);
 
-        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { attendance: { date: attendanceDate }}},{new: true})
+        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { attendance: { date: new Date(attendanceDate) }}},{new: true})
         return {
           ...user._doc,
           _id: user.id,

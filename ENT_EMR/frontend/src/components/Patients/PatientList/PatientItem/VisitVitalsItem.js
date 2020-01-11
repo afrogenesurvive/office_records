@@ -13,7 +13,7 @@ const VisitVitalsItem = props => (
             Vitals
           </Card.Title>
 
-          <Card.Text>
+          
           <ul className="cardUl">
             <li className="cardLi">
             <p className="userItemHeading"> date:</p>
@@ -88,7 +88,7 @@ const VisitVitalsItem = props => (
             </p>
             </li>
           </ul>
-          </Card.Text>
+          
 
         </Card.Body>
       </Card>

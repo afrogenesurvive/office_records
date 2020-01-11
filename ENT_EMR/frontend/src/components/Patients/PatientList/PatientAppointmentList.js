@@ -16,10 +16,13 @@ const patientAppointmentList = props => {
         userId={props.authUserId}
         type={appointment.type}
         date={patientAppointmentDate}
+        canDelete={props.canDelete}
+        onDelete={props.onDelete}
         time={appointment.time}
         title={appointment.title}
         description={appointment.description}
         location={appointment.location}
+        appointment={appointment}
       />
     );
   });

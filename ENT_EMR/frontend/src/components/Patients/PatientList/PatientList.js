@@ -5,7 +5,11 @@ import './UserList.css';
 
 const patientList = props => {
   const patients = props.patients.map(patient => {
-    const patientRegistrationDate = new Date(patient.registrationDate.substr(0,10)*1000).toISOString().slice(0,10)
+    let patientRegistrationDate = null;
+    if (patient.registrationDate !== null) {
+       patientRegistrationDate = new Date(patient.registrationDate.substr(0,10)*1000).toISOString().slice(0,10)
+    }
+
     return (
       <PatientItem
         key={patient._id}

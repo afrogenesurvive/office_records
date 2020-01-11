@@ -14,7 +14,7 @@ const VisitSurveyItem = props => (
             Survey
           </Card.Title>
 
-          <Card.Text>
+          
           <ul className="cardUl">
             <li className="cardLi">
             <p className="userItemHeading"> Date:</p>
@@ -53,7 +53,7 @@ const VisitSurveyItem = props => (
             </p>
             </li>
           </ul>
-          </Card.Text>
+          
           <Card.Link href="">
           <Button variant="info" onClick={props.onViewAttachment.bind(this, props.attachment)}>
             View

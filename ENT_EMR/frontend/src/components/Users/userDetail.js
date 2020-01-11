@@ -23,7 +23,10 @@ const UserDetail = (props) => {
   const userAttachment = user.attachments;
   // const authSelectedUser = JSON.stringify(props.AuthContext.selectedUser);
   const userEmploymentDate = new Date(user.employmentDate.substr(0,10)*1000).toISOString().slice(0,10);
-  const userTerminationDate = new Date(user.terminationDate.substr(0,10)*1000).toISOString().slice(0,10);
+  let userTerminationDate = user.terminationDate;
+  if (user.terminationDate !== null) {
+    userTerminationDate = new Date(user.terminationDate.substr(0,10)*1000).toISOString().slice(0,10);
+  }
 
   // console.log("user attendance:  ", userAttendance, authSelectedUser.slice(0,5) === '{"_id' , authSelectedUser.slice(0,5));
   console.log("UserDetail.props.authUserId:  ",authUserId, "  UserDetail.props.user:  ", {...user});
@@ -58,10 +61,10 @@ const UserDetail = (props) => {
 
           <Col className="detailCardCol">
             <Card.Text>
-              <span className="bold">Start Date:</span> {userEmploymentDate}
+              <span className="bold">Employment Date:</span> {userEmploymentDate}
             </Card.Text>
             <Card.Text>
-              <span className="bold">Start Date:</span> {userTerminationDate}
+              <span className="bold">Termination Date:</span> {userTerminationDate}
             </Card.Text>
           </Col>
         </Row>

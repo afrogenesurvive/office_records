@@ -13,7 +13,7 @@ const VisitConsultantItem = props => (
             Consultant
           </Card.Title>
 
-          <Card.Text>
+          
           <ul className="cardUl">
             <li className="cardLi">
             <p className="userItemHeading"> Date:</p>
@@ -34,7 +34,7 @@ const VisitConsultantItem = props => (
             </p>
             </li>
           </ul>
-          </Card.Text>
+          
         </Card.Body>
       </Card>
     </div>
