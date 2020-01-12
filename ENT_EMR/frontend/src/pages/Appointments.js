@@ -142,7 +142,7 @@ class AppointmentsPage extends Component {
       return
     }
 
-    // const appointment = { title, type, date, time, seenTime, checkinTime, location, description, inProgress, attended, important };
+
     console.log(`
         creating appointment...
         title: ${title},
@@ -168,8 +168,8 @@ class AppointmentsPage extends Component {
 
     const token = this.context.token;
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-    // fetch('http://localhost:10000/graphql', {
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -318,7 +318,7 @@ class AppointmentsPage extends Component {
 
     const token = this.context.token;
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -393,7 +393,7 @@ class AppointmentsPage extends Component {
         `
       }
 
-      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -459,7 +459,7 @@ class AppointmentsPage extends Component {
         {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
         `};
 
-      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -536,7 +536,7 @@ class AppointmentsPage extends Component {
 
       const token = this.context.token;
 
-      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -584,7 +584,7 @@ class AppointmentsPage extends Component {
 
       const token = this.context.token;
 
-      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -632,7 +632,7 @@ class AppointmentsPage extends Component {
 
       const token = this.context.token;
 
-      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -686,7 +686,7 @@ class AppointmentsPage extends Component {
 
       const token = this.context.token;
 
-      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -735,7 +735,7 @@ class AppointmentsPage extends Component {
 
       const token = this.context.token;
 
-      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -786,7 +786,7 @@ class AppointmentsPage extends Component {
             {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{email,phone},consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
         `};
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -832,7 +832,7 @@ class AppointmentsPage extends Component {
             {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{email,phone},consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
         `};
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -877,7 +877,7 @@ class AppointmentsPage extends Component {
             {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{email,phone},consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
         `};
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -932,7 +932,7 @@ class AppointmentsPage extends Component {
           {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
         `};
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1010,7 +1010,7 @@ class AppointmentsPage extends Component {
         `
     };
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1052,7 +1052,7 @@ class AppointmentsPage extends Component {
         `
     };
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -1096,9 +1096,31 @@ class AppointmentsPage extends Component {
       `);
 
       const pdfData = {
-        title: appointment.title,
-        body: appointment.date,
-      };
+        title: "This pdf is supplied with Appointment data...",
+        appointment: {
+          _id: appointment._id,
+          title: appointment.title,
+          type: appointment.type,
+          date: appointment.date,
+          time: appointment.time,
+          seenTime: appointment.seenTime,
+          checkinTime: appointment.checkinTime,
+          location: appointment.location,
+          description: appointment.description,
+          patient:{
+            _id: appointment.patient._id,
+            name: appointment.patient.name,
+            contact:
+            {
+              email: appointment.patient.contact.email,
+              phone: appointment.patient.contact.phone
+            }},
+              inProgress: appointment.inProgress,
+              attended: appointment.attended,
+              important: appointment.important,
+              notes: appointment.notes
+            }
+        }
 
     this.setState({createPdf: true, pdfData: pdfData})
   }

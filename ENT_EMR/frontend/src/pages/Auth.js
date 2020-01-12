@@ -25,7 +25,14 @@ class AuthPage extends Component {
   //     return { isLogin: !prevState.isLogin };
   //   });
   // };
+  componentDidMount() {
 
+    if (sessionStorage.getItem('login info')) {
+      this.setState({ userAlert: "sesh cookie present" });
+    } else {
+      this.setState({ userAlert: "Alerts shown here" });
+    }
+  }
 
   submitHandler = event => {
     console.log("login function...");
@@ -48,8 +55,8 @@ class AuthPage extends Component {
         }
       `};
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
-    // fetch('http://localhost:10000/graphql', {
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -79,14 +86,14 @@ class AuthPage extends Component {
             resData.data.login.tokenExpiration
           );
 
-          // const sessionStorageLoginInfo = {
-          //   token: resData.data.login.token,
-          //   userId: resData.data.login.userId,
-          //   tokenExpiration: resData.data.login.tokenExpiration
-          // };
+          const sessionStorageLoginInfo = {
+            token: resData.data.login.token,
+            userId: resData.data.login.userId,
+            tokenExpiration: resData.data.login.tokenExpiration
+          };
 
           // sessionStorage.setItem('login info', sessionStorageLoginInfo);
-          // sessionStorage.setItem('login info', JSON.stringify(sessionStorageLoginInfo));
+          sessionStorage.setItem('login info', JSON.stringify(sessionStorageLoginInfo));
 
         }
       })
