@@ -31,10 +31,6 @@ return (
     <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="TreatmentTitle"/>
   </Form.Group>
-  <Form.Group as={Col} controlId="formGridTreatmentType">
-    <Form.Label>Type</Form.Label>
-    <Form.Control type="text" placeholder="TreatmentType"/>
-  </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentDescription">
     <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="3" placeholder="TreatmentDescription"/>

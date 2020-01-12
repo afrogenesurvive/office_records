@@ -14,7 +14,7 @@
   margin-left: 30vw;
   height: 85vh;
   border-radius: 10px;
-  width: 60vw;
+  width: 75vw;
   background: white;
   padding: 2rem;
   overflow: scroll;
@@ -26,4 +26,11 @@
 
 .attachmentViewerCloseButton {
   margin: 1rem;
+}
+
+.attachmentViewer > iframe {
+  display: block;
+  width: 90%;
+  height: 75%;
+  margin: 1rem auto;
 }

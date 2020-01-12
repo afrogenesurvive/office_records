@@ -1,15 +1,16 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import FileViewer from 'react-file-viewer';
+// import FileViewer from 'react-file-viewer';
 
 import "./AttachmentViewer.css"
 
+
+
 const AttachmentViewer = (props) =>{
-  const fileType = props.attachmentType.substr(1,4)
 
   console.log(`
+    attachmentViewer.props: ${JSON.stringify(props)}
     fileType: ${props.attachmentType},
-    also fileType: ${fileType},
     `);
 
 
@@ -20,14 +21,12 @@ return (
     <Button variant="danger" className="attachmentViewerCloseButton" onClick={props.onCloseAttachmentView}>
       close
     </Button>
-    {props.attachmentFile && (
-      <FileViewer
-          fileType={props.attachmentType}
-          filePath={props.attachmentFile}
-      />
-    )}
 
-
+    <a href={props.attachmentFile} target="_blank">
+    <Button variant="success">
+      View the Attachment
+    </Button>
+    </a>
     </div>
   </div>
 )

@@ -18,6 +18,7 @@ class App extends Component {
     token: null,
     userId: null,
     context: this.context,
+    sessionCookiePresent: false,
   };
 
   static contextType = AuthContext;
@@ -34,7 +35,8 @@ class App extends Component {
   logout = () => {
     this.setState({
        token: null,
-       userId: null
+       userId: null,
+       sessionCookiePresent: null
       });
     sessionStorage.clear();
     this.context = {
@@ -65,9 +67,21 @@ class App extends Component {
   };
 
 
-  // componentDidMount() {
-  //
-  // }
+  componentDidMount() {
+    
+    if (sessionStorage.getItem('login info')) {
+
+      let seshStore = sessionStorage.getItem('login info');
+      this.context.token = seshStore.token;
+      this.context.userId = seshStore.userId;
+      this.setState({
+        sessionCookiePresent: true,
+        userId: seshStore.userId,
+        token: seshStore.token,
+        });
+
+    }
+  }
 
   render() {
     return (
