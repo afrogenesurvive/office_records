@@ -6,7 +6,7 @@ import './UserList.css';
 const patientAttachmentsList = props => {
   console.log("patient attachments list props", props.patientAttachments);
   const patientAttachments = props.patientAttachments.map(attachment => {
-
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+attachment.path+"/"+attachment.name+"."+attachment.format;
     return (
       <PatientAttachmentItem
         key={attachment.name}
@@ -18,6 +18,7 @@ const patientAttachmentsList = props => {
         onDelete={props.onDelete}
         attachment={attachment}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });
