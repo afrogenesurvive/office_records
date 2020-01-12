@@ -7,6 +7,7 @@ const patientBillingList = props => {
   console.log("patient billing list props", props.patientBilling);
   const patientBilling = props.patientBilling.map(billing => {
     const patientBillingDate = new Date(billing.date.substr(0,10)*1000).toISOString().slice(0,10);
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+billing.attachment.path+"/"+billing.attachment.name+"."+billing.attachment.format;
     return (
       <PatientBillingItem
         key={billing.date}
@@ -23,6 +24,7 @@ const patientBillingList = props => {
         onDelete={props.onDelete}
         billing={billing}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });

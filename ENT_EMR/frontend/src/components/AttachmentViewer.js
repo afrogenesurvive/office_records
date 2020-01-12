@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-// import FileViewer from 'react-file-viewer';
 
 import "./AttachmentViewer.css"
 
@@ -22,7 +21,7 @@ return (
       close
     </Button>
 
-    <a href={props.attachmentFile} target="_blank">
+    <a href={props.attachmentFile}>
     <Button variant="success">
       View the Attachment
     </Button>

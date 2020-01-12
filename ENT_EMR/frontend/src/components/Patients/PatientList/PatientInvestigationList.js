@@ -7,6 +7,7 @@ const patientInvestigationList = props => {
   console.log("patient investigation list props", props.patientInvestigation);
   const patientInvestigation = props.patientInvestigation.map(investigation => {
     const patientInvestigationDate = new Date(investigation.date.substr(0,10)*1000).toISOString().slice(0,10);
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+investigation.attachment.path+"/"+investigation.attachment.name+"."+investigation.attachment.format;
     return (
       <PatientInvestigationItem
         key={investigation.date}
@@ -20,6 +21,7 @@ const patientInvestigationList = props => {
         onDelete={props.onDelete}
         investigation={investigation}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });

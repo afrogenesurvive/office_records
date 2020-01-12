@@ -14,7 +14,7 @@ const patientHistoryItem = props => (
             History
           </Card.Title>
 
-          
+
           <ul className="cardUl">
             <li className="cardLi">
             <p className="userItemHeading"> Type:</p>
@@ -59,7 +59,7 @@ const patientHistoryItem = props => (
             </p>
             </li>
           </ul>
-          
+
           <Card.Link href="">
           { props.canDelete === true && (
             <Button variant="danger" onClick={props.onDelete.bind(this, props.history)}>
@@ -67,10 +67,15 @@ const patientHistoryItem = props => (
             </Button>
           )}
           </Card.Link>
-          <Card.Link href="">
-          <Button variant="info" onClick={props.onViewAttachment.bind(this, props.attachment)}>
+          <Card.Link href={props.attachmentLink} target="_blank">
+          <Button variant="primary"  className="listButton">
             View
           </Button>
+          {
+          //   <Button variant="primary"  className="listButton" onClick={props.onViewAttachment.bind(this, props.attachment)}>
+          //   View
+          // </Button>
+        }
           </Card.Link>
         </Card.Body>
       </Card>

@@ -6,7 +6,7 @@ import './UserList.css';
 const patientAllergiesList = props => {
   console.log("patient allergies list props", props.patientAllergies);
   const patientAllergies = props.patientAllergies.map(allergies => {
-
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+allergies.attachment.path+"/"+allergies.attachment.name+"."+allergies.attachment.format;
     return (
       <PatientAllergiesItem
         key={allergies.title}
@@ -19,6 +19,7 @@ const patientAllergiesList = props => {
         onDelete={props.onDelete}
         allergies={allergies}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });
