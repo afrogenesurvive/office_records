@@ -26,9 +26,12 @@ return (
     <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="MedicationType"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridMedicationDescription">
     <Form.Label>Description</Form.Label>
-    <Form.Control as="textarea" rows="3" placeholder="MedicationDescription"/>
+    <Form.Control as="textarea" rows="5" placeholder="MedicationDescription"/>
   </Form.Group>
   </Form.Row>
 
@@ -50,28 +53,19 @@ return (
   </Form.Group>
   </Form.Row>
 
+  <Form.Row>
+  {props.canCancel && (
+    <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
+  )}
 
-{props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
-)}
-
-{props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
-)}
+  {props.canConfirm && (
+    <Button variant="primary" className="formButton" type="submit">
+    Submit
+    </Button>
+  )}
+  </Form.Row>
 
 </Form>
-{
-  // <Form.Group as={Col} controlId="formGridMedicationAttachmentName">
-  //   <Form.Label>MedicationAttachmentName</Form.Label>
-  //   <Form.Control type="text" placeholder="MedicationAttachmentName"/>
-  // </Form.Group>
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

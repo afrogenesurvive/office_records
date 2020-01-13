@@ -23,29 +23,19 @@ return (
     <Form.Control type="date" placeholder="TreatmentDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridTreatmentDateTodayCheckbox">
-    <Form.Label>Today's Date?</Form.Label>
+    <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
-  </Form.Group>
-
-  <Form.Group as={Col} controlId="formGridTreatmentTitle">
-    <Form.Label>Title</Form.Label>
-    <Form.Control type="text" placeholder="TreatmentTitle"/>
-  </Form.Group>
-  <Form.Group as={Col} controlId="formGridTreatmentDescription">
-    <Form.Label>Description</Form.Label>
-    <Form.Control as="textarea" rows="3" placeholder="TreatmentDescription"/>
   </Form.Group>
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridTreatmentDose">
-    <Form.Label>Dose</Form.Label>
-    <Form.Control type="text" placeholder="TreatmentDose"/>
+  <Form.Group as={Col} controlId="formGridTreatmentTitle">
+    <Form.Label>Title</Form.Label>
+    <Form.Control type="text" placeholder="TreatmentTitle"/>
   </Form.Group>
-  <Form.Group as={Col} controlId="formGridTreatmentFrequency">
-    <Form.Label>Frequency</Form.Label>
-    <Form.Control type="text" placeholder="TreatmentFrequency"/>
-  </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridTreatmentTypeSelect">
     <Form.Label>Type Options</Form.Label>
     <Form.Control as="select">
@@ -61,7 +51,24 @@ return (
   </Form.Row>
 
   <Form.Row>
+  <Form.Group as={Col} controlId="formGridTreatmentDescription">
+    <Form.Label>Description</Form.Label>
+    <Form.Control as="textarea" rows="5" placeholder="TreatmentDescription"/>
+  </Form.Group>
+  </Form.Row>
 
+  <Form.Row>
+  <Form.Group as={Col} controlId="formGridTreatmentDose">
+    <Form.Label>Dose</Form.Label>
+    <Form.Control type="text" placeholder="TreatmentDose"/>
+  </Form.Group>
+  <Form.Group as={Col} controlId="formGridTreatmentFrequency">
+    <Form.Label>Frequency</Form.Label>
+    <Form.Control type="text" placeholder="TreatmentFrequency"/>
+  </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridTreatmentAttachmentFormat">
     <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="TreatmentAttachmentFormat"/>
@@ -78,28 +85,19 @@ return (
   </Form.Group>
   </Form.Row>
 
+  <Form.Row>
+  {props.canCancel && (
+    <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
+  )}
 
-{props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
-)}
-
-{props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
-)}
+  {props.canConfirm && (
+    <Button variant="primary" className="formButton" type="submit">
+    Submit
+    </Button>
+  )}
+  </Form.Row>
 
 </Form>
-{
-  // <Form.Group as={Col} controlId="formGridTreatmentAttachmentName">
-  //   <Form.Label>TreatmentAttachmentName</Form.Label>
-  //   <Form.Control type="text" placeholder="DiagnosisAttachmentName"/>
-  // </Form.Group>
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

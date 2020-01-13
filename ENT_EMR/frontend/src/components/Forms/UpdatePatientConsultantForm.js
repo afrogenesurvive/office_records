@@ -29,18 +29,17 @@ return (
 
   </Form.Row>
 
+  <Form.Row>
+  {props.canCancel && (
+    <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
+  )}
 
-{props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
-)}
-
-{props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
-)}
+  {props.canConfirm && (
+    <Button variant="primary" className="formButton" type="submit">
+    Submit
+    </Button>
+  )}
+  </Form.Row>
 
 </Form>
 {

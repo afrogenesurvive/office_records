@@ -27,7 +27,9 @@ return (
     <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="Title"/>
   </Form.Group>
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridType">
   <Form.Label>Type</Form.Label>
   <Form.Control type="text" placeholder="Type" />
@@ -45,14 +47,19 @@ return (
   <Form.Control type="date" placeholder="Date" />
 </Form.Group>
 <Form.Group as={Col} controlId="formGridDateTodayCheckbox">
-  <Form.Label>Today's Date?</Form.Label>
+  <Form.Label>Today ?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
 </Form.Group>
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridTime">
   <Form.Label>Scheduled Time</Form.Label>
     <Form.Control type="time" placeholder="Time" />
 </Form.Group>
+</Form.Row>
+
+<Form.Row>
 <Form.Group as={Col} controlId="formGridCheckinTime">
   <Form.Label>Check-in Time</Form.Label>
     <Form.Control type="time" placeholder="CheckinTime" />
@@ -66,9 +73,11 @@ return (
 <Form.Row>
 <Form.Group as={Col} controlId="formGridDescription">
   <Form.Label>Description</Form.Label>
-  <Form.Control as="textarea" rows="2" placeholder="Description" />
+  <Form.Control as="textarea" rows="7" placeholder="Description" />
 </Form.Group>
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridInProgress">
       <Form.Label>In Progress ?</Form.Label>
       <Form.Control as="select">
@@ -94,15 +103,15 @@ return (
             </Form.Group>
 </Form.Row>
 
+<Form.Row>
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="4" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  <Button variant="success" type="submit">Create New</Button>
+    <Button variant="success" className="formButton" type="submit">Create New</Button>
 )}
+</Form.Row>
 
 </Form>
 </div>

@@ -23,10 +23,12 @@ return (
     <Form.Control type="date" placeholder="DiagnosisDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridDiagnosisDateTodayCheckbox">
-    <Form.Label>Today's Date?</Form.Label>
+    <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
+  </Form.Row>
 
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridDiagnosisTitle">
     <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="DiagnosisTitle"/>
@@ -35,9 +37,12 @@ return (
     <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="DiagnosisType"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridDiagnosisDescription">
     <Form.Label>Description</Form.Label>
-    <Form.Control as="textarea" rows="3" placeholder="DiagnosisDescription"/>
+    <Form.Control as="textarea" rows="7" placeholder="DiagnosisDescription"/>
   </Form.Group>
   </Form.Row>
 
@@ -59,28 +64,19 @@ return (
   </Form.Group>
   </Form.Row>
 
+  <Form.Row>
+  {props.canCancel && (
+    <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
+  )}
 
-{props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
-)}
-
-{props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
-)}
+  {props.canConfirm && (
+    <Button variant="primary" className="formButton" type="submit">
+    Submit
+    </Button>
+  )}
+  </Form.Row>
 
 </Form>
-{
-  // <Form.Group as={Col} controlId="formGridDiagnosisAttachmentName">
-  //   <Form.Label>DiagnosisAttachmentName</Form.Label>
-  //   <Form.Control type="text" placeholder="DiagnosisAttachmentName"/>
-  // </Form.Group>
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

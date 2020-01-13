@@ -23,10 +23,12 @@ return (
     <Form.Control type="date" placeholder="ExaminationDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridExaminationDateTodayCheckbox">
-    <Form.Label>Today's Date?</Form.Label>
+    <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
+  </Form.Row>
 
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridExaminationAreaSelect">
     <Form.Label>Area Options</Form.Label>
     <Form.Control as="select">
@@ -41,13 +43,17 @@ return (
     <option>abdomen</option>
     </Form.Control>
   </Form.Group>
+
   <Form.Group as={Col} controlId="formGridExaminationArea">
     <Form.Label>Area</Form.Label>
     <Form.Control type="text" placeholder="ExaminationArea"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridExaminationGeneral">
     <Form.Label>General</Form.Label>
-    <Form.Control type="text" placeholder="ExaminationGeneral"/>
+    <Form.Control as="textarea" rows="5" placeholder="ExaminationGeneral"/>
   </Form.Group>
   </Form.Row>
 
@@ -56,6 +62,9 @@ return (
     <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="ExaminationType"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridExaminationMeasure">
     <Form.Label>Measure</Form.Label>
     <Form.Control type="text" placeholder="ExaminationMeasure"/>
@@ -69,8 +78,11 @@ return (
   <Form.Row>
   <Form.Group as={Col} controlId="formGridExaminationDescription">
     <Form.Label>Description</Form.Label>
-    <Form.Control as="textarea" rows="3" placeholder="ExaminationDescription"/>
+    <Form.Control as="textarea" rows="7" placeholder="ExaminationDescription"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridExaminationFollowUp">
     <Form.Label>FollowUp ?</Form.Label>
     <Form.Control as="select">
@@ -98,28 +110,19 @@ return (
   </Form.Group>
   </Form.Row>
 
+  <Form.Row>
+  {props.canCancel && (
+    <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
+  )}
 
-{props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
-)}
-
-{props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
-)}
+  {props.canConfirm && (
+    <Button variant="primary" className="formButton" type="submit">
+    Submit
+    </Button>
+  )}
+  </Form.Row>
 
 </Form>
-{
-  // <Form.Group as={Col} controlId="formGridExaminationAttachmentName">
-  //   <Form.Label>ExaminationAttachmentName</Form.Label>
-  //   <Form.Control type="text" placeholder="ExaminationAttachmentName"/>
-  // </Form.Group>
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

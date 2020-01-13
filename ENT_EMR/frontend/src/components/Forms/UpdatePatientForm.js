@@ -25,7 +25,9 @@ return (
       <Form.Label>Name</Form.Label>
       <Form.Control type="text" placeholder={patient.name}/>
     </Form.Group>
+    </Form.Row>
 
+<Form.Row>
   <Form.Group as={Col} controlId="formGridDob">
     <Form.Label>D.O.B</Form.Label>
     <Form.Control type="date" placeholder={patient.dob}/>
@@ -34,6 +36,9 @@ return (
     <Form.Label>Age</Form.Label>
     <Form.Control type="number" placeholder={patient.age}/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridGender">
     <Form.Label>Gender</Form.Label>
     <Form.Control as="select">
@@ -48,7 +53,9 @@ return (
     <Form.Label>Email</Form.Label>
     <Form.Control type="email" placeholder={patient.contact.email}/>
   </Form.Group>
+  </Form.Row>
 
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridContactPhone">
     <Form.Label>Phone</Form.Label>
     <Form.Control type="number" placeholder={patient.contact.phone}/>
@@ -64,6 +71,9 @@ return (
     <Form.Label>Street Name</Form.Label>
     <Form.Control type="text" placeholder={patient.address.street}/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridAddressTown">
     <Form.Label>Town</Form.Label>
     <Form.Control type="text" placeholder={patient.address.town}/>
@@ -72,6 +82,9 @@ return (
     <Form.Label>Parish</Form.Label>
     <Form.Control type="text" placeholder={patient.address.parish}/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridAddressPostOffice">
     <Form.Label>Post Office</Form.Label>
     <Form.Control type="text" placeholder={patient.address.postOffice}/>
@@ -84,25 +97,29 @@ return (
     <Form.Control type="date" placeholder={patient.registrationDate}/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridRegistrationDateTodayCheckbox">
-    <Form.Label>Today's Date?</Form.Label>
+    <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
+  </Form.Row>
 
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridReferralDate">
     <Form.Label>Referral Date</Form.Label>
     <Form.Control type="date" placeholder={patient.referralDate}/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridReferralDateTodayCheckbox">
-    <Form.Label>Today's Date?</Form.Label>
+    <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
+  </Form.Row>
 
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridExpirationDate">
     <Form.Label>Expiration Date</Form.Label>
     <Form.Control type="date" placeholder={patient.expirationDate}/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridExpirationDateTodayCheckbox">
-    <Form.Label>Today's Date?</Form.Label>
+    <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
   </Form.Row>
@@ -112,6 +129,9 @@ return (
     <Form.Label>Referring Doctor: Name</Form.Label>
     <Form.Control type="text" placeholder={patient.referringDoctor.name}/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridReferringDoctorEmail">
     <Form.Label>Referring Doctor: Email</Form.Label>
     <Form.Control type="email" placeholder={patient.referringDoctor.email}/>
@@ -127,6 +147,9 @@ return (
     <Form.Label>Attending Physician: Name</Form.Label>
     <Form.Control type="text" placeholder={patient.attendingPhysician.name}/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridAttendingPhysicianEmail">
     <Form.Label>Attending Physician: Email</Form.Label>
     <Form.Control type="email" placeholder={patient.attendingPhysician.email}/>
@@ -146,6 +169,9 @@ return (
     <Form.Label>Employer</Form.Label>
     <Form.Control type="text" placeholder={patient.occupation.employer}/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridOccupationEmployerContactPhone">
     <Form.Label>Employer: Phone</Form.Label>
     <Form.Control type="number" placeholder={patient.occupation.contact.phone}/>
@@ -159,13 +185,17 @@ return (
   </Form.Row>
 
 
+  <Form.Row>
   {props.canCancel && (
-    <Button variant="danger" onClick={props.onCancel}>Cancel</Button>
+    <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
   )}
 
   {props.canConfirm && (
-    <Button variant="success" type="submit">Edit Patient</Button>
+    <Button variant="primary" className="formButton" type="submit">
+    Edit Patient
+    </Button>
   )}
+  </Form.Row>
 
   </Form>
   {

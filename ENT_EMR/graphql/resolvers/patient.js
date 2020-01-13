@@ -1512,11 +1512,10 @@ module.exports = {
     }
 
     try {
-
-      const existingPatientName = await Patient.findOne({ name: args.patientInput.name});
+      const existingPatientName = await Patient.findOne({ name: args.patientInput.name, dob: new Date(args.patientInput.dob), registrationDate: new Date(args.patientInput.registrationDate)});
 
       if (existingPatientName) {
-        throw new Error('Patient w/ that name exists already.');
+        throw new Error('Patient w/ that name, dob & reg date exists already.');
       }
 
       const today = new Date();

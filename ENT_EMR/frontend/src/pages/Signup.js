@@ -99,8 +99,8 @@ class SignupPage extends Component {
         `
     };
 
-    // fetch('http://localhost:10000/graphql', {
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {

@@ -21,44 +21,54 @@ return (
 <Form onSubmit={props.onConfirm}>
 
 <Form.Row>
+<Form.Group as={Col} controlId="formGridAttendanceDateTodayCheckbox">
+  <Form.Label>Today's Date?</Form.Label>
+  <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+</Form.Group>
+</Form.Row>
+
+<Form.Row>
   <Form.Group as={Col} controlId="formGridAttendanceDate">
-    <Form.Label>Date</Form.Label>
+    <Form.Label>Other Date</Form.Label>
     <Form.Control type="date" placeholder="Date"/>
   </Form.Group>
-  <Form.Group as={Col} controlId="formGridAttendanceDateTodayCheckbox">
-    <Form.Label>Today's Date?</Form.Label>
-    <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
-  </Form.Group>
+
   {
     // <DatePicker className="calendarDob"
     //   selected={AuthContext._currentValue.fancyDate}
     //   onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e}}
     // />
   }
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridAttendanceStatus">
     <Form.Label>Status</Form.Label>
     <Form.Control type="text" placeholder="Attendance Status"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridAttendanceDescription">
     <Form.Label>Description</Form.Label>
-    <Form.Control as="textarea" rows="3" placeholder="Attendance Description"/>
+    <Form.Control as="textarea" rows="7" placeholder="Attendance Description"/>
   </Form.Group>
 </Form.Row>
 
+<Form.Row>
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="2" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 {props.canCancelProfile && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="5" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  <Button variant="success" type="submit">Add Attendance</Button>
+  <Button variant="primary" className="formButton" type="submit">
+  Submit
+  </Button>
 )}
+</Form.Row>
 
 </Form>
 {

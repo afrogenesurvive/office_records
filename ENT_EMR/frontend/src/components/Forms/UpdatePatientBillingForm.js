@@ -23,10 +23,12 @@ return (
     <Form.Control type="date" placeholder="BillingDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridBillingDateTodayCheckbox">
-    <Form.Label>Today's Date?</Form.Label>
+    <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
+  </Form.Row>
 
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridBillingTitle">
     <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="BillingTitle"/>
@@ -35,9 +37,12 @@ return (
     <Form.Label>Type</Form.Label>
     <Form.Control type="text" placeholder="BillingType"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridBillingDescription">
     <Form.Label>Description</Form.Label>
-    <Form.Control as="textarea" rows="3" placeholder="BillingDescription"/>
+    <Form.Control as="textarea" rows="7" placeholder="BillingDescription"/>
   </Form.Group>
   </Form.Row>
 
@@ -53,9 +58,12 @@ return (
           <option>false</option>
         </Form.Control>
       </Form.Group>
+      </Form.Row>
+
+      <Form.Row>
       <Form.Group as={Col} controlId="formGridBillingNotes">
         <Form.Label>Notes</Form.Label>
-        <Form.Control as="textarea" rows="3" placeholder="BillingNotes"/>
+        <Form.Control as="textarea" rows="5" placeholder="BillingNotes"/>
       </Form.Group>
 
   </Form.Row>
@@ -78,18 +86,17 @@ return (
   </Form.Group>
   </Form.Row>
 
+  <Form.Row>
+  {props.canCancel && (
+    <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
+  )}
 
-{props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
-)}
-
-{props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
-)}
+  {props.canConfirm && (
+    <Button variant="primary" className="formButton" type="submit">
+    Submit
+    </Button>
+  )}
+  </Form.Row>
 
 </Form>
 {

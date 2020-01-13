@@ -12,7 +12,7 @@ import VisitComplaintList from './PatientList/VisitComplaintList';
 import VisitExaminationList from './PatientList/VisitExaminationList';
 import VisitSurveyList from './PatientList/VisitSurveyList';
 import VisitVitalsList from './PatientList/VisitVitalsList';
-import VisitHistoryList from './PatientList/VisitHistoryList';
+// import VisitHistoryList from './PatientList/VisitHistoryList';
 import VisitInvestigationList from './PatientList/VisitInvestigationList';
 import VisitDiagnosisList from './PatientList/VisitDiagnosisList';
 import VisitTreatmentList from './PatientList/VisitTreatmentList';
@@ -44,7 +44,7 @@ const PatientVisit = (props) => {
   const examination = visit.examination;
   const survey = visit.survey;
   const vitals = visit.vitals;
-  const history = visit.history;
+  // const history = visit.history;
   const investigation = visit.investigation;
   const diagnosis = visit.diagnosis;
   const treatment = visit.treatment;
@@ -137,20 +137,22 @@ const PatientVisit = (props) => {
       </Card.Body>
       </Card>
       </Tab>
-      <Tab eventKey="History" title="History">
-      <Card className="PatientDetailCard">
-      <Card.Body>
-      <Card.Text>
-        History
-      </Card.Text>
-      <VisitHistoryList
-        history={history}
-        authUserId={props.authUserId}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Card.Body>
-      </Card>
-      </Tab>
+      {
+        // <Tab eventKey="History" title="History">
+        // <Card className="PatientDetailCard">
+        // <Card.Body>
+        // <Card.Text>
+        //   History
+        // </Card.Text>
+        // <VisitHistoryList
+        //   history={history}
+        //   authUserId={props.authUserId}
+        //   onViewAttachment={props.onViewAttachment}
+        //   />
+        // </Card.Body>
+        // </Card>
+        // </Tab>
+      }
       <Tab eventKey="Investigation" title="Investigation">
       <Card className="PatientDetailCard">
       <Card.Body>

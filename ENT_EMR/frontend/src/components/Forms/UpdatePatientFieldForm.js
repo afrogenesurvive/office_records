@@ -33,25 +33,35 @@ return (
 <option>referringDoctor.name</option>
 </Form.Control>
 </Form.Group>
+</Form.Row>
+
+<Form.Row>
   <Form.Group as={Col} controlId="formGridField">
     <Form.Label>Field</Form.Label>
     <Form.Control type="text" placeholder="Field"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridQuery">
     <Form.Label>Query</Form.Label>
-    <Form.Label>Date Format YYYY-MM-DD</Form.Label>
+    <Form.Label>Date Format: ( YYYY-MM-DD )</Form.Label>
     <Form.Control type="text" placeholder="Query"/>
   </Form.Group>
 </Form.Row>
 
 
+<Form.Row>
 {props.canCancel && (
-  <Button variant="danger" onClick={props.onCancel}>Cancel</Button>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  <Button variant="success" type="submit">Edit Patient Field</Button>
+  <Button variant="primary" className="formButton" type="submit">
+  Edit Patient
+  </Button>
 )}
+</Form.Row>
 
 </Form>
 </div>

@@ -22,18 +22,25 @@ return (
     <Form.Label>Company</Form.Label>
     <Form.Control type="text" placeholder="insuranceCompany"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridInsuranceNumber">
     <Form.Label>Number</Form.Label>
     <Form.Control type="number" placeholder="insuranceNumber"/>
-  </Form.Group>
-  <Form.Group as={Col} controlId="formGridInsuranceDescription">
-    <Form.Label>Description</Form.Label>
-    <Form.Control type="text" placeholder="insuranceDescription"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridInsuranceExpiry">
     <Form.Label>Expiry</Form.Label>
     <Form.Control type="date" placeholder="insuranceExpiry"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
+  <Form.Group as={Col} controlId="formGridInsuranceDescription">
+    <Form.Label>Description</Form.Label>
+    <Form.Control as="textarea" rows="5" placeholder="insuranceDescription"/>
+  </Form.Group>
+
 
 </Form.Row>
 
@@ -43,31 +50,29 @@ return (
   <Form.Label>Subscriber Company</Form.Label>
   <Form.Control type="text" placeholder="insuranceSubscriberCompany"/>
 </Form.Group>
+</Form.Row>
+
+<Form.Row>
 <Form.Group as={Col} controlId="formGridInsuranceSubscriberDescription">
   <Form.Label>Description</Form.Label>
-  <Form.Control tas="textarea" rows="3" placeholder="insuranceSubscriberDescription"/>
+  <Form.Control tas="textarea" rows="5" placeholder="insuranceSubscriberDescription"/>
 </Form.Group>
 
 </Form.Row>
 
-
+<Form.Row>
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
+  <Button variant="primary" className="formButton" type="submit">
   Submit
-  </Accordion.Toggle>
+  </Button>
 )}
+</Form.Row>
 
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

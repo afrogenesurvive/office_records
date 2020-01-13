@@ -23,23 +23,30 @@ return (
     <Form.Control type="date" placeholder="ComplaintDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridComplaintDateTodayCheckbox">
-    <Form.Label>Today's Date?</Form.Label>
+    <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
+  </Form.Row>
 
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridComplaintTitle">
     <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="ComplaintTitle"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridComplaintDescription">
     <Form.Label>Description</Form.Label>
-    <Form.Control as="textarea" rows="3" placeholder="ComplaintDescription"/>
+    <Form.Control as="textarea" rows="7" placeholder="ComplaintDescription"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridComplaintAnamnesis">
     <Form.Label>Anamnesis</Form.Label>
-    <Form.Control as="textarea" rows="3" placeholder="ComplaintAnamnesis"/>
+    <Form.Control as="textarea" rows="7" placeholder="ComplaintAnamnesis"/>
   </Form.Group>
-
   </Form.Row>
 
   <Form.Row>
@@ -60,18 +67,17 @@ return (
   </Form.Group>
   </Form.Row>
 
+  <Form.Row>
+  {props.canCancel && (
+    <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
+  )}
 
-{props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
-)}
-
-{props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
-)}
+  {props.canConfirm && (
+    <Button variant="primary" className="formButton" type="submit">
+    Submit
+    </Button>
+  )}
+  </Form.Row>
 
 </Form>
 {
