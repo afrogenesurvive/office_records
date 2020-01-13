@@ -22,7 +22,9 @@ return (
     <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder={appointment.title}/>
   </Form.Group>
+  </Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridType">
   <Form.Label>Type</Form.Label>
   <Form.Control type="text" placeholder={appointment.type} />
@@ -40,14 +42,19 @@ return (
   <Form.Control type="date" placeholder={appointment.date} />
 </Form.Group>
 <Form.Group as={Col} controlId="formGridDateTodayCheckbox">
-  <Form.Label>Today's Date?</Form.Label>
+  <Form.Label>Today ?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
 </Form.Group>
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridTime">
   <Form.Label>Scheduled Time</Form.Label>
     <Form.Control type="time" placeholder={appointment.time}/>
 </Form.Group>
+</Form.Row>
+
+<Form.Row>
 <Form.Group as={Col} controlId="formGridCheckinTime">
   <Form.Label>Check-in Time</Form.Label>
     <Form.Control type="time" placeholder={appointment.checkinTime}/>
@@ -61,9 +68,11 @@ return (
 <Form.Row>
 <Form.Group as={Col} controlId="formGridDescription">
   <Form.Label>Description</Form.Label>
-  <Form.Control as="textarea" rows="2" placeholder={appointment.description} />
+  <Form.Control as="textarea" rows="7" placeholder={appointment.description} />
 </Form.Group>
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridInProgress">
       <Form.Label>In Progress ?</Form.Label>
       <Form.Control as="select">
@@ -89,17 +98,17 @@ return (
             </Form.Group>
 </Form.Row>
 
+<Form.Row>
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="2" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="2" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
+  <Button variant="primary" className="formButton" type="submit">
+  Edit Appointment
+  </Button>
 )}
+</Form.Row>
 
 </Form>
 {

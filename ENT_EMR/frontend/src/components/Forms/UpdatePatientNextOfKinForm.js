@@ -22,6 +22,9 @@ return (
     <Form.Label>Name</Form.Label>
     <Form.Control type="text" placeholder="NextOfKinName"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridNextOfKinPhone">
     <Form.Label>Phone</Form.Label>
     <Form.Control type="number" placeholder="NextOfKinPhone"/>
@@ -33,24 +36,19 @@ return (
 
 </Form.Row>
 
-
+<Form.Row>
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
+  <Button variant="primary" className="formButton" type="submit">
   Submit
-  </Accordion.Toggle>
+  </Button>
 )}
+</Form.Row>
 
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

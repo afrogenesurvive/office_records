@@ -180,8 +180,8 @@ class ThisUserPage extends Component {
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
-    // fetch('http://localhost:10000/graphql', {
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -236,7 +236,7 @@ class ThisUserPage extends Component {
           `};
 
 
-        fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+        fetch('http://localhost:10000/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
@@ -321,7 +321,7 @@ class ThisUserPage extends Component {
         `};
 
 
-      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -420,7 +420,7 @@ class ThisUserPage extends Component {
         `};
 
 
-      fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+      fetch('http://localhost:10000/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {
@@ -530,7 +530,7 @@ class ThisUserPage extends Component {
       `};
 
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -577,7 +577,7 @@ class ThisUserPage extends Component {
         `};
 
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -620,7 +620,7 @@ class ThisUserPage extends Component {
         `};
 
 
-    fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+    fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -681,7 +681,7 @@ class ThisUserPage extends Component {
        `};
 
 
-          fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+          fetch('http://localhost:10000/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -739,7 +739,7 @@ class ThisUserPage extends Component {
       `};
 
 
-          fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+          fetch('http://localhost:10000/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -820,7 +820,7 @@ class ThisUserPage extends Component {
       `};
 
 
-          fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
+          fetch('http://localhost:10000/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {

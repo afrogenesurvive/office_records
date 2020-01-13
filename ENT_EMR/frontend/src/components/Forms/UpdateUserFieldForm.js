@@ -32,37 +32,38 @@ return (
     <option>terminationDate</option>
   </Form.Control>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
     <Form.Group as={Col} controlId="formGridField">
     <Form.Label>Field</Form.Label>
     <Form.Control type="text" placeholder="Query"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridQuery">
     <Form.Label>Query</Form.Label>
-    <Form.Label>Date Format YYYY-MM-DD</Form.Label>
+    <Form.Label> (Date Format: YYYY-MM-DD) </Form.Label>
     <Form.Control type="text" placeholder="Query"/>
   </Form.Group>
 </Form.Row>
 
 
+<Form.Row>
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="2" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 {props.canCancelProfile && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="5" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  // <Accordion.Toggle as={Button} variant="success" eventKey="2" className="btn" type="submit">
-  // Submit
-  // </Accordion.Toggle>
-  <Button variant="success" type="submit">
+  <Button variant="primary" className="formButton" type="submit">
   Submit
   </Button>
 )}
+</Form.Row>
 
 </Form>
 {

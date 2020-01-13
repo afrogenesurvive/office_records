@@ -43,7 +43,9 @@ return (
   //   <Form.Control type="text" placeholder={user.role}/>
   // </Form.Group>
 }
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridPhone">
   <Form.Label>Phone</Form.Label>
   <Form.Control type="number" placeholder={user.phone}/>
@@ -62,22 +64,26 @@ return (
   //   onChange={date => setStartDate(date)}
   // />
 }
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridEmploymentDate">
   <Form.Label>Employment Date</Form.Label>
   <Form.Control type="date" placeholder={user.employmentDate}/>
 </Form.Group>
 <Form.Group as={Col} controlId="formGridEmploymentDateTodayCheckbox">
-  <Form.Label>Today's Date</Form.Label>
+  <Form.Label>Today ?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
 </Form.Group>
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridTerminationDate">
   <Form.Label>Termination Date</Form.Label>
   <Form.Control type="date" placeholder={user.terminationDate}/>
 </Form.Group>
 <Form.Group as={Col} controlId="formGridTerminationDateTodayCheckbox">
-  <Form.Label>Today's Date</Form.Label>
+  <Form.Label>Today ?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
 </Form.Group>
 </Form.Row>
@@ -93,7 +99,9 @@ return (
   <Form.Label>Street Name</Form.Label>
   <Form.Control type="text" placeholder={user.address.street}/>
 </Form.Group>
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridAddressTown">
   <Form.Label>Town</Form.Label>
   <Form.Control type="text" placeholder={user.address.town}/>
@@ -111,19 +119,20 @@ return (
 </Form.Group>
 </Form.Row>
 
-
+<Form.Row>
 {props.canCancel && (
-  <Button variant="danger" onClick={props.onCancel}>Cancel</Button>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 {props.canCancelProfile && (
-  <Button variant="danger" onClick={props.onCancel}>Cancel</Button>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  <Button variant="primary" type="submit">
+  <Button variant="primary" className="formButton" type="submit">
   Submit
   </Button>
 )}
+</Form.Row>
 
 </Form>
 </div>

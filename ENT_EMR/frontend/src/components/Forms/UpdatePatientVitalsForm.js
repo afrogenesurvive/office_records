@@ -23,14 +23,19 @@ return (
     <Form.Control type="date" placeholder="VitalsDate"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridVitalsDateTodayCheckbox">
-    <Form.Label>Today's Date?</Form.Label>
+    <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
+  </Form.Row>
 
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridVitalsPr">
     <Form.Label>Pulse rate (unit)</Form.Label>
     <Form.Control type="number" placeholder="VitalsPr"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridVitalsBp1">
     <Form.Label>Blood pressure 1 </Form.Label>
     <Form.Control type="number" placeholder="VitalsBp1"/>
@@ -50,6 +55,9 @@ return (
   <Form.Label>Temperature (unit) </Form.Label>
   <Form.Control type="number" placeholder="VitalsTemp"/>
 </Form.Group>
+</Form.Row>
+
+<Form.Row>
 <Form.Group as={Col} controlId="formGridVitalsPs02">
   <Form.Label>02 saturation (unit)</Form.Label>
   <Form.Control type="number" placeholder="VitalsPs02"/>
@@ -65,6 +73,9 @@ return (
     <Form.Label>Weight (unit)</Form.Label>
     <Form.Control type="number" placeholder="VitalsWeight"/>
   </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridVitalsBmi">
     <Form.Label>Bmi</Form.Label>
     <Form.Control type="number" placeholder="VitalsBmi"/>
@@ -82,27 +93,19 @@ return (
 </Form.Group>
 </Form.Row>
 
+<Form.Row>
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn">
-  Cancel
-  </Accordion.Toggle>
-)
-// <Button variant="danger" onClick={props.onCancel}>
-// Cancel
-// </Button>
-}
-
-{props.canConfirm && (
-  <Accordion.Toggle as={Button} variant="success" eventKey="9" className="btn" type="submit">
-  Submit
-  </Accordion.Toggle>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 
+{props.canConfirm && (
+  <Button variant="primary" className="formButton" type="submit">
+  Submit
+  </Button>
+)}
+</Form.Row>
+
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

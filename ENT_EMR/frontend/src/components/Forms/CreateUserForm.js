@@ -47,7 +47,9 @@ return (
 
   </Form.Control>
 </Form.Group>
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridPhone">
   <Form.Label>Phone</Form.Label>
   <Form.Control type="number" placeholder="phone"/>
@@ -66,25 +68,29 @@ return (
     //   onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e}}
     // />
   }
+  </Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridEmploymentDate">
   <Form.Label>Employment Date</Form.Label>
   <Form.Control type="date" placeholder="employmentDate" />
 </Form.Group>
 <Form.Group as={Col} controlId="formGridEmploymentDateTodayCheckbox">
-  <Form.Label>Today's Date?</Form.Label>
+  <Form.Label>Today ?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
 </Form.Group>
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridTerminationDate">
   <Form.Label>Termination Date</Form.Label>
   <Form.Control type="date" placeholder="terminationDate" />
 </Form.Group>
-</Form.Row>
 <Form.Group as={Col} controlId="formGridTerminationDateTodayCheckbox">
-  <Form.Label>Today's Date?</Form.Label>
+  <Form.Label>Today ?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
 </Form.Group>
+</Form.Row>
 
 
 <Form.Row>
@@ -97,18 +103,21 @@ return (
   <Form.Label>Street Name</Form.Label>
   <Form.Control type="text" placeholder="addressStreet"/>
 </Form.Group>
+</Form.Row>
 
+<Form.Row>
 <Form.Group as={Col} controlId="formGridAddressTown">
   <Form.Label>Town</Form.Label>
   <Form.Control type="text" placeholder="addressTown"/>
 </Form.Group>
-</Form.Row>
 
-<Form.Row>
 <Form.Group as={Col} controlId="formGridAddressParish">
   <Form.Label>Parish</Form.Label>
   <Form.Control type="text" placeholder="addressParish"/>
 </Form.Group>
+</Form.Row>
+
+<Form.Row>
 <Form.Group as={Col} controlId="formGridAddressPostOffice">
   <Form.Label>Post Office</Form.Label>
   <Form.Control type="text" placeholder="addressPostOffice"/>
@@ -116,15 +125,17 @@ return (
 </Form.Row>
 
 
+<Form.Row>
 {props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="0" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
+  <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
 )}
 
 {props.canConfirm && (
-  <Button variant="success" type="submit">Create</Button>
+  <Button variant="primary" className="formButton" type="submit">
+  Create
+  </Button>
 )}
+</Form.Row>
 <p>{props.successText}</p>
 
 </Form>

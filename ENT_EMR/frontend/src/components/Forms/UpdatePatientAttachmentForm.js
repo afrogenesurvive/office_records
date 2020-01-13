@@ -39,16 +39,17 @@ return (
   </Form.Group>
   </Form.Row>
 
+  <Form.Row>
+  {props.canCancel && (
+    <Button variant="danger" className="formButton" onClick={props.onCancel}>Cancel</Button>
+  )}
 
-{props.canCancel && (
-  <Accordion.Toggle as={Button} variant="danger" eventKey="9" className="btn" onClick={props.onCancel}>
-  Cancel
-  </Accordion.Toggle>
-)}
-
-{props.canConfirm && (
-  <Button variant="success" type="submit">Add</Button>
-)}
+  {props.canConfirm && (
+    <Button variant="primary" className="formButton" type="submit">
+    Submit
+    </Button>
+  )}
+  </Form.Row>
 
 </Form>
 {// <Form.Group as={Col} controlId="formGridPatientAttachmentName">
