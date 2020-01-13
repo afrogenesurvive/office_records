@@ -11,6 +11,7 @@ const visitInvestigationList = props => {
   investigation = props.investigation.map(investigationItem => {
     const visitInvestigationDate = new Date(investigationItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const investigationAttachment = investigationItem.attachment;
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+investigationItem.attachment.path+"/"+investigationItem.attachment.name+"."+investigationItem.attachment.format;
     console.log(`
       visitInvestigationDate: ${visitInvestigationDate},
       `);
@@ -27,6 +28,7 @@ const visitInvestigationList = props => {
         attachmentFormat={investigationAttachment.format}
         attachmentPath={investigationAttachment.path}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });

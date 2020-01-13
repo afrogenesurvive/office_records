@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-// import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 // import Accordion from 'react-bootstrap/Accordion';
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
@@ -66,6 +66,11 @@ const PatientVisit = (props) => {
       <div className="PatientDetailBox1">
       <p>Date: {new Date(visit.date).toISOString().slice(0,10)}</p>
       <p>Patient: {visit.patientName}</p>
+
+      <Button variant="danger" size="sm" onClick={props.onCloseVisit}>
+        Close
+      </Button>
+
       <Tabs defaultActiveKey="Visit" id="uncontrolled-tab-example" className="tab">
       <Tab eventKey="" title="Visit:" disabled>
       </Tab>

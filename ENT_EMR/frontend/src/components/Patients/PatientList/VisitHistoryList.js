@@ -11,6 +11,7 @@ const visitHistoryList = props => {
   history = props.history.map(historyItem => {
     const visitHistoryDate = new Date(historyItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const historyAttachment = historyItem.attachment;
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+historyItem.attachment.path+"/"+historyItem.attachment.name+"."+historyItem.attachment.format;
     console.log(`
       visitHistoryDate: ${visitHistoryDate},
       `);
@@ -26,6 +27,7 @@ const visitHistoryList = props => {
         attachmentFormat={historyAttachment.format}
         attachmentPath={historyAttachment.path}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });

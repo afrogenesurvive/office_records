@@ -10,6 +10,7 @@ const visitTreatmentList = props => {
   treatment = props.treatment.map(treatmentItem => {
     const visitTreatmentDate = new Date(treatmentItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const treatmentAttachment = treatmentItem.attachment;
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+treatmentItem.attachment.path+"/"+treatmentItem.attachment.name+"."+treatmentItem.attachment.format;
     console.log(`
       visitTreatmentDate: ${visitTreatmentDate},
       `);
@@ -28,6 +29,7 @@ const visitTreatmentList = props => {
         attachmentFormat={treatmentAttachment.format}
         attachmentPath={treatmentAttachment.path}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });
