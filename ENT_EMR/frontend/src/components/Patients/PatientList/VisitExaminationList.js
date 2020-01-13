@@ -11,6 +11,7 @@ const visitExaminationList = props => {
   examination = props.examination.map(examinationItem => {
     const visitExaminationDate = new Date(examinationItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const examinationAttachment = examinationItem.attachment;
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+examinationItem.attachment.path+"/"+examinationItem.attachment.name+"."+examinationItem.attachment.format;
     console.log(`
       visitExaminationDate: ${visitExaminationDate},
       `);
@@ -31,6 +32,7 @@ const visitExaminationList = props => {
         attachmentFormat={examinationAttachment.format}
         attachmentPath={examinationAttachment.path}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });

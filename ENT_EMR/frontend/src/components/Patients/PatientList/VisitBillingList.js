@@ -11,6 +11,7 @@ const visitBillingList = props => {
   billing = props.billing.map(billingItem => {
     const visitBillingDate = new Date(billingItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const billingAttachment = billingItem.attachment;
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+billingItem.attachment.path+"/"+billingItem.attachment.name+"."+billingItem.attachment.format;
     console.log(`
       visitBillingDate: ${visitBillingDate},
       `);
@@ -30,6 +31,7 @@ const visitBillingList = props => {
         attachmentFormat={billingAttachment.format}
         attachmentPath={billingAttachment.path}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });

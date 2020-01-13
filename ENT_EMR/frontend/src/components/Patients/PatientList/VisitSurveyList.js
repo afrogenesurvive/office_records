@@ -11,6 +11,7 @@ const visitSurveyList = props => {
   survey = props.survey.map(surveyItem => {
     const visitSurveyDate = new Date(surveyItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const surveyAttachment = surveyItem.attachment;
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+surveyItem.attachment.path+"/"+surveyItem.attachment.name+"."+surveyItem.attachment.format;
     console.log(`
       visitSurveyDate: ${visitSurveyDate},
       `);
@@ -26,6 +27,7 @@ const visitSurveyList = props => {
         attachmentFormat={surveyAttachment.format}
         attachmentPath={surveyAttachment.path}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });

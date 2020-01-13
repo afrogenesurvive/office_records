@@ -30,6 +30,7 @@ import PatientBillingList from './PatientList/PatientBillingList';
 import PatientAttachmentsList from './PatientList/PatientAttachmentsList';
 import PatientNotesList from './PatientList/PatientNotesList';
 import PatientTagsList from './PatientList/PatientTagsList';
+import PatientVisitList from './PatientList/PatientVisitList';
 import PatientVisit from './PatientVisit';
 
 import SearchPatientVisitForm from '../../components/Forms/SearchPatientVisitForm';
@@ -69,15 +70,36 @@ const PatientDetail = (props) => {
   if (patient.expirationDate !== null)
   {patientExpirationDate = new Date(patient.expirationDate.substr(0,10)*1000).toISOString().slice(0,10);}
   else {patientExpirationDate = patient.expirationDate;}
+  const visitList = props.visitList;
+  // let selectedVisit = {
+  //   // date: 0,
+  //   // patientName: "",
+  //   // consultant: "",
+  //   // complaint: "",
+  //   // examination: "",
+  //   // survey: "",
+  //   // vitals: "",
+  //   // history: "",
+  //   // investigation: "",
+  //   // diagnosis: "",
+  //   // treatment: "",
+  //   // billing: "",
+  // };
+  // function onSelectVisit (props) {
+  //   // console.log("patient detail selected visit:  ", JSON.stringify(props));
+  //   console.log("bang!!");
+  //   selectedVisit = props;
+  // }
   // let visit = "noVisit";
   // if (props.visit) {
   //   visit = props.visit;
   // }
+
   // const token = props.token;
   // const userId = props.authUserId;
   // const patientId = patient._id;
 
-  console.log("PatientDetail.props.patient:  ", {...patient});
+  console.log("PatientDetail.props.patient:  ", {...patient}, "visitList", visitList);
   // console.log("patientExamination[1].date:  ", new Date(patientExamination[1].date.substr(0,10)*1000).toISOString());
   // console.log("patientConsultant[1].date:  ", patientConsultant[1].date);
   // console.log("patientComplaint[1].date:  ", patientComplaint[1].date);
@@ -88,7 +110,7 @@ const PatientDetail = (props) => {
   return (
     <div className="PatientDetailBox1">
 
-    <Tabs defaultActiveKey="Demographics" id="uncontrolled-tab-example" className="tab">
+    <Tabs defaultActiveKey="VisitList" id="uncontrolled-tab-example" className="tab">
 
       <Tab eventKey="Demographics" title="Demographics">
       <Card className="PatientDetailCard">
@@ -427,7 +449,37 @@ const PatientDetail = (props) => {
         onDelete={props.tagDelete}
         />
       </Tab>
-      <Tab eventKey="Visit" title="Visit">
+      <Tab eventKey="VisitList" title="Visit List">
+
+      <Button variant="warning" className="formButton" onClick={props.onGetVisitList}>
+        Get Visit List
+      </Button>
+
+      <Card.Text>
+        <span className="bold ul">Selected Visit :</span>
+      </Card.Text>
+
+      { props.selectedVisit !== null &&
+      (<Card.Text>
+        <PatientVisit
+          authUserId={props.authUserId}
+          visit={props.selectedVisit}
+          onViewAttachment={props.onViewAttachment}
+          onCloseVisit={props.onCloseVisit}
+          />
+        </Card.Text>
+      )}
+
+      <Card.Text>
+        <span className="bold ul">Visit List :</span>
+      </Card.Text>
+      <PatientVisitList
+        authUserId={props.authUserId}
+        visitList={visitList}
+        onSelectVisit={props.onSelectVisit}
+      />
+      </Tab>
+      <Tab eventKey="VisitSearch" title="Search for a Visit">
       <Card.Text>
       </Card.Text>
       <SearchPatientVisitForm
@@ -437,11 +489,12 @@ const PatientDetail = (props) => {
               confirmText="Search"
               patient={props.patient}
             />
-      {  props.visit !== null && (
+      { props.visit !== null && (
         <PatientVisit
           authUserId={props.authUserId}
           visit={props.visit}
           onViewAttachment={props.onViewAttachment}
+          onCloseVisit={props.onCloseVisit}
           />
         )}
       </Tab>

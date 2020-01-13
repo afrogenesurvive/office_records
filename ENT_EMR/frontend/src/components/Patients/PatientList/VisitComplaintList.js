@@ -11,6 +11,7 @@ const visitComplaintList = props => {
   complaint = props.complaint.map(complaintItem => {
     const visitComplaintDate = new Date(complaintItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const complaintAttachment = complaintItem.attachment;
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+complaintItem.attachment.path+"/"+complaintItem.attachment.name+"."+complaintItem.attachment.format;
     console.log(`
       visitComplaintDate: ${visitComplaintDate},
       `);
@@ -27,6 +28,7 @@ const visitComplaintList = props => {
         attachmentFormat={complaintAttachment.format}
         attachmentPath={complaintAttachment.path}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });

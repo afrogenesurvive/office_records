@@ -69,6 +69,8 @@ class PatientsPage extends Component {
     patientSearchQuery: null,
     canDelete: null,
     visit: null,
+    visitList: [],
+    selectedVisit: null,
     userAlert: null,
     showAttachment: false,
     showThisAttachmentFile: null,
@@ -2396,7 +2398,6 @@ modalConfirmSearchNameHandler = (event) => {
         selectedPatient.consultant: ${JSON.stringify(selectedPatient.consultant)},
         selectedPatient.complaints: ${JSON.stringify(selectedPatient.complaints)},
         visitDate: ${new Date(event.target.formBasicVisitDate.value)},
-        complaintDate: ${new Date(1580515200*1000)},
       `);
 
     let visitDate = new Date(event.target.formBasicVisitDate.value).toISOString().substring(0, 10);
@@ -2430,8 +2431,73 @@ modalConfirmSearchNameHandler = (event) => {
       console.log(`
         visit: ${JSON.stringify(visit)},
         `);
-        this.context.visit = visit;
+        // this.context.visit = visit;
         this.setState({visit: visit});
+
+  }
+
+  getVisitList = () => {
+
+    const selectedPatient = this.state.selectedPatient;
+    const patientName = this.state.selectedPatient.name;
+    let selectedPatientAppointmentDateArray = [];
+    let selectedPatientAppointmentVisitArray = [];
+    let selectedPatientAppointments = this.state.selectedPatient.appointments.map(appointments => {
+      console.log("appointments.date", appointments.date);
+      selectedPatientAppointmentDateArray.push(new Date(appointments.date.substr(0,10)*1000).toISOString().substring(0, 10))
+    })
+    console.log(`
+        getVisitList function:
+        selectedPatientAppointments: ${selectedPatientAppointmentDateArray}
+      `);
+
+      selectedPatientAppointmentDateArray.map(appointmentDate => {
+        console.log(`
+          retriveing visit for ${appointmentDate} ...selectedPatientAppointmentVisitArray: ${JSON.stringify(selectedPatientAppointmentVisitArray)},
+          `);
+          thisGetVisit(appointmentDate, patientName)
+      })
+
+      function thisGetVisit (argsDate, argsPatientName) {
+        console.log("thisGetVisit function...");
+
+        let visitDate = argsDate
+
+
+        let visitSurveys = selectedPatient.surveys.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+        let visitConsultants = selectedPatient.consultant.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+        let visitComplaints = selectedPatient.complaints.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+        // let visitSurveys = selectedPatient.surveys.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString() === visitDate);
+        let visitVitals = selectedPatient.vitals.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+        let visitExaminations = selectedPatient.examination.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+        let visitHistory = selectedPatient.history.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+        let visitInvestigations = selectedPatient.investigation.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+        let visitDiagnosis = selectedPatient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+        let visitTreatments = selectedPatient.treatment.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+        let visitBilling = selectedPatient.billing.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+
+        const visit = {
+          date: visitDate,
+          patientName: argsPatientName,
+          consultant: visitConsultants,
+          complaint: visitComplaints,
+          examination: visitExaminations,
+          survey: visitSurveys,
+          vitals: visitVitals,
+          history: visitHistory,
+          investigation: visitInvestigations,
+          diagnosis: visitDiagnosis,
+          treatment: visitTreatments,
+          billing: visitBilling,
+        };
+
+        selectedPatientAppointmentVisitArray.push(visit)
+      }
+      // console.log(`
+      //     ...final selectedPatientAppointmentVisitArray: ${JSON.stringify(selectedPatientAppointmentVisitArray)}
+      //   `);
+
+      this.setState({ visitList: selectedPatientAppointmentVisitArray})
 
   }
 
@@ -3824,6 +3890,26 @@ deletePatientTagItem = (props) => {
     });
   };
 
+  selectVisit = (props) => {
+    console.log(`
+      changing selected visit ...
+      event: ${JSON.stringify(props)},
+      `);
+      this.setState({ selectedVisit: props })
+
+  }
+
+  closeVisit = () => {
+    console.log(`
+      clearing selected visits...
+      `);
+
+    this.setState({
+      visit: null,
+      selectedVisit: null,
+    })
+  }
+
 
   componentWillUnmount() {
     this.isActive = false;
@@ -3970,7 +4056,8 @@ deletePatientTagItem = (props) => {
                   canDelete={this.state.canDelete}
                   onDelete={this.modalDeleteHandler}
                   onGetVisit={this.getPatientVisit}
-                  visit={this.context.visit}
+                  visit={this.state.visit}
+                  selectedVisit={this.state.selectedVisit}
                   fetchUsers={this.fetchUsers}
                   appointmentDelete={this.deletePatientAppointmentItem}
                   consultantDelete={this.deletePatientConsultantItem}
@@ -3992,6 +4079,10 @@ deletePatientTagItem = (props) => {
                   tagDelete={this.deletePatientTagItem}
                   onViewAttachment={this.onViewAttachment}
                   onCreatePdf={this.createPdf}
+                  onGetVisitList={this.getVisitList}
+                  visitList={this.state.visitList}
+                  onSelectVisit={this.selectVisit}
+                  onCloseVisit={this.closeVisit}
                   />
               )}
             </Tab.Pane>

@@ -11,6 +11,7 @@ const visitDiagnosisList = props => {
   diagnosis = props.diagnosis.map(diagnosisItem => {
     const visitDiagnosisDate = new Date(diagnosisItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const diagnosisAttachment = diagnosisItem.attachment;
+    const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+diagnosisItem.attachment.path+"/"+diagnosisItem.attachment.name+"."+diagnosisItem.attachment.format;
     console.log(`
       visitDiagnosisDate: ${visitDiagnosisDate},
       `);
@@ -27,6 +28,7 @@ const visitDiagnosisList = props => {
         attachmentFormat={diagnosisAttachment.format}
         attachmentPath={diagnosisAttachment.path}
         onViewAttachment={props.onViewAttachment}
+        attachmentLink={attachmentLink}
       />
     );
   });
