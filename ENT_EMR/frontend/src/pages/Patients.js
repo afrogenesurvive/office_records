@@ -71,6 +71,18 @@ class PatientsPage extends Component {
     visit: null,
     visitList: [],
     selectedVisit: null,
+    createVisitChecklist: {
+      consultant: false,
+      complaint: false,
+      diagnosis: false,
+      examination: false,
+      investigation: false,
+      survey: false,
+      treatment: false,
+      vitals: false,
+      billing: false
+    },
+    newVisit: false,
     userAlert: null,
     showAttachment: false,
     showThisAttachmentFile: null,
@@ -101,6 +113,10 @@ class PatientsPage extends Component {
   startCreatePatientHandler = () => {
     this.setState({ creating: true });
     console.log("CreatePatientForm...");
+  };
+  startCreateVisitHandler = () => {
+    this.setState({ newVisit: true });
+    console.log("CreateVisitForm...");
   };
   startUpdatePatientHandler = () => {
     this.setState({ updating: true, updatingArray: true });
@@ -556,6 +572,7 @@ class PatientsPage extends Component {
 
 
 updatePatientConsultantHandler = (event) => {
+  event.preventDefault();
 
   let token = this.context.token;
   const userId = this.context.userId;
@@ -791,6 +808,7 @@ updatePatientNextOfKinHandler = (event) => {
 
 
 updatePatientComplaintHandler = (event) => {
+  event.preventDefault();
 
   const token = this.context.token;
   const userId = this.context.userId;
@@ -892,7 +910,7 @@ updatePatientComplaintHandler = (event) => {
         this.context.patients = this.state.patients;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({ userAlert: responseAlert})
-        this.fetchPatients();
+        // this.fetchPatients();
       })
       .catch(err => {
         console.log(err);
@@ -902,6 +920,7 @@ updatePatientComplaintHandler = (event) => {
 }
 
 updatePatientSurveyHandler = (event) => {
+  event.preventDefault();
 
   const token = this.context.token;
   const userId = this.context.userId;
@@ -1011,6 +1030,7 @@ updatePatientSurveyHandler = (event) => {
 }
 
 updatePatientVitalsHandler = (event) => {
+  event.preventDefault();
 
   const token = this.context.token;
   const userId = this.context.userId;
@@ -1095,6 +1115,7 @@ updatePatientVitalsHandler = (event) => {
 
 
 updatePatientExaminationHandler = (event) => {
+  event.preventDefault();
 
   const token = this.context.token;
   const userId = this.context.userId;
@@ -1329,6 +1350,7 @@ updatePatientHistoryHandler = (event) => {
 
 
 updatePatientAllergiesHandler = (event) => {
+  event.preventDefault();
 
   const token = this.context.token;
   const userId = this.context.userId;
@@ -1440,6 +1462,7 @@ updatePatientAllergiesHandler = (event) => {
 
 updatePatientMedicationHandler = (event) => {
 
+
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
@@ -1543,6 +1566,7 @@ updatePatientMedicationHandler = (event) => {
 
 
 updatePatientInvestigationHandler = (event) => {
+  event.preventDefault();
 
   const token = this.context.token;
   const userId = this.context.userId;
@@ -1658,6 +1682,7 @@ updatePatientInvestigationHandler = (event) => {
 
 
 updatePatientDiagnosisHandler = (event) => {
+  event.preventDefault();
 
   const token = this.context.token;
   const userId = this.context.userId;
@@ -1768,6 +1793,7 @@ updatePatientDiagnosisHandler = (event) => {
 
 
 updatePatientTreatmentHandler = (event) => {
+  event.preventDefault();
 
   const token = this.context.token;
   const userId = this.context.userId;
@@ -1887,6 +1913,7 @@ updatePatientTreatmentHandler = (event) => {
 
 
 updatePatientBillingHandler = (event) => {
+  event.preventDefault();
 
   const token = this.context.token;
   const userId = this.context.userId;
@@ -3881,6 +3908,8 @@ deletePatientTagItem = (props) => {
 
   showDetailHandler = patientId => {
 
+    this.setState({ visitList: [] })
+
     this.setState(prevState => {
       const selectedPatient = prevState.patients.find(e => e._id === patientId);
       this.context.selectedPatient = selectedPatient;
@@ -3908,6 +3937,38 @@ deletePatientTagItem = (props) => {
       visit: null,
       selectedVisit: null,
     })
+  }
+
+  createVisitChecklistUpdate = (props) => {
+    console.log(`
+      updating create-visit checklist...
+      props: ${props},
+      `);
+      this.setState({ userAlert: `creating visit: ${props} addedd...`})
+      this.setState({
+        createVisitChecklist.[props]: true
+      })
+
+  }
+
+  newVisitComplete = () => {
+    console.log(`
+      finished adding new visit...
+      `);
+      this.setState({
+        // newVisit: false,
+        createVisitChecklist: {
+          consultant: true,
+          complaint: true,
+          diagnosis: true,
+          examination: true,
+          investigation: true,
+          survey: true,
+          treatment: true,
+          vitals: true,
+          billing: true
+        }
+      })
   }
 
 
@@ -3973,6 +4034,9 @@ deletePatientTagItem = (props) => {
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="disabled" disabled>Add:</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="patientAddVisit">Visit</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="patientEditConsultant">Consultant</Nav.Link>
@@ -4101,6 +4165,343 @@ deletePatientTagItem = (props) => {
               )}
             </Tab.Pane>
 
+            <Tab.Pane eventKey="patientAddVisit">
+            {this.state.selectedPatient === null && (
+              <Button variant="outline-warning" size="lg" className="confirmEditButton">
+                Select a Patient from the Master List
+              </Button>
+            )}
+              { this.state.selectedPatient !== null &&
+                this.state.newVisit !== true &&
+              (<Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startCreateVisitHandler} >Add NEW Visit</Button>
+              )}
+              {this.state.selectedPatient !== null &&
+                this.state.newVisit === true && (
+
+                  <Accordion defaultActiveKey="0">
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                          Guide:
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="0">
+                        <Card.Body>
+                        <Card.Text>
+                          To create a NEW Patient Visit, fill in the forms below.
+                        </Card.Text>
+
+                        <Card.Text>
+                          Everytime you submit a form with new info, a new item is added to the current Patient visit.
+                        </Card.Text>
+
+                        <Card.Text>
+                          When you are done with a section click the GREEN Done adding Complaints, Vitals etc and continue to the next form.
+                        </Card.Text>
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                          Consultant
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="1">
+                        <Card.Body>
+                        Add Consultant form:
+                        {this.state.createVisitChecklist.consultant === true &&
+                        (
+                          <Button variant="warning" size="lg" className="formButton">
+                          Consultant for this Visit has already been added!!
+                          </Button>
+                        )}
+
+                        {this.state.createVisitChecklist.consultant === false &&
+                        this.context.selectedUser === null && (
+                          <Button variant="outline-warning" size="lg" className="confirmEditButton">
+                            Select someone from the Staff page
+                          </Button>
+                        )}
+                        {this.state.createVisitChecklist.consultant === false &&
+                        this.context.selectedUser !== null && (
+                          <Row>
+                          <Card.Text>Add Consultant: {this.context.selectedUser.name}  ...</Card.Text>
+                          <Card.Text> To Paitient: {this.state.selectedPatient.name} ??</Card.Text>
+
+                          </Row>
+                        )}
+                        {this.state.createVisitChecklist.consultant === false &&
+                        this.context.selectedUser !== null && (
+                          <UpdatePatientConsultantForm
+                          authUserId={this.context.userId}
+                            canConfirm
+                            onCancel={this.modalCancelHandler}
+                            onConfirm={this.updatePatientConsultantHandler}
+                            confirmText="Confirm"
+                            consultant={this.context.selectedUser}
+                            visit
+                            onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                          />
+                        )}
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                          Complaint
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="2">
+                        <Card.Body>
+                        Add Complaint form:
+                        {this.state.createVisitChecklist.complaint === true &&
+                        (
+                          <Button variant="warning" size="lg" className="formButton">
+                          Complaint for this Visit has already been added!!
+                          </Button>
+                        )}
+                        {this.state.createVisitChecklist.complaint === false &&
+                        (<UpdatePatientComplaintForm
+                              authUserId={this.context.userId}
+                                canConfirm
+                                onCancel={this.modalCancelHandler}
+                                onConfirm={this.updatePatientComplaintHandler}
+                                confirmText="Confirm"
+                                patient={this.state.selectedPatient}
+                                visit
+                                onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                              />
+                            )}
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                          Vitals
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="3">
+                        <Card.Body>
+                        Add Vitals form:
+                        {this.state.createVisitChecklist.vitals === true &&
+                        (
+                          <Button variant="warning" size="lg" className="formButton">
+                          Vitals for this Visit have already been added!!
+                          </Button>
+                        )}
+                        {this.state.createVisitChecklist.vitals === false && (
+                          <UpdatePatientVitalsForm
+                                authUserId={this.context.userId}
+                                  canConfirm
+                                  onCancel={this.modalCancelHandler}
+                                  onConfirm={this.updatePatientVitalsHandler}
+                                  confirmText="Confirm"
+                                  patient={this.state.selectedPatient}
+                                  visit
+                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                                />
+                        )}
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="4">
+                          Examination
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="4">
+                        <Card.Body>
+                        Add Examination form:
+                        {this.state.createVisitChecklist.examination === true &&
+                        (
+                          <Button variant="warning" size="lg" className="formButton">
+                          Examination for this Visit has already been added!!
+                          </Button>
+                        )}
+                        {this.state.createVisitChecklist.examination === false && (
+                          <UpdatePatientExaminationForm
+                                authUserId={this.context.userId}
+                                  canConfirm
+                                  onCancel={this.modalCancelHandler}
+                                  onConfirm={this.updatePatientExaminationHandler}
+                                  confirmText="Confirm"
+                                  patient={this.state.selectedPatient}
+                                  visit
+                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                                />
+                        )}
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="5">
+                          Survey
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="5">
+                        <Card.Body>
+                        Add Survey form:
+                        {this.state.createVisitChecklist.survey === true && (
+                          <Button variant="warning" size="lg" className="formButton">
+                          Survey for this Visit has already been added!!
+                          </Button>
+                        )}
+                        {this.state.createVisitChecklist.survey === false && (
+                          <UpdatePatientSurveyForm
+                                authUserId={this.context.userId}
+                                  canConfirm
+                                  onCancel={this.modalCancelHandler}
+                                  onConfirm={this.updatePatientSurveyHandler}
+                                  confirmText="Confirm"
+                                  patient={this.state.selectedPatient}
+                                  visit
+                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                                />
+                        )}
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="6">
+                          Investigation
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="6">
+                        <Card.Body>
+                        Add Investigation form:
+                        {this.state.createVisitChecklist.investigation === true && (
+                          <Button variant="warning" size="lg" className="formButton">
+                          Investigation for this Visit has already been added!!
+                          </Button>
+                        )}
+                        {this.state.createVisitChecklist.investigation === false && (
+                          <UpdatePatientInvestigationForm
+                                authUserId={this.context.userId}
+                                  canConfirm
+                                  onCancel={this.modalCancelHandler}
+                                  onConfirm={this.updatePatientInvestigationHandler}
+                                  confirmText="Confirm"
+                                  patient={this.state.selectedPatient}
+                                  visit
+                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                                />
+                        )}
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="7">
+                          Diagnosis
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="7">
+                        <Card.Body>
+                        Add Diagnosis form:
+                        {this.state.createVisitChecklist.diagnosis === true && (
+                          <Button variant="warning" size="lg" className="formButton">
+                          Diagnosis for this Visit has already been added!!
+                          </Button>
+                        )}
+                        {this.state.createVisitChecklist.diagnosis === false && (
+                          <UpdatePatientDiagnosisForm
+                                authUserId={this.context.userId}
+                                  canConfirm
+                                  onCancel={this.modalCancelHandler}
+                                  onConfirm={this.updatePatientDiagnosisHandler}
+                                  confirmText="Confirm"
+                                  patient={this.state.selectedPatient}
+                                  visit
+                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                                />
+                        )}
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="8">
+                          Treatment
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="8">
+                        <Card.Body>
+                        Add Treatment form:
+                        {this.state.createVisitChecklist.treatment === true && (
+                          <Button variant="warning" size="lg" className="formButton">
+                          Treatment for this Visit has already been added!!
+                          </Button>
+                        )}
+                        {this.state.createVisitChecklist.treatment === false && (
+                          <UpdatePatientTreatmentForm
+                                authUserId={this.context.userId}
+                                canCancel
+                                  canConfirm
+                                  onCancel={this.modalCancelHandler}
+                                  onConfirm={this.updatePatientTreatmentHandler}
+                                  confirmText="Confirm"
+                                  patient={this.state.selectedPatient}
+                                  visit
+                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                                />
+                        )}
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="9">
+                          Billing
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="9">
+                        <Card.Body>
+                        Add Billing form:
+                        {this.state.createVisitChecklist.billing === true &&
+                        (
+                          <Button variant="warning" size="lg" className="formButton">
+                          Billing for this Visit has already been added!!
+                          </Button>
+                        )}
+                        {this.state.createVisitChecklist.billing === false && (
+                          <UpdatePatientBillingForm
+                                authUserId={this.context.userId}
+                                  canConfirm
+                                  onCancel={this.modalCancelHandler}
+                                  onConfirm={this.updatePatientBillingHandler}
+                                  confirmText="Confirm"
+                                  patient={this.state.selectedPatient}
+                                  visit
+                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                                />
+                        )}
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="10">
+                          Finish
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="10">
+                        <Card.Body>
+                        <Button variant="success" className="formButton" onClick={this.newVisitComplete}>
+                        Done creating Visit
+                        </Button>
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                  </Accordion>
+              )}
+            </Tab.Pane>
+
             <Tab.Pane eventKey="patientEditDemographics">
               {this.state.selectedPatient === null && (
                 <Button variant="outline-warning" size="lg" className="confirmEditButton">
@@ -4160,6 +4561,7 @@ deletePatientTagItem = (props) => {
               )}
               {this.state.patientUpdateField === 'consultant' &&
               this.state.selectedPatient !== null &&
+              this.context.selectedUser === null &&
               (
                 <Row>
                 <Button variant="outline-warning" size="lg" className="confirmEditButton">

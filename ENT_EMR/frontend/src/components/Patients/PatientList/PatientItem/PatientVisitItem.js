@@ -7,11 +7,7 @@ import './UserItem.css';
 const patientVisitItem = props => (
   <li key={props.userId} className="users__list-item_master">
   <div>
-    <h5 className="userItemHeading"> Visit Patient Name:</h5>
-    <p className="userItemText">
-      {props.name}
-    </p>
-    <h5 className="userItemHeading"> Visit Date:</h5>
+    <h5 className="userItemHeading"> Date:</h5>
     <p className="userItemText">
       {props.date}
     </p>
