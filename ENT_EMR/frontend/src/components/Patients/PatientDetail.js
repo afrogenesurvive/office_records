@@ -60,16 +60,40 @@ const PatientDetail = (props) => {
   const patientAttachments = patient.attachments;
   const patientNotes = patient.notes;
   const patientTags = patient.tags;
-  const patientRegistrationDate = new Date(patient.registrationDate.substr(0,10)*1000).toISOString().slice(0,10);
-  const patientDob = new Date(patient.dob.substr(0,10)*1000).toISOString().slice(0,10);
+
+  console.log(`
+    patient.registrationDate: ${patient.registrationDate},
+    patient.dob: ${patient.dob},
+    patient.referralDate: ${patient.referralDate},
+    `);
+
+  let patientRegistrationDate = 0;
+  if (patient.registrationDate !== null &&
+      patient.registrationDate !== undefined
+  )
+  {
+    patientRegistrationDate = new Date(patient.registrationDate.substr(0,10)*1000).toISOString().slice(0,10);
+  }
+
+  let patientDob = 0;
+  if (patient.dob !== null &&
+      patient.dob !== undefined
+  ) {
+    patientDob = new Date(patient.dob.substr(0,10)*1000).toISOString().slice(0,10);
+  }
+
   // const patientReferralDate = new Date(patient.referralDate*1000).toUTCString();
-  let patientReferralDate = patient.referralDate;
-  if (patient.referralDate) {
+  let patientReferralDate = 0;
+  if (patient.referralDate !== null &&
+      patient.referralDate !== undefined
+  ) {
     patientReferralDate = new Date(patient.referralDate.substr(0,10)*1000).toISOString().slice(0,10);
   }
-  let patientExpirationDate = undefined;
-  if (patient.expirationDate !== null)
-  {patientExpirationDate = new Date(patient.expirationDate.substr(0,10)*1000).toISOString().slice(0,10);}
+  let patientExpirationDate = 0;
+  if (patient.expirationDate !== null &&
+      patient.expirationDate !== undefined
+  ) {
+    patientExpirationDate = new Date(patient.expirationDate.substr(0,10)*1000).toISOString().slice(0,10);}
   else {patientExpirationDate = patient.expirationDate;}
   const visitList = props.visitList;
   // let selectedVisit = {
@@ -112,7 +136,7 @@ const PatientDetail = (props) => {
     <div className="PatientDetailBox1">
 
 
-    <Tab.Container id="left-tabs-example" defaultActiveKey="1">
+    <Tab.Container id="left-tabs-example" defaultActiveKey="20">
       <Row>
         <Col sm={2}>
           <Nav variant="pills" className="flex-column">
@@ -515,6 +539,7 @@ const PatientDetail = (props) => {
               onDelete={props.tagDelete}
               />
             </Tab.Pane>
+
             <Tab.Pane eventKey="20">
             <Button variant="warning" className="formButton" onClick={props.onGetVisitList}>
               Get Visit List
@@ -538,12 +563,21 @@ const PatientDetail = (props) => {
             <Card.Text>
               <span className="bold ul">Visit List :</span>
             </Card.Text>
+            <Row>
+            <Button variant="primary" size="sm" className="formButton" onClick={props.onSortVisitListAsc}>
+              Sort List Asc
+            </Button>
+            <Button variant="info" size="sm" className="formButton" onClick={props.onSortVisitListDesc}>
+              Sort List Desc
+            </Button>
+            </Row>
             <PatientVisitList
               authUserId={props.authUserId}
               visitList={visitList}
               onSelectVisit={props.onSelectVisit}
             />
             </Tab.Pane>
+
             <Tab.Pane eventKey="21">
             <Card.Text>
             </Card.Text>
@@ -568,7 +602,7 @@ const PatientDetail = (props) => {
       </Row>
     </Tab.Container>
 
-    
+
   </div>
   );
 }

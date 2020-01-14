@@ -2561,6 +2561,45 @@ modalConfirmSearchNameHandler = (event) => {
   }
 
 
+  getVisitListAsc = () => {
+    console.log(`
+      sorting visit list in ascending order...
+      `);
+
+      let list = this.state.visitList;
+
+      list.sort((a, b) => {
+        if (a.date < b.date) return -1
+        return a.date > b.date ? 1 : 0
+      })
+
+      console.log(`
+        list: ${list}
+        `);
+
+      this.setState({visitList: list})
+  }
+  getVisitListDesc = () => {
+    console.log(`
+      sorting visit list in descending order...
+      `);
+
+      let list = this.state.visitList;
+
+      list.sort((a, b) => {
+        if (a.date < b.date) return 1
+        return a.date > b.date ? -1 : 0
+      })
+
+      console.log(`
+        list: ${list}
+        `);
+
+      this.setState({visitList: list})
+  }
+
+
+
   modalCancelHandler = () => {
     this.setState({ creating: false, updating: false, searching: false, selectedPatient: null });
   };
@@ -4180,6 +4219,8 @@ deletePatientTagItem = (props) => {
                   visitList={this.state.visitList}
                   onSelectVisit={this.selectVisit}
                   onCloseVisit={this.closeVisit}
+                  onSortVisitListAsc={this.getVisitListAsc}
+                  onSortVisitListDesc={this.getVisitListDesc}
                   />
               )}
             </Tab.Pane>
