@@ -71,6 +71,7 @@ class PatientsPage extends Component {
     visit: null,
     visitList: [],
     selectedVisit: null,
+    newVisit: false,
     createVisitChecklist: {
       consultant: false,
       complaint: false,
@@ -80,7 +81,7 @@ class PatientsPage extends Component {
       survey: false,
       treatment: false,
       vitals: false,
-      billing: false
+      billing: false,
     },
     newVisit: false,
     userAlert: null,
@@ -3945,9 +3946,10 @@ deletePatientTagItem = (props) => {
       props: ${props},
       `);
       this.setState({ userAlert: `creating visit: ${props} addedd...`})
-      this.setState({
-        createVisitChecklist.[props]: true
-      })
+
+      let newState = Object.assign({}, this.state);
+      newState.createVisitChecklist[props] = true;
+      this.setState(newState);
 
   }
 
@@ -3956,18 +3958,18 @@ deletePatientTagItem = (props) => {
       finished adding new visit...
       `);
       this.setState({
-        // newVisit: false,
-        createVisitChecklist: {
-          consultant: true,
-          complaint: true,
-          diagnosis: true,
-          examination: true,
-          investigation: true,
-          survey: true,
-          treatment: true,
-          vitals: true,
-          billing: true
-        }
+          newVisit: false,
+          createVisitChecklist: {
+            consultant: true,
+            complaint: true,
+            diagnosis: true,
+            examination: true,
+            investigation: true,
+            survey: true,
+            treatment: true,
+            vitals: true,
+            billing: true,
+          }
       })
   }
 
@@ -4210,7 +4212,7 @@ deletePatientTagItem = (props) => {
                       <Accordion.Collapse eventKey="1">
                         <Card.Body>
                         Add Consultant form:
-                        {this.state.createVisitChecklist.consultant === true &&
+                        {this.state.newVisit_consultant === true &&
                         (
                           <Button variant="warning" size="lg" className="formButton">
                           Consultant for this Visit has already been added!!
@@ -4411,15 +4413,15 @@ deletePatientTagItem = (props) => {
                         )}
                         {this.state.createVisitChecklist.diagnosis === false && (
                           <UpdatePatientDiagnosisForm
-                                authUserId={this.context.userId}
-                                  canConfirm
-                                  onCancel={this.modalCancelHandler}
-                                  onConfirm={this.updatePatientDiagnosisHandler}
-                                  confirmText="Confirm"
-                                  patient={this.state.selectedPatient}
-                                  visit
-                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
-                                />
+                              authUserId={this.context.userId}
+                              canConfirm
+                              onCancel={this.modalCancelHandler}
+                              onConfirm={this.updatePatientDiagnosisHandler}
+                              confirmText="Confirm"
+                              patient={this.state.selectedPatient}
+                              visit
+                              onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                            />
                         )}
                         </Card.Body>
                       </Accordion.Collapse>
@@ -4440,16 +4442,16 @@ deletePatientTagItem = (props) => {
                         )}
                         {this.state.createVisitChecklist.treatment === false && (
                           <UpdatePatientTreatmentForm
-                                authUserId={this.context.userId}
-                                canCancel
-                                  canConfirm
-                                  onCancel={this.modalCancelHandler}
-                                  onConfirm={this.updatePatientTreatmentHandler}
-                                  confirmText="Confirm"
-                                  patient={this.state.selectedPatient}
-                                  visit
-                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
-                                />
+                              authUserId={this.context.userId}
+                              canCancel
+                              canConfirm
+                              onCancel={this.modalCancelHandler}
+                              onConfirm={this.updatePatientTreatmentHandler}
+                              confirmText="Confirm"
+                              patient={this.state.selectedPatient}
+                              visit
+                              onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                            />
                         )}
                         </Card.Body>
                       </Accordion.Collapse>
@@ -4471,15 +4473,15 @@ deletePatientTagItem = (props) => {
                         )}
                         {this.state.createVisitChecklist.billing === false && (
                           <UpdatePatientBillingForm
-                                authUserId={this.context.userId}
-                                  canConfirm
-                                  onCancel={this.modalCancelHandler}
-                                  onConfirm={this.updatePatientBillingHandler}
-                                  confirmText="Confirm"
-                                  patient={this.state.selectedPatient}
-                                  visit
-                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
-                                />
+                              authUserId={this.context.userId}
+                              canConfirm
+                              onCancel={this.modalCancelHandler}
+                              onConfirm={this.updatePatientBillingHandler}
+                              confirmText="Confirm"
+                              patient={this.state.selectedPatient}
+                              visit
+                              onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                            />
                         )}
                         </Card.Body>
                       </Accordion.Collapse>
@@ -4487,7 +4489,7 @@ deletePatientTagItem = (props) => {
                     <Card>
                       <Card.Header>
                         <Accordion.Toggle as={Button} variant="link" eventKey="10">
-                          Finish
+                          Finished ?
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="10">
