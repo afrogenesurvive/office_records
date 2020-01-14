@@ -77,17 +77,15 @@ return (
     Submit
     </Button>
   )}
+
+  {props.visit && (
+    <Button variant="success" className="formButton" onClick={props.onCreateVisitChecklistUpdate.bind(this, "complaint")}>
+    Done adding Complaint
+    </Button>
+  )}
   </Form.Row>
 
 </Form>
-{
-  // <Form.Group as={Col} controlId="formGridComplaintAttachmentName">
-  //   <Form.Label>ComplaintAttachmentName</Form.Label>
-  //   <Form.Control type="text" placeholder="complaintAttachmentName"/>
-  // </Form.Group>
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

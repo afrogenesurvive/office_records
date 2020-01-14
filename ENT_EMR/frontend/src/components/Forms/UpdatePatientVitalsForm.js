@@ -103,6 +103,12 @@ return (
   Submit
   </Button>
 )}
+
+{props.visit && (
+  <Button variant="success" className="formButton" onClick={props.onCreateVisitChecklistUpdate.bind(this, "vitals")}>
+  Done adding Vitals
+  </Button>
+)}
 </Form.Row>
 
 </Form>
