@@ -18,14 +18,22 @@ return (
 <div className="UpdateFormContainer">
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
+
   <Form.Group as={Col} controlId="formGridTreatmentDate">
     <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="TreatmentDate"/>
   </Form.Group>
+
   <Form.Group as={Col} controlId="formGridTreatmentDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
+
+  <Form.Group as={Col} controlId="formGridTreatmentDateTodayCheckbox">
+    <Form.Label>Today ?</Form.Label>
+    <Form.Control type="checkbox" defaultChecked={true}/>
+  </Form.Group>
+
   </Form.Row>
 
   <Form.Row>
