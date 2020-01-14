@@ -4212,7 +4212,7 @@ deletePatientTagItem = (props) => {
                       <Accordion.Collapse eventKey="1">
                         <Card.Body>
                         Add Consultant form:
-                        {this.state.newVisit_consultant === true &&
+                        {this.state.createVisitChecklist.consultant === true &&
                         (
                           <Button variant="warning" size="lg" className="formButton">
                           Consultant for this Visit has already been added!!
@@ -4355,15 +4355,15 @@ deletePatientTagItem = (props) => {
                         )}
                         {this.state.createVisitChecklist.survey === false && (
                           <UpdatePatientSurveyForm
-                                authUserId={this.context.userId}
-                                  canConfirm
-                                  onCancel={this.modalCancelHandler}
-                                  onConfirm={this.updatePatientSurveyHandler}
-                                  confirmText="Confirm"
-                                  patient={this.state.selectedPatient}
-                                  visit
-                                  onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
-                                />
+                            authUserId={this.context.userId}
+                            canConfirm
+                            onCancel={this.modalCancelHandler}
+                            onConfirm={this.updatePatientSurveyHandler}
+                            confirmText="Confirm"
+                            patient={this.state.selectedPatient}
+                            visit
+                            onCreateVisitChecklistUpdate={this.createVisitChecklistUpdate}
+                          />
                         )}
                         </Card.Body>
                       </Accordion.Collapse>

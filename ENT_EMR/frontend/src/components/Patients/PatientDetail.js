@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 // import Accordion from 'react-bootstrap/Accordion';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import Nav from 'react-bootstrap/Nav';
 // import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -110,395 +111,464 @@ const PatientDetail = (props) => {
   return (
     <div className="PatientDetailBox1">
 
-    <Tabs defaultActiveKey="VisitList" id="uncontrolled-tab-example" className="tab">
 
-      <Tab eventKey="Demographics" title="Demographics">
-      <Card className="PatientDetailCard">
-      <Card.Body>
-      <Card.Title><span className="ul">Patient Details</span></Card.Title>
-      <Row className="detailCardRow">
-        <Col md={4} className="detailCardCol">
-          <Card.Text>
-            <span className="bold">ID :</span> {patient._id}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Title :</span> {patient.title}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Name :</span> {patient.name}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">D.O.B :</span> {patientDob}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Age :</span> {patient.age}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Gender :</span> {patient.gender}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Reg Date :</span> {patientRegistrationDate}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Ref Date :</span> {patientReferralDate}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Exp Date :</span> {patientExpirationDate}
-          </Card.Text>
+    <Tab.Container id="left-tabs-example" defaultActiveKey="1">
+      <Row>
+        <Col sm={2}>
+          <Nav variant="pills" className="flex-column">
+            <Nav.Item>
+              <Nav.Link eventKey="1">Demographics</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="2">Appointments</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="3">Consultants</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="4">Insurance</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="5">Next Of Kin</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="6">Complaints</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="7">Surveys</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="8">Vitals</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="9">Examination</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="10">History</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="11">Allergies</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="12">Medication</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="13">Investigation</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="14">Diagnosis</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="15">Treatment</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="16">Billing</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="17">Attachments</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="18">Notes</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="19">Tags</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="20">Visit List</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="21">Visit Search</Nav.Link>
+            </Nav.Item>
+          </Nav>
         </Col>
+        <Col sm={10}>
+          <Tab.Content>
+            <Tab.Pane eventKey="1">
+                <Card className="PatientDetailCard">
+                <Card.Body>
+                <Card.Title><span className="ul">Patient Details</span></Card.Title>
+                <Row className="detailCardRow">
+                  <Col md={4} className="detailCardCol">
+                    <Card.Text>
+                      <span className="bold">ID :</span> {patient._id}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Title :</span> {patient.title}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Name :</span> {patient.name}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">D.O.B :</span> {patientDob}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Age :</span> {patient.age}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Gender :</span> {patient.gender}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Reg Date :</span> {patientRegistrationDate}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Ref Date :</span> {patientReferralDate}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Exp Date :</span> {patientExpirationDate}
+                    </Card.Text>
+                  </Col>
 
-        <Col md={4} className="detailCardCol">
-          <Card.Text>
-            <span className="bold">Phone :</span> {patient.contact.phone}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Email :</span> {patient.contact.email}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Address :</span>
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Street No :</span> {patient.address.number}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Street Name :</span> {patient.address.street}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Town :</span> {patient.address.town}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Parish :</span> {patient.address.parish}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">PO :</span> {patient.address.postOffice}
-          </Card.Text>
-        </Col>
+                  <Col md={4} className="detailCardCol">
+                    <Card.Text>
+                      <span className="bold">Phone :</span> {patient.contact.phone}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Email :</span> {patient.contact.email}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Address :</span>
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Street No :</span> {patient.address.number}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Street Name :</span> {patient.address.street}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Town :</span> {patient.address.town}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Parish :</span> {patient.address.parish}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">PO :</span> {patient.address.postOffice}
+                    </Card.Text>
+                  </Col>
 
-        <Col md={4} className="detailCardCol">
-          <Card.Text>
-            <span className="bold">Job Position :</span> {patient.occupation.role}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Employer :</span> {patient.occupation.employer}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Employer Phone :</span> {patient.occupation.contact.phone}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Employer Email :</span> {patient.occupation.contact.email}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Referring Doctor :</span>
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Name :</span> {patient.referringDoctor.name}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Phone :</span> {patient.referringDoctor.phone}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Email :</span> {patient.referringDoctor.email}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Attending Physician :</span>
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Name :</span> {patient.attendingPhysician.name}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Phone :</span> {patient.attendingPhysician.phone}
-          </Card.Text>
-          <Card.Text>
-            <span className="bold">Email :</span> {patient.attendingPhysician.email}
-          </Card.Text>
-        </Col>
-      </Row>
+                  <Col md={4} className="detailCardCol">
+                    <Card.Text>
+                      <span className="bold">Job Position :</span> {patient.occupation.role}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Employer :</span> {patient.occupation.employer}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Employer Phone :</span> {patient.occupation.contact.phone}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Employer Email :</span> {patient.occupation.contact.email}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Referring Doctor :</span>
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Name :</span> {patient.referringDoctor.name}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Phone :</span> {patient.referringDoctor.phone}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Email :</span> {patient.referringDoctor.email}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Attending Physician :</span>
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Name :</span> {patient.attendingPhysician.name}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Phone :</span> {patient.attendingPhysician.phone}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="bold">Email :</span> {patient.attendingPhysician.email}
+                    </Card.Text>
+                  </Col>
+                </Row>
 
-      <Row className="detailCardRow">
-        <Col className="detailCardCol">
-          { props.canDelete === true && (
-            <Button variant="danger" onClick={props.onDelete}>
-              Delete Patient !!??
+                <Row className="detailCardRow">
+                  <Col className="detailCardCol">
+                    { props.canDelete === true && (
+                      <Button variant="danger" onClick={props.onDelete}>
+                        Delete Patient !!??
+                      </Button>
+                    )}
+                  </Col>
+
+                  <Col className="detailCardCol">
+                    <Button variant="warning" onClick={props.onCreatePdf.bind(this, patient)}>
+                      Create Pdf
+                    </Button>
+                  </Col>
+                </Row>
+
+                </Card.Body>
+                </Card>
+            </Tab.Pane>
+            <Tab.Pane eventKey="2">
+              <Card.Text>
+                Appointments:
+              </Card.Text>
+              <PatientAppointmentList
+                patientAppointment={patientAppointment}
+                authUserId={props.authUserId}
+                canDelete={props.canDelete}
+                onDelete={props.appointmentDelete}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="3">
+              <Card.Text>
+                Consultants:
+              </Card.Text>
+              { patientConsultant !== null &&
+                (<PatientConsultantList
+                  patientConsultant={patientConsultant}
+                  authUserId={props.authUserId}
+                  canDelete={props.canDelete}
+                  onDelete={props.consultantDelete}
+                  />)
+              }
+            </Tab.Pane>
+            <Tab.Pane eventKey="4">
+            <Card.Text>
+              Insurance:
+            </Card.Text>
+            <PatientInsuranceList
+              patientInsurance={patientInsurance}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.insuranceDelete}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="5">
+              <Card.Text>
+                NextOfKin:
+              </Card.Text>
+              <PatientNextOfKinList
+                patientNextOfKin={patientNextOfKin}
+                authUserId={props.authUserId}
+                canDelete={props.canDelete}
+                onDelete={props.nextOfKinDelete}
+                />
+            </Tab.Pane>
+            <Tab.Pane eventKey="6">
+              <Card.Text>
+                Complaint:
+              </Card.Text>
+              <PatientComplaintList
+                patientComplaint={patientComplaint}
+                authUserId={props.authUserId}
+                canDelete={props.canDelete}
+                onDelete={props.complaintDelete}
+                onViewAttachment={props.onViewAttachment}
+                />
+            </Tab.Pane>
+            <Tab.Pane eventKey="7">
+              <Card.Text>
+                Surveys:
+              </Card.Text>
+              <PatientSurveyList
+                patientSurvey={patientSurvey}
+                authUserId={props.authUserId}
+                canDelete={props.canDelete}
+                onDelete={props.surveyDelete}
+                onViewAttachment={props.onViewAttachment}
+                />
+            </Tab.Pane>
+            <Tab.Pane eventKey="8">
+              <Card.Text>
+                Vitals:
+              </Card.Text>
+              <PatientVitalsList
+                patientVitals={patientVitals}
+                authUserId={props.authUserId}
+                canDelete={props.canDelete}
+                onDelete={props.vitalsDelete}
+                />
+            </Tab.Pane>
+            <Tab.Pane eventKey="9">
+            <Card.Text>
+              Examination:
+            </Card.Text>
+            <PatientExaminationList
+              patientExamination={patientExamination}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.examinationDelete}
+              onViewAttachment={props.onViewAttachment}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="10">
+            <Card.Text>
+              History:
+            </Card.Text>
+            <PatientHistoryList
+              patientHistory={patientHistory}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.historyDelete}
+              onViewAttachment={props.onViewAttachment}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="11">
+            <Card.Text>
+              Allergies:
+            </Card.Text>
+            <PatientAllergiesList
+              patientAllergies={patientAllergies}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.allergiesDelete}
+              onViewAttachment={props.onViewAttachment}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="12">
+            <Card.Text>
+              Medication:
+            </Card.Text>
+            <PatientMedicationList
+              patientMedication={patientMedication}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.medicationDelete}
+              onViewAttachment={props.onViewAttachment}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="13">
+            <Card.Text>
+              Investigation:
+            </Card.Text>
+            <PatientInvestigationList
+              patientInvestigation={patientInvestigation}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.investigationDelete}
+              onViewAttachment={props.onViewAttachment}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="14">
+            <Card.Text>
+              Diagnosis:
+            </Card.Text>
+            <PatientDiagnosisList
+              patientDiagnosis={patientDiagnosis}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.diagnosisDelete}
+              onViewAttachment={props.onViewAttachment}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="15">
+            <Card.Text>
+              Treatment:
+            </Card.Text>
+            <PatientTreatmentList
+              patientTreatment={patientTreatment}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.treatmentDelete}
+              onViewAttachment={props.onViewAttachment}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="16">
+            <Card.Text>
+              Billing:
+            </Card.Text>
+            <PatientBillingList
+              patientBilling={patientBilling}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.billingDelete}
+              onViewAttachment={props.onViewAttachment}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="17">
+            <Card.Text>
+              Attachments:
+            </Card.Text>
+            <PatientAttachmentsList
+              patientAttachments={patientAttachments}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.attachmentDelete}
+              onViewAttachment={props.onViewAttachment}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="18">
+            <Card.Text>
+              Notes:
+            </Card.Text>
+            <PatientNotesList
+              patientNotes={patientNotes}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.noteDelete}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="19">
+            <Card.Text>
+              Tags:
+            </Card.Text>
+            <PatientTagsList
+              patientTags={patientTags}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.tagDelete}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="20">
+            <Button variant="warning" className="formButton" onClick={props.onGetVisitList}>
+              Get Visit List
             </Button>
-          )}
-        </Col>
 
-        <Col className="detailCardCol">
-          <Button variant="warning" onClick={props.onCreatePdf.bind(this, patient)}>
-            Create Pdf
-          </Button>
+            <Card.Text>
+              <span className="bold ul">Selected Visit :</span>
+            </Card.Text>
+
+            { props.selectedVisit !== null &&
+            (<Card.Text>
+              <PatientVisit
+                authUserId={props.authUserId}
+                visit={props.selectedVisit}
+                onViewAttachment={props.onViewAttachment}
+                onCloseVisit={props.onCloseVisit}
+                />
+              </Card.Text>
+            )}
+
+            <Card.Text>
+              <span className="bold ul">Visit List :</span>
+            </Card.Text>
+            <PatientVisitList
+              authUserId={props.authUserId}
+              visitList={visitList}
+              onSelectVisit={props.onSelectVisit}
+            />
+            </Tab.Pane>
+            <Tab.Pane eventKey="21">
+            <Card.Text>
+            </Card.Text>
+            <SearchPatientVisitForm
+                  authUserId={props.authUserId}
+                    canConfirm
+                    onGetVisit={props.onGetVisit}
+                    confirmText="Search"
+                    patient={props.patient}
+                  />
+            { props.visit !== null && (
+              <PatientVisit
+                authUserId={props.authUserId}
+                visit={props.visit}
+                onViewAttachment={props.onViewAttachment}
+                onCloseVisit={props.onCloseVisit}
+                />
+              )}
+            </Tab.Pane>
+          </Tab.Content>
         </Col>
       </Row>
+    </Tab.Container>
 
-      </Card.Body>
-      </Card>
-      </Tab>
-
-      <Tab eventKey="Appointments" title="Appointments">
-      <Card.Text>
-        Appointments:
-      </Card.Text>
-      <PatientAppointmentList
-      patientAppointment={patientAppointment}
-      authUserId={props.authUserId}
-      canDelete={props.canDelete}
-      onDelete={props.appointmentDelete}
-      />
-      </Tab>
-
-      <Tab eventKey="Consultant" title="Consultant">
-      <Card.Text>
-        Consultants:
-      </Card.Text>
-      { patientConsultant !== null &&
-        (<PatientConsultantList
-          patientConsultant={patientConsultant}
-          authUserId={props.authUserId}
-          canDelete={props.canDelete}
-          onDelete={props.consultantDelete}
-          />)
-      }
-      </Tab>
-
-      <Tab eventKey="Insurance" title="Insurance">
-      <Card.Text>
-        Insurance:
-      </Card.Text>
-      <PatientInsuranceList
-        patientInsurance={patientInsurance}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.insuranceDelete}
-        />
-      </Tab>
-
-      <Tab eventKey="NextOfKin" title="NextOfKin">
-      <Card.Text>
-        NextOfKin:
-      </Card.Text>
-      <PatientNextOfKinList
-        patientNextOfKin={patientNextOfKin}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.nextOfKinDelete}
-        />
-      </Tab>
-
-      <Tab eventKey="Complaint" title="Complaint">
-      <Card.Text>
-        Complaint:
-      </Card.Text>
-      <PatientComplaintList
-        patientComplaint={patientComplaint}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.complaintDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="Survey" title="Survey">
-      <Card.Text>
-        Surveys:
-      </Card.Text>
-      <PatientSurveyList
-        patientSurvey={patientSurvey}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.surveyDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="Vitals" title="Vitals">
-      <Card.Text>
-        Vitals:
-      </Card.Text>
-      <PatientVitalsList
-        patientVitals={patientVitals}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.vitalsDelete}
-        />
-      </Tab>
-      <Tab eventKey="Examination" title="Examination">
-      <Card.Text>
-        Examination:
-      </Card.Text>
-      <PatientExaminationList
-        patientExamination={patientExamination}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.examinationDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="History" title="History">
-      <Card.Text>
-        History:
-      </Card.Text>
-      <PatientHistoryList
-        patientHistory={patientHistory}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.historyDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="Allergies" title="Allergies">
-      <Card.Text>
-        Allergies:
-      </Card.Text>
-      <PatientAllergiesList
-        patientAllergies={patientAllergies}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.allergiesDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="Medication" title="Medication">
-      <Card.Text>
-        Medication:
-      </Card.Text>
-      <PatientMedicationList
-        patientMedication={patientMedication}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.medicationDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="Investigation" title="Investigation">
-      <Card.Text>
-        Investigation:
-      </Card.Text>
-      <PatientInvestigationList
-        patientInvestigation={patientInvestigation}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.investigationDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="Diagnosis" title="Diagnosis">
-      <Card.Text>
-        Diagnosis:
-      </Card.Text>
-      <PatientDiagnosisList
-        patientDiagnosis={patientDiagnosis}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.diagnosisDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="Treatment" title="Treatment">
-      <Card.Text>
-        Treatment:
-      </Card.Text>
-      <PatientTreatmentList
-        patientTreatment={patientTreatment}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.treatmentDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="Billing" title="Billing">
-      <Card.Text>
-        Billing:
-      </Card.Text>
-      <PatientBillingList
-        patientBilling={patientBilling}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.billingDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="Attachments" title="Attachments">
-      <Card.Text>
-        Attachments:
-      </Card.Text>
-      <PatientAttachmentsList
-        patientAttachments={patientAttachments}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.attachmentDelete}
-        onViewAttachment={props.onViewAttachment}
-        />
-      </Tab>
-      <Tab eventKey="Notes" title="Notes">
-      <Card.Text>
-        Notes:
-      </Card.Text>
-      <PatientNotesList
-        patientNotes={patientNotes}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.noteDelete}
-        />
-      </Tab>
-      <Tab eventKey="Tags" title="Tags">
-      <Card.Text>
-        Tags:
-      </Card.Text>
-      <PatientTagsList
-        patientTags={patientTags}
-        authUserId={props.authUserId}
-        canDelete={props.canDelete}
-        onDelete={props.tagDelete}
-        />
-      </Tab>
-      <Tab eventKey="VisitList" title="Visit List">
-
-      <Button variant="warning" className="formButton" onClick={props.onGetVisitList}>
-        Get Visit List
-      </Button>
-
-      <Card.Text>
-        <span className="bold ul">Selected Visit :</span>
-      </Card.Text>
-
-      { props.selectedVisit !== null &&
-      (<Card.Text>
-        <PatientVisit
-          authUserId={props.authUserId}
-          visit={props.selectedVisit}
-          onViewAttachment={props.onViewAttachment}
-          onCloseVisit={props.onCloseVisit}
-          />
-        </Card.Text>
-      )}
-
-      <Card.Text>
-        <span className="bold ul">Visit List :</span>
-      </Card.Text>
-      <PatientVisitList
-        authUserId={props.authUserId}
-        visitList={visitList}
-        onSelectVisit={props.onSelectVisit}
-      />
-      </Tab>
-      <Tab eventKey="VisitSearch" title="Search for a Visit">
-      <Card.Text>
-      </Card.Text>
-      <SearchPatientVisitForm
-            authUserId={props.authUserId}
-              canConfirm
-              onGetVisit={props.onGetVisit}
-              confirmText="Search"
-              patient={props.patient}
-            />
-      { props.visit !== null && (
-        <PatientVisit
-          authUserId={props.authUserId}
-          visit={props.visit}
-          onViewAttachment={props.onViewAttachment}
-          onCloseVisit={props.onCloseVisit}
-          />
-        )}
-      </Tab>
-    </Tabs>
+    
   </div>
   );
 }
