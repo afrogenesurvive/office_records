@@ -592,11 +592,14 @@ updatePatientConsultantHandler = (event) => {
       token = null;
   }
 
-  console.log("UpdatePatientConsultantFormData:  ", event.target.formGridConsultantDate.value);
+  // console.log("UpdatePatientConsultantFormData:  ", event.target.formGridConsultantDate.value);
 
   this.setState({ updating: false , patientUpdateField: null });
 
-  let consultantDate = event.target.formGridConsultantDate.value;
+  let consultantDate = null;
+  if (event.target.formGridConsultantDate) {
+    consultantDate = event.target.formGridConsultantDate.value;
+  }
   if (event.target.formGridConsultantDateTodayCheckbox.checked === true) {
     consultantDate = new Date().toISOString().slice(0,10);
   }
@@ -826,7 +829,10 @@ updatePatientComplaintHandler = (event) => {
 
   let complaintTitle = event.target.formGridComplaintTitle.value;
 
-  let complaintDate = event.target.formGridComplaintDate.value;
+  let complaintDate = null;
+  if (event.target.formGridComplaintDate) {
+    complaintDate = event.target.formGridComplaintDate.value;
+  }
   if (event.target.formGridComplaintDateTodayCheckbox.checked === true) {
     complaintDate = new Date().toISOString().slice(0,10);
   }
@@ -936,7 +942,10 @@ updatePatientSurveyHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
-  let surveyDate = event.target.formGridSurveyDate.value;
+  let surveyDate = null;
+  if (event.target.formGridSurveyDate) {
+    surveyDate = event.target.formGridSurveyDate.value;
+  }
   if (event.target.formGridSurveyDateTodayCheckbox.checked === true) {
     surveyDate = new Date().toISOString().slice(0,10);
   }
@@ -1046,7 +1055,10 @@ updatePatientVitalsHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
-  let vitalsDate = event.target.formGridVitalsDate.value;
+  let vitalsDate = null;
+  if (event.target.formGridVitalsDate) {
+    vitalsDate = event.target.formGridVitalsDate.value;
+  }
   if (event.target.formGridVitalsDateTodayCheckbox.checked === true) {
     vitalsDate = new Date().toISOString().slice(0,10);
   }
@@ -1131,7 +1143,10 @@ updatePatientExaminationHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
-  let examinationDate = event.target.formGridExaminationDate.value;
+  let examinationDate = null;
+  if (event.target.formGridExaminationDate) {
+    examinationDate = event.target.formGridExaminationDate.value;
+  }
   if (event.target.formGridExaminationDateTodayCheckbox.checked === true) {
     examinationDate = new Date().toISOString().slice(0,10);
   }
@@ -1256,6 +1271,10 @@ updatePatientHistoryHandler = (event) => {
 
   let historyType = event.target.formGridHistoryType.value;
 
+  // let historyDate = null;
+  // if (event.target.formGridHistoryDate) {
+  //   historyDate = event.target.formGridHistoryDate.value;
+  // }
   let historyDate = event.target.formGridHistoryDate.value;
   if (event.target.formGridHistoryDateTodayCheckbox.checked === true) {
     historyDate = new Date().toISOString().slice(0,10);
@@ -1582,7 +1601,10 @@ updatePatientInvestigationHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
-  let investigationDate = event.target.formGridInvestigationDate.value;
+  let investigationDate = null;
+  if (event.target.formGridInvestigationDate) {
+    investigationDate = event.target.formGridInvestigationDate.value;
+  }
   if (event.target.formGridInvestigationDateTodayCheckbox.checked === true) {
     investigationDate = new Date().toISOString().slice(0,10);
   }
@@ -1698,7 +1720,10 @@ updatePatientDiagnosisHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
-  let diagnosisDate = event.target.formGridDiagnosisDate.value;
+  let diagnosisDate = null;
+  if (event.target.formGridDiagnosisDate) {
+    diagnosisDate = event.target.formGridDiagnosisDate.value;
+  }
   if (event.target.formGridDiagnosisDateTodayCheckbox.checked === true) {
     diagnosisDate = new Date().toISOString().slice(0,10);
   }
@@ -1809,7 +1834,10 @@ updatePatientTreatmentHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
-  let treatmentDate = event.target.formGridTreatmentDate.value;
+  let treatmentDate = null;
+  if (event.target.formGridTreatmentDate) {
+    treatmentDate = event.target.formGridTreatmentDate.value;
+  }
   if (event.target.formGridTreatmentDateTodayCheckbox.checked === true) {
     treatmentDate = new Date().toISOString().slice(0,10);
   }
@@ -1929,7 +1957,10 @@ updatePatientBillingHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null });
 
-  let billingDate = event.target.formGridBillingDate.value;
+  let billingDate = null;
+  if (event.target.formGridBillingDate) {
+    billingDate = event.target.formGridBillingDate.value;
+  }
   if (event.target.formGridBillingDateTodayCheckbox.checked === true) {
     billingDate = new Date().toISOString().slice(0,10);
   }
