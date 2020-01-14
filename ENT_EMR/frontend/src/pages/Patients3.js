@@ -101,6 +101,7 @@ class PatientsPage extends Component {
   }
 
   componentDidMount() {
+    this.setState({ selectedPatient: this.context.selectedPatient })
     this.fetchPatients();
     if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
@@ -2450,7 +2451,7 @@ modalConfirmSearchNameHandler = (event) => {
 
   getPatientVisit = (event) => {
 
-    const selectedPatient = this.state.selectedPatient;
+    const selectedPatient = this.context.selectedPatient;
     event.preventDefault();
     console.log(`
         getUserVisit function:
@@ -2497,8 +2498,8 @@ modalConfirmSearchNameHandler = (event) => {
 
   getVisitList = () => {
 
-    const selectedPatient = this.state.selectedPatient;
-    const patientName = this.state.selectedPatient.name;
+    const selectedPatient = this.context.selectedPatient;
+    const patientName = this.context.selectedPatient.name;
     let selectedPatientAppointmentDateArray = [];
     let selectedPatientAppointmentVisitArray = [];
     let selectedPatientAppointments = this.state.selectedPatient.appointments.map(appointments => {
@@ -2561,47 +2562,8 @@ modalConfirmSearchNameHandler = (event) => {
   }
 
 
-  getVisitListAsc = () => {
-    console.log(`
-      sorting visit list in ascending order...
-      `);
-
-      let list = this.state.visitList;
-
-      list.sort((a, b) => {
-        if (a.date < b.date) return -1
-        return a.date > b.date ? 1 : 0
-      })
-
-      console.log(`
-        list: ${list}
-        `);
-
-      this.setState({visitList: list})
-  }
-  getVisitListDesc = () => {
-    console.log(`
-      sorting visit list in descending order...
-      `);
-
-      let list = this.state.visitList;
-
-      list.sort((a, b) => {
-        if (a.date < b.date) return 1
-        return a.date > b.date ? -1 : 0
-      })
-
-      console.log(`
-        list: ${list}
-        `);
-
-      this.setState({visitList: list})
-  }
-
-
-
   modalCancelHandler = () => {
-    this.setState({ creating: false, updating: false, searching: false, selectedPatient: null });
+    this.setState({ creating: false, updating: false, searching: false });
   };
 
 
@@ -2878,7 +2840,7 @@ modalConfirmSearchNameHandler = (event) => {
 
     let token = this.context.token;
     let userId = this.context.userId;
-    let patientId = this.state.selectedPatient._id;
+    let patientId = this.context.selectedPatient._id;
     let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
     console.log(`
@@ -2936,7 +2898,7 @@ modalConfirmSearchNameHandler = (event) => {
 
     let token = this.context.token;
     let userId = this.context.userId;
-    let patientId = this.state.selectedPatient._id;
+    let patientId = this.context.selectedPatient._id;
     let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
     console.log(`
@@ -2994,7 +2956,7 @@ deletePatientNextOfKinItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
 
   console.log(`
     delete patient nextOfKin item:
@@ -3050,7 +3012,7 @@ deletePatientComplaintItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
   let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
   console.log(`
@@ -3108,7 +3070,7 @@ deletePatientSurveyItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
   let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
   console.log(`
@@ -3166,7 +3128,7 @@ deletePatientVitalsItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
   let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
   console.log(`
@@ -3224,7 +3186,7 @@ deletePatientExaminationItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
   let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
   console.log(`
@@ -3282,7 +3244,7 @@ deletePatientHistoryItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
   let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
   console.log(`
@@ -3340,7 +3302,7 @@ deletePatientAllergiesItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
 
   console.log(`
     delete patient Allergies item:
@@ -3396,7 +3358,7 @@ deletePatientMedicationItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
 
   console.log(`
     delete patient Medication item:
@@ -3452,7 +3414,7 @@ deletePatientInvestigationItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
   let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
   console.log(`
@@ -3510,7 +3472,7 @@ deletePatientDiagnosisItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
   let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
   console.log(`
@@ -3568,7 +3530,7 @@ deletePatientTreatmentItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
   let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
   console.log(`
@@ -3626,7 +3588,7 @@ deletePatientBillingItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
   let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
 
   console.log(`
@@ -3684,7 +3646,7 @@ deletePatientAttachmentItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
 
   // console.log(`
   //   deleting from s3...
@@ -3761,7 +3723,7 @@ deletePatientNoteItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
 
   console.log(`
     delete patient Note item:
@@ -3817,7 +3779,7 @@ deletePatientTagItem = (props) => {
 
   let token = this.context.token;
   let userId = this.context.userId;
-  let patientId = this.state.selectedPatient._id;
+  let patientId = this.context.selectedPatient._id;
 
   console.log(`
     delete patient Tag item:
@@ -4219,8 +4181,6 @@ deletePatientTagItem = (props) => {
                   visitList={this.state.visitList}
                   onSelectVisit={this.selectVisit}
                   onCloseVisit={this.closeVisit}
-                  onSortVisitListAsc={this.getVisitListAsc}
-                  onSortVisitListDesc={this.getVisitListDesc}
                   />
               )}
             </Tab.Pane>
@@ -5100,7 +5060,7 @@ deletePatientTagItem = (props) => {
                   onCancel={this.modalCancelHandler}
                   onConfirm={this.modalConfirmSearchHandler}
                   confirmText="Search"
-                  patient={this.context.selectedPatient}
+                  patient={this.state.selectedPatient}
                 />
               )}
               </Tab>
@@ -5118,7 +5078,7 @@ deletePatientTagItem = (props) => {
                   onCancel={this.modalCancelHandler}
                   onConfirm={this.modalConfirmSearchIdHandler}
                   confirmText="Search"
-                  patient={this.context.selectedPatient}
+                  patient={this.state.selectedPatient}
                 />
               )}
               </Tab>
@@ -5137,7 +5097,7 @@ deletePatientTagItem = (props) => {
                   onCancel={this.modalCancelHandler}
                   onConfirm={this.modalConfirmSearchNameHandler}
                   confirmText="Search"
-                  patient={this.context.selectedPatient}
+                  patient={this.state.selectedPatient}
                 />
               )}
               </Tab>
