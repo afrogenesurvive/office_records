@@ -32,13 +32,20 @@ return (
     <Form.Label>Other Date</Form.Label>
     <Form.Control type="date" placeholder="Date"/>
   </Form.Group>
+  </Form.Row>
 
+  <Form.Row>
   {
     // <DatePicker className="calendarDob"
     //   selected={AuthContext._currentValue.fancyDate}
     //   onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e}}
     // />
   }
+  <Form.Label>Fancy Date</Form.Label>
+  <DatePicker className="calendarDob"
+    selected={new Date(AuthContext._currentValue.fancyDate)}
+    onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e;console.log("authcontext.fancyDate",AuthContext._currentValue.fancyDate)}}
+  />
   </Form.Row>
 
   <Form.Row>

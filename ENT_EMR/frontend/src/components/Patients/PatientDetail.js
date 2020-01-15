@@ -564,10 +564,10 @@ const PatientDetail = (props) => {
               <span className="bold ul">Visit List :</span>
             </Card.Text>
             <Row>
-            <Button variant="primary" size="sm" className="formButton" onClick={props.onSortVisitListAsc}>
+            <Button variant="primary" size="sm" onClick={props.onSortVisitListAsc}>
               Sort List Asc
             </Button>
-            <Button variant="info" size="sm" className="formButton" onClick={props.onSortVisitListDesc}>
+            <Button variant="info" size="sm" onClick={props.onSortVisitListDesc}>
               Sort List Desc
             </Button>
             </Row>

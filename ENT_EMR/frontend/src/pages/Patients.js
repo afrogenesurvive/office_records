@@ -280,7 +280,7 @@ class PatientsPage extends Component {
   };
 
   modalCancelHandler = () => {
-    this.setState({ creating: false, updating: false, selectedPatient: null });
+    this.setState({ creating: false, updating: false });
   };
 
 
@@ -2641,7 +2641,11 @@ modalConfirmSearchNameHandler = (event) => {
 
         this.context.patients = this.state.patients;
         if (this.isActive) {
-          this.setState({ patients: patients, isLoading: false });
+          this.setState({
+            patients: patients,
+            isLoading: false,
+
+          });
         }
 
       })
@@ -4176,14 +4180,20 @@ deletePatientTagItem = (props) => {
         <Col sm={10}>
           <Tab.Content>
             <Tab.Pane eventKey="patientDetail">
-              {this.state.selectedPatient === null && (
+              {this.state.selectedPatient === null &&
+                 (
                 <Button variant="outline-warning" size="lg" className="confirmEditButton">
                   Select a Patient from the Master List
                 </Button>
               )}
+              {this.state.selectedPatient === null &&
+                 (
+                <Button variant="outline-danger" size="lg" className="confirmEditButton">
+                  Don't forget to select someone from the Staff page before editing Patient Consultant information !!!
+                </Button>
+              )}
               {this.state.isLoading === false &&
-                this.state.selectedPatient !== null
-                &&
+                this.state.selectedPatient !== null &&
                 (<PatientDetail
                   authUserId={this.context.userId}
                   token={this.context.token}
