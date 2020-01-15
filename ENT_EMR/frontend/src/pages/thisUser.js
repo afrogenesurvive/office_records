@@ -285,21 +285,22 @@ class ThisUserPage extends Component {
     console.log(`
       dates & raisins...
       this.context.fancyDate: ${new Date(AuthContext._currentValue.fancyDate).toISOString().slice(0,10)},
-      event.target.formGridAttendanceDate.value: ${event.target.formGridAttendanceDate.value},
       event.target.formGridAttendanceDateTodayCheckbox.checked: ${event.target.formGridAttendanceDateTodayCheckbox.checked},
       `);
     this.setState({ updating: false , userUpdateField: null });
 
-    let attendanceDate = event.target.formGridAttendanceDate.value;
+    let attendanceDate = null;
 
     if (event.target.formGridAttendanceDateTodayCheckbox.checked === true) {
+      console.log("1");
       attendanceDate = new Date().toISOString().slice(0,10);
     }
 
     if (
-      event.target.formGridAttendanceDate.value === '' &&
+      AuthContext._currentValue.fancyDate !== null &&
       event.target.formGridAttendanceDateTodayCheckbox.checked !== true
     ) {
+      console.log("2");
       attendanceDate = new Date(AuthContext._currentValue.fancyDate).toISOString().slice(0,10);
     }
 
