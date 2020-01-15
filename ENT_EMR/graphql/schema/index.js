@@ -1,5 +1,4 @@
 
-const { GraphQLObjectType, GraphQLString } = require('graphql')
 const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
@@ -92,6 +91,7 @@ type Patient {
   insurance: [Insurance]
   complaints: [Complaint]
   surveys: [Survey]
+  systematicInquiry: [SystematicInquiry]
   vitals: [Vitals]
   examination: [Examination]
   history: [History]
@@ -101,6 +101,7 @@ type Patient {
   diagnosis: [Diagnosis]
   treatment: [Treatment]
   billing: [Billing]
+  vigilance: [Vigilance]
   attachments: [Attachment]
   notes: [String]
   tags: [String]
@@ -157,6 +158,14 @@ type Survey {
   description: String
   attachment: Attachment
 }
+
+type SystematicInquiry {
+  date: String
+  title: String
+  description: String
+  attachment: Attachment
+}
+
 type Vitals {
   date: String
   pr: Float
@@ -237,6 +246,188 @@ type Billing {
   paid: Boolean
   notes: String
   attachment: Attachment
+}
+
+type Vigilance {
+  date: String,
+  chronicIllness: ChronicIllness,
+  lifestyle: Lifestyle,
+  screening: Screening,
+  vaccines: Vaccines
+}
+
+type ChronicIllness {
+  diabetes: Diabetes,
+  hbp: Hbp,
+  dyslipidemia: Dyslipidemia,
+  cad: Cad
+}
+
+type Diabetes {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Hbp {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Dyslipidemia {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Cad {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Lifestyle {
+  weight: Weight,
+  diet: Diet,
+  smoking: Smoking,
+  substanceAbuse: SubstanceAbuse,
+  exercise: Exercise,
+  allergies: VigilanceAllergies,
+  asthma: Asthma
+}
+
+type Weight {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Diet {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Smoking {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type SubstanceAbuse {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Exercise {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type VigilanceAllergies {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Asthma {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Screening {
+  breast: Breast,
+  prostate: Prostate,
+  cervix: Cervix,
+  colon: Colon,
+  dental: Dental
+}
+
+type Breast {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Prostate {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Cervix {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Colon {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Dental {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Vaccines {
+  influenza: Influenza,
+  varicella: Varicella,
+  hpv: Hpv,
+  mmr: Mmr,
+  tetanus: Tetanus,
+  pneumovax: Pneumovax,
+  other: Other
+}
+
+type Influenza {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Varicella {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Hpv {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Mmr {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Tetanus {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Pneumovax {
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
+}
+
+type Other {
+  name: String,
+  medication: Boolean,
+  testing: Boolean,
+  comment: String
 }
 
 type Appointment {
@@ -353,6 +544,12 @@ input PatientInput {
   surveyAttachmentName: String
   surveyAttachmentFormat: String
   surveyAttachmentPath: String
+  systematicInquiryDate: String
+  systematicInquiryTitle: String
+  systematicInquiryDescription: String
+  systematicInquiryAttachmentName: String
+  systematicInquiryAttachmentFormat: String
+  systematicInquiryAttachmentPath: String
   vitalsDate: String
   vitalsPr: Float
   vitalsBp1: Float
@@ -428,6 +625,77 @@ input PatientInput {
   billingAttachmentFormat: String
   billingAttachmentPath: String
   billingNotes: String
+  vigilanceDate: String
+  vigilanceChronicIllnessDiabetesMedication: Boolean
+  vigilanceChronicIllnessDiabetesTesting: Boolean
+  vigilanceChronicIllnessDiabetesComment: String
+  vigilanceChronicIllnessHbpMedication: Boolean
+  vigilanceChronicIllnessHbpTesting: Boolean
+  vigilanceChronicIllnessHbpComment: String
+  vigilanceChronicIllnessDyslipidemiaMedication: Boolean
+  vigilanceChronicIllnessDyslipidemiaTesting: Boolean
+  vigilanceChronicIllnessDyslipidemiaComment: String
+  vigilanceChronicIllnessCadMedication: Boolean
+  vigilanceChronicIllnessCadTesting: Boolean
+  vigilanceChronicIllnessCadComment: String
+  vigilanceLifestyleWeightMedication: Boolean
+  vigilanceLifestyleWeightTesting: Boolean
+  vigilanceLifestyleWeightComment: String
+  vigilanceLifestyleDietMedication: Boolean
+  vigilanceLifestyleDietTesting: Boolean
+  vigilanceLifestyleDietComment: String
+  vigilanceLifestyleSmokingMedication: Boolean
+  vigilanceLifestyleSmokingTesting: Boolean
+  vigilanceLifestyleSmokingComment: String
+  vigilanceLifestyleSubstanceAbuseMedication: Boolean
+  vigilanceLifestyleSubstanceAbuseTesting: Boolean
+  vigilanceLifestyleSubstanceAbuseComment: String
+  vigilanceLifestyleExerciseMedication: Boolean
+  vigilanceLifestyleExerciseTesting: Boolean
+  vigilanceLifestyleExerciseComment: String
+  vigilanceLifestyleAllergiesMedication: Boolean
+  vigilanceLifestyleAllergiesTesting: Boolean
+  vigilanceLifestyleAllergiesComment: String
+  vigilanceLifestyleAsthmaMedication: Boolean
+  vigilanceLifestyleAsthmaTesting: Boolean
+  vigilanceLifestyleAsthmaComment: String
+  vigilanceScreeningBreastMedication: Boolean
+  vigilanceScreeningBreastTesting: Boolean
+  vigilanceScreeningBreastComment: String
+  vigilanceScreeningProstateMedication: Boolean
+  vigilanceScreeningProstateTesting: Boolean
+  vigilanceScreeningProstateComment: String
+  vigilanceScreeningCervixMedication: Boolean
+  vigilanceScreeningCervixTesting: Boolean
+  vigilanceScreeningCervixComment: String
+  vigilanceScreeningColonMedication: Boolean
+  vigilanceScreeningColonTesting: Boolean
+  vigilanceScreeningColonComment: String
+  vigilanceScreeningDentalMedication: Boolean
+  vigilanceScreeningDentalTesting: Boolean
+  vigilanceScreeningDentalComment: String
+  vigilanceVaccinesInfluenzaMedication: Boolean
+  vigilanceVaccinesInfluenzaTesting: Boolean
+  vigilanceVaccinesInfluenzaComment: String
+  vigilanceVaccinesVaricellaMedication: Boolean
+  vigilanceVaccinesVaricellaTesting: Boolean
+  vigilanceVaccinesVaricellaComment: String
+  vigilanceVaccinesHpvMedication: Boolean
+  vigilanceVaccinesHpvTesting: Boolean
+  vigilanceVaccinesHpvComment: String
+  vigilanceVaccinesMmrMedication: Boolean
+  vigilanceVaccinesMmrTesting: Boolean
+  vigilanceVaccinesMmrComment: String
+  vigilanceVaccinesTetanusMedication: Boolean
+  vigilanceVaccinesTetanusTesting: Boolean
+  vigilanceVaccinesTetanusComment: String
+  vigilanceVaccinesPneumovaxMedication: Boolean
+  vigilanceVaccinesPneumovaxTesting: Boolean
+  vigilanceVaccinesPneumovaxComment: String
+  vigilanceVaccinesOtherName: String
+  vigilanceVaccinesOtherMedication: Boolean
+  vigilanceVaccinesOtherTesting: Boolean
+  vigilanceVaccinesOtherComment: String
   attachmentName: String
   attachmentPath: String
   attachmentFormat: String
@@ -511,6 +779,7 @@ type RootMutation {
     updatePatientNextOfKin(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientComplaint(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientSurvey(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientSystematicInquiry(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientVitals(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientExamination(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientHistory(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
@@ -520,6 +789,7 @@ type RootMutation {
     updatePatientDiagnosis(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientTreatment(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientBilling(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
+    updatePatientVigilance(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientAttachment(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientNotes(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
     updatePatientTags(userId: ID!, patientId: ID!, patientInput: PatientInput!): Patient
@@ -531,6 +801,7 @@ type RootMutation {
     deletePatientNextOfKin(userId: ID!, patientId: ID!, nextOfKinName: String!): Patient
     deletePatientComplaint(userId: ID!, patientId: ID!, complaintTitle: String!, complaintDate: String!): Patient
     deletePatientSurvey(userId: ID!, patientId: ID!, surveyTitle: String!, surveyDate: String!): Patient
+    deletePatientSystemInquiry(userId: ID!, patientId: ID!, systematicInquiryTitle: String!, systematicInquiryDate: String!): Patient
     deletePatientVitals(userId: ID!, patientId: ID!, vitalsDate: String!): Patient
     deletePatientExamination(userId: ID!, patientId: ID!, examinationType: String!, examinationDate: String!): Patient
     deletePatientHistory(userId: ID!, patientId: ID!, historyDate: String!, historyTitle: String!): Patient
@@ -540,6 +811,7 @@ type RootMutation {
     deletePatientDiagnosis(userId: ID!, patientId: ID!, diagnosisDate: String!, diagnosisTitle: String!): Patient
     deletePatientTreatment(userId: ID!, patientId: ID!, treatmentDate: String!, treatmentTitle: String!): Patient
     deletePatientBilling(userId: ID!, patientId: ID!, billingDate: String!, billingTitle: String!): Patient
+    deletePatientVigilance(userId: ID!, patientId: ID!, vigilanceDate: String!): Patient
     deletePatientAttachment(userId: ID!, patientId: ID!, attachmentName: String!): Patient
     deletePatientNote(userId: ID!, patientId: ID!, note: String!): Patient
     deletePatientTag(userId: ID!, patientId: ID!, tag: String!): Patient

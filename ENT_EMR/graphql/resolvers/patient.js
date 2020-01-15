@@ -966,6 +966,160 @@ module.exports = {
       throw err;
     }
   },
+  updatePatientVigilance: async (args, req) => {
+    console.log(`
+      updatePatientVigilance...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const patientVigilanceObject = {
+        date: args.patientInput.vigilanceDate,
+        chronicIllness: {
+          diabetes: {
+            medication: args.patientInput.vigilanceChronicIllnessDiabetesMedication,
+            testing: args.patientInput.vigilanceChronicIllnessDiabetesTesting,
+            comment: args.patientInput.vigilanceChronicIllnessDiabetesComment
+          },
+          hbp: {
+            medication: args.patientInput.vigilanceChronicIllnessHbpMedication,
+            testing: args.patientInput.vigilanceChronicIllnessHbpTesting,
+            comment: args.patientInput.vigilanceChronicIllnessHbpComment
+          },
+          dyslipidemia: {
+            medication: args.patientInput.vigilanceChronicIllnessDyslipidemiaMedication,
+            testing: args.patientInput.vigilanceChronicIllnessDyslipidemiaTesting,
+            comment: args.patientInput.vigilanceChronicIllnessDyslipidemiaComment
+          },
+          cad: {
+            medication: args.patientInput.vigilanceChronicIllnessCadMedication,
+            testing: args.patientInput.vigilanceChronicIllnessCadTesting,
+            comment: args.patientInput.vigilanceChronicIllnessCadComment
+          }
+        },
+        lifestyle: {
+          weight: {
+            medication: args.patientInput.vigilanceLifestyleWeightMedication,
+            testing: args.patientInput.vigilanceLifestyleWeightTesting,
+            comment: args.patientInput.vigilanceLifestyleWeightComment
+          },
+          diet: {
+            medication: args.patientInput.vigilanceLifestyleDietMedication,
+            testing: args.patientInput.vigilanceLifestyleDietTesting,
+            comment: args.patientInput.vigilanceLifestyleDietComment
+          },
+          smoking: {
+            medication: args.patientInput.vigilanceLifestyleSmokingMedication,
+            testing: args.patientInput.vigilanceLifestyleSmokingTesting,
+            comment: args.patientInput.vigilanceLifestyleSmokingComment
+          },
+          substanceAbuse: {
+            medication: args.patientInput.vigilanceLifestyleSubstanceAbuseMedication,
+            testing: args.patientInput.vigilanceLifestyleSubstanceAbuseTesting,
+            comment: args.patientInput.vigilanceLifestyleSubstanceAbuseComment
+          },
+          exercise: {
+            medication: args.patientInput.vigilanceLifestyleExerciseMedication,
+            testing: args.patientInput.vigilanceLifestyleExerciseTesting,
+            comment: args.patientInput.vigilanceLifestyleExerciseComment
+          },
+          allergies: {
+            medication: args.patientInput.vigilanceLifestyleAllergiesMedication,
+            testing: args.patientInput.vigilanceLifestyleAllergiesTesting,
+            comment: args.patientInput.vigilanceLifestyleAllergiesComment
+          },
+          asthma: {
+            medication: args.patientInput.vigilanceLifestyleAsthmaMedication,
+            testing: args.patientInput.vigilanceLifestyleAsthmaTesting,
+            comment: args.patientInput.vigilanceLifestyleAsthmaComment
+          }
+        },
+        screening: {
+          breast: {
+            medication: args.patientInput.vigilanceScreeningBreastMedication,
+            testing: args.patientInput.vigilanceScreeningBreastTesting,
+            comment: args.patientInput.vigilanceScreeningBreastComment
+          },
+          prostate: {
+            medication: args.patientInput.vigilanceScreeningProstateMedication,
+            testing: args.patientInput.vigilanceScreeningProstateTesting,
+            comment: args.patientInput.vigilanceScreeningProstateComment
+          },
+          cervix: {
+            medication: args.patientInput.vigilanceScreeningCervixMedication,
+            testing: args.patientInput.vigilanceScreeningCervixTesting,
+            comment: args.patientInput.vigilanceScreeningCervixComment
+          },
+          colon: {
+            medication: args.patientInput.vigilanceScreeningColonMedication,
+            testing: args.patientInput.vigilanceScreeningColonTesting,
+            comment: args.patientInput.vigilanceScreeningColonComment
+          },
+          dental: {
+            medication: args.patientInput.vigilanceScreeningDentalMedication,
+            testing: args.patientInput.vigilanceScreeningDentalTesting,
+            comment: args.patientInput.vigilanceScreeningDentalComment
+          }
+        },
+        vaccines: {
+          influenza: {
+            medication: args.patientInput.vigilanceVaccinesInfluenzaMedication,
+            testing: args.patientInput.vigilanceVaccinesInfluenzaTesting,
+            comment: args.patientInput.vigilanceVaccinesInfluenzaComment
+          },
+          varicella: {
+            medication: args.patientInput.vigilanceVaccinesVaricellaMedication,
+            testing: args.patientInput.vigilanceVaccinesVaricellaTesting,
+            comment: args.patientInput.vigilanceVaccinesVaricellaComment
+          },
+          hpv: {
+            medication: args.patientInput.vigilanceVaccinesHpvMedication,
+            testing: args.patientInput.vigilanceVaccinesHpvTesting,
+            comment: args.patientInput.vigilanceVaccinesHpvComment
+          },
+          mmr: {
+            medication: args.patientInput.vigilanceVaccinesMmrMedication,
+            testing: args.patientInput.vigilanceVaccinesMmrTesting,
+            comment: args.patientInput.vigilanceVaccinesMmrComment
+          },
+          tetanus: {
+            medication: args.patientInput.vigilanceVaccinesTetanusMedication,
+            testing: args.patientInput.vigilanceVaccinesTetanusTesting,
+            comment: args.patientInput.vigilanceVaccinesTetanusComment
+          },
+          pneumovax: {
+            medication: args.patientInput.vigilanceVaccinesPneumovaxMedication,
+            testing: args.patientInput.vigilanceVaccinesPneumovaxTesting,
+            comment: args.patientInput.vigilanceVaccinesPneumovaxComment
+          },
+          other: {
+            name: args.patientInput.vigilanceVaccinesOtherName,
+            medication: args.patientInput.vigilanceVaccinesOtherMedication,
+            testing: args.patientInput.vigilanceVaccinesOtherTesting,
+            comment: args.patientInput.vigilanceVaccinesOtherComment
+          }
+        }
+      }
+
+      console.log(`
+        patientVigilanceObject: ${patientVigilanceObject}
+        `);
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {vigilance:patientVigilanceObject}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+    } catch (err) {
+      throw err;
+    }
+  },
   updatePatientAttachment: async (args, req) => {
     console.log(`
       updatePatientAttachment...args:
@@ -1602,6 +1756,16 @@ module.exports = {
               path: "",
             }
           }],
+        systematicInquiry: [{
+            date: 0,
+            title: "",
+            description: "",
+            attachment:{
+              name: "",
+              format: "",
+              path: "",
+            }
+          }],
         vitals: [{
           date: 0,
           pr: 0,
@@ -1706,13 +1870,140 @@ module.exports = {
             type: "",
             description: "",
             amount: 0,
-            paid: null,
+            paid: false,
             attachment:{
               name: "",
               format: "",
               path: "",
             },
             notes: "",
+          }],
+          vigilance:[{
+            date: 0,
+            chronicIllness: {
+              diabetes: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              hbp: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              dyslipidemia: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              cad: {
+                medication: false,
+                testing: false,
+                comment: ""
+              }
+            },
+            lifestyle: {
+              weight: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              diet: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              smoking: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              substanceAbuse: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              exercise: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              allergies: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              asthma: {
+                medication: false,
+                testing: false,
+                comment: ""
+              }
+            },
+            screening: {
+              breast: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              prostate: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              cervix: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              colon: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              dental: {
+                medication: false,
+                testing: false,
+                comment: ""
+              }
+            },
+            vaccines: {
+              influenza: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              varicella: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              hpv: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              mmr: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              tetanus: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              pneumovax: {
+                medication: false,
+                testing: false,
+                comment: ""
+              },
+              other: {
+                name: "",
+                medication: false,
+                testing: false,
+                comment: ""
+              }
+            }
           }],
         attachments: [{
           name: "",
