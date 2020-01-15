@@ -11,7 +11,7 @@ const VisitHistoryItem = props => (
     <Card className="card">
         <Card.Body>
           <Card.Title>
-            History
+            Past History
           </Card.Title>
 
 

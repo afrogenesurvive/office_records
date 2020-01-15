@@ -4120,7 +4120,7 @@ deletePatientTagItem = (props) => {
               <Nav.Link eventKey="patientEditNextOfKin">Next of Kin</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="patientEditComplaint">Complaint</Nav.Link>
+              <Nav.Link eventKey="patientEditComplaint">History</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="patientEditSurvey">Survey</Nav.Link>
@@ -4132,7 +4132,7 @@ deletePatientTagItem = (props) => {
               <Nav.Link eventKey="patientEditExamination">Examination</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="patientEditHistory">History</Nav.Link>
+              <Nav.Link eventKey="patientEditHistory">Past History</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="patientEditAllergies">Allergies</Nav.Link>
@@ -4271,6 +4271,10 @@ deletePatientTagItem = (props) => {
 
                         <Card.Text>
                           When you are done with a section click the GREEN Done adding Complaints, Vitals etc and continue to the next form.
+                        </Card.Text>
+
+                        <Card.Text>
+                          Once you have submitted all the information required scroll to the bottom and click the green button.
                         </Card.Text>
                         </Card.Body>
                       </Accordion.Collapse>
@@ -4722,7 +4726,7 @@ deletePatientTagItem = (props) => {
                 </Button>
               )}
               {this.state.selectedPatient !== null && (
-                <Button variant="outline-primary" value='complaint' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Complaint</Button>
+                <Button variant="outline-primary" value='complaint' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add History</Button>
               )}
               {this.state.patientUpdateField === 'complaint' &&
               this.state.selectedPatient !== null
@@ -4818,7 +4822,7 @@ deletePatientTagItem = (props) => {
                 </Button>
               )}
               {this.state.selectedPatient !== null && (
-                <Button variant="outline-primary" value='history' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add History</Button>
+                <Button variant="outline-primary" value='history' size="lg" className="confirmEditButton" onClick={this.updatePatientSpecial.bind(this)}>Add Past History</Button>
               )}
               {this.state.patientUpdateField === 'history' &&
               this.state.selectedPatient !== null
