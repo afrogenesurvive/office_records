@@ -1,4 +1,5 @@
 import React from 'react';
+import GooglePicker from 'react-google-picker';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -45,6 +46,26 @@ return (
   // </Form.Group>
 }
 </Form.Row>
+
+{
+// <Form.Row>
+// <GooglePicker clientId={'690063429488-2dh9am3ppa1htdtu57u4seb2ja4dve3d.apps.googleusercontent.com'}
+//             developerKey={'AIzaSyBE94KR1wlluK9sls29Uw7PYC9sTkeixZY'}
+//             scope={['https://www.googleapis.com/auth/drive.readonly']}
+//               onChange={data => console.log('on change:', data)}
+//               onAuthFailed={data => console.log('on auth failed:', data)}
+//               multiselect={true}
+//               navHidden={true}
+//               authImmediate={false}
+//               mimeTypes={['image/png', 'image/jpeg', 'image/jpg']}
+//               query={'10'}
+//               viewId={'DOCS'}>
+//             <Button variant="primary" className="formButton">
+//             Google Picker
+//             </Button>
+// </GooglePicker>
+// </Form.Row>
+}
 
 <Form.Row>
 {props.canCancel && (
