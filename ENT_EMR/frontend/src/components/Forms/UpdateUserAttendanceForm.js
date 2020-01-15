@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -10,6 +10,16 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const UpdateUserAttendanceForm = (props) => {
+
+  const [startDate, setStartDate] = useState(new Date());
+
+ const handleChange = date => {
+   setStartDate(date);
+   AuthContext._currentValue.fancyDate = startDate;
+   console.log(`
+     AuthContext._currentValue.fancyDate = startDate: ${AuthContext._currentValue.fancyDate},
+     `);
+  }
 
 console.log("UpdateUserAttendanceForm.props:  ", {...props});
 const {...user} = props.user;
@@ -27,25 +37,29 @@ return (
 </Form.Group>
 </Form.Row>
 
-<Form.Row>
-  <Form.Group as={Col} controlId="formGridAttendanceDate">
-    <Form.Label>Other Date</Form.Label>
-    <Form.Control type="date" placeholder="Date"/>
-  </Form.Group>
-  </Form.Row>
-
   <Form.Row>
   {
+    // <Form.Row>
+    //   <Form.Group as={Col} controlId="formGridAttendanceDate">
+    //     <Form.Label>Other Date</Form.Label>
+    //     <Form.Control type="date" placeholder="Date"/>
+    //   </Form.Group>
+    // </Form.Row>
+  }
+
+  {
     // <DatePicker className="calendarDob"
-    //   selected={AuthContext._currentValue.fancyDate}
-    //   onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e}}
+    //   selected={new Date(AuthContext._currentValue.fancyDate)}
+    //   onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e;console.log("authcontext.fancyDate",AuthContext._currentValue.fancyDate)}}
     // />
   }
-  <Form.Label>Fancy Date</Form.Label>
-  <DatePicker className="calendarDob"
-    selected={new Date(AuthContext._currentValue.fancyDate)}
-    onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e;console.log("authcontext.fancyDate",AuthContext._currentValue.fancyDate)}}
-  />
+  <Form.Group as={Col} controlId="formGridAttendanceFancyDate">
+    <Form.Label>Fancy Date</Form.Label>
+    <DatePicker className="calendarDob"
+    selected={startDate}
+     onChange={handleChange}
+    />
+  </Form.Group>
   </Form.Row>
 
   <Form.Row>
