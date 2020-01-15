@@ -42,21 +42,21 @@ return (
   <Form.Row>
   <Form.Group as={Col} controlId="formGridComplaintTitle">
     <Form.Label>Title</Form.Label>
-    <Form.Control type="text" placeholder="ComplaintTitle"/>
+    <Form.Control type="text" placeholder="HistoryTitle"/>
   </Form.Group>
   </Form.Row>
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridComplaintDescription">
-    <Form.Label>Description</Form.Label>
-    <Form.Control as="textarea" rows="7" placeholder="ComplaintDescription"/>
+    <Form.Label>Complaint</Form.Label>
+    <Form.Control as="textarea" rows="7" placeholder="HistoryComplaint"/>
   </Form.Group>
   </Form.Row>
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridComplaintAnamnesis">
     <Form.Label>Anamnesis</Form.Label>
-    <Form.Control as="textarea" rows="7" placeholder="ComplaintAnamnesis"/>
+    <Form.Control as="textarea" rows="7" placeholder="HistoryAnamnesis"/>
   </Form.Group>
   </Form.Row>
 
@@ -64,7 +64,7 @@ return (
 
   <Form.Group as={Col} controlId="formGridComplaintAttachmentFormat">
     <Form.Label>Attachment Format</Form.Label>
-    <Form.Control type="text" placeholder="complaintAttachmentFormat"/>
+    <Form.Control type="text" placeholder="historyAttachmentFormat"/>
   </Form.Group>
   {
   //   <Form.Group as={Col} controlId="formGridComplaintAttachmentPath">

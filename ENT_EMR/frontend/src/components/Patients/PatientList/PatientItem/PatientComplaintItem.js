@@ -11,7 +11,7 @@ const patientComplaintItem = props => (
     <Card className="card">
         <Card.Body>
           <Card.Title>
-            Complaint
+            History
           </Card.Title>
 
 
@@ -29,7 +29,7 @@ const patientComplaintItem = props => (
             </p>
             </li>
             <li className="cardLi">
-            <p className="userItemHeading"> Description:</p>
+            <p className="userItemHeading"> Complaint:</p>
             <p className="userItemText">
             {props.description}
             </p>

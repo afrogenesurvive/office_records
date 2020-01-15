@@ -20,14 +20,14 @@ return (
 <Form.Row>
   <Form.Group as={Col} controlId="formGridHistoryType">
     <Form.Label>Type</Form.Label>
-    <Form.Control type="text" placeholder="HistoryType"/>
+    <Form.Control type="text" placeholder="Past History Type"/>
   </Form.Group>
   </Form.Row>
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridHistoryDate">
     <Form.Label>Date</Form.Label>
-    <Form.Control type="date" placeholder="HistoryDate"/>
+    <Form.Control type="date" placeholder="Past History Date"/>
   </Form.Group>
   <Form.Group as={Col} controlId="formGridHistoryDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
@@ -38,14 +38,14 @@ return (
   <Form.Row>
   <Form.Group as={Col} controlId="formGridHistoryTitle">
     <Form.Label>Title</Form.Label>
-    <Form.Control type="text" placeholder="HistoryTitle"/>
+    <Form.Control type="text" placeholder="Past History Title"/>
   </Form.Group>
   </Form.Row>
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridHistoryDescription">
     <Form.Label>Description</Form.Label>
-    <Form.Control as="textarea" rows="5" placeholder="HistoryDescription"/>
+    <Form.Control as="textarea" rows="5" placeholder="Past History Description"/>
   </Form.Group>
   </Form.Row>
 
@@ -53,7 +53,7 @@ return (
 
   <Form.Group as={Col} controlId="formGridHistoryAttachmentFormat">
     <Form.Label>Attachment Format</Form.Label>
-    <Form.Control type="text" placeholder="HistoryAttachmentFormat"/>
+    <Form.Control type="text" placeholder="Past History AttachmentFormat"/>
   </Form.Group>
   {
   //   <Form.Group as={Col} controlId="formGridAttachmentPath">

@@ -10,7 +10,7 @@ const VisitComplaintItem = props => (
     <Card className="card">
         <Card.Body>
           <Card.Title>
-            Complaint
+            History
           </Card.Title>
 
 

@@ -156,7 +156,7 @@ const PatientDetail = (props) => {
               <Nav.Link eventKey="5">Next Of Kin</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="6">Complaints</Nav.Link>
+              <Nav.Link eventKey="6">History</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="7">Surveys</Nav.Link>
@@ -168,7 +168,7 @@ const PatientDetail = (props) => {
               <Nav.Link eventKey="9">Examination</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="10">History</Nav.Link>
+              <Nav.Link eventKey="10">Past History</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="11">Allergies</Nav.Link>
@@ -423,7 +423,7 @@ const PatientDetail = (props) => {
             </Tab.Pane>
             <Tab.Pane eventKey="10">
             <Card.Text>
-              History:
+              Past History:
             </Card.Text>
             <PatientHistoryList
               patientHistory={patientHistory}
