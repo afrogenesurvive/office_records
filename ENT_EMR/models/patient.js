@@ -95,6 +95,17 @@ const patientSchema = new Schema({
         },
         _id: false
     }],
+  systematicInquiry: [{
+      date: {type: Date},
+      title: {type:String},
+      description: {type:String},
+      attachment: {
+          name: {type:String},
+          format: {type:String},
+          path: {type:String}
+        },
+        _id: false
+    }],
   vitals:[{
       date: {type: Date},
       pr: {type: Number},
@@ -213,6 +224,134 @@ const patientSchema = new Schema({
         path: {type: String},
       },
     notes: {type: String},
+    _id: false
+  }],
+  vigilance:[{
+    date: {type: Date},
+    chronicIllness: {
+      diabetes: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      hbp: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      dyslipidemia: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      cad: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      }
+    },
+    lifestyle: {
+      weight: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      diet: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      smoking: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      substanceAbuse: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      exercise: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      allergies: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      asthma: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      }
+    },
+    screening: {
+      breast: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      prostate: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      cervix: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      colon: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      dental: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      }
+    },
+    vaccines: {
+      influenza: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      varicella: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      hpv: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      mmr: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      tetanus: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      pneumovax: {
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      },
+      other: {
+        name: {type: String},
+        medication: {type: Boolean},
+        testing: {type: Boolean},
+        comment: {type: String}
+      }
+    },
     _id: false
   }],
   attachments: [{
