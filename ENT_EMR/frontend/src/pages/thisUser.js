@@ -280,13 +280,27 @@ class ThisUserPage extends Component {
     //   console.log("Not the creator or Admin! No edit permission!!");
     //   selectedUserId = null;
     // }
-    console.log("UpdateUserAttendanceFormData:  ", event.target.formGridAttendanceStatus.value);
+    console.log("UpdateUserAttendanceFormData:  ", event.target.formGridAttendanceStatus.value, );
 
+    console.log(`
+      dates & raisins...
+      this.context.fancyDate: ${new Date(AuthContext._currentValue.fancyDate).toISOString().slice(0,10)},
+      event.target.formGridAttendanceDate.value: ${event.target.formGridAttendanceDate.value},
+      event.target.formGridAttendanceDateTodayCheckbox.checked: ${event.target.formGridAttendanceDateTodayCheckbox.checked},
+      `);
     this.setState({ updating: false , userUpdateField: null });
 
     let attendanceDate = event.target.formGridAttendanceDate.value;
+
     if (event.target.formGridAttendanceDateTodayCheckbox.checked === true) {
       attendanceDate = new Date().toISOString().slice(0,10);
+    }
+
+    if (
+      event.target.formGridAttendanceDate.value === '' &&
+      event.target.formGridAttendanceDateTodayCheckbox.checked !== true
+    ) {
+      attendanceDate = new Date(AuthContext._currentValue.fancyDate).toISOString().slice(0,10);
     }
 
     let attendanceStatus = event.target.formGridAttendanceStatus.value;
