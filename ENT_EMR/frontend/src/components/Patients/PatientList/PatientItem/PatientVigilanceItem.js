@@ -22,6 +22,46 @@ const patientVigilanceItem = props => (
             {props.date}
             </p>
             </li>
+            <li className="cardLi">
+            <p className="userItemHeading"> Chronic Illness :</p>
+            </li>
+            <li className="cardLi">
+              <span className="bold"><p className="userItemText">Diabetes</p></span>
+            </li>
+
+            <li className="cardLi">
+            <p className="userItemText">
+            Medication:
+            </p>
+
+            {props.chronicIllness.diabetes.medication === true && (
+              <p className="userItemText">Yes</p>
+            )}
+            {props.chronicIllness.diabetes.medication === false && (
+              <p className="userItemText">No</p>
+            )}
+
+            </li>
+
+            <li className="cardLi">
+            <p className="userItemText">
+            Testing:
+            </p>
+
+            {props.chronicIllness.diabetes.testing === true && (
+              <p className="userItemText">Yes</p>
+            )}
+            {props.chronicIllness.diabetes.testing === false && (
+              <p className="userItemText">No</p>
+            )}
+
+            </li>
+
+            <li className="cardLi">
+            <p className="userItemText">
+            Comment: {props.chronicIllness.diabetes.comment}
+            </p>
+            </li>
           </ul>
 
           <Card.Link href="">
