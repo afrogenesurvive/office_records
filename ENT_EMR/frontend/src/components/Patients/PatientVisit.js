@@ -11,12 +11,14 @@ import VisitConsultantList from './PatientList/VisitConsultantList';
 import VisitComplaintList from './PatientList/VisitComplaintList';
 import VisitExaminationList from './PatientList/VisitExaminationList';
 import VisitSurveyList from './PatientList/VisitSurveyList';
+import VisitSystematicInquiryList from './PatientList/VisitSystematicInquiryList';
 import VisitVitalsList from './PatientList/VisitVitalsList';
 // import VisitHistoryList from './PatientList/VisitHistoryList';
 import VisitInvestigationList from './PatientList/VisitInvestigationList';
 import VisitDiagnosisList from './PatientList/VisitDiagnosisList';
 import VisitTreatmentList from './PatientList/VisitTreatmentList';
 import VisitBillingList from './PatientList/VisitBillingList';
+import VisitVigilanceList from './PatientList/VisitVigilanceList';
 
 import './PatientDetail.css';
 
@@ -28,12 +30,14 @@ const PatientVisit = (props) => {
     complaint: "",
     examination: "",
     survey: "",
+    systematicInquiry: "",
     vitals: "",
     history: "",
     investigation: "",
     diagnosis: "",
     treatment: "",
     billing: "",
+    vigilance: "",
   };
   if (props.visit !== null) {
     visit = props.visit;
@@ -43,12 +47,14 @@ const PatientVisit = (props) => {
   const complaint = visit.complaint;
   const examination = visit.examination;
   const survey = visit.survey;
+  const systematicInquiry = visit.systematicInquiry;
   const vitals = visit.vitals;
   // const history = visit.history;
   const investigation = visit.investigation;
   const diagnosis = visit.diagnosis;
   const treatment = visit.treatment;
   const billing = visit.billing;
+  const vigilance = visit.vigilance;
 
   console.log(`
     patientVisit: ${JSON.stringify(visit)},
@@ -57,10 +63,12 @@ const PatientVisit = (props) => {
     complaint: ${complaint},
     examination: ${examination},
     survey: ${survey},
+    systematicInquiry: ${systematicInquiry},
     investigation: ${investigation},
     diagnosis: ${diagnosis},
     treatment: ${treatment},
     billing: ${billing},
+    vigilance: ${vigilance},
         `);
     return (
       <div className="PatientDetailBox1">
@@ -123,6 +131,20 @@ const PatientVisit = (props) => {
       </Card.Text>
       <VisitSurveyList
         survey={survey}
+        authUserId={props.authUserId}
+        onViewAttachment={props.onViewAttachment}
+        />
+      </Card.Body>
+      </Card>
+      </Tab>
+      <Tab eventKey="SystematicInquiry" title="SystematicInquiry">
+      <Card className="PatientDetailCard">
+      <Card.Body>
+      <Card.Text>
+        SystematicInquiry
+      </Card.Text>
+      <VisitSystematicInquiryList
+        systematicInquiry={systematicInquiry}
         authUserId={props.authUserId}
         onViewAttachment={props.onViewAttachment}
         />
@@ -210,6 +232,19 @@ const PatientVisit = (props) => {
         billing={billing}
         authUserId={props.authUserId}
         onViewAttachment={props.onViewAttachment}
+        />
+      </Card.Body>
+      </Card>
+      </Tab>
+      <Tab eventKey="Vigilance" title="Vigilance">
+      <Card className="PatientDetailCard">
+      <Card.Body>
+      <Card.Text>
+        Vigilance
+      </Card.Text>
+      <VisitVigilanceList
+        vigilance={vigilance}
+        authUserId={props.authUserId}
         />
       </Card.Body>
       </Card>

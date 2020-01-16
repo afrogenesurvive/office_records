@@ -64,3 +64,10 @@
 .cardLi {
   padding: 0;
 }
+
+.bold {
+  font-weight: bold;
+}
+.ul {
+  text-decoration: underline;
+}

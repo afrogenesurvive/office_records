@@ -8,7 +8,12 @@ const patientAppointmentList = props => {
   console.log("patient Appointment list props", props.patientAppointment);
   const patientAppointment = props.patientAppointment.map(appointment => {
     let patientAppointmentDate = appointment.date;
-    if (appointment.date !== null ) {
+    // console.log("appointment.date", appointment.date);
+    if (
+      appointment.date !== null &&
+      appointment.date !== 0 &&
+      appointment.date !== undefined
+    ) {
       patientAppointmentDate = new Date(appointment.date.substr(0,10)*1000).toISOString().slice(0,10);
     }
 
