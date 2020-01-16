@@ -19,6 +19,7 @@ import PatientConsultantList from './PatientList/PatientConsultantList';
 import PatientNextOfKinList from './PatientList/PatientNextOfKinList';
 import PatientComplaintList from './PatientList/PatientComplaintList';
 import PatientSurveyList from './PatientList/PatientSurveyList';
+import PatientSystematicInquiryList from './PatientList/PatientSystematicInquiryList';
 import PatientVitalsList from './PatientList/PatientVitalsList';
 import PatientExaminationList from './PatientList/PatientExaminationList';
 import PatientHistoryList from './PatientList/PatientHistoryList';
@@ -28,6 +29,7 @@ import PatientInvestigationList from './PatientList/PatientInvestigationList';
 import PatientDiagnosisList from './PatientList/PatientDiagnosisList';
 import PatientTreatmentList from './PatientList/PatientTreatmentList';
 import PatientBillingList from './PatientList/PatientBillingList';
+import PatientVigilanceList from './PatientList/PatientVigilanceList';
 import PatientAttachmentsList from './PatientList/PatientAttachmentsList';
 import PatientNotesList from './PatientList/PatientNotesList';
 import PatientTagsList from './PatientList/PatientTagsList';
@@ -48,6 +50,7 @@ const PatientDetail = (props) => {
   const patientNextOfKin = patient.nextOfKin;
   const patientComplaint = patient.complaints;
   const patientSurvey = patient.surveys;
+  const patientSystematicInquiry = patient.systematicInquiry;
   const patientVitals = patient.vitals;
   const patientExamination = patient.examination;
   const patientHistory = patient.history;
@@ -57,6 +60,7 @@ const PatientDetail = (props) => {
   const patientDiagnosis = patient.diagnosis;
   const patientTreatment = patient.treatment;
   const patientBilling = patient.billing;
+  const patientVigilance = patient.vigilance;
   const patientAttachments = patient.attachments;
   const patientNotes = patient.notes;
   const patientTags = patient.tags;
@@ -162,6 +166,9 @@ const PatientDetail = (props) => {
               <Nav.Link eventKey="7">Surveys</Nav.Link>
             </Nav.Item>
             <Nav.Item>
+              <Nav.Link eventKey="22">Systematic Inquiry</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
               <Nav.Link eventKey="8">Vitals</Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -187,6 +194,9 @@ const PatientDetail = (props) => {
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="16">Billing</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="23">Vigilance</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="17">Attachments</Nav.Link>
@@ -398,6 +408,18 @@ const PatientDetail = (props) => {
                 onViewAttachment={props.onViewAttachment}
                 />
             </Tab.Pane>
+            <Tab.Pane eventKey="22">
+              <Card.Text>
+                Systematic Inquiry:
+              </Card.Text>
+              <PatientSystematicInquiryList
+                patientSystematicInquiry={patientSystematicInquiry}
+                authUserId={props.authUserId}
+                canDelete={props.canDelete}
+                onDelete={props.systematicInquiryDelete}
+                onViewAttachment={props.onViewAttachment}
+                />
+            </Tab.Pane>
             <Tab.Pane eventKey="8">
               <Card.Text>
                 Vitals:
@@ -502,6 +524,18 @@ const PatientDetail = (props) => {
               authUserId={props.authUserId}
               canDelete={props.canDelete}
               onDelete={props.billingDelete}
+              onViewAttachment={props.onViewAttachment}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="23">
+            <Card.Text>
+              Vigilance:
+            </Card.Text>
+            <PatientVigilanceList
+              patientVigilance={patientVigilance}
+              authUserId={props.authUserId}
+              canDelete={props.canDelete}
+              onDelete={props.vigilanceDelete}
               onViewAttachment={props.onViewAttachment}
               />
             </Tab.Pane>
