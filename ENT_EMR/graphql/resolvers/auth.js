@@ -38,7 +38,8 @@ module.exports = {
       return {
         atlas: creds.atlas,
         s3: creds.s3,
-        jwt: creds.jwt
+        jwt: creds.jwt,
+        gdrive: creds.gdrive
       };
   }
 };

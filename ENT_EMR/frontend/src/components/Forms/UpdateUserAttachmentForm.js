@@ -13,7 +13,7 @@ const UpdateUserAttachmentForm = (props) => {
 console.log("UpdateUserAttachmentForm.props:  ", {...props}, " AuthContext: ", AuthContext);
 const {...user} = props.user;
 console.log("UpdateUserAttachmentForm.props.user:  ", {...user});
-// let file = null;
+const gdriveCreds = AuthContext._currentValue.creds.gdrive;
 
 return (
 <div className="UpdateFormContainer">
@@ -49,8 +49,8 @@ return (
 
 {
 // <Form.Row>
-// <GooglePicker clientId={'690063429488-2dh9am3ppa1htdtu57u4seb2ja4dve3d.apps.googleusercontent.com'}
-//             developerKey={'AIzaSyBE94KR1wlluK9sls29Uw7PYC9sTkeixZY'}
+// <GooglePicker clientId={'gdriveCreds.clientId'}
+//             developerKey={'gdriveCreds.developerKey'}
 //             scope={['https://www.googleapis.com/auth/drive.readonly']}
 //               onChange={data => console.log('on change:', data)}
 //               onAuthFailed={data => console.log('on auth failed:', data)}

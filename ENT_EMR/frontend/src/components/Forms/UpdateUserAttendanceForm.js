@@ -38,6 +38,10 @@ return (
 </Form.Row>
 
   <Form.Row>
+    <Form.Group as={Col} controlId="formGridAttendanceDate">
+      <Form.Label>Other Date</Form.Label>
+      <Form.Control type="date" placeholder="Date"/>
+    </Form.Group>
   {
     // <Form.Row>
     //   <Form.Group as={Col} controlId="formGridAttendanceDate">
@@ -53,13 +57,17 @@ return (
     //   onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e;console.log("authcontext.fancyDate",AuthContext._currentValue.fancyDate)}}
     // />
   }
-  <Form.Group as={Col} controlId="formGridAttendanceFancyDate">
-    <Form.Label>Fancy Date</Form.Label>
-    <DatePicker className="calendarDob"
-    selected={startDate}
-     onChange={handleChange}
-    />
-  </Form.Group>
+  {
+    // <Form.Group as={Col} controlId="formGridAttendanceFancyDate">
+    //   <Form.Label>Fancy Date</Form.Label>
+    //   <DatePicker className="calendarDob"
+    //   selected={startDate}
+    //    onChange={handleChange}
+    //   />
+    // </Form.Group>
+  }
+
+
   </Form.Row>
 
   <Form.Row>

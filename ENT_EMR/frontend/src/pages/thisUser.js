@@ -289,20 +289,21 @@ class ThisUserPage extends Component {
       `);
     this.setState({ updating: false , userUpdateField: null });
 
-    let attendanceDate = null;
+    let attendanceDate = event.target.formGridAttendanceDate.value;
+    // let attendanceDate = null;
 
     if (event.target.formGridAttendanceDateTodayCheckbox.checked === true) {
       console.log("1");
       attendanceDate = new Date().toISOString().slice(0,10);
     }
 
-    if (
-      AuthContext._currentValue.fancyDate !== null &&
-      event.target.formGridAttendanceDateTodayCheckbox.checked !== true
-    ) {
-      console.log("2");
-      attendanceDate = new Date(AuthContext._currentValue.fancyDate).toISOString().slice(0,10);
-    }
+    // if (
+    //   AuthContext._currentValue.fancyDate !== null &&
+    //   event.target.formGridAttendanceDateTodayCheckbox.checked !== true
+    // ) {
+    //   console.log("2");
+    //   attendanceDate = new Date(AuthContext._currentValue.fancyDate).toISOString().slice(0,10);
+    // }
 
     let attendanceStatus = event.target.formGridAttendanceStatus.value;
     let attendanceDescription = event.target.formGridAttendanceDescription.value;
@@ -631,7 +632,7 @@ class ThisUserPage extends Component {
     const requestBody = {
       query: `
       query {getCreds
-        {atlas{user,pw,db},s3{bucketName,region,accessKeyId,secretAccessKey},jwt{encode}}}
+        {atlas{user,pw,db},s3{bucketName,region,accessKeyId,secretAccessKey},jwt{encode},gdrive{clientId,developerKey}}}
         `};
 
 
