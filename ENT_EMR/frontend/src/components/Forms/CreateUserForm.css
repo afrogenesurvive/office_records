@@ -31,3 +31,13 @@
   margin-right: 3rem;
   margin-top: 1.5rem;
 }
+
+.bpInput {
+  width: 50%;
+  margin: 0 !important;
+}
+
+.bpInputGroup {
+  width: 25%;
+
+}

@@ -47,13 +47,13 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridVitalsBp1">
-    <Form.Label>Blood pressure 1 </Form.Label>
-    <Form.Control type="number" placeholder="VitalsBp1"/>
+  <Form.Group controlId="formGridVitalsBp1" className="bpInputGroup">
+    <Form.Label>Blood /</Form.Label>
+    <Form.Control type="number" className="bpInput" placeholder="0/"/>
   </Form.Group>
-  <Form.Group as={Col} controlId="formGridVitalsBp2">
-    <Form.Label>Blood pressure 2</Form.Label>
-    <Form.Control type="number" placeholder="VitalsBp2"/>
+  <Form.Group controlId="formGridVitalsBp2" className="bpInputGroup">
+    <Form.Label>Pressure</Form.Label>
+    <Form.Control type="number" className="bpInput" placeholder="0"/>
   </Form.Group>
 </Form.Row>
 
