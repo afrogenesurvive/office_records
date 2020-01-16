@@ -807,7 +807,7 @@ type RootMutation {
     deletePatientNextOfKin(userId: ID!, patientId: ID!, nextOfKinName: String!): Patient
     deletePatientComplaint(userId: ID!, patientId: ID!, complaintTitle: String!, complaintDate: String!): Patient
     deletePatientSurvey(userId: ID!, patientId: ID!, surveyTitle: String!, surveyDate: String!): Patient
-    deletePatientSystemInquiry(userId: ID!, patientId: ID!, systematicInquiryTitle: String!, systematicInquiryDate: String!): Patient
+    deletePatientSystematicInquiry(userId: ID!, patientId: ID!, systematicInquiryTitle: String!, systematicInquiryDate: String!): Patient
     deletePatientVitals(userId: ID!, patientId: ID!, vitalsDate: String!): Patient
     deletePatientExamination(userId: ID!, patientId: ID!, examinationType: String!, examinationDate: String!): Patient
     deletePatientHistory(userId: ID!, patientId: ID!, historyDate: String!, historyTitle: String!): Patient
