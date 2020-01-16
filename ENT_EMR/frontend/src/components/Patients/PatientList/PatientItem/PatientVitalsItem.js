@@ -14,7 +14,7 @@ const patientVitalsItem = props => (
             Vitals
           </Card.Title>
 
-          
+
           <ul className="cardUl">
             <li className="cardLi">
             <p className="userItemHeading"> date:</p>
@@ -29,15 +29,9 @@ const patientVitalsItem = props => (
             </p>
             </li>
             <li className="cardLi">
-            <p className="userItemHeading"> Blood Pressure 1:</p>
+            <p className="userItemHeading"> Blood Pressure:</p>
             <p className="userItemText">
-            {props.bp1}
-            </p>
-            </li>
-            <li className="cardLi">
-            <p className="userItemHeading"> Blood Pressure 2:</p>
-            <p className="userItemText">
-            {props.bp2}
+            {props.bp1} / {props.bp2}
             </p>
             </li>
             <li className="cardLi">
