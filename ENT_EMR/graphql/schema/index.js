@@ -54,6 +54,7 @@ type Creds {
   atlas: AtlasCreds
   s3: S3Creds
   jwt: JwtCreds
+  gdrive: GdriveCreds
 }
 type AtlasCreds {
   user: String
@@ -68,6 +69,11 @@ type S3Creds {
 }
 type JwtCreds {
   encode: String
+}
+
+type GdriveCreds {
+  clientId: String
+  developerKey: String
 }
 
 type Patient {

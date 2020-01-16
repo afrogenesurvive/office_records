@@ -568,6 +568,63 @@ module.exports = {
       throw err;
     }
   },
+  updatePatientSystematicInquiry: async (args, req) => {
+    console.log(`
+      updatePatientSystematicInquiry...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+
+      const systematicInquiryDate = args.patientInput.systematicInquiryDate;
+      const systematicInquiryTitle = args.patientInput.systematicInquiryTitle;
+      const systematicInquiryDescription = args.patientInput.systematicInquiryDescription;
+      const systematicInquiryAttachmentName = args.patientInput.systematicInquiryAttachmentName;
+      const systematicInquiryAttachmentFormat = args.patientInput.systematicInquiryAttachmentFormat;
+      const systematicInquiryAttachmentPath = args.patientInput.systematicInquiryAttachmentPath;
+
+      console.log(`
+        systematicInquiryDate: ${systematicInquiryDate},
+        systematicInquiryTitle: ${systematicInquiryTitle},
+        systematicInquiryDescription: ${systematicInquiryDescription},
+        systematicInquiryAttachmentName: ${systematicInquiryAttachmentName},
+        systematicInquiryAttachmentFormat: ${systematicInquiryAttachmentFormat},
+        systematicInquiryAttachmentPath: ${systematicInquiryAttachmentPath},
+        `);
+
+
+      const patientSystematicInquiry = {
+        date: systematicInquiryDate,
+        title: systematicInquiryTitle,
+        description: systematicInquiryDescription,
+        attachment: {
+          name: systematicInquiryAttachmentName,
+          format: systematicInquiryAttachmentFormat,
+          path: systematicInquiryAttachmentPath,
+        }
+      }
+
+      console.log(" patientSystematicInquiry ", patientSystematicInquiry);
+
+        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {systematicInquiry:patientSystematicInquiry}},{new: true})
+        .populate('appointments')
+        .populate('consultant.reference');
+
+          return {
+              ...patient._doc,
+              _id: patient.id,
+              name: patient.name
+          };
+      // }
+    } catch (err) {
+      throw err;
+    }
+  },
   updatePatientVitals: async (args, req) => {
     console.log(`
       updatePatientVitals...args: ${util.inspect(args)},
@@ -1367,6 +1424,30 @@ module.exports = {
       throw err;
     }
   },
+  deletePatientSystematicInquiry: async (args, req) => {
+    console.log(`
+      deletePatientSystematicInquiry...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+
+    try {
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { systematicInquiry: {title: args.systematicInquiryTitle, date: new Date(args.systematicInquiryDate)}}},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
   deletePatientVitals: async (args, req) => {
     console.log(`
       deletePatientVitals...args:
@@ -1564,6 +1645,30 @@ module.exports = {
     }
     try {
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { billing: {date: new Date(args.billingDate), title: args.billingTitle} }},{new: true})
+      .populate('appointments')
+      .populate('consultant.reference');
+
+        return {
+          ...patient._doc,
+          _id: patient.id,
+          name: patient.name
+        };
+    } catch (err) {
+      throw err;
+    }
+  },
+  deletePatientVigilance: async (args, req) => {
+    console.log(`
+      deletePatientVigilance...args:
+      ${util.inspect(args)},
+      isAuth: ${req.isAuth},
+      `);
+
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
+    try {
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { vigilance: {date: new Date(args.vigilanceDate)} }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
 

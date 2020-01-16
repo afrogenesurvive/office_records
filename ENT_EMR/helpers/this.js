@@ -12,6 +12,10 @@ const creds = {
     },
     jwt: {
       encode: 'MsBarbri'
+    },
+    gdrive: {
+      clientId: '690063429488-2dh9am3ppa1htdtu57u4seb2ja4dve3d.apps.googleusercontent.com',
+      developerKey: 'AIzaSyBE94KR1wlluK9sls29Uw7PYC9sTkeixZY'
     }
 }
 exports.creds = creds;
