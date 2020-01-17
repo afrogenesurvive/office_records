@@ -52,6 +52,8 @@ class AppointmentsPage extends Component {
     appointmentSearchQuery: null,
     canDelete: null,
     userAlert: null,
+    overlay: false,
+    overlayStatus: "test",
     createPdf: false,
     pdfData: null,
   };

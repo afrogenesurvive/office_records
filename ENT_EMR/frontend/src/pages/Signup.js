@@ -14,6 +14,8 @@ class SignupPage extends Component {
   state = {
     success: "Signup!!",
     userAlert: null,
+    overlay: false,
+    overlayStatus: "test",
   };
 
   modalConfirmHandler = (event) => {
@@ -141,6 +143,12 @@ class SignupPage extends Component {
         authUserId={this.context.userId}
         alert={this.state.userAlert}
       />
+
+      {this.state.overlay === true && (
+        <LoadingOverlay
+          status={this.state.overlayStatus}
+        />
+      )}
 
       <Col className="signupRow" md={8}>
         <CreateUserForm

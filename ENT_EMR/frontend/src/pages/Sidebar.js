@@ -20,6 +20,8 @@ import './Sidebar.css';
 class SidebarPage extends Component {
   state = {
     authContext: AuthContext._currentValue,
+    overlay: false,
+    overlayStatus: "test",
   };
   isActive = true;
 
@@ -78,7 +80,7 @@ class SidebarPage extends Component {
         <Card.Text>
           {this.context.selectedUser.name}
         </Card.Text>
-        
+
         <Card.Subtitle className="mb-2">Patient:</Card.Subtitle>
         <Card.Text>
           {this.context.selectedPatient.name}
