@@ -16,7 +16,7 @@ const LoadingOveray = (props) =>{
 return (
   <div className="attachmentViewerBg">
     <div className="loadingOverlay">
-      {props.status}
+      <h5 className="attachmentViewerTitle">status : {props.status} ...</h5>
     </div>
   </div>
 )

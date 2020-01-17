@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 
 import AlertBox from '../components/AlertBox';
 import CreateUserForm from '../components/Forms/CreateUserForm';
-import './Auth.css';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 class SignupPage extends Component {
   state = {

@@ -18,6 +18,7 @@ import Nav from 'react-bootstrap/Nav';
 import AlertBox from '../components/AlertBox';
 import AttachmentViewer from '../components/AttachmentViewer';
 import PdfCreator from '../components/PdfCreator';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 import UpdateUserFieldForm from '../components/Forms/UpdateUserFieldForm';
 import UpdateUserAttendanceForm from '../components/Forms/UpdateUserAttendanceForm';
@@ -55,11 +56,12 @@ class ThisUserPage extends Component {
   // }
 
   componentDidMount() {
+
+    if (this.context.user.name === "Lord-of-the-Manor"){
+      this.setState({canDelete: true, overlay: true, overlayStatus: "loading your profile..."})
+    }
     this.getThisUser();
     this.getCreds();
-    if (this.context.user.name === "Lord-of-the-Manor"){
-      this.setState({canDelete: true})
-    }
     // if (this.context.user.name === 'admin579'){
     //   this.setState({canDelete: true})
     // }
@@ -617,6 +619,7 @@ class ThisUserPage extends Component {
 
           this.context.user = thisUser;
           console.log("this.context.user:  " + this.context.user.name);
+          this.setState({ overlay: false})
 
         }
       })

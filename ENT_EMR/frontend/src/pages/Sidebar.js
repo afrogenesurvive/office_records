@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 // import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 
+import LoadingOverlay from '../components/LoadingOverlay';
 
 import AppointmentTodayList from '../components/Appointments/AppointmentList/AppointmentTodayList';
 import AppointmentInProgressList from '../components/Appointments/AppointmentList/AppointmentInProgressList';

@@ -29,6 +29,7 @@ import SearchPatientNameForm from '../components/Forms/SearchPatientNameForm';
 import AlertBox from '../components/AlertBox';
 import AttachmentViewer from '../components/AttachmentViewer';
 import PdfCreator from '../components/PdfCreator';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import UpdatePatientForm from '../components/Forms/UpdatePatientForm';
