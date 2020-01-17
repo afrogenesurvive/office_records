@@ -18,6 +18,7 @@ import Card from 'react-bootstrap/Card';
 // import Backdrop from '../components/Backdrop/Backdrop';
 import AlertBox from '../components/AlertBox';
 import PdfCreator from '../components/PdfCreator';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 import AppointmentList from '../components/Appointments/AppointmentList/AppointmentList';
 import AppointmentDetail from '../components/Appointments/AppointmentDetail';

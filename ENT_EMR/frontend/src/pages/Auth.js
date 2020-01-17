@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row';
 import './Auth.css';
 import AuthContext from '../context/auth-context';
 import AlertBox from '../components/AlertBox';
-
+import LoadingOverlay from '../components/LoadingOverlay';
 
 class AuthPage extends Component {
   state = {
@@ -39,6 +39,10 @@ class AuthPage extends Component {
   submitHandler = event => {
     console.log("login function...");
     event.preventDefault();
+
+    this.setState({overlay: true, overlayStatus: "signing you in..."})
+
+
     const email = event.target.formBasicEmail.value;
     const password = event.target.formBasicPassword.value;
 
@@ -97,6 +101,7 @@ class AuthPage extends Component {
           // sessionStorage.setItem('login info', sessionStorageLoginInfo);
           sessionStorage.setItem('login info', JSON.stringify(sessionStorageLoginInfo));
 
+
         }
       })
       .catch(err => {
@@ -116,6 +121,12 @@ class AuthPage extends Component {
         authUserId={this.context.userId}
         alert={this.state.userAlert}
       />
+
+      {this.state.overlay === true && (
+        <LoadingOverlay
+          status={this.state.overlayStatus}
+        />
+      )}
 
 
       <Form className="auth-form" onSubmit={this.submitHandler}>
