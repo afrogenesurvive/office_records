@@ -1,14 +1,11 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 const User = require('../../models/user');
-
 const { pocketVariables } = require('../../helpers/pocketVars');
 const { creds } = require('../../helpers/this');
 
 module.exports = {
   login: async ({ email, password }) => {
-
 
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -27,9 +24,6 @@ module.exports = {
     return { userId: user.id, token: token, tokenExpiration: 2 };
   },
   getCreds: async (req) => {
-    console.log(`
-      retriveing creds...
-      `);
 
     if (pocketVariables.isAuth !== true) {
       throw new Error('Unauthenticated!');

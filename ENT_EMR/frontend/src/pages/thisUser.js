@@ -227,52 +227,52 @@ class ThisUserPage extends Component {
         selectedUserId = null;
       }
 
-        console.log("UpdateUserFieldFormData:  ", event.target.formGridField.value);
-        this.setState({ updating: false });
+      console.log("UpdateUserFieldFormData:  ", event.target.formGridField.value);
+      this.setState({ updating: false });
 
-        let field = event.target.formGridField.value;
-        let query = event.target.formGridQuery.value;
+      let field = null;
+      let query = event.target.formGridQuery.value;
+      if (event.target.formGridFieldSelect.value === "select") {
+        field = event.target.formGridField.value;
+      } else {
+        field = event.target.formGridFieldSelect.value;
+      }
 
-        const requestBody = {
-          query:`
-            mutation{updateUserField(userId:"${userId}",selectedUserId:"${userId}",field:"${field}",query:"${query}")
-            {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
-          `};
+      const requestBody = {
+        query:`
+          mutation{updateUserField(userId:"${userId}",selectedUserId:"${userId}",field:"${field}",query:"${query}")
+          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+        `};
 
 
-        fetch('http://localhost:10000/graphql', {
-          method: 'POST',
-          body: JSON.stringify(requestBody),
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token
+      fetch('http://localhost:10000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!');
           }
+          return res.json();
         })
-          .then(res => {
-            if (res.status !== 200 && res.status !== 201) {
-              throw new Error('Failed!');
-            }
-            return res.json();
-          })
-          .then(resData => {
-            console.log("response data... " + JSON.stringify(resData.data.updateUserField));
-
-            const updatedUserId = resData.data.updateUserField._id;
-            const updatedUser = this.state.users.find(e => e._id === updatedUserId);
-            const updatedUserPos = this.state.users.indexOf(updatedUser);
-            const slicedArray = this.state.users.splice(updatedUserPos, 1);
-            console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-
-            this.state.users.push(resData.data.updateUserField);
-            this.context.users = this.state.users;
-            const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            this.getThisUser();
-          })
-          .catch(err => {
-            console.log(err);
-            this.setState({userAlert: err});
-          });
+        .then(resData => {
+          const updatedUserId = resData.data.updateUserField._id;
+          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+          const updatedUserPos = this.state.users.indexOf(updatedUser);
+          const slicedArray = this.state.users.splice(updatedUserPos, 1);
+          this.state.users.push(resData.data.updateUserField);
+          this.context.users = this.state.users;
+          const responseAlert = JSON.stringify(resData.data).slice(2,25);
+          this.setState({ userAlert: responseAlert})
+          this.getThisUser();
+        })
+        .catch(err => {
+          this.setState({userAlert: err});
+        });
 
     }
 

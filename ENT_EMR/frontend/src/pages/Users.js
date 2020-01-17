@@ -1,30 +1,22 @@
 import S3 from 'react-aws-s3';
-// import S3FileUpload from 'react-s3';
 import React, { Component } from 'react';
-// import FileViewer from 'react-file-viewer';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-// import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-// import TabContainer from 'react-bootstrap/TabContainer';
-// import TabContent from 'react-bootstrap/TabContent';
-// import TabPane from 'react-bootstrap/TabPane';
 import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card';
 
-// import Modal from '../components/Modal/Modal';
-// import Backdrop from '../components/Backdrop/Backdrop';
+import AuthContext from '../context/auth-context';
 import UserList from '../components/Users/UserList/UserList';
 import SearchUserList from '../components/Users/UserList/SearchUserList';
 import UserDetail from '../components/Users/UserDetail';
-import Spinner from '../components/Spinner/Spinner';
-import AuthContext from '../context/auth-context';
 
+import Spinner from '../components/Spinner/Spinner';
 import SidebarPage from './Sidebar';
 import AlertBox from '../components/AlertBox';
 import LoadingOverlay from '../components/LoadingOverlay';
@@ -74,58 +66,43 @@ class UsersPage extends Component {
 
   static contextType = AuthContext;
 
-  // constructor(props) {
-  //   super(props);
-  // }
-
   componentDidMount() {
     this.fetchUsers();
     if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
-    // if (this.context.user.name === 'admin579'){
-    //   this.setState({canDelete: true})
-    // }
   }
-
 
   startCreateUserHandler = () => {
     this.setState({ creating: true });
-    console.log("CreateUserForm...");
   };
   startUpdateUserHandler = () => {
     this.setState({ updating: true });
-    console.log("UpdateUserForm...");
   };
-
   startSearchUserHandler = () => {
     this.setState({ searching: true });
-    console.log("SearchUserForm...");
   };
 
   modalConfirmHandler = (event) => {
 
-    console.log("CreateUserFormData:  ", event.target.formGridEmail.value);
+    this.setState({ creating: false, userAlert: "Creating new user..." });
 
-    this.setState({ creating: false });
     const email = event.target.formGridEmail.value;
     const password = event.target.formGridPassword.value;
     const name = event.target.formGridName.value;
     const role = event.target.formGridRole.value;
-    let dob = event.target.formGridDob.value;
-    let phone = event.target.formGridPhone.value;
-    let addressNumber = event.target.formGridAddressNumber.value;
-    let addressStreet = event.target.formGridAddressStreet.value;
-    let addressTown = event.target.formGridAddressTown.value;
-    let addressParish = event.target.formGridAddressParish.value;
-    let addressPostOffice = event.target.formGridAddressPostOffice.value;
-
+    const dob = event.target.formGridDob.value;
+    const phone = event.target.formGridPhone.value;
+    const addressNumber = event.target.formGridAddressNumber.value;
+    const addressStreet = event.target.formGridAddressStreet.value;
+    const addressTown = event.target.formGridAddressTown.value;
+    const addressParish = event.target.formGridAddressParish.value;
+    const addressPostOffice = event.target.formGridAddressPostOffice.value;
     let employmentDate = event.target.formGridEmploymentDate.value;
     if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
       employmentDate = new Date().toISOString().slice(0,10);
     }
-
-    let terminationDate = event.target.formGridTerminationDate.value;
+    const terminationDate = event.target.formGridTerminationDate.value;
 
     if (
       email.trim().length === 0 ||
@@ -141,40 +118,18 @@ class UsersPage extends Component {
       addressPostOffice.trim().length === 0 ||
       employmentDate.trim().length === 0
     ) {
-      console.log("blank fields detected!!!...Please try again...");
       this.setState({userAlert: "blank fields detected!!!...Please try again..."});
       return;
     }
 
     const token = this.context.token;
     const userId = this.context.userId;
-
-    console.log(`
-      creating user...
-      userId: ${userId}
-      email: ${email},
-      password: ${password},
-      name: ${name},
-      role: ${role},
-      dob: ${dob},
-      phone: ${phone},
-      addressNumber: ${addressNumber},
-      addressStreet: ${addressStreet},
-      addressTown: ${addressTown},
-      addressParish: ${addressParish},
-      addressPostOffice: ${addressPostOffice},
-      employmentDate: ${employmentDate},
-      terminationDate: ${terminationDate},
-      `);
-
     const requestBody = {
       query: `
           mutation {createUser(userInput: {email:"${email}",password:"${password}",name:"${name}",dob:"${dob}",addressNumber:${addressNumber},addressStreet:"${addressStreet}",addressTown:"${addressTown}",addressParish:"${addressParish}", addressPostOffice:"${addressPostOffice}",phone:"${phone}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
           {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
-        }
-        `};
-
-
+        }`
+      };
 
     // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     fetch('http://localhost:10000/graphql', {
@@ -192,13 +147,9 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("create user response data... " + JSON.stringify(resData.data.createUser));
-
-        // this.state.users.push(resData.data.createUser)
         this.setState(prevState => {
           const updatedUsers = [...prevState.users];
           updatedUsers.push(resData.data.createUser);
-
           return { users: updatedUsers };
         });
         this.context.users.push(resData.data.createUser);
@@ -206,11 +157,9 @@ class UsersPage extends Component {
         this.setState({userAlert: responseAlert});
       })
       .catch(err => {
-        console.log(err);
         this.setState({userAlert: err});
       });
   };
-
 
   modalConfirmUpdateHandler = (event) => {
 
@@ -218,26 +167,21 @@ class UsersPage extends Component {
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
     if(userId !== selectedUserId && this.context.user.role !== 'admin') {
-      console.log("Not the creator or Admin! No edit permission!!");
       this.setState({userAlert: "Not the creator or Admin! No edit permission!!"});
       selectedUserId = null;
     }
 
-    console.log("UpdateUserFormData:  ", event.target.formGridEmail.value);
-
-    this.setState({ updating: false });
-
-    let email = event.target.formGridEmail.value;
-    let password = event.target.formGridPassword.value;
-    let name = event.target.formGridName.value;
-    let role = this.context.selectedUser.role;
-    let dob = event.target.formGridDob.value;
-    let phone = event.target.formGridPhone.value;
-    let addressNumber = event.target.formGridAddressNumber.value;
-    let addressStreet = event.target.formGridAddressStreet.value;
-    let addressTown = event.target.formGridAddressTown.value;
-    let addressParish = event.target.formGridAddressParish.value;
-    let addressPostOffice = event.target.formGridAddressPostOffice.value;
+    const email = event.target.formGridEmail.value;
+    const password = event.target.formGridPassword.value;
+    const name = event.target.formGridName.value;
+    const role = this.context.selectedUser.role;
+    const dob = event.target.formGridDob.value;
+    const phone = event.target.formGridPhone.value;
+    const addressNumber = event.target.formGridAddressNumber.value;
+    const addressStreet = event.target.formGridAddressStreet.value;
+    const addressTown = event.target.formGridAddressTown.value;
+    const addressParish = event.target.formGridAddressParish.value;
+    const addressPostOffice = event.target.formGridAddressPostOffice.value;
 
     let employmentDate = event.target.formGridEmploymentDate.value;
     if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
@@ -248,17 +192,13 @@ class UsersPage extends Component {
     if (event.target.formGridTerminationDateTodayCheckbox.checked === true) {
       terminationDate = new Date().toISOString().slice(0,10);
     }
-
     if (email.trim().length === 0 ) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       email = this.context.selectedUser.email;
     }
     if (password.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       password = this.context.selectedUser.password;
     }
     if (name.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       name = this.context.selectedUser.name;
     }
     // if (role.trim().length === 0) {
@@ -266,60 +206,34 @@ class UsersPage extends Component {
     //   role = this.state.selectedUser.role;
     // }
     if (dob.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       dob = this.context.selectedUser.dob;
     }
     if (phone.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       phone = this.context.selectedUser.phone;
     }
     if (addressNumber.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       addressNumber = this.context.selectedUser.address.number;
     }
     if (addressStreet.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       addressStreet = this.context.selectedUser.address.street;
     }
     if (addressTown.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       addressTown = this.context.selectedUser.address.town;
     }
     if (addressParish.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       addressParish = this.context.selectedUser.address.parish;
     }
     if (addressPostOffice.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       addressPostOffice = this.context.selectedUser.address.postOffice;
     }
     if (employmentDate.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       employmentDate = this.context.selectedUser.employmentDate;
     }
     if (terminationDate.trim().length === 0) {
-      console.log("blank fields detected!!!...filling w/ previous data...");
       terminationDate = this.context.selectedUser.terminationDate;
     }
 
-    console.log(`
-      updating user profile...
-      userId: ${userId}
-      email: ${email},
-      password: ${password},
-      name: ${name},
-      role: ${role},
-      dob: ${dob},
-      phone: ${phone},
-      addressNumber: ${addressNumber},
-      addressStreet: ${addressStreet},
-      addressTown: ${addressTown},
-      addressParish: ${addressParish},
-      addressPostOffice: ${addressPostOffice},
-      employmentDate: ${employmentDate},
-      terminationDate: ${terminationDate},
-      `);
-      this.setState({userAlert: "updating user profile..."});
+    this.setState({userAlert: "updating user profile..."});
 
     const requestBody = {
       query: `
@@ -327,8 +241,7 @@ class UsersPage extends Component {
       {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
 
-
-        fetch('http://localhost:10000/graphql', {
+      fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -342,16 +255,12 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData));
         const updatedUser = resData.data.updateUser;
-        console.log("updatedUser:  ", JSON.stringify(updatedUser));
         this.setState({user: updatedUser})
         this.state.users.push(resData.data.updateUser);
         this.context.users = this.state.users;
-
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({ userAlert: responseAlert})
-        // this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUser})
         this.fetchUsers();
       })
       .catch(err => {
@@ -360,97 +269,67 @@ class UsersPage extends Component {
       });
   };
 
-
   modalConfirmUpdateFieldHandler = (event) => {
 
+    this.setState({ updating: false , userAlert: "Updating your profile by field..."});
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
-    // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
-    //   console.log("Not the creator or Admin! No edit permission!!");
-    //   selectedUserId = null;
-    // }
+    let field = null;
+    let query = event.target.formGridQuery.value;
+    if (event.target.formGridFieldSelect.value === "select") {
+      field = event.target.formGridField.value;
+    } else {
+      field = event.target.formGridFieldSelect.value;
+    }
 
-
-      console.log("UpdateUserFieldFormData:  ", event.target.formGridField.value, event.target.formGridFieldSelect.value);
-      this.setState({ updating: false });
-
-      let field = null;
-      let query = event.target.formGridQuery.value;
-      if (event.target.formGridFieldSelect.value === "select") {
-        field = event.target.formGridField.value;
-      } else {
-        field = event.target.formGridFieldSelect.value;
+    const requestBody = {
+      query:`
+        mutation{updateUserField(userId:"${userId}",selectedUserId:"${selectedUserId}",field:"${field}",query:"${query}")
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
       }
-      console.log(`
-          field: ${field},
-          query: ${query},
-        `);
+      `};
 
-        this.setState({ userAlert: "updating user field..."})
-
-      const requestBody = {
-        query:`
-          mutation{updateUserField(userId:"${userId}",selectedUserId:"${selectedUserId}",field:"${field}",query:"${query}")
-          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
+      fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
         }
-        `};
-
-        fetch('http://localhost:10000/graphql', {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token
-        }
+        return res.json();
       })
-        .then(res => {
-          if (res.status !== 200 && res.status !== 201) {
-            throw new Error('Failed!');
-          }
-          return res.json();
-        })
-        .then(resData => {
-          console.log("response data... " + JSON.stringify(resData.data.updateUserField));
-
-          const updatedUserId = resData.data.updateUserField._id;
-          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
-          const updatedUserPos = this.state.users.indexOf(updatedUser);
-          const slicedArray = this.state.users.splice(updatedUserPos, 1);
-          console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-
-          this.state.users.push(resData.data.updateUserField);
-          this.context.users = this.state.users;
-          const responseAlert = JSON.stringify(resData.data).slice(2,25);
-          this.setState({ userAlert: responseAlert})
-          this.fetchUsers();
-        })
-        .catch(err => {
-          console.log(err);
-          this.setState({userAlert: err});
-        });
-
+      .then(resData => {
+        const updatedUserId = resData.data.updateUserField._id;
+        const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+        const updatedUserPos = this.state.users.indexOf(updatedUser);
+        const slicedArray = this.state.users.splice(updatedUserPos, 1);
+        this.state.users.push(resData.data.updateUserField);
+        this.context.users = this.state.users;
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
+        this.setState({ userAlert: responseAlert})
+        this.fetchUsers();
+      })
+      .catch(err => {
+        this.setState({userAlert: err});
+      });
   }
 
   updateUserAttendanceHandler = (event) => {
+
+    this.setState({ updating: false , userUpdateField: null, userAlert: "adding user attendance item..." });
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
-    // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
-    //   console.log("Not the creator or Admin! No edit permission!!");
-    //   selectedUserId = null;
-    // }
     if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
-      console.log("Not the creator or Admin! No edit permission!!");
       this.setState({ userAlert: "Not the creator or Admin! No edit permission!!"});
-        selectedUserId = null;
+      selectedUserId = null;
     }
-
-    console.log("UpdateUserAttendanceFormData:  ", );
-
-    this.setState({ updating: false , userUpdateField: null });
-
-
     let attendanceDate = event.target.formGridAttendanceDate.value;
     if (event.target.formGridAttendanceDateTodayCheckbox.checked === true) {
       attendanceDate = new Date().toISOString().slice(0,10);
@@ -463,95 +342,58 @@ class UsersPage extends Component {
     attendanceDate.trim().length === 0 ||
     attendanceStatus.trim().length === 0
     ){
-      console.log("blank fields detected!!!...filling w/ previous data...");
       return
     }
 
-    console.log(`
-      adding user attendance item...
-      userId: ${userId},
-      selectedUserId: ${selectedUserId}
-      attendanceDate: ${attendanceDate},
-      attendanceStatus: ${attendanceStatus},
-      attendanceDescription: ${attendanceDescription}
-      `);
+    const requestBody = {
+      query:`
+        mutation {updateUserAttendance(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{attendanceDate:"${attendanceDate}",attendanceStatus:"${attendanceStatus}",attendanceDescription:"${attendanceDescription}"})
+        {_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
+      `};
 
-      this.setState({ userAlert: "adding user attendance item..."});
-
-      const requestBody = {
-        query:`
-          mutation {updateUserAttendance(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{attendanceDate:"${attendanceDate}",attendanceStatus:"${attendanceStatus}",attendanceDescription:"${attendanceDescription}"})
-          {_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
-        `};
-
-
-      fetch('http://localhost:10000/graphql', {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
         }
+        return res.json();
       })
-        .then(res => {
-          if (res.status !== 200 && res.status !== 201) {
-            throw new Error('Failed!');
-          }
-          return res.json();
-        })
-        .then(resData => {
-          console.log("response data... " + JSON.stringify(resData.data.updateUserAttendance));
-
-          const updatedUserId = resData.data.updateUserAttendance._id;
-          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
-          const updatedUserPos = this.state.users.indexOf(updatedUser);
-          const slicedArray = this.state.users.splice(updatedUserPos, 1);
-          console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-
-          this.state.users.push(resData.data.updateUserAttendance);
-          this.context.users = this.state.users;
-          const responseAlert = JSON.stringify(resData.data).slice(2,25);
-          this.setState({ userAlert: responseAlert})
-          this.fetchUsers();
-        })
-        .catch(err => {
-          console.log(err);
-          this.setState({userAlert: err});
-        });
-
-
+      .then(resData => {
+        const updatedUserId = resData.data.updateUserAttendance._id;
+        const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+        const updatedUserPos = this.state.users.indexOf(updatedUser);
+        const slicedArray = this.state.users.splice(updatedUserPos, 1);
+        this.state.users.push(resData.data.updateUserAttendance);
+        this.context.users = this.state.users;
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
+        this.setState({ userAlert: responseAlert})
+        this.fetchUsers();
+      })
+      .catch(err => {
+        this.setState({userAlert: err});
+      });
   }
 
     updateUserAttachmentHandler = (event) => {
 
+    this.setState({ updating: false , userUpdateField: null, userAlert: "adding user attatchment item..." });
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
-    // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
-    //   console.log("Not the creator or Admin! No edit permission!!");
-    //   selectedUserId = null;
-    // }
     if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
-      console.log("Not the creator or Admin! No edit permission!!");
       this.setState({userAlert: "Not the creator or Admin! No edit permission!!"})
-        selectedUserId = null;
+      selectedUserId = null;
     }
-
-    console.log("UpdateUserAttachmentFormData:  ");
-
-    this.setState({ updating: false , userUpdateField: null });
-
-    // let attachmentName = event.target.formGridAttachmentName.value;
     let attachmentFormat = event.target.formGridAttachmentFormat.value;
     let attachmentPath = "uploads/staff/"+selectedUserId+"/attachments";
-    // let attachmentPath = event.target.formGridAttachmentPath.value;
     let file = AuthContext._currentValue.file;
-
-    console.log(`
-      uploading to s3...
-      file.name: ${file.name},
-      AuthContext._currentValue.file: ${AuthContext._currentValue.file},
-      `);
     const config = {
       bucketName: this.context.creds.s3.bucketName,
       dirName: attachmentPath,
@@ -572,257 +414,186 @@ class UsersPage extends Component {
       attachmentName.trim().length === 0 ||
       attachmentFormat.trim().length === 0 ||
       attachmentPath.trim().length === 0
-  ) {
-      console.log("blank fields detected!!! try again");
+    ) {
+      this.setState({ userAlert: "blank fields detected!!! try again" })
       return
     }
 
-    console.log(`
-      adding user attachment item...
-      userId: ${userId},
-      selectedUserId: ${selectedUserId}
-      attachmentName: ${attachmentName},
-      attachmentFormat: ${attachmentFormat},
-      attachmentPath: ${attachmentPath},
-      `);
-      this.setState({userAlert: "adding user attatchment item..."})
+    const requestBody = {
+      query:`
+        mutation{updateUserAttachment(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentPath}"})
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+      `};
 
-      const requestBody = {
-        query:`
-          mutation{updateUserAttachment(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{attachmentName:"${attachmentName}",attachmentFormat:"${attachmentFormat}",attachmentPath:"${attachmentPath}"})
-          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
-        `};
-
-        fetch('http://localhost:10000/graphql', {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token
+      fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
         }
+        return res.json();
       })
-        .then(res => {
-          if (res.status !== 200 && res.status !== 201) {
-            throw new Error('Failed!');
-          }
-          return res.json();
-        })
-        .then(resData => {
-          console.log("response data... " + JSON.stringify(resData.data.updateUserAttachment));
-
-          const updatedUserId = resData.data.updateUserAttachment._id;
-          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
-          const updatedUserPos = this.state.users.indexOf(updatedUser);
-          const slicedArray = this.state.users.splice(updatedUserPos, 1);
-          console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-
-          this.state.users.push(resData.data.updateUserAttachment);
-          this.context.users = this.state.users;
-          const responseAlert = JSON.stringify(resData.data).slice(2,25);
-          this.setState({ userAlert: responseAlert})
-          this.fetchUsers();
-        })
-        .catch(err => {
-          console.log(err);
-          this.setState({userAlert: err});
-        });
-
-
+      .then(resData => {
+        const updatedUserId = resData.data.updateUserAttachment._id;
+        const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+        const updatedUserPos = this.state.users.indexOf(updatedUser);
+        const slicedArray = this.state.users.splice(updatedUserPos, 1);
+        this.state.users.push(resData.data.updateUserAttachment);
+        this.context.users = this.state.users;
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
+        this.setState({ userAlert: responseAlert})
+        this.fetchUsers();
+      })
+      .catch(err => {
+        this.setState({userAlert: err});
+      });
   }
 
 
   updateUserLeaveHandler = (event) => {
 
+    this.setState({ updating: false , userUpdateField: null, userAlert: "adding user leave item..." });
     const token = this.context.token;
     const userId = this.context.userId;
     let selectedUserId = this.context.selectedUser._id;
-    // if(userId !== selectedUserId && this.context.user.role !== 'admin') {
-    //   console.log("Not the creator or Admin! No edit permission!!");
-    //   selectedUserId = null;
-    // }
     if (userId !== selectedUserId && this.context.user.role !== "admin" ) {
-      console.log("Not the creator or Admin! No edit permission!!");
       this.setState({userAlert: "Not the creator or Admin! No edit permission!!"})
-        selectedUserId = null;
+      selectedUserId = null;
     }
-
-    console.log("UpdateUserLeaveFormData:  ", event.target.formGridLeaveType.value);
-
-    this.setState({ updating: false , userUpdateField: null });
-
     let leaveType = event.target.formGridLeaveType.value;
     let leaveTitle = event.target.formGridLeaveTitle.value;
-
     let leaveStartDate = event.target.formGridLeaveStartDate.value;
     if (event.target.formGridLeaveStartDateTodayCheckbox.checked === true) {
       leaveStartDate = new Date().toISOString().slice(0,10);
     }
-
     let leaveEndDate = event.target.formGridLeaveEndDate.value;
     if (event.target.formGridLeaveEndDateTodayCheckbox.checked === true) {
       leaveEndDate = new Date().toISOString().slice(0,10);
     }
-
     if (
       leaveType.trim().length === 0 ||
       leaveTitle.trim().length === 0 ||
       leaveStartDate.trim().length === 0 ||
       leaveEndDate.trim().length === 0
     ) {
-      console.log("blank fields detected!!!...try again");
       this.setState({userAlert: "blank fields detected!!!...try again"});
       return
     }
 
-    console.log(`
-      adding user leave item...
-      userId: ${userId},
-      selectedUserId: ${selectedUserId}
-      leave: {
-        type: ${leaveType},
-        title: ${leaveTitle},
-        startDate: ${leaveStartDate},
-        endDate: ${leaveEndDate}
+    const requestBody = {
+      query:`
+        mutation{updateUserLeave(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{leaveType:"${leaveType}",leaveTitle:"${leaveTitle}",leaveStartDate:"${leaveStartDate}",leaveEndDate:"${leaveEndDate}"})
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+      `};
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
       }
-      `);
-      this.setState({userAlert: "adding user leave item..."})
-
-      const requestBody = {
-        query:`
-          mutation{updateUserLeave(userId:"${userId}",selectedUserId:"${selectedUserId}",userInput:{leaveType:"${leaveType}",leaveTitle:"${leaveTitle}",leaveStartDate:"${leaveStartDate}",leaveEndDate:"${leaveEndDate}"})
-          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
-        `};
-
-
-      fetch('http://localhost:10000/graphql', {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
         }
+        return res.json();
       })
-        .then(res => {
-          if (res.status !== 200 && res.status !== 201) {
-            throw new Error('Failed!');
-          }
-          return res.json();
-        })
-        .then(resData => {
-          console.log("response data... " + JSON.stringify(resData.data));
-
-          const updatedUserId = resData.data.updateUserLeave._id;
-          const updatedUser = this.state.users.find(e => e._id === updatedUserId);
-          const updatedUserPos = this.state.users.indexOf(updatedUser);
-          const slicedArray = this.state.users.splice(updatedUserPos, 1);
-          console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-
-          this.state.users.push(resData.data.updateUserLeave);
-          this.context.users = this.state.users;
-          const responseAlert = JSON.stringify(resData.data).slice(2,25);
-          this.setState({ userAlert: responseAlert})
-          this.fetchUsers();
-        })
-        .catch(err => {
-          console.log(err);
-          this.setState({userAlert: err});
-        });
-
+      .then(resData => {
+        const updatedUserId = resData.data.updateUserLeave._id;
+        const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+        const updatedUserPos = this.state.users.indexOf(updatedUser);
+        const slicedArray = this.state.users.splice(updatedUserPos, 1);
+        this.state.users.push(resData.data.updateUserLeave);
+        this.context.users = this.state.users;
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
+        this.setState({ userAlert: responseAlert})
+        this.fetchUsers();
+      })
+      .catch(err => {
+        this.setState({userAlert: err});
+      });
   }
 
 
   modalConfirmSearchHandler = (event) => {
-    console.log("SearchUserForm:  ");
-
 
     let userId = this.context.userId;
+    const token = this.context.token;
+    let field = null;
+    let query = event.target.formBasicQuery.value;
+    if (event.target.formBasicFieldSelect.value === "select") {
+      field = event.target.formBasicField.value;
+    } else {
+      field = event.target.formBasicFieldSelect.value;
+    }
 
-      console.log("SearchUserFormData:  ", event.target.formBasicField.value);
-      this.setState({ searching: false });
+    this.setState({
+      userSearchField: field,
+      userSearchQuery: query,
+      searching: false,
+      userAlert: "Searching for User..."
+    })
 
-      let field = null;
-      let query = event.target.formBasicQuery.value;
-      if (event.target.formBasicFieldSelect.value === "select") {
-        field = event.target.formBasicField.value;
-      } else {
-        field = event.target.formBasicFieldSelect.value;
+    if (
+      field.trim().length === 0 ||
+      query.trim().length === 0
+    ) {
+      this.setState({userAlert: "blank fields detected!!!...Please try again..."})
+      return;
+    }
+
+    const search = { field, query };
+    const requestBody = {
+      query: `
+        query {getUserField(userId:"${userId}",field:"${field}",query:"${query}")
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+      `}
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
       }
-
-      this.setState({
-        userSearchField: field,
-        userSearchQuery: query,
-      })
-
-      if (
-        field.trim().length === 0 ||
-        query.trim().length === 0
-      ) {
-        console.log("blank fields detected!!!...Please try again...");
-        this.setState({userAlert: "blank fields detected!!!...Please try again..."})
-        return;
-      }
-
-      const search = { field, query }
-      console.log("Searching for User:  ", JSON.stringify(search));
-      this.setState({userAlert: "Searching for User..."})
-
-      const requestBody = {
-        query: `
-          query {getUserField(userId:"${userId}",field:"${field}",query:"${query}")
-          {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
-        `}
-
-      const token = this.context.token;
-
-      fetch('http://localhost:10000/graphql', {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
         }
+        return res.json();
       })
-        .then(res => {
-          if (res.status !== 200 && res.status !== 201) {
-            throw new Error('Failed!');
-          }
-          return res.json();
-        })
-        .then(resData => {
-          console.log("response data... " + JSON.stringify(resData));
-
-          const responseAlert = JSON.stringify(resData.data).slice(0,8);
-          this.setState({userAlert: responseAlert});
-
-          const searchUsers = resData.data.getUserField;
-
-          this.setState({ searchUsers: searchUsers})
-          console.log("state.searchUsers:  ", this.state.searchUsers);
-          // this.fetchUsers();
-        })
-        .catch(err => {
-          console.log(err);
-          this.setState({userAlert: err});
-        });
+      .then(resData => {
+        const responseAlert = JSON.stringify(resData.data).slice(0,8);
+        const searchUsers = resData.data.getUserField;
+        this.setState({ searchUsers: searchUsers, userAlert: responseAlert})
+        // this.fetchUsers();
+      })
+      .catch(err => {
+        this.setState({userAlert: err});
+      });
   }
 
   modalConfirmSearchIdHandler = (event) => {
 
     let userId = this.context.userId;
-    this.setState({ searching: false });
-
-    console.log("SearchUserIdFormData:", event.target.formBasicId.value);
+    const token = this.context.token;
+    this.setState({ searching: false, userAlert: "Searching for Staff by Id #..." });
     let selectedUserId = event.target.formBasicId.value;
-
     const requestBody = {
       query: `
         query {getUserId(userId:"${userId}",selectedUserId:"${selectedUserId}")
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `}
 
-    const token = this.context.token;
-
-
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -838,43 +609,32 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData));
-
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({userAlert: responseAlert});
-
         const searchUsers = resData.data.getUserId;
 
-        this.setState({ searchUsers: [searchUsers] });
-        console.log("state.searchUsers:  ", this.state.searchUsers);
+        this.setState({ searchUsers: [searchUsers], userAlert: responseAlert });
         // this.fetchUsers();
       })
       .catch(err => {
-        console.log(err);
         this.setState({userAlert: err});
       });
-
   }
+
   modalConfirmSearchAttendanceDateHandler = (event) => {
 
     let userId = this.context.userId;
-    this.setState({ searching: false });
-
-    console.log("SearchUserAttendanceDateFormData:");
-
+    const token = this.context.token;
+    this.setState({ searching: false, userAlert: "Searching for user by Attendance Date..." });
     let attendanceDate = event.target.formBasicDate.value;
     if (event.target.formBasicDateTodayCheckbox.checked === true) {
       attendanceDate = new Date().toISOString().slice(0,10);
     }
-
     const requestBody = {
       query: `
         query {getUserAttendanceDate(userId:"${userId}",attendanceDate:"${attendanceDate}")
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `}
 
-    const token = this.context.token;
-
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -890,42 +650,29 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData));
-
         const responseAlert = JSON.stringify(resData.data).slice(0,8);
-        this.setState({userAlert: responseAlert});
-
         const searchUsers = resData.data.getUserAttendanceDate;
-
-        this.setState({ searchUsers: searchUsers})
-        console.log("state.searchUsers:  ", this.state.searchUsers);
+        this.setState({ searchUsers: searchUsers, userAlert: responseAlert })
         // this.fetchUsers();
       })
       .catch(err => {
-        console.log(err);
         this.setState({userAlert: err});
       });
-
   }
+
   modalConfirmSearchLeaveDateRangeHandler = (event) => {
 
+    this.setState({ searching: false, userAlert: "Searching for Staff by Leave Date range..." });
     let userId = this.context.userId;
-    this.setState({ searching: false });
-
-    console.log("SearchUserLeaveDateRangeFormData:");
-
+    const token = this.context.token;
     const startDate = event.target.formBasicStartDate.value;
     const endDate = event.target.formBasicEndDate.value;
-
     const requestBody = {
       query: `
         query{getUserLeaveDateRange(userId:"${userId}",startDate:"${startDate}",endDate:"${endDate}")
         {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `}
 
-    const token = this.context.token;
-
-
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -941,40 +688,24 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData));
-
         const responseAlert = JSON.stringify(resData.data).slice(0,8);
-        this.setState({userAlert: responseAlert});
-
         const searchUsers = resData.data.getUserLeaveDateRange;
-
-        this.setState({ searchUsers: searchUsers})
-        console.log("state.searchUsers:  ", this.state.searchUsers);
+        this.setState({ searchUsers: searchUsers, userAlert: responseAlert})
         // this.fetchUsers();
       })
       .catch(err => {
-        console.log(err);
         this.setState({userAlert: err});
       });
-
   }
 
   modalConfirmSearchNameHandler = (event) => {
-    console.log("SearchUserNameFormData:", event.target.formBasicName.value);
-    this.setState({ searching: false });
+
+    this.setState({ searching: false, userAlert: "Searching users by name ..." });
 
     let users = this.state.users;
     const regex = new RegExp(event.target.formBasicName.value,"i");
-    console.log(`
-      regex: ${regex},
-      `);
-      let result = users.filter(user => user.name.match(regex))
-      console.log(`
-        result: ${JSON.stringify(result)}
-        `);
-
-        this.setState({ searchUsers: result})
-
+    let result = users.filter(user => user.name.match(regex))
+    this.setState({ searchUsers: result})
   }
 
 
@@ -983,10 +714,9 @@ class UsersPage extends Component {
   };
 
   fetchUsers() {
-    console.log("fetch users:");
-    const userId = this.context.userId;
 
-    this.setState({ isLoading: true });
+    const userId = this.context.userId;
+    this.setState({ isLoading: true, userAlert: "Fetching Staff Master List..." });
     const requestBody = {
       query: `
           query {users (userId:"${userId}")
@@ -1009,21 +739,11 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-
         const responseAlert = JSON.stringify(resData.data).slice(0,8);
-        this.setState({userAlert: responseAlert});
-
-        const users = resData.data.users;
-        console.log("resData:  ", resData);
-        console.log(users);
-
-        if (this.isActive) {
-          this.setState({ users: users, isLoading: false });
-        }
+        this.setState({userAlert: responseAlert, users: resData.data.users, isLoading: false});
         this.context.users = this.state.users;
       })
       .catch(err => {
-        console.log(err);
         this.setState({userAlert: err});
         if (this.isActive) {
           this.setState({ isLoading: false });
@@ -1032,16 +752,14 @@ class UsersPage extends Component {
   }
 
   fetchUsersAsc = () => {
-    console.log("'fetch usersAsc function' context object... " + JSON.stringify(this.context));
-    const userId = this.context.userId;
 
-    // this.setState({ isSorting: true });
+    this.setState({ userAlert: "Fetching Staff Master List in Ascending order..."})
+    const userId = this.context.userId;
     const requestBody = {
       query: `
           query {usersNameAsc (userId:"${userId}")
           {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
-
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
@@ -1060,37 +778,23 @@ class UsersPage extends Component {
       })
       .then(resData => {
         const users = resData.data.usersNameAsc;
-        console.log("resData:  ", resData);
-        console.log(users);
-
         const responseAlert = JSON.stringify(resData.data).slice(0,8);
-        this.setState({userAlert: responseAlert});
-
-        this.setState({users: users});
-        // if (this.isActive) {
-        //   this.setState({ users: users, isLoading: false });
-        // }
+        this.setState({userAlert: responseAlert, users: users});
         this.context.users = this.state.users;
       })
       .catch(err => {
-        console.log(err);
         this.setState({userAlert: err});
-        // if (this.isActive) {
-        //   this.setState({ isLoading: false });
-        // }
       });
   }
   fetchUsersDesc = () => {
-    console.log("'fetch usersDesc function' context object... " + JSON.stringify(this.context));
-    const userId = this.context.userId;
 
-    // this.setState({ isLoading: true });
+    this.setState({ userAlert: "Fetching Staff Master List in Descending order ..."})
+    const userId = this.context.userId;
     const requestBody = {
       query: `
           query {usersNameDesc (userId:"${userId}")
           {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
         `};
-
 
     fetch('http://localhost:10000/graphql', {
       method: 'POST',
@@ -1109,35 +813,20 @@ class UsersPage extends Component {
       })
       .then(resData => {
         const users = resData.data.usersNameDesc;
-        console.log("resData:  ", resData);
-        console.log(users);
-
         const responseAlert = JSON.stringify(resData.data).slice(0,8);
-        this.setState({userAlert: responseAlert});
-
-        // if (this.isActive) {
-        //   this.setState({ users: users, isLoading: false });
-        // }
-        this.setState({users: users});
+        this.setState({userAlert: responseAlert, users: users});
         this.context.users = this.state.users;
       })
       .catch(err => {
-        console.log(err);
         this.setState({userAlert: err});
-        // if (this.isActive) {
-        //   this.setState({ isLoading: false });
-        // }
       });
   }
 
 modalDeleteHandler = () => {
-  console.log("deleting user...selectedUser:  ", this.context.selectedUser);
 
   const userId = this.context.userId;
   const selectedUserId = this.context.selectedUser._id;
-
   if(this.context.user.role !== 'admin') {
-    console.log("Not the Admin! No edit permission!!");
     this.setState({userAlert: "Not the Admin! No edit permission!!"})
   }
 
@@ -1148,9 +837,8 @@ modalDeleteHandler = () => {
         mutation {
           deleteUser(userId: "${userId}", selectedUserId: "${selectedUserId}")
           {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
-        }
-      `};
-
+        }`
+      };
 
   fetch('http://localhost:10000/graphql', {
     method: 'POST',
@@ -1167,167 +855,116 @@ modalDeleteHandler = () => {
       return res.json();
     })
     .then(resData => {
-
       const responseAlert = JSON.stringify(resData.data).slice(0,8);
       this.setState({userAlert: responseAlert});
-
       let deletedUser = resData.data.deleteUser;
-      console.log(deletedUser);
-
       let deletedUserId = deletedUser._id;
       deletedUser = this.state.users.find(e => e._id === deletedUserId);
       const deletedUserPos = this.state.users.indexOf(deletedUser);
       const slicedArray = this.state.users.splice(deletedUserPos, 1);
-      console.log("deletedUser:  ", JSON.stringify(deletedUser),"  deletedUserPos:  ", deletedUserPos, "  slicedArray:  ", slicedArray);
-
       this.setState({ deleting: false });
-      // this.setState({ deleting: false, selectedUser: null });
-      // this.context.selectedUser = null;
-
       this.fetchUsers();
-
     })
     .catch(err => {
-      console.log(err);
       this.setState({userAlert: err});
       if (this.isActive) {
         this.setState({ deleting: false });
       }
     });
-
 }
 
 deleteUserAttendanceItem = (props) => {
 
+  this.setState({ userAlert: "Deleting Staff Attendance Item..."})
   let token = this.context.token;
   let userId = this.context.userId;
   let selectedUserId = this.state.selectedUser._id;
   let date = new Date(props.date.substr(0,10)*1000).toISOString().slice(0,10);
+  const requestBody = {
+    query: `
+     mutation{deleteUserAttendance(userId:"${userId}",selectedUserId:"${selectedUserId}",attendanceDate:"${date}")
+     {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+  `};
 
-  console.log(`
-    delete user Attendance item:
-    props: ${JSON.stringify(props)},
-    token: ${token},
-    userId: ${userId},
-    selectedUserId: ${selectedUserId},
-    attandance date: ${date},
-    `);
-
-    const requestBody = {
-      query: `
-       mutation{deleteUserAttendance(userId:"${userId}",selectedUserId:"${selectedUserId}",attendanceDate:"${date}")
-       {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
-    `};
-
-
-        fetch('http://localhost:10000/graphql', {
-          method: 'POST',
-          body: JSON.stringify(requestBody),
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token
-          }
-        })
-          .then(res => {
-            if (res.status !== 200 && res.status !== 201) {
-              throw new Error('Failed!');
-            }
-            return res.json();
-          })
-          .then(resData => {
-            console.log("resData.data:  ",resData.data.deleteUserAttendance);
-
-            const updatedUserId = resData.data.deleteUserAttendance._id;
-            const updatedUser = this.state.users.find(e => e._id === updatedUserId);
-            const updatedUserPos = this.state.users.indexOf(updatedUser);
-            const slicedArray = this.state.users.splice(updatedUserPos, 1);
-            console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-
-            this.state.users.push(resData.data.deleteUserAttendance);
-            this.context.users = this.state.users;
-            const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            this.fetchUsers();
-
-          })
-          .catch(err => {
-            console.log(err);
-            this.setState({ userAlert: err })
-          });
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        const updatedUserId = resData.data.deleteUserAttendance._id;
+        const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+        const updatedUserPos = this.state.users.indexOf(updatedUser);
+        const slicedArray = this.state.users.splice(updatedUserPos, 1);
+        this.state.users.push(resData.data.deleteUserAttendance);
+        this.context.users = this.state.users;
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
+        this.setState({ userAlert: responseAlert})
+        this.fetchUsers();
+      })
+      .catch(err => {
+        this.setState({ userAlert: err })
+      });
 }
 
 deleteUserLeaveItem = (props) => {
 
+  this.setState({ userAlert: "Deleting Staff Leave Item..."})
   let token = this.context.token;
   let userId = this.context.userId;
   let selectedUserId = this.state.selectedUser._id;
+  const requestBody = {
+    query: `
+     mutation{deleteUserLeave(userId:"${userId}",selectedUserId:"${selectedUserId}",leaveTitle:"${props.title}")
+     {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
+  `};
 
-  console.log(`
-    delete user Leave item:
-    props: ${JSON.stringify(props)},
-    token: ${token},
-    userId: ${userId},
-    selectedUserId: ${selectedUserId},
-    `);
-
-    const requestBody = {
-      query: `
-       mutation{deleteUserLeave(userId:"${userId}",selectedUserId:"${selectedUserId}",leaveTitle:"${props.title}")
-       {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
-    `};
-
-
-        fetch('http://localhost:10000/graphql', {
-          method: 'POST',
-          body: JSON.stringify(requestBody),
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token
-          }
-        })
-          .then(res => {
-            if (res.status !== 200 && res.status !== 201) {
-              throw new Error('Failed!');
-            }
-            return res.json();
-          })
-          .then(resData => {
-            let deletedUser = resData.data.deleteUserLeave;
-            console.log(deletedUser);
-
-            const updatedUserId = resData.data.deleteUserLeave._id;
-            const updatedUser = this.state.users.find(e => e._id === updatedUserId);
-            const updatedUserPos = this.state.users.indexOf(updatedUser);
-            const slicedArray = this.state.users.splice(updatedUserPos, 1);
-            console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-
-            this.state.users.push(resData.data.deleteUserLeave);
-            this.context.users = this.state.users;
-            const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            this.fetchUsers();
-
-          })
-          .catch(err => {
-            console.log(err);
-            this.setState({ userAlert: err })
-          });
+  fetch('http://localhost:10000/graphql', {
+    method: 'POST',
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      if (res.status !== 200 && res.status !== 201) {
+        throw new Error('Failed!');
+      }
+      return res.json();
+    })
+    .then(resData => {
+      let deletedUser = resData.data.deleteUserLeave;
+      const updatedUserId = resData.data.deleteUserLeave._id;
+      const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+      const updatedUserPos = this.state.users.indexOf(updatedUser);
+      const slicedArray = this.state.users.splice(updatedUserPos, 1);
+      this.state.users.push(resData.data.deleteUserLeave);
+      this.context.users = this.state.users;
+      const responseAlert = JSON.stringify(resData.data).slice(2,25);
+      this.setState({ userAlert: responseAlert})
+      this.fetchUsers();
+    })
+    .catch(err => {
+      this.setState({ userAlert: err })
+    });
 }
 
 deleteUserAttachmentItem = (props) => {
 
+  this.setState({ userAlert: "Deleting Staff Attachment Item..."})
   let token = this.context.token;
   let userId = this.context.userId;
   let selectedUserId = this.state.selectedUser._id;
-
-  console.log(`
-    delete user Attachment item:
-    props: ${JSON.stringify(props)},
-    token: ${token},
-    userId: ${userId},
-    selectedUserId: ${selectedUserId},
-    `);
-
     // console.log(`
     //   deleting from s3...
     //   file.name: ${props.name},
@@ -1349,97 +986,76 @@ deleteUserAttachmentItem = (props) => {
     // .then(response => console.log(response))
     // .catch(err => console.error(err))
 
-
     const requestBody = {
       query: `
        mutation{deleteUserAttachment(userId:"${userId}",selectedUserId:"${selectedUserId}",attachmentName:"${props.name}")
        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
     `};
 
-
-        fetch('http://localhost:10000/graphql', {
-          method: 'POST',
-          body: JSON.stringify(requestBody),
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token
-          }
-        })
-          .then(res => {
-            if (res.status !== 200 && res.status !== 201) {
-              throw new Error('Failed!');
-            }
-            return res.json();
-          })
-          .then(resData => {
-            let deletedUser = resData.data.deleteUserAttachment;
-            console.log(deletedUser);
-
-            const updatedUserId = resData.data.deleteUserAttachment._id;
-            const updatedUser = this.state.users.find(e => e._id === updatedUserId);
-            const updatedUserPos = this.state.users.indexOf(updatedUser);
-            const slicedArray = this.state.users.splice(updatedUserPos, 1);
-            console.log("updatedUser:  ", JSON.stringify(updatedUser),"  updatedUserPos:  ", updatedUserPos, "  slicedArray:  ", slicedArray);
-
-            this.state.users.push(resData.data.deleteUserAttachment);
-            this.context.users = this.state.users;
-            const responseAlert = JSON.stringify(resData.data).slice(2,25);
-            this.setState({ userAlert: responseAlert})
-            this.fetchUsers();
-
-          })
-          .catch(err => {
-            console.log(err);
-            this.setState({ userAlert: err })
-          });
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        let deletedUser = resData.data.deleteUserAttachment;
+        const updatedUserId = resData.data.deleteUserAttachment._id;
+        const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+        const updatedUserPos = this.state.users.indexOf(updatedUser);
+        const slicedArray = this.state.users.splice(updatedUserPos, 1);
+        this.state.users.push(resData.data.deleteUserAttachment);
+        this.context.users = this.state.users;
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
+        this.setState({ userAlert: responseAlert})
+        this.fetchUsers();
+      })
+      .catch(err => {
+        this.setState({ userAlert: err })
+      });
 }
-
 
 
 updateUserSpecial (event) {
 
-  console.log("special field to update:  ", event.target.value);
   const field = event.target.value;
   this.setState({ userUpdateField: field});
-
 }
 
-  showDetailHandler = userId => {
+showDetailHandler = userId => {
 
-    this.setState(prevState => {
-      const selectedUser = prevState.users.find(e => e._id === userId);
-      this.context.selectedUser = selectedUser;
-      this.setState({selectedUser: selectedUser});
-      console.log("User selected  :  ", selectedUser);
-      return { selectedUser: selectedUser };
-    });
-  };
+  this.setState(prevState => {
+    const selectedUser = prevState.users.find(e => e._id === userId);
+    this.context.selectedUser = selectedUser;
+    this.setState({selectedUser: selectedUser});
+    return { selectedUser: selectedUser };
+  });
+};
 
   onViewAttachment = (attachment) => {
-    console.log(`
-      setting up attachment viewer...
-      attachment: ${JSON.stringify(attachment)}
-      `);
+
       this.setState({showAttachment: true})
 
       const file = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+attachment.path+"/"+attachment.name;
       const type = attachment.format;
 
-      this.setState({showThisAttachmentFile: file, showThisAttachmentType: type})
+      this.setState({showThisAttachmentFile: file, showThisAttachmentType: type, })
   }
 
   closeAttachmentView = () => {
-    console.log(`
-      closing attachment viewer...
-      `);
+
       this.setState({showAttachment: false})
   }
 
   createPdf = (user) => {
-    console.log(`
-        creating pdf...
-        user: ${JSON.stringify(user)}
-      `);
 
       const pdfData = {
         title: "This pdf is supplied with Staff data...",
@@ -1471,14 +1087,10 @@ updateUserSpecial (event) {
   }
 
   closePdfCreator = () => {
-    console.log(`
-      closing pdf creator...
-      `);
       this.setState({createPdf: false, pdfData: null})
   }
 
   userSearchClearlHandler () {
-    console.log("clearing user search results");
     this.setState({searchUsers: [], userAlert: "clearing user search results"});
   }
 
