@@ -37,6 +37,8 @@ class ThisUserPage extends Component {
     isLoading: false,
     userUpdateField: null,
     userAlert: null,
+    overlay: false,
+    overlayStatus: "test",
     canDelete: null,
     showAttachment: false,
     createPdf: false,
@@ -972,6 +974,13 @@ class ThisUserPage extends Component {
         authUserId={this.context.userId}
         alert={this.state.userAlert}
       />
+
+      {this.state.overlay === true && (
+        <LoadingOverlay
+          status={this.state.overlayStatus}
+        />
+      )}
+
       <SidebarPage
         you={this.state.user}
       />

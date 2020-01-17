@@ -89,6 +89,8 @@ class PatientsPage extends Component {
     },
     newVisit: false,
     userAlert: null,
+    overlay: false,
+    overlayStatus: "test",
     showAttachment: false,
     showThisAttachmentFile: null,
     showThisAttachmentType: null,

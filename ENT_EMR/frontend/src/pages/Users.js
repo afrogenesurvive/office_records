@@ -27,6 +27,7 @@ import AuthContext from '../context/auth-context';
 
 import SidebarPage from './Sidebar';
 import AlertBox from '../components/AlertBox';
+import LoadingOverlay from '../components/LoadingOverlay';
 import AttachmentViewer from '../components/AttachmentViewer';
 import PdfCreator from '../components/PdfCreator';
 
@@ -60,6 +61,8 @@ class UsersPage extends Component {
     userSearchQuery: null,
     canDelete: null,
     userAlert: null,
+    overlay: false,
+    overlayStatus: "test",
     file: null,
     showAttachment: false,
     showThisAttachmentFile: null,
@@ -1513,6 +1516,12 @@ updateUserSpecial (event) {
       authUserId={this.context.userId}
       alert={this.state.userAlert}
     />
+
+    {this.state.overlay === true && (
+      <LoadingOverlay
+        status={this.state.overlayStatus}
+      />
+    )}
 
     <SidebarPage/>
 
