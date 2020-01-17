@@ -12,7 +12,6 @@ const mongodb = require('mongodb');
 const isAuth = require('./middleware/is-auth');
 const path = require('path');
 
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -39,8 +38,6 @@ app.use(
 );
 
 mongoose.connect('mongodb://localhost:27017/ent_emr_dev',{useNewUrlParser: true, useUnifiedTopology: true})
-// mongoose.connect(process.env.MONGO_URI,{useNewUrlParser: true, useUnifiedTopology: true})
-// mongoose.connect("mongodb+srv://ent_emr_admin:0tolaryngologY@cluster0-5iwfn.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
 // mongoose.connect("mongodb+srv://"+creds.atlas.user+":"+creds.atlas.pw+"@cluster0-5iwfn.mongodb.net/"+creds.atlas.db+"?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
     console.log(`
@@ -53,14 +50,7 @@ mongoose.connect('mongodb://localhost:27017/ent_emr_dev',{useNewUrlParser: true,
 });
 
 
-// app.listen(8080,function(){
-//     console.log('Express app start on port 8080')
-// });
-// app.get("/", function(req, res) {
-//   res.send("Hello World!");
-// });
-//
-// mongoose.connect("mongodb+srv://ent_emr_admin:0tolaryngologY@cluster0-5iwfn.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
+// mongoose.connect("mongodb+srv://"+creds.atlas.user+":"+creds.atlas.pw+"@cluster0-5iwfn.mongodb.net/"+creds.atlas.db+"?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
 //   .then(() => {
 //     console.log("DB connected...");
 //     app.listen(8080);

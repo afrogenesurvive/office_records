@@ -14,16 +14,18 @@ const { pocketVariables } = require('../../helpers/pocketVars');
 
 module.exports = {
   users: async (args, req) => {
-    console.log(`
-      users...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
+    // console.log(`
+    //   users...args: ${util.inspect(args)},
+    //   isAuth: ${req.isAuth},
+    //   `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+      
       const users = await User.find({});
+
       return users.map(user => {
         return transformUser(user,);
       });
@@ -32,17 +34,14 @@ module.exports = {
     }
   },
   usersNameAsc: async (args, req) => {
-    console.log(`
-      users...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
-
     }
     try {
+
       const users = await User.find({}).sort({ name: 1 });
+
       return users.map(user => {
         return transformUser(user,);
       });
@@ -51,17 +50,14 @@ module.exports = {
     }
   },
   usersNameDesc: async (args, req) => {
-    console.log(`
-      users...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
-
     }
     try {
+
       const users = await User.find({}).sort({ name: -1 });
+
       return users.map(user => {
         return transformUser(user,);
       });
@@ -70,10 +66,6 @@ module.exports = {
     }
   },
   getThisUser: async (args, req) => {
-    console.log(`
-      getThisUser...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -100,10 +92,6 @@ module.exports = {
     }
   },
   getUserId: async (args, req) => {
-    console.log(`
-      getUserId...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -122,24 +110,17 @@ module.exports = {
     }
   },
   getUserField: async (args, req) => {
-    console.log(`
-      getUserField...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
       const resolverField = args.field;
       const resolverQuery = args.query;
       const query = {[resolverField]:resolverQuery};
-      console.log(`
-        resolverField: ${resolverField},
-        resolverQuery: ${resolverQuery},
-        queryObject: ${query},
-        `);
       const users = await User.find(query);
+
       return users.map(user => {
         return transformUser(user);
       });
@@ -148,20 +129,15 @@ module.exports = {
     }
   },
   getUserAttendanceDate: async (args, req) => {
-    console.log(`
-      getUserAttendanceDate...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
       const attendanceDate = new Date(args.attendanceDate);
-      console.log(`
-        attendanceDate: ${attendanceDate},
-        `);
       const users = await User.find({'attendance.date': attendanceDate, 'attendance.status': ''});
+
       return users.map(user => {
         return transformUser(user);
       });
@@ -170,10 +146,6 @@ module.exports = {
     }
   },
   getUserLeaveDateRange: async (args, req) => {
-    console.log(`
-      getUserLeaveDateRange...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -182,11 +154,8 @@ module.exports = {
 
       const startDate = new Date(args.startDate).toISOString();
       const endDate = new Date(args.endDate).toISOString();
-      console.log(`
-        startDate: ${startDate},
-        endDate: ${endDate},
-        `);
       const users = await User.find({'leave.startDate': {'$gt' : new Date(startDate) , '$lt': new Date(endDate) }, 'leave.endDate': {'$gt' : new Date(startDate) , '$lt': new Date(endDate) }});
+
       return users.map(user => {
         return transformUser(user);
       });
@@ -195,19 +164,12 @@ module.exports = {
     }
   },
   updateUser: async (args, req) => {
-    console.log(`
-      updateUser...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // if (args.selectedUserId != args.userId ) {
-      //   throw new Error('Not the creator! No edit permission');
-      // }
-      // else {
+
       const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
       const user = await User.findOneAndUpdate({_id:args.selectedUserId},{
         email: args.userInput.email,
@@ -226,6 +188,7 @@ module.exports = {
         employmentDate: args.userInput.employmentDate,
         terminationDate: args.userInput.terminationDate,
         },{new: true});
+
         return {
           ...user._doc,
           _id: user.id,
@@ -241,34 +204,22 @@ module.exports = {
           attendance: user.attendance,
           leave: user.leave,
         };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updateUserField: async (args, req) => {
-    console.log(`
-      updateUserField...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // if (args.selectedUserId != args.userId ) {
-      //   throw new Error('Not the creator! No edit permission');
-      // }
-      // else {
+
       const resolverField = args.field;
       const resolverQuery = args.query;
       const query = {[resolverField]:resolverQuery};
-      console.log(`
-          resolverField: ${resolverField},
-          resolverQuery: ${resolverQuery},
-          query object: ${JSON.stringify(query)},
-        `);
       const user = await User.findOneAndUpdate({_id:args.selectedUserId},query,{new: true})
+
       return {
         ...user._doc,
         _id: user.id,
@@ -284,36 +235,24 @@ module.exports = {
         attendance: user.attendance,
         leave: user.leave,
       };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updateUserAttachment: async (args, req) => {
-    console.log(`
-      updateUserAttachment...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // if (args.selectedUserId != args.userId ) {
-      //   throw new Error('Not the creator! No edit permission');
-      // }
-      // else {
 
       const userAttachmentObject = {
         name: args.userInput.attachmentName,
         format: args.userInput.attachmentFormat,
         path: args.userInput.attachmentPath
       }
-      console.log(`
-        userAttachmentObject: ${userAttachmentObject}
-        `);
-
       const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attachments: userAttachmentObject}},{new: true})
+
       return {
         ...user._doc,
         _id: user.id,
@@ -329,35 +268,24 @@ module.exports = {
         attendance: user.attendance,
         leave: user.leave,
       };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updateUserAttendance: async (args, req) => {
-    console.log(`
-      updateUserAttendance...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // if (args.selectedUserId != args.userId ) {
-      //   throw new Error('Not the creator! No edit permission');
-      // }
-      // else {
+
       const userAttendanceObject = {
         date: args.userInput.attendanceDate,
         status: args.userInput.attendanceStatus,
         description: args.userInput.attendanceDescription,
       }
-      console.log(`
-        userAttendanceObject: ${util.inspect(userAttendanceObject)}
-        `);
-        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attendance: userAttendanceObject}},{new: true, useFindAndModify: false})
+      const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attendance: userAttendanceObject}},{new: true, useFindAndModify: false})
+
         return {
           ...user._doc,
           _id: user.id,
@@ -373,36 +301,25 @@ module.exports = {
           attendance: user.attendance,
           leave: user.leave,
         };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updateUserAttendanceToday: async (args, req) => {
-    console.log(`
-      updateUserAttendanceToday...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // if (args.selectedUserId != args.userId ) {
-      //   throw new Error('Not the creator! No edit permission');
-      // }
-      // else {
+
       const today = new Date();
       const status = "Present";
       const userAttendanceObject = {
         date: today,
         status: status,
       }
-      console.log(`
-        userAttendanceObject: ${util.inspect(userAttendanceObject)}
-        `);
-        const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attendance: userAttendanceObject}},{new: true, useFindAndModify: false})
+      const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { attendance: userAttendanceObject}},{new: true, useFindAndModify: false})
+
         return {
           ...user._doc,
           _id: user.id,
@@ -418,35 +335,26 @@ module.exports = {
           attendance: user.attendance,
           leave: user.leave,
         };
-      // }
     } catch (err) {
       throw err;
     }
   },
+
   updateUserLeave: async (args, req) => {
-    console.log(`
-      updateUserLeave...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // if (args.selectedUserId != args.userId ) {
-      //   throw new Error('Not the creator! No edit permission');
-      // }
-      // else {
       const userLeaveObject = {
         type: args.userInput.leaveType,
         title: args.userInput.leaveTitle,
         startDate: args.userInput.leaveStartDate,
         endDate: args.userInput.leaveEndDate,
       }
-      console.log(`
-        userLeaveObject: ${JSON.stringify(userLeaveObject)}
-        `);
+
         const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$addToSet: { leave: userLeaveObject}},{new: true})
+
         return {
           ...user._doc,
           _id: user.id,
@@ -462,31 +370,20 @@ module.exports = {
           attendance: user.attendance,
           leave: user.leave,
         };
-      // }
     } catch (err) {
       throw err;
     }
   },
   deleteUserLeave: async (args, req) => {
-    console.log(`
-      deleteUserLeave...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // if (args.selectedUserId != args.userId ) {
-      //   throw new Error('Not the creator! No edit permission');
-      // }
-      // else {
-      const title = args.leaveTitle;
-      console.log(`
-          title: ${title}
-        `);
 
+        const title = args.leaveTitle;
         const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { leave: { title: title }}},{new: true})
+
         return {
           ...user._doc,
           _id: user.id,
@@ -502,32 +399,20 @@ module.exports = {
           attendance: user.attendance,
           leave: user.leave,
         };
-      // }
     } catch (err) {
       throw err;
     }
   },
   deleteUserAttendance: async (args, req) => {
-    console.log(`
-      deleteUserAttendance...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // if (args.selectedUserId != args.userId ) {
-      //   throw new Error('Not the creator! No edit permission');
-      // }
-      // else {
-      const attendanceDate = args.attendanceDate;
-      // const attendanceDate = new Date(args.attendanceDate).toISOString();
-      console.log(`
-          attendanceDate: ${attendanceDate}
-        `);
 
+        const attendanceDate = args.attendanceDate;
         const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { attendance: { date: new Date(attendanceDate) }}},{new: true})
+
         return {
           ...user._doc,
           _id: user.id,
@@ -543,30 +428,18 @@ module.exports = {
           attendance: user.attendance,
           leave: user.leave,
         };
-      // }
     } catch (err) {
       throw err;
     }
   },
   deleteUserAttachment: async (args, req) => {
-    console.log(`
-      deleteUserAttachment...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // if (args.selectedUserId != args.userId ) {
-      //   throw new Error('Not the creator! No edit permission');
-      // }
-      // else {
-      const attachmentName = args.attachmentName;
-      console.log(`
-          attachmentName: ${attachmentName}
-        `);
 
+        const attachmentName = args.attachmentName;
         const user = await User.findOneAndUpdate({_id:args.selectedUserId},{$pull: { attachments: { name: attachmentName }}},{new: true})
         return {
           ...user._doc,
@@ -583,25 +456,16 @@ module.exports = {
           attendance: user.attendance,
           leave: user.leave,
         };
-      // }
     } catch (err) {
       throw err;
     }
   },
   deleteUser: async (args, req) => {
-    console.log(`
-      deleteUser...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // if (args.selectedUserId != args.userId) {
-      //   throw new Error('Not the creator! No edit permission');
-      // }
-      // else {
       const user = await User.findByIdAndRemove(args.selectedUserId);
         return {
           ...user._doc,
@@ -618,16 +482,11 @@ module.exports = {
           attendance: user.attendance,
           leave: user.leave,
         };
-      // }
     } catch (err) {
       throw err;
     }
   },
   createUser: async (args, req) => {
-    console.log(`
-      createUser...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     try {
       const existingUserName = await User.findOne({ name: args.userInput.name});

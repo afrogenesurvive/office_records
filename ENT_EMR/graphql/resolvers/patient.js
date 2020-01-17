@@ -1,30 +1,28 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const DataLoader = require('dataloader');
-
+const util = require('util');
 
 const User = require('../../models/user');
 const Patient = require('../../models/patient');
 const Appointment = require('../../models/appointment');
-const util = require('util');
 
 const { transformPatient } = require('./merge');
 const { dateToString } = require('../../helpers/date');
 const { pocketVariables } = require('../../helpers/pocketVars');
 
-
 module.exports = {
   patients: async (args, req) => {
-    console.log(`
-      patients...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
+    // console.log(`
+    //   patients...args: ${util.inspect(args)},
+    //   isAuth: ${req.isAuth},
+    //   `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
+
       const patients = await Patient.find({})
       .populate('appointments')
       .populate('consultant.reference');
@@ -37,16 +35,12 @@ module.exports = {
     }
   },
   patientsNameAsc: async (args, req) => {
-    console.log(`
-      patients...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
+
       const patients = await Patient.find({}).sort({ name: 1 })
       .populate('appointments')
       .populate('consultant.reference');
@@ -59,16 +53,12 @@ module.exports = {
     }
   },
   patientsNameDesc: async (args, req) => {
-    console.log(`
-      patients...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
+
       const patients = await Patient.find({}).sort({ name: -1 })
       .populate('appointments')
       .populate('consultant.reference');
@@ -81,16 +71,12 @@ module.exports = {
     }
   },
   getPatientId: async (args, req) => {
-    console.log(`
-      getPatientId...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
+
       const patient = await Patient.findById(args.patientId)
       .populate('appointments')
       .populate('consultant.reference');
@@ -105,22 +91,15 @@ module.exports = {
     }
   },
   getPatientField: async (args, req) => {
-    console.log(`
-      getPatientField...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
+
       const resolverField = args.field;
       const resolverQuery = args.query;
       const query = {[resolverField]:resolverQuery};
-
-      console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
-
       const patients = await Patient.find(query)
       .populate('appointments')
       .populate('consultant.reference');
@@ -134,45 +113,29 @@ module.exports = {
     }
   },
   getPatientNameRegex: async (args, req) => {
-    console.log(`
-      getPatientNameRegex...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
 
-      const regex = "/^" + args.regex + "/"
-      console.log(`
-        regex: ${regex}
-        `);
-
+      const regex = "/^" + args.regex + "/";
       const patients = await Patient.find({'address.parish': {$regex: regex, $options: 'i'}})
       .populate('appointments')
       .populate('consultant.reference');
-      console.log("regex response:  ", patients);
 
       return patients.map(patient => {
         return transformPatient(patient);
-
       });
     } catch (err) {
       throw err;
     }
   },
   getPatientDiagnosis: async (args, req) => {
-    console.log(`
-      getPatientDiagnosis...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const patients = await Patient.find({'diagnosis.type': args.diagnosisType})
@@ -181,54 +144,30 @@ module.exports = {
 
       return patients.map(patient => {
         return transformPatient(patient);
-
       });
     } catch (err) {
       throw err;
     }
   },
   getPatientVisitDate: async (args, req) => {
-    console.log(`
-      getPatientVisitDate...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
-    //
-    // if (!req.isAuth) {
-    //   throw new Error('Unauthenticated!');
-    // }
-    //
-    // try {
-    //
-    //   const patients = await Patient.find({'diagnosis.type': args.diagnosisType})
-    //   .populate('appointments')
-    //   .populate('consultant.reference');
-    //
-    //   return patients.map(patient => {
-    //     return transformPatient(patient);
-    //
-    //   });
-    // } catch (err) {
-    //   throw err;
-    // }
+    // console.log(`
+    //   getPatientVisitDate...args: ${util.inspect(args)},
+    //   isAuth: ${req.isAuth},
+    //   `);
   },
   updatePatient: async (args, req) => {
-    console.log(`
-      updatePatient...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const today = new Date();
       const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       const dateTime = date+' '+time;
-
-      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},
+        {
         title: args.patientInput.title,
         name: args.patientInput.name,
         dob: args.patientInput.dob,
@@ -266,8 +205,7 @@ module.exports = {
             email: args.patientInput.occupationEmployerContactEmail
           }
         },
-
-       }
+      }
       ,{new: true})
       .populate('appointments')
       .populate('consultant.reference');
@@ -282,24 +220,15 @@ module.exports = {
     }
   },
   updatePatientField: async (args, req) => {
-    console.log(`
-      updatePatientField...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
 
-
         const resolverField = args.field;
         const resolverQuery = args.query;
         const query = {[resolverField]:resolverQuery};
-
-        console.log("resolverField:  ", resolverField, "resolverQuery:  ", resolverQuery, "query object:  ", query);
-
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},query,{new: true})
         .populate('appointments')
         .populate('consultant.reference');
@@ -314,23 +243,14 @@ module.exports = {
     }
   },
   updatePatientAppointment: async (args, req) => {
-    console.log(`
-      updatePatientAppointment...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
         const patientAppointment = await Appointment.findById({_id:args.appointmentId});
-        const patientAppointmentId = patientAppointment.id
-        console.log("patientAppointment... " + patientAppointment.name);
-        console.log("patientAppointmentId... " + patientAppointmentId);
-
+        const patientAppointmentId = patientAppointment.id;
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {appointments:patientAppointment}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
@@ -340,42 +260,25 @@ module.exports = {
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updatePatientConsultant: async (args, req) => {
-    console.log(`
-      updatePatientConsultant...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const consultantDate = args.patientInput.consultantDate;
       const consultantReference = args.patientInput.consultantReference;
-      console.log(`
-        consultantDate:${consultantDate},
-        consultantReference:${consultantReference},
-        `);
-
       const patientConsultant = await User.findById(consultantReference );
-      console.log("patientConsultant:  ", patientConsultant);
-
       const consultantObject = {
         date: consultantDate,
         reference: patientConsultant,
-      }
-
-      console.log(" consultantObject: ", consultantObject);
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {consultant:consultantObject}},{new: true})
+      };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {consultant:consultantObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
 
@@ -389,16 +292,10 @@ module.exports = {
     }
   },
   updatePatientInsurance: async (args, req) => {
-    console.log(`
-      updatePatientInsurance...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const patientInsuranceObject =  {
@@ -410,12 +307,7 @@ module.exports = {
               company: args.patientInput.insuranceSubscriberCompany,
               description: args.patientInput.insuranceSubscriberDescription
             }
-          }
-
-      console.log(`
-        patientInsuranceObject: ${patientInsuranceObject}
-        `);
-
+          };
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {insurance:patientInsuranceObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
@@ -425,21 +317,15 @@ module.exports = {
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updatePatientNextOfKin: async (args, req) => {
-    console.log(`
-      updatePatientNextOfKin...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const patientNextOfKinObject =  {
@@ -448,12 +334,7 @@ module.exports = {
               email: args.patientInput.nextOfKinEmail,
               phone: args.patientInput.nextOfKinPhone
             }
-          }
-
-      console.log(`
-        patientNextOfKinObject: ${patientNextOfKinObject}
-        `);
-
+          };
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {nextOfKin:patientNextOfKinObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
@@ -469,16 +350,10 @@ module.exports = {
     }
   },
   updatePatientComplaint: async (args, req) => {
-    console.log(`
-      updatePatientComplaint...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const patientComplaintObject =  {
@@ -491,12 +366,7 @@ module.exports = {
               format: args.patientInput.complaintAttachmentFormat,
               path: args.patientInput.complaintAttachmentPath
             }
-          }
-
-      console.log(`
-        patientComplaintObject: ${patientComplaintObject}
-        `);
-
+          };
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {complaints:patientComplaintObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
@@ -506,22 +376,15 @@ module.exports = {
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updatePatientSurvey: async (args, req) => {
-    console.log(`
-      updatePatientSurvey...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const surveyDate = args.patientInput.surveyDate;
@@ -530,17 +393,6 @@ module.exports = {
       const surveyAttachmentName = args.patientInput.surveyAttachmentName;
       const surveyAttachmentFormat = args.patientInput.surveyAttachmentFormat;
       const surveyAttachmentPath = args.patientInput.surveyAttachmentPath;
-
-      console.log(`
-        surveyDate: ${surveyDate},
-        surveyTitle: ${surveyTitle},
-        surveyDescription: ${surveyDescription},
-        surveyAttachmentName: ${surveyAttachmentName},
-        surveyAttachmentFormat: ${surveyAttachmentFormat},
-        surveyAttachmentPath: ${surveyAttachmentPath},
-        `);
-
-
       const patientSurvey = {
         date: surveyDate,
         title: surveyTitle,
@@ -550,11 +402,8 @@ module.exports = {
           format: surveyAttachmentFormat,
           path: surveyAttachmentPath,
         }
-      }
-
-      console.log(" patientSurvey: ", patientSurvey);
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {surveys:patientSurvey}},{new: true})
+      };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {surveys:patientSurvey}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
 
@@ -563,22 +412,15 @@ module.exports = {
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updatePatientSystematicInquiry: async (args, req) => {
-    console.log(`
-      updatePatientSystematicInquiry...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const systematicInquiryDate = args.patientInput.systematicInquiryDate;
@@ -587,17 +429,6 @@ module.exports = {
       const systematicInquiryAttachmentName = args.patientInput.systematicInquiryAttachmentName;
       const systematicInquiryAttachmentFormat = args.patientInput.systematicInquiryAttachmentFormat;
       const systematicInquiryAttachmentPath = args.patientInput.systematicInquiryAttachmentPath;
-
-      console.log(`
-        systematicInquiryDate: ${systematicInquiryDate},
-        systematicInquiryTitle: ${systematicInquiryTitle},
-        systematicInquiryDescription: ${systematicInquiryDescription},
-        systematicInquiryAttachmentName: ${systematicInquiryAttachmentName},
-        systematicInquiryAttachmentFormat: ${systematicInquiryAttachmentFormat},
-        systematicInquiryAttachmentPath: ${systematicInquiryAttachmentPath},
-        `);
-
-
       const patientSystematicInquiry = {
         date: systematicInquiryDate,
         title: systematicInquiryTitle,
@@ -607,11 +438,8 @@ module.exports = {
           format: systematicInquiryAttachmentFormat,
           path: systematicInquiryAttachmentPath,
         }
-      }
-
-      console.log(" patientSystematicInquiry ", patientSystematicInquiry);
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {systematicInquiry:patientSystematicInquiry}},{new: true})
+      };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {systematicInquiry:patientSystematicInquiry}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
 
@@ -620,21 +448,15 @@ module.exports = {
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updatePatientVitals: async (args, req) => {
-    console.log(`
-      updatePatientVitals...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const vitalsDate  = args.patientInput.vitalsDate;
@@ -649,23 +471,6 @@ module.exports = {
       const vitalsBmi = args.patientInput.vitalsBmi;
       const vitalsUrineType = args.patientInput.vitalsUrineType;
       const vitalsUrineValue = args.patientInput.vitalsUrineValue;
-
-      console.log(`
-        vitalsDate: ${vitalsDate},
-        vitalsPr: ${vitalsPr},
-        vitalsBp1: ${vitalsBp1},
-        vitalsBp2: ${vitalsBp2},
-        vitalsRr: ${vitalsRr},
-        vitalsTemp: ${vitalsTemp},
-        vitalsPs02: ${vitalsPs02},
-        vitalsHeight: ${vitalsHeight},
-        vitalsWeight: ${vitalsWeight},
-        vitalsBmi: ${vitalsBmi},
-        vitalsUrineType: ${vitalsUrineType},
-        vitalsUrineValue: ${vitalsUrineValue},
-        `);
-
-
       const patientVitals = {
         date: vitalsDate,
         pr: vitalsPr,
@@ -681,11 +486,8 @@ module.exports = {
           type: vitalsUrineType,
           value: vitalsUrineValue,
         }
-      }
-
-      console.log(" patientVitals: ", patientVitals);
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {vitals:patientVitals}},{new: true})
+      };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {vitals:patientVitals}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
 
@@ -694,21 +496,15 @@ module.exports = {
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updatePatientExamination: async (args, req) => {
-    console.log(`
-      updatePatientExamination...args: ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const patientExaminationObject = {
@@ -725,13 +521,8 @@ module.exports = {
               format: args.patientInput.examinationAttachmentFormat,
               path: args.patientInput.examinationAttachmentPath
             }
-          }
-
-      console.log(`
-        patientExaminationObject: ${patientExaminationObject}
-        `);
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {examination:patientExaminationObject}},{new: true})
+          };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {examination:patientExaminationObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
 
@@ -740,22 +531,15 @@ module.exports = {
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updatePatientHistory: async (args, req) => {
-    console.log(`
-      updatePatientHistory...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
       const patientHistoryObject = {
             title: args.patientInput.historyTitle,
@@ -767,13 +551,8 @@ module.exports = {
               format: args.patientInput.historyAttachmentFormat,
               path: args.patientInput.historyAttachmentPath
             }
-          }
-
-      console.log(`
-        patientHistoryObject: ${patientHistoryObject}
-        `);
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {history:patientHistoryObject}},{new: true})
+          };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {history:patientHistoryObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
 
@@ -782,22 +561,15 @@ module.exports = {
               _id: patient.id,
               name: patient.name
           };
-      // }
     } catch (err) {
       throw err;
     }
   },
   updatePatientAllergies: async (args, req) => {
-    console.log(`
-      updatePatientAllergies...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const patientAllergiesObject = {
@@ -809,13 +581,8 @@ module.exports = {
               format: args.patientInput.allergiesAttachmentFormat,
               path: args.patientInput.allergiesAttachmentPath
             },
-          }
-
-      console.log(`
-        patientAllergiesObject: ${patientAllergiesObject}
-        `);
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {allergies:patientAllergiesObject}},{new: true})
+          };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {allergies:patientAllergiesObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
 
@@ -830,16 +597,10 @@ module.exports = {
     }
   },
   updatePatientMedication: async (args, req) => {
-    console.log(`
-      updatePatientMedication...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const patientMedicationObject = {
@@ -851,13 +612,8 @@ module.exports = {
               format: args.patientInput.medicationAttachmentFormat,
               path: args.patientInput.medicationAttachmentPath
             }
-          }
-
-      console.log(`
-        patientMedicationObject: ${patientMedicationObject}
-        `);
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {medication:patientMedicationObject}},{new: true})
+          };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {medication:patientMedicationObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
 
@@ -871,16 +627,12 @@ module.exports = {
     }
   },
   updatePatientInvestigation: async (args, req) => {
-    console.log(`
-      updatePatientInvestigation...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
       const patientInvestigationObject = {
             date: args.patientInput.investigationDate,
             title: args.patientInput.investigationTitle,
@@ -891,11 +643,8 @@ module.exports = {
               format: args.patientInput.investigationAttachmentFormat,
               path: args.patientInput.investigationAttachmentPath
             }
-          }
-      console.log(`
-        patientInvestigationObject: ${patientInvestigationObject}
-        `);
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {investigation:patientInvestigationObject}},{new: true})
+          };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {investigation:patientInvestigationObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
           return {
@@ -908,16 +657,12 @@ module.exports = {
     }
   },
   updatePatientDiagnosis: async (args, req) => {
-    console.log(`
-      updatePatientDiagnosis...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
       const patientDiagnosisObject = {
             date: args.patientInput.diagnosisDate,
             title: args.patientInput.diagnosisTitle,
@@ -928,11 +673,8 @@ module.exports = {
               format: args.patientInput.diagnosisAttachmentFormat,
               path: args.patientInput.diagnosisAttachmentPath
             }
-          }
-      console.log(`
-        patientDiagnosisObject: ${patientDiagnosisObject}
-        `);
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {diagnosis:patientDiagnosisObject}},{new: true})
+          };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {diagnosis:patientDiagnosisObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
           return {
@@ -945,16 +687,12 @@ module.exports = {
     }
   },
   updatePatientTreatment: async (args, req) => {
-    console.log(`
-      updatePatientTreatment...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
       const patientTreatmentObject = {
             date: args.patientInput.treatmentDate,
             title: args.patientInput.treatmentTitle,
@@ -967,11 +705,8 @@ module.exports = {
               format: args.patientInput.treatmentAttachmentFormat,
               path: args.patientInput.treatmentAttachmentPath
             }
-          }
-      console.log(`
-        patientTreatmentObject: ${patientTreatmentObject}
-        `);
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {treatment:patientTreatmentObject}},{new: true})
+          };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {treatment:patientTreatmentObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
           return {
@@ -984,16 +719,12 @@ module.exports = {
     }
   },
   updatePatientBilling: async (args, req) => {
-    console.log(`
-      updatePatientBilling...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
       const patientBillingObject = {
             date: args.patientInput.billingDate,
             title: args.patientInput.billingTitle,
@@ -1007,11 +738,8 @@ module.exports = {
               format: args.patientInput.billingAttachmentFormat,
               path: args.patientInput.billingAttachmentPath
             }
-          }
-      console.log(`
-        patientBillingObject: ${patientBillingObject}
-        `);
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {billing:patientBillingObject}},{new: true})
+          };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {billing:patientBillingObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
           return {
@@ -1024,16 +752,12 @@ module.exports = {
     }
   },
   updatePatientVigilance: async (args, req) => {
-    console.log(`
-      updatePatientVigilance...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
       const patientVigilanceObject = {
         date: args.patientInput.vigilanceDate,
         chronicIllness: {
@@ -1160,12 +884,8 @@ module.exports = {
             comment: args.patientInput.vigilanceVaccinesOtherComment
           }
         }
-      }
-
-      console.log(`
-        patientVigilanceObject: ${patientVigilanceObject}
-        `);
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {vigilance:patientVigilanceObject}},{new: true})
+      };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {vigilance:patientVigilanceObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
           return {
@@ -1178,23 +898,18 @@ module.exports = {
     }
   },
   updatePatientAttachment: async (args, req) => {
-    console.log(`
-      updatePatientAttachment...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
       const patientAttachmentObject = {
         name: args.patientInput.attachmentName,
         format: args.patientInput.attachmentFormat,
         path: args.patientInput.attachmentPath,
-      }
-
-        const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {attachments:patientAttachmentObject}},{new: true})
+      };
+      const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {attachments:patientAttachmentObject}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
           return {
@@ -1207,16 +922,12 @@ module.exports = {
     }
   },
   updatePatientNotes: async (args, req) => {
-    console.log(`
-      updatePatientNotes...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {notes:args.patientInput.notes}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
@@ -1230,16 +941,12 @@ module.exports = {
     }
   },
   updatePatientTags: async (args, req) => {
-    console.log(`
-      updatePatientTags...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
         const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$addToSet: {tags:args.patientInput.tag}},{new: true})
         .populate('appointments')
         .populate('consultant.reference');
@@ -1253,16 +960,12 @@ module.exports = {
     }
   },
   deletePatient: async (args, req) => {
-    console.log(`
-      deletePatient...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
       const patient = await Patient.findByIdAndRemove(args.patientId);
         return {
           ...patient._doc,
@@ -1274,16 +977,12 @@ module.exports = {
     }
   },
   deletePatientAppointment: async (args, req) => {
-    console.log(`
-      deletePatientAppointment...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
+
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { appointments: { _id: args.appointmentId, date: new Date(args.appointmentDate)}}},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
@@ -1297,11 +996,6 @@ module.exports = {
     }
   },
   deletePatientConsultant: async (args, req) => {
-    console.log(`
-      deletePatientConsultant...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1309,7 +1003,6 @@ module.exports = {
     try {
 
       const consultantObject = await User.findById({_id: args.consultantId});
-
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { consultant: { date: new Date(args.consultantDate) , reference:consultantObject }}},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
@@ -1323,20 +1016,12 @@ module.exports = {
     }
   },
   deletePatientInsurance: async (args, req) => {
-    console.log(`
-      deletePatientInsurance...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
 
-      // console.log(`
-      //   insurance: ${insurance},
-      //   `);
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { insurance: { company: args.insuranceCompany, number: args.insuranceNumber } }},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
@@ -1350,19 +1035,12 @@ module.exports = {
     }
   },
   deletePatientNextOfKin: async (args, req) => {
-    console.log(`
-      deletePatientNextOfKin...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
     try {
-      // console.log(`
-      //   nextOfKin: ${util.inspect(nextOfKin)}
-      //   `);
+
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { nextOfKin: { name: args.nextOfKinName}}},{new: true})
       .populate('appointments')
       .populate('consultant.reference');
@@ -1377,11 +1055,6 @@ module.exports = {
     }
   },
   deletePatientComplaint: async (args, req) => {
-    console.log(`
-      deletePatientComplaint...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1401,11 +1074,6 @@ module.exports = {
     }
   },
   deletePatientSurvey: async (args, req) => {
-    console.log(`
-      deletePatientSurvey...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1425,11 +1093,6 @@ module.exports = {
     }
   },
   deletePatientSystematicInquiry: async (args, req) => {
-    console.log(`
-      deletePatientSystematicInquiry...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1449,11 +1112,6 @@ module.exports = {
     }
   },
   deletePatientVitals: async (args, req) => {
-    console.log(`
-      deletePatientVitals...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1473,11 +1131,6 @@ module.exports = {
     }
   },
   deletePatientExamination: async (args, req) => {
-    console.log(`
-      deletePatientExamination...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1496,11 +1149,6 @@ module.exports = {
     }
   },
   deletePatientHistory: async (args, req) => {
-    console.log(`
-      deletePatientHistory...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1519,11 +1167,6 @@ module.exports = {
     }
   },
   deletePatientAllergies: async (args, req) => {
-    console.log(`
-      deletePatientAllergies...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1542,11 +1185,6 @@ module.exports = {
     }
   },
   deletePatientMedication: async (args, req) => {
-    console.log(`
-      deletePatientMedication...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1565,11 +1203,6 @@ module.exports = {
     }
   },
   deletePatientInvestigation: async (args, req) => {
-    console.log(`
-      deletePatientInvestigation...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1588,11 +1221,6 @@ module.exports = {
     }
   },
   deletePatientDiagnosis: async (args, req) => {
-    console.log(`
-      deletePatientDiagnosis...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1611,11 +1239,6 @@ module.exports = {
     }
   },
   deletePatientTreatment: async (args, req) => {
-    console.log(`
-      deletePatientTreatment...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1634,11 +1257,6 @@ module.exports = {
     }
   },
   deletePatientBilling: async (args, req) => {
-    console.log(`
-      deletePatientBilling...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1658,11 +1276,6 @@ module.exports = {
     }
   },
   deletePatientVigilance: async (args, req) => {
-    console.log(`
-      deletePatientVigilance...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
@@ -1682,16 +1295,10 @@ module.exports = {
     }
   },
   deletePatientAttachment: async (args, req) => {
-    console.log(`
-      deletePatientAttachment...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { attachments: { name: args.attachmentName }}},{new: true})
@@ -1708,16 +1315,10 @@ module.exports = {
     }
   },
   deletePatientNote: async (args, req) => {
-    console.log(`
-      deletePatientNote...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { notes: args.note }},{new: true})
@@ -1734,16 +1335,10 @@ module.exports = {
     }
   },
   deletePatientTag: async (args, req) => {
-    console.log(`
-      deletePatientTag...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
 
       const patient = await Patient.findOneAndUpdate({_id:args.patientId},{$pull: { tags: args.tag }},{new: true})
@@ -1760,28 +1355,20 @@ module.exports = {
     }
   },
   createPatient: async (args, req) => {
-    console.log(`
-      createPatient...args:
-      ${util.inspect(args)},
-      isAuth: ${req.isAuth},
-      `);
 
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
-
     try {
-      const existingPatientName = await Patient.findOne({ name: args.patientInput.name, dob: new Date(args.patientInput.dob), registrationDate: new Date(args.patientInput.registrationDate)});
 
+      const existingPatientName = await Patient.findOne({ name: args.patientInput.name, dob: new Date(args.patientInput.dob), registrationDate: new Date(args.patientInput.registrationDate)});
       if (existingPatientName) {
         throw new Error('Patient w/ that name, dob & reg date exists already.');
       }
-
       const today = new Date();
       const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       const dateTime = date+' '+time;
-
       const patient = new Patient(
         {
         title: args.patientInput.title,

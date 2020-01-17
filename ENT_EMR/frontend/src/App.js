@@ -68,7 +68,7 @@ class App extends Component {
 
 
   componentDidMount() {
-    
+
     if (sessionStorage.getItem('login info')) {
 
       let seshStore = sessionStorage.getItem('login info');
@@ -79,7 +79,6 @@ class App extends Component {
         userId: seshStore.userId,
         token: seshStore.token,
         });
-
     }
   }
 
@@ -124,13 +123,11 @@ class App extends Component {
                 {this.state.token && (<Route path="/patients" component={PatientsPage} />)}
                 {this.state.token && (<Route path="/appointments" component={AppointmentsPage} />)}
                 {this.state.token && (<Route path="/profile" component={ThisUserPage} />)}
-
-                { // logged in -> users page from login page
-                  this.state.token && (<Redirect from="/auth" to="/profile" exact />)}
+                {this.state.token && (<Redirect from="/auth" to="/profile" exact />)}
 
                 { //if not logged in -> go to login page
-                  !this.state.token && (<Route path="/auth" component={AuthPage} />)}
-                  {!this.state.token && (<Route path="/signup" component={SignupPage} />)}
+                !this.state.token && (<Route path="/auth" component={AuthPage} />)}
+                {!this.state.token && (<Route path="/signup" component={SignupPage} />)}
                 {!this.state.token && <Redirect to="/auth" exact />}
               </Switch>
             </main>
