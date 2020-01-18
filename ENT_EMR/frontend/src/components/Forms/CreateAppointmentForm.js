@@ -4,15 +4,10 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import Alert from 'react-bootstrap/Alert';
-// import FormCheck from 'react-bootstrap/FormCheck'
-// import { NavLink } from 'react-router-dom';
 import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const CreateAppointmentForm = (props) => {
-
-  // console.log({...props});
-  console.log("CreateAppointmentForm:  ", AuthContext.token);
 
 return (
 <div className="CreateFormContainer">
@@ -79,28 +74,28 @@ return (
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridInProgress">
-      <Form.Label>In Progress ?</Form.Label>
-      <Form.Control as="select">
-        <option>false</option>
-        <option>true</option>
-      </Form.Control>
-    </Form.Group>
+  <Form.Label>In Progress ?</Form.Label>
+  <Form.Control as="select">
+    <option>false</option>
+    <option>true</option>
+  </Form.Control>
+</Form.Group>
 
-    <Form.Group as={Col} controlId="formGridAttended">
-          <Form.Label>Attended ?</Form.Label>
-          <Form.Control as="select">
-            <option>false</option>
-            <option>true</option>
-          </Form.Control>
-        </Form.Group>
+<Form.Group as={Col} controlId="formGridAttended">
+  <Form.Label>Attended ?</Form.Label>
+  <Form.Control as="select">
+    <option>false</option>
+    <option>true</option>
+  </Form.Control>
+</Form.Group>
 
-        <Form.Group as={Col} controlId="formGridImportant">
-              <Form.Label>Important ?</Form.Label>
-              <Form.Control as="select">
-                <option>false</option>
-                <option>true</option>
-              </Form.Control>
-            </Form.Group>
+<Form.Group as={Col} controlId="formGridImportant">
+  <Form.Label>Important ?</Form.Label>
+  <Form.Control as="select">
+    <option>false</option>
+    <option>true</option>
+  </Form.Control>
+</Form.Group>
 </Form.Row>
 
 <Form.Row>

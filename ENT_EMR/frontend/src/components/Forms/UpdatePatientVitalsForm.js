@@ -3,15 +3,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
-// import FormCheck from 'react-bootstrap/FormCheck'
-// import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const UpdatePatientVitalsForm = (props) => {
-
-console.log("UpdatePatientVitalsForm.props:  ", {...props});
 const {...patient} = props.patient;
-console.log("UpdatePatientVitalsForm.props.patient:  ", {...patient});
 
 
 return (

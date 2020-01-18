@@ -2,16 +2,12 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Accordion from 'react-bootstrap/Accordion'
-// import FormCheck from 'react-bootstrap/FormCheck'
+import Accordion from 'react-bootstrap/Accordion';
 import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const UpdatePatientInvestigationForm = (props) => {
-
-console.log("UpdatePatientInvestigationForm.props:  ", {...props});
 const {...patient} = props.patient;
-console.log("UpdatePatientInvestigationForm.props.patient:  ", {...patient});
 
 
 return (
@@ -74,12 +70,7 @@ return (
     <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="InvestigationAttachmentFormat"/>
   </Form.Group>
-  {
-  //   <Form.Group as={Col} controlId="formGridAttachmentPath">
-  //   <Form.Label>Path</Form.Label>
-  //   <Form.Control type="string" placeholder="File path"/>
-  // </Form.Group>
-}
+  
   <Form.Group as={Col} controlId="formGridInvestigationAttachmentFile">
     <Form.Label>File</Form.Label>
     <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>

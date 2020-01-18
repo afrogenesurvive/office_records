@@ -2,16 +2,11 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Accordion from 'react-bootstrap/Accordion'
-// import FormCheck from 'react-bootstrap/FormCheck'
-// import AuthContext from '../../context/auth-context';
+import Accordion from 'react-bootstrap/Accordion';
 import './CreateUserForm.css';
 
 const UpdateUserFieldForm = (props) => {
-
-console.log("UpdateUserFieldForm.props:  ", {...props});
 const {...user} = props.user;
-console.log("UpdateUserFieldForm.props.user:  ", {...user});
 
 return (
 <div className="UpdateFormContainer">
@@ -66,10 +61,6 @@ return (
 </Form.Row>
 
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

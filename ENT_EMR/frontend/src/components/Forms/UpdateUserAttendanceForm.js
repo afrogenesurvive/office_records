@@ -2,29 +2,20 @@ import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Accordion from 'react-bootstrap/Accordion'
-// import FormCheck from 'react-bootstrap/FormCheck'
+import Accordion from 'react-bootstrap/Accordion';
 import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const UpdateUserAttendanceForm = (props) => {
-
-  const [startDate, setStartDate] = useState(new Date());
+const [startDate, setStartDate] = useState(new Date());
 
  const handleChange = date => {
    setStartDate(date);
    AuthContext._currentValue.fancyDate = startDate;
-   console.log(`
-     AuthContext._currentValue.fancyDate = startDate: ${AuthContext._currentValue.fancyDate},
-     `);
   }
-
-console.log("UpdateUserAttendanceForm.props:  ", {...props});
 const {...user} = props.user;
-console.log("UpdateUserAttendanceForm.props.user:  ", {...user});
-
 
 return (
 <div className="UpdateFormContainer">
@@ -100,10 +91,6 @@ return (
 </Form.Row>
 
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

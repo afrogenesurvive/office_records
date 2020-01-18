@@ -8,10 +8,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import './CreateUserForm.css';
 
 const UpdatePatientNextOfKinForm = (props) => {
-
-console.log("UpdatePatientNextOfKinForm.props:  ", {...props});
 const {...patient} = props.patient;
-console.log("UpdatePatientNextOfKinForm.props.patient:  ", {...patient});
 
 
 return (
