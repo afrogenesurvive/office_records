@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-// import Form from 'react-bootstrap/Form';
-// import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-// import Button from 'react-bootstrap/Button';
-// import Card from 'react-bootstrap/Card';
 
 import AlertBox from '../components/AlertBox';
 import CreateUserForm from '../components/Forms/CreateUserForm';
@@ -21,10 +17,8 @@ class SignupPage extends Component {
   modalConfirmHandler = (event) => {
 
     event.preventDefault();
-    console.log("signing up...");
-    console.log("CreateUserFormData:  ", event.target.formGridEmail.value);
 
-    this.setState({ creating: false });
+    this.setState({ creating: false, userAlert: "Signing you up...." });
     const email = event.target.formGridEmail.value;
     const password = event.target.formGridPassword.value;
     const name = event.target.formGridName.value;
@@ -62,44 +56,19 @@ class SignupPage extends Component {
       employmentDate.trim().length === 0 ||
       terminationDate.trim().length === 0
     ) {
-      console.log("blank fields detected!!!...Please try again...");
       this.setState({userAlert: "blank fields detected!!!...Please try again..."});
       return;
     }
 
     const token = this.context.token;
     const userId = this.context.userId;
-    const user = { email, password, name, role, dob, phone, addressNumber, addressStreet, addressTown, addressParish, addressPostOffice, employmentDate, terminationDate };
-
-    console.log(`
-      creating user...
-      userId: ${userId}
-      email: ${email},
-      password: ${password},
-      name: ${name},
-      role: ${role},
-      dob: ${dob},
-      phone: ${phone},
-      addressNumber: ${addressNumber},
-      addressStreet: ${addressStreet},
-      addressTown: ${addressTown},
-      addressParish: ${addressParish},
-      addressPostOffice: ${addressPostOffice},
-      employmentDate: ${employmentDate},
-      terminationDate: ${terminationDate},
-      `);
-      this.setState({userAlert: "creating user..."});
-
     const requestBody = {
       query: `
           mutation {
-            createUser(userInput: {email:"${email}",password:"${password}",name:"${name}",role:"${role}",
-
-            employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
+            createUser(userInput: {email:"${email}",password:"${password}",name:"${name}",role:"${role}",employmentDate:"${employmentDate}",terminationDate:"${terminationDate}"})
             {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}
-          }
-        `
-    };
+          }`
+        };
 
     // fetch('http://ec2-3-19-32-237.us-east-2.compute.amazonaws.com/graphql', {
     fetch('http://localhost:10000/graphql', {
@@ -117,19 +86,13 @@ class SignupPage extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log("response data... " + JSON.stringify(resData));
-        console.log("resData head slice:  ", JSON.stringify(resData).slice(2,7));
         if (JSON.stringify(resData).slice(2,7) === 'error') {
-          console.log("signup...failed...");
-          this.setState({success: "Something went wrong!!!" });
+          this.setState({success: "Something went wrong!!!", userAlert: "Something went wrong!!!"  });
         } else {
-          this.setState({success: "Signup success...Proceed to login" });
-          console.log(this.state.success);
+          this.setState({success: "Signup success...Proceed to login", userAlert: "Signup success...Proceed to login" });
         }
-        this.setState({userAlert: JSON.stringify(resData).slice(2,7)})
       })
       .catch(err => {
-        console.log(err);
         this.setState({userAlert: err});
       });
   };

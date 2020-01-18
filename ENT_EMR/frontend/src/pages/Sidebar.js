@@ -1,21 +1,16 @@
-// import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
-// import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 
+import AuthContext from '../context/auth-context';
 import LoadingOverlay from '../components/LoadingOverlay';
 
 import AppointmentTodayList from '../components/Appointments/AppointmentList/AppointmentTodayList';
 import AppointmentInProgressList from '../components/Appointments/AppointmentList/AppointmentInProgressList';
 
-// import Modal from '../components/Modal/Modal';
-// import Backdrop from '../components/Backdrop/Backdrop';
-// import Spinner from '../components/Spinner/Spinner';
-import AuthContext from '../context/auth-context';
 import './Sidebar.css';
 
 class SidebarPage extends Component {
@@ -27,23 +22,6 @@ class SidebarPage extends Component {
   isActive = true;
 
   static contextType = AuthContext;
-
-  // constructor(props) {
-  //   super(props);
-  //   // this.appointmentsToday = this.context.appointmentsToday;
-  //   // this.appointmentsWeekImportant = this.context.appointmentsWeekImportant;
-  //   // this.appointmentsInprogress = this.context.appointmentsInprogress;
-  // }
-
-
-
-
-  componentDidMount() {
-    console.log("state:  ", this.state.authContext);
-    // console.log("context:  ", AuthContext._currentValue);
-    // run get today appts func and req
-  }
-
 
   componentWillUnmount() {
     this.isActive = false;
@@ -103,13 +81,11 @@ class SidebarPage extends Component {
         </Button>
       )}
       {this.context.appointmentsToday !== null && (
-
         <AppointmentTodayList
           appointmentToday={this.context.appointmentsToday}
           authUserId={this.context.userId}
           />
       )}
-
       </Col>
       </Row>
       <Row className="apptSidebarRow">
@@ -121,13 +97,11 @@ class SidebarPage extends Component {
         </Button>
       )}
       {this.context.appointmentsInProgress !== null && (
-
         <AppointmentInProgressList
           appointmentInProgress={this.context.appointmentsInProgress}
           authUserId={this.context.userId}
           />
       )}
-
       </Col>
       </Row>
       </Container>
