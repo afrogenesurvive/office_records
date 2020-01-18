@@ -4,7 +4,6 @@ import VisitSurveyItem from './PatientItem/VisitSurveyItem';
 import './UserList.css';
 
 const visitSurveyList = props => {
-  console.log("VisitSurveylist props", props.survey);
 
   let survey = undefined;
   if (props.survey) {
@@ -12,9 +11,7 @@ const visitSurveyList = props => {
     const visitSurveyDate = new Date(surveyItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const surveyAttachment = surveyItem.attachment;
     const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+surveyItem.attachment.path+"/"+surveyItem.attachment.name+"."+surveyItem.attachment.format;
-    console.log(`
-      visitSurveyDate: ${visitSurveyDate},
-      `);
+    
     return (
       <VisitSurveyItem
         key={surveyItem.date}

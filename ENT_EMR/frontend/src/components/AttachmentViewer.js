@@ -3,15 +3,7 @@ import Button from 'react-bootstrap/Button';
 
 import "./AttachmentViewer.css"
 
-
-
 const AttachmentViewer = (props) =>{
-
-  console.log(`
-    attachmentViewer.props: ${JSON.stringify(props)}
-    fileType: ${props.attachmentType},
-    `);
-
 
 return (
   <div className="attachmentViewerBg">

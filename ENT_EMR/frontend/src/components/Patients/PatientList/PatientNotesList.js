@@ -4,7 +4,6 @@ import PatientNoteItem from './PatientItem/PatientNoteItem';
 import './UserList.css';
 
 const patientNotesList = props => {
-  console.log("patient Notes list props", props.patientNotes);
   const patientNotes = props.patientNotes.map(note => {
 
     return (

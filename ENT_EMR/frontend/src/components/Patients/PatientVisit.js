@@ -1,9 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-// import Accordion from 'react-bootstrap/Accordion';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
@@ -13,7 +10,6 @@ import VisitExaminationList from './PatientList/VisitExaminationList';
 import VisitSurveyList from './PatientList/VisitSurveyList';
 import VisitSystematicInquiryList from './PatientList/VisitSystematicInquiryList';
 import VisitVitalsList from './PatientList/VisitVitalsList';
-// import VisitHistoryList from './PatientList/VisitHistoryList';
 import VisitInvestigationList from './PatientList/VisitInvestigationList';
 import VisitDiagnosisList from './PatientList/VisitDiagnosisList';
 import VisitTreatmentList from './PatientList/VisitTreatmentList';
@@ -56,20 +52,6 @@ const PatientVisit = (props) => {
   const billing = visit.billing;
   const vigilance = visit.vigilance;
 
-  console.log(`
-    patientVisit: ${JSON.stringify(visit)},
-    date: ${visit.date},
-    consultant: ${consultant},
-    complaint: ${complaint},
-    examination: ${examination},
-    survey: ${survey},
-    systematicInquiry: ${systematicInquiry},
-    investigation: ${investigation},
-    diagnosis: ${diagnosis},
-    treatment: ${treatment},
-    billing: ${billing},
-    vigilance: ${vigilance},
-        `);
     return (
       <div className="PatientDetailBox1">
       <p>Date: {new Date(visit.date).toISOString().slice(0,10)}</p>
@@ -164,22 +146,6 @@ const PatientVisit = (props) => {
       </Card.Body>
       </Card>
       </Tab>
-      {
-        // <Tab eventKey="History" title="History">
-        // <Card className="PatientDetailCard">
-        // <Card.Body>
-        // <Card.Text>
-        //   History
-        // </Card.Text>
-        // <VisitHistoryList
-        //   history={history}
-        //   authUserId={props.authUserId}
-        //   onViewAttachment={props.onViewAttachment}
-        //   />
-        // </Card.Body>
-        // </Card>
-        // </Tab>
-      }
       <Tab eventKey="Investigation" title="Investigation">
       <Card className="PatientDetailCard">
       <Card.Body>

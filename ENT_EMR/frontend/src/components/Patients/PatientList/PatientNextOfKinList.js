@@ -4,7 +4,6 @@ import PatientNextOfKinItem from './PatientItem/PatientNextOfKinItem';
 import './UserList.css';
 
 const patientNextOfKinList = props => {
-  console.log("patient NextOfKin list props", props.patientNextOfKin);
   const patientNextOfKin = props.patientNextOfKin.map(nextOfKin => {
     return (
       <PatientNextOfKinItem

@@ -4,7 +4,6 @@ import PatientTagItem from './PatientItem/PatientTagItem';
 import './UserList.css';
 
 const patientTagsList = props => {
-  console.log("patient Tags list props", props.patientTags);
   const patientTags = props.patientTags.map(tag => {
 
     return (

@@ -118,7 +118,20 @@ class AppointmentsPage extends Component {
 
     const requestBody = {
       query: `
-          mutation {createAppointment(userId:"${userId}",patientId:"${selectedPatientId}",appointmentInput:{title:"${title}",type:"${type}",date:"${date}",time:"${time}",seenTime:"${seenTime}",checkinTime:"${checkinTime}",location:"${location}",description:"${description}",inProgress:${inProgress},attended:${attended},important:${important},})
+          mutation {createAppointment(userId:"${userId}",
+          patientId:"${selectedPatientId}",
+          appointmentInput:{
+            title:"${title}",
+            type:"${type}",
+            date:"${date}",
+            time:"${time}",
+            seenTime:"${seenTime}",
+            checkinTime:"${checkinTime}",
+            location:"${location}",
+            description:"${description}",
+            inProgress:${inProgress},
+            attended:${attended},
+            important:${important}})
           {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important}}
         `
     };

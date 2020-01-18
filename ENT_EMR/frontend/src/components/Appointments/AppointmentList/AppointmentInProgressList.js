@@ -4,7 +4,6 @@ import AppointmentInProgressItem from './AppointmentItem/AppointmentInProgressIt
 import './UserList.css';
 
 const appointmentInProgressList = props => {
-  console.log("patient InProgress list props", props.appointmentInProgress);
   const appointmentInProgress = props.appointmentInProgress.map(appointment => {
     const appointmentInProgressDate = new Date(appointment.date.substr(0,10)*1000).toISOString().slice(0,10);
     return (

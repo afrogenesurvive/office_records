@@ -4,7 +4,6 @@ import VisitInvestigationItem from './PatientItem/VisitInvestigationItem';
 import './UserList.css';
 
 const visitInvestigationList = props => {
-  console.log("VisitInvestigationlist props", props.investigation);
 
   let investigation = undefined;
   if (props.investigation) {
@@ -12,9 +11,7 @@ const visitInvestigationList = props => {
     const visitInvestigationDate = new Date(investigationItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const investigationAttachment = investigationItem.attachment;
     const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+investigationItem.attachment.path+"/"+investigationItem.attachment.name+"."+investigationItem.attachment.format;
-    console.log(`
-      visitInvestigationDate: ${visitInvestigationDate},
-      `);
+
     return (
       <VisitInvestigationItem
         key={investigationItem.date}

@@ -1,17 +1,11 @@
-// import {parse, stringify} from 'flatted/esm';
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-// import Accordion from 'react-bootstrap/Accordion';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
-// import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
-// import AuthContext from '../../context/auth-context';
-
 
 import PatientAppointmentList from './PatientList/PatientAppointmentList';
 import PatientInsuranceList from './PatientList/PatientInsuranceList';
@@ -38,12 +32,10 @@ import PatientVisit from './PatientVisit';
 
 import SearchPatientVisitForm from '../../components/Forms/SearchPatientVisitForm';
 
-
 import './PatientDetail.css';
 
 const PatientDetail = (props) => {
   const {...patient} = props.patient;
-  // const authPatientId = props.authUserId;
   const patientAppointment = patient.appointments;
   const patientInsurance = patient.insurance;
   const patientConsultant = patient.consultant;
@@ -65,12 +57,6 @@ const PatientDetail = (props) => {
   const patientNotes = patient.notes;
   const patientTags = patient.tags;
 
-  console.log(`
-    patient.registrationDate: ${patient.registrationDate},
-    patient.dob: ${patient.dob},
-    patient.referralDate: ${patient.referralDate},
-    `);
-
   let patientRegistrationDate = 0;
   if (patient.registrationDate !== null &&
       patient.registrationDate !== undefined
@@ -86,7 +72,6 @@ const PatientDetail = (props) => {
     patientDob = new Date(patient.dob.substr(0,10)*1000).toISOString().slice(0,10);
   }
 
-  // const patientReferralDate = new Date(patient.referralDate*1000).toUTCString();
   let patientReferralDate = 0;
   if (patient.referralDate !== null &&
       patient.referralDate !== undefined
@@ -100,41 +85,6 @@ const PatientDetail = (props) => {
     patientExpirationDate = new Date(patient.expirationDate.substr(0,10)*1000).toISOString().slice(0,10);}
   else {patientExpirationDate = patient.expirationDate;}
   const visitList = props.visitList;
-  // let selectedVisit = {
-  //   // date: 0,
-  //   // patientName: "",
-  //   // consultant: "",
-  //   // complaint: "",
-  //   // examination: "",
-  //   // survey: "",
-  //   // vitals: "",
-  //   // history: "",
-  //   // investigation: "",
-  //   // diagnosis: "",
-  //   // treatment: "",
-  //   // billing: "",
-  // };
-  // function onSelectVisit (props) {
-  //   // console.log("patient detail selected visit:  ", JSON.stringify(props));
-  //   console.log("bang!!");
-  //   selectedVisit = props;
-  // }
-  // let visit = "noVisit";
-  // if (props.visit) {
-  //   visit = props.visit;
-  // }
-
-  // const token = props.token;
-  // const userId = props.authUserId;
-  // const patientId = patient._id;
-
-  console.log("PatientDetail.props.patient:  ", {...patient}, "visitList", visitList);
-  // console.log("patientExamination[1].date:  ", new Date(patientExamination[1].date.substr(0,10)*1000).toISOString());
-  // console.log("patientConsultant[1].date:  ", patientConsultant[1].date);
-  // console.log("patientComplaint[1].date:  ", patientComplaint[1].date);
-  // console.log("patientComplaint[1].date:  ", new Date(patientComplaint[1].date.substr(0,10)*1000).toLocaleString());
-
-
 
   return (
     <div className="PatientDetailBox1">
@@ -635,8 +585,6 @@ const PatientDetail = (props) => {
         </Col>
       </Row>
     </Tab.Container>
-
-
   </div>
   );
 }

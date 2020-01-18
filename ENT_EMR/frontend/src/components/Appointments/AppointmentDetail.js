@@ -11,12 +11,10 @@ import './PatientDetail.css';
 
 const AppointmentDetail = (props) => {
   const {...appointment} = props.appointment;
-  // const authUserId = props.authUserId;
   const appointmentDate = new Date(appointment.date.substr(0,10)*1000).toISOString().slice(0,10);
   const appointmentNote = appointment.notes;
   const appointmentPatientContact = appointment.patient.contact;
-  console.log("appointmentPatientContact:  ", appointmentPatientContact.phone);
-  console.log("AppointmentDetail.props.appointment:  ", {...appointment}, appointmentNote);
+
   return (
     <div className="PatientDetailBox">
     <Card className="PatientDetailCard">
@@ -118,7 +116,6 @@ const AppointmentDetail = (props) => {
         />
 
     </Card.Body>
-
 
   </Card>
     </div>

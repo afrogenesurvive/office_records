@@ -61,12 +61,7 @@ const MyDocument = () => (
 );
 
 const PdfCreator = (props) =>{
-  console.log(`
-    PdfCreator.props: ${JSON.stringify(props)},
-    `);
     docProps = props;
-
-    console.log('My Document Component...', {MyDocument});
 
 return (
   <div className="attachmentViewerBg">
@@ -80,13 +75,6 @@ return (
     <Button variant="danger" onClick={props.onClosePdfCreator}>
       close
     </Button>
-
-    {
-
-    //   <PDFViewer>
-    //   <MyDocument/>
-    // </PDFViewer>
-  }
     </div>
 
   </div>

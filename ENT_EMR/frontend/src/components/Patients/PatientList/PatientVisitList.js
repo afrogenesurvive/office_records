@@ -5,10 +5,6 @@ import './UserList.css';
 
 const patientVisitList = props => {
   const visits = props.visitList.map(visit => {
-    // let patientRegistrationDate = null;
-    // if (patient.registrationDate !== null) {
-    //    patientRegistrationDate = new Date(patient.registrationDate.substr(0,10)*1000).toISOString().slice(0,10)
-    // }
 
     return (
       <PatientVisitItem

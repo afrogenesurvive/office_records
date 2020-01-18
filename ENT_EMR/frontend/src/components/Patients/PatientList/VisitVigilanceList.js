@@ -4,7 +4,6 @@ import VisitVigilanceItem from './PatientItem/VisitVigilanceItem';
 import './UserList.css';
 
 const visitVigilanceList = props => {
-  console.log("VisitVigilancelist props", props.vigilance);
 
   let vigilance = undefined;
   if (props.vigilance) {
@@ -12,9 +11,6 @@ const visitVigilanceList = props => {
     const visitVigilanceDate = new Date(vigilanceItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const vigilanceAttachment = vigilanceItem.attachment;
 
-    console.log(`
-      visitVigilanceDate: ${visitVigilanceDate},
-      `);
     return (
       <VisitVigilanceItem
         key={vigilanceItem.date}

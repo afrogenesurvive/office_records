@@ -4,7 +4,6 @@ import PatientSystematicInquiryItem from './PatientItem/PatientSystematicInquiry
 import './UserList.css';
 
 const patientSystematicInquiryList = props => {
-  console.log("patient systematicInquiry list props", props.patientSystematicInquiry);
   const patientSystematicInquiry = props.patientSystematicInquiry.map(systematicInquiry => {
     const patientSystematicInquiryDate = new Date(systematicInquiry.date.substr(0,10)*1000).toISOString().slice(0,10);
     const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+systematicInquiry.attachment.path+"/"+systematicInquiry.attachment.name+"."+systematicInquiry.attachment.format;
