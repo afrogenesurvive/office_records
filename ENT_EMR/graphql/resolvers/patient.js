@@ -966,6 +966,7 @@ module.exports = {
     }
     try {
 
+      // const deletePatientAppointmentItem = await Appointment.deleteMany({"patient._id": args.patientId })
       const patient = await Patient.findByIdAndRemove(args.patientId);
         return {
           ...patient._doc,

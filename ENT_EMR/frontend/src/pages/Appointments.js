@@ -57,6 +57,9 @@ class AppointmentsPage extends Component {
   static contextType = AuthContext;
 
   componentDidMount() {
+    if (JSON.stringify(this.context.selectedAppointment) !== "{}") {
+      this.setState({ selectedAppointment: this.context.selectedAppointment })
+    }
     if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
@@ -178,8 +181,6 @@ class AppointmentsPage extends Component {
     const token = this.context.token;
     const userId = this.context.userId;
     const appointmentId = this.context.selectedAppointment._id;
-    console.log("UpdateAppointmentFormData:  ", event.target.formGridTitle.value);
-
 
     this.setState({ updating: false, userAlert: "updating appointment..." });
     let title = event.target.formGridTitle.value;
@@ -515,7 +516,6 @@ class AppointmentsPage extends Component {
           // this.fetchUsers();
         })
         .catch(err => {
-          console.log(err);
           this.setState({userAlert: err});
         });
 
@@ -631,11 +631,11 @@ class AppointmentsPage extends Component {
         return res.json();
       })
       .then(resData => {
-        const responseAlert = JSON.stringify(resData.data).slice(2,15);
-        if (this.isActive) {
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
+        // if (this.isActive) {
           this.setState({ appointments: resData.data.appointments, isLoading: false, userAlert: responseAlert });
           this.context.appointments = this.state.appointments;
-        }
+        // }
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -706,8 +706,7 @@ class AppointmentsPage extends Component {
       })
       .then(resData => {
         const appointments = resData.data.appointmentsDateDesc;
-        console.log(appointments);
-        const responseAlert = JSON.stringify(resData.data).slice(2,15);
+        const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.context.appointments = appointments;
         this.setState({appointments: appointments, userAlert: responseAlert, isLoading: false})
         // if (this.isActive) {
@@ -715,7 +714,6 @@ class AppointmentsPage extends Component {
         // }
       })
       .catch(err => {
-        console.log(err);
         this.setState({userAlert: err});
         // if (this.isActive) {
         //   this.setState({ isLoading: false });

@@ -26,11 +26,11 @@ const UserDetail = (props) => {
   if (user.terminationDate !== null) {
     userTerminationDate = new Date(user.terminationDate.substr(0,10)*1000).toISOString().slice(0,10);
   }
-  
+
   return (
     <div className={"UserDetailBox1"}>
 
-    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="tab">
+    <Tabs defaultActiveKey="Demographics" id="uncontrolled-tab-example" className="tab">
 
       <Tab eventKey="Demographics" title="Demographics">
       <Card className="UserDetailCard">
