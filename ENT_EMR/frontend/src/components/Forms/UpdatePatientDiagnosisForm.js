@@ -8,10 +8,7 @@ import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const UpdatePatientDiagnosisForm = (props) => {
-
-console.log("UpdatePatientDiagnosisForm.props:  ", {...props});
 const {...patient} = props.patient;
-console.log("UpdatePatientDiagnosisForm.props.patient:  ", {...patient});
 
 
 return (
@@ -33,7 +30,7 @@ return (
   {props.visit && (
   <Form.Group as={Col} controlId="formGridDiagnosisDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
-    <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+    <Form.Control type="checkbox" defaultChecked={true} onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
   )}
 
@@ -63,12 +60,7 @@ return (
     <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="DiagnosisAttachmentFormat"/>
   </Form.Group>
-  {
-  //   <Form.Group as={Col} controlId="formGridAttachmentPath">
-  //   <Form.Label>Path</Form.Label>
-  //   <Form.Control type="string" placeholder="File path"/>
-  // </Form.Group>
-}
+  
   <Form.Group as={Col} controlId="formGridDiagnosisAttachmentFile">
     <Form.Label>File</Form.Label>
     <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>
