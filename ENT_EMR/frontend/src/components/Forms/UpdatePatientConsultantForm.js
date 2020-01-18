@@ -8,11 +8,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import './CreateUserForm.css';
 
 const UpdatePatientConsultantForm = (props) => {
-
-console.log("UpdatePatientConsultantForm.props:  ", {...props});
 const {...patient} = props.patient;
-console.log("UpdatePatientConsultantForm.props.patient:  ", {...patient});
-
 
 return (
 <div className="UpdateFormContainer">
@@ -59,10 +55,6 @@ return (
   </Form.Row>
 
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

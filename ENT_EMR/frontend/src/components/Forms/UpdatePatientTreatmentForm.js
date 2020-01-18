@@ -8,10 +8,7 @@ import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const UpdatePatientTreatmentForm = (props) => {
-
-console.log("UpdatePatientTreatmentForm.props:  ", {...props});
 const {...patient} = props.patient;
-console.log("UpdatePatientTreatmentForm.props.patient:  ", {...patient});
 
 
 return (
@@ -19,20 +16,26 @@ return (
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
 
+  {!props.visit && (
   <Form.Group as={Col} controlId="formGridTreatmentDate">
     <Form.Label>Date</Form.Label>
     <Form.Control type="date" placeholder="TreatmentDate"/>
   </Form.Group>
+  )}
 
+  {!props.visit && (
   <Form.Group as={Col} controlId="formGridTreatmentDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
+  )}
 
+  {props.visit && (
   <Form.Group as={Col} controlId="formGridTreatmentDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" defaultChecked={true}/>
   </Form.Group>
+  )}
 
   </Form.Row>
 
@@ -81,16 +84,12 @@ return (
     <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="TreatmentAttachmentFormat"/>
   </Form.Group>
-  {
-  //   <Form.Group as={Col} controlId="formGridAttachmentPath">
-  //   <Form.Label>Path</Form.Label>
-  //   <Form.Control type="string" placeholder="File path"/>
-  // </Form.Group>
-}
+
   <Form.Group as={Col} controlId="formGridTreatmentAttachmentFile">
     <Form.Label>File</Form.Label>
     <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>
   </Form.Group>
+
   </Form.Row>
 
   <Form.Row>
