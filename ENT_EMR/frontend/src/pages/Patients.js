@@ -98,12 +98,15 @@ class PatientsPage extends Component {
   static contextType = AuthContext;
 
   componentDidMount() {
-    if (JSON.stringify(this.context.selectedPatient) !== "{}") {
-      this.setState({ selectedPatient: this.context.selectedPatient })
-    }
+    console.log("here", this.context.user.name);
     if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
+
+    if (JSON.stringify(this.context.selectedPatient) !== "{}") {
+      this.setState({ selectedPatient: this.context.selectedPatient })
+    }
+
     this.fetchPatients();
   }
 
