@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-
 import './Auth.css';
 import AuthContext from '../context/auth-context';
 import AlertBox from '../components/AlertBox';
@@ -18,15 +17,6 @@ class AuthPage extends Component {
   };
   static contextType = AuthContext;
 
-  // constructor(props) {
-  //   super(props);
-  // }
-
-  // switchModeHandler = () => {
-  //   this.setState(prevState => {
-  //     return { isLogin: !prevState.isLogin };
-  //   });
-  // };
   componentDidMount() {
 
     if (sessionStorage.getItem('login info')) {
@@ -37,10 +27,9 @@ class AuthPage extends Component {
   }
 
   submitHandler = event => {
-    console.log("login function...");
     event.preventDefault();
 
-    this.setState({overlay: true, overlayStatus: "signing you in..."})
+    this.setState({overlay: true, overlayStatus: "Signing you in...", userAlert: "Signing you in..."})
 
 
     const email = event.target.formBasicEmail.value;

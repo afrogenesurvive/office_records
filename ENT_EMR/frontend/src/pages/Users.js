@@ -182,7 +182,6 @@ class UsersPage extends Component {
     const addressTown = event.target.formGridAddressTown.value;
     const addressParish = event.target.formGridAddressParish.value;
     const addressPostOffice = event.target.formGridAddressPostOffice.value;
-
     let employmentDate = event.target.formGridEmploymentDate.value;
     if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
       employmentDate = new Date().toISOString().slice(0,10);
@@ -194,12 +193,15 @@ class UsersPage extends Component {
     }
     if (email.trim().length === 0 ) {
       email = this.context.selectedUser.email;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     if (password.trim().length === 0) {
       password = this.context.selectedUser.password;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     if (name.trim().length === 0) {
       name = this.context.selectedUser.name;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     // if (role.trim().length === 0) {
     //   console.log("blank fields detected!!!...filling w/ previous data...");
@@ -207,30 +209,39 @@ class UsersPage extends Component {
     // }
     if (dob.trim().length === 0) {
       dob = this.context.selectedUser.dob;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     if (phone.trim().length === 0) {
       phone = this.context.selectedUser.phone;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     if (addressNumber.trim().length === 0) {
       addressNumber = this.context.selectedUser.address.number;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     if (addressStreet.trim().length === 0) {
       addressStreet = this.context.selectedUser.address.street;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     if (addressTown.trim().length === 0) {
       addressTown = this.context.selectedUser.address.town;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     if (addressParish.trim().length === 0) {
       addressParish = this.context.selectedUser.address.parish;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     if (addressPostOffice.trim().length === 0) {
       addressPostOffice = this.context.selectedUser.address.postOffice;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     if (employmentDate.trim().length === 0) {
       employmentDate = this.context.selectedUser.employmentDate;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
     if (terminationDate.trim().length === 0) {
       terminationDate = this.context.selectedUser.terminationDate;
+      this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
     }
 
     this.setState({userAlert: "updating user profile..."});
@@ -1080,9 +1091,7 @@ showDetailHandler = userId => {
           attendance: user.atttendance,
           leave: user.leave
         }
-
       };
-
     this.setState({createPdf: true, pdfData: pdfData})
   }
 
@@ -1094,540 +1103,521 @@ showDetailHandler = userId => {
     this.setState({searchUsers: [], userAlert: "clearing user search results"});
   }
 
-
   componentWillUnmount() {
     this.isActive = false;
   }
 
   render() {
     return (
-
     <React.Fragment>
-    {this.state.showAttachment === true && (
-      <AttachmentViewer
-        onCloseAttachmentView={this.closeAttachmentView}
-        attachmentFile={this.state.showThisAttachmentFile}
-        attachmentType={this.state.showThisAttachmentType}
-      />
-    )}
-
-    {this.state.createPdf === true && (
+      {this.state.showAttachment === true && (
+        <AttachmentViewer
+          onCloseAttachmentView={this.closeAttachmentView}
+          attachmentFile={this.state.showThisAttachmentFile}
+          attachmentType={this.state.showThisAttachmentType}
+        />
+      )}
+      {this.state.createPdf === true && (
         <PdfCreator
           pdfData={this.state.pdfData}
           onClosePdfCreator={this.closePdfCreator}
         />
-    )}
+      )}
+      <Accordion>
+        <Row>
+        <Col md={3} className="MasterCol1">
+        <AlertBox
+          authUserId={this.context.userId}
+          alert={this.state.userAlert}
+        />
+        {this.state.overlay === true && (
+          <LoadingOverlay
+            status={this.state.overlayStatus}
+          />
+        )}
+        <SidebarPage/>
+        </Col>
 
-    <Accordion>
+        <Col md={9} className="MasterCol2">
+            <Container className="containerCombinedDetail">
+              <Tab.Container id="left-tabs-example" defaultActiveKey="userDetail">
+                <Row>
+                  <Col sm={2}>
+                    <Nav variant="pills" className="flex-column">
+                      <Nav.Item>
+                        <Nav.Link eventKey="MasterList">MASTER LIST</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="userDetail">Selected</Nav.Link>
+                      </Nav.Item>
+                      { this.context.user.role === "admin" && (
+                      <Nav.Item>
+                        <Nav.Link eventKey="userCreate">Create New</Nav.Link>
+                      </Nav.Item>
+                      )}
+                      <Nav.Item>
+                        <Nav.Link eventKey="disabled" disabled>Edit:</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="userEditDemographics">Demographics</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="userEditField">Single Field</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="disabled" disabled>Add:</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="userEditAttendance">Attendance</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="userEditLeave">Leave</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="userEditAttachment">Attachment</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="disabled" disabled>Search:</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="SearchInput">Input</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="SearchResult">Results</Nav.Link>
+                      </Nav.Item>
+                    </Nav>
+                  </Col>
 
-    <Row>
+                  <Col sm={10}>
+                    <Tab.Content>
+                      <Tab.Pane eventKey="userDetail">
+                        {this.state.selectedUser === null && (
+                          <Button variant="outline-warning" size="lg" className="confirmEditButton">
+                            Select a Staff member from the Master List
+                          </Button>
+                        )}
+                        {this.state.isLoading === false &&
+                          this.state.selectedUser !== null
+                          && (
+                            <UserDetail
+                            authUserId={this.context.userId}
+                            AuthContext={this.context}
+                            user={this.state.selectedUser}
+                            onEdit={this.startUpdateUserHandler}
+                            canDelete={this.state.canDelete}
+                            onDelete={this.modalDeleteHandler}
+                            attendanceDelete={this.deleteUserAttendanceItem}
+                            leaveDelete={this.deleteUserLeaveItem}
+                            attachmentDelete={this.deleteUserAttachmentItem}
+                            onViewAttachment={this.onViewAttachment}
+                            onCreatePdf={this.createPdf}
+                            />
+                          )}
+                      </Tab.Pane>
 
-    <Col md={3} className="MasterCol1">
+                      { this.context.user.role === "admin" && (
+                        <Tab.Pane eventKey="userCreate">
+                        <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startCreateUserHandler} >Create a NEW Staff Profile</Button>
+                          {this.state.creating && (
+                            <CreateUserForm
+                              authUserId={this.context.userId}
+                              canCancel
+                              canConfirm
+                              onCancel={this.modalCancelHandler}
+                              onConfirm={this.modalConfirmHandler}
+                              onSubmit={this.modalConfirmHandler}
+                              confirmText="Confirm"
+                            />
+                          )}
+                        </Tab.Pane>
+                      )}
 
-    <AlertBox
-      authUserId={this.context.userId}
-      alert={this.state.userAlert}
-    />
 
-    {this.state.overlay === true && (
-      <LoadingOverlay
-        status={this.state.overlayStatus}
-      />
-    )}
+                      <Tab.Pane eventKey="userEditDemographics">
+                        {this.state.selectedUser === null && (
+                          <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                            Select a Staff member from the Master List
+                          </Button>
+                        )}
+                        {this.state.selectedUser !== null &&
+                          this.context.user.role === "admin"
+                          && (
+                          <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Demographics as Admin</Button>
+                        )}
+                        {this.state.selectedUser !== null &&
+                          this.state.selectedUser._id === this.context.user._id
+                          && (
+                          <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Demographics</Button>
+                        )}
+                        {this.state.selectedUser !== null &&
+                          this.state.selectedUser._id === this.context.user._id && (
+                          <Button variant="outline-danger" className="confirmEditButton" size="lg">
+                            Your Profile
+                          </Button>
+                        )}
+                        {this.state.selectedUser !== null &&
+                          this.state.selectedUser._id !== this.context.user._id && (
+                          <Button variant="outline-danger" className="confirmEditButton" size="lg">
+                            Not my profile
+                          </Button>
+                        )}
+                        {this.state.updating &&
+                          this.state.selectedUser !== null
+                          && (
+                          <UpdateUserForm
+                            authUserId={this.context.userId}
+                            canCancel
+                            canConfirm
+                            onCancel={this.modalCancelHandler}
+                            onConfirm={this.modalConfirmUpdateHandler}
+                            confirmText="Confirm"
+                            user={this.context.selectedUser}
+                          />
+                        )}
+                      </Tab.Pane>
 
-    <SidebarPage/>
+                      <Tab.Pane eventKey="userEditField">
+                        {this.state.selectedUser === null && (
+                          <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                            Select a Staff member from the Master List
+                          </Button>
+                        )}
 
-    </Col>
+                        {this.state.selectedUser !== null &&
+                          this.context.user.role === "admin"
+                          && (
+                          <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Field as Admin</Button>
+                        )}
+                        {this.state.selectedUser !== null &&
+                          this.state.selectedUser._id === this.context.user._id
+                          && (
+                          <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit a Single Field</Button>
+                        )}
+                        {this.state.selectedUser !== null &&
+                          this.state.selectedUser._id === this.context.user._id && (
+                          <Button variant="outline-success" className="confirmEditButton" size="lg">
+                            Your Profile
+                          </Button>
+                        )}
+                        {this.state.selectedUser !== null &&
+                          this.state.selectedUser._id !== this.context.user._id && (
+                          <Button variant="outline-danger" className="confirmEditButton" size="lg">
+                            Not my profile
+                          </Button>
+                        )}
+                        {this.state.updating &&
+                          this.state.selectedUser !== null
+                          && (
+                            <UpdateUserFieldForm
+                              authUserId={this.context.userId}
+                              canCancel
+                              canConfirm
+                              onCancel={this.modalCancelHandler}
+                              onConfirm={this.modalConfirmUpdateFieldHandler}
+                              confirmText="Confirm"
+                              user={this.state.selectedUser}
+                            />
+                        )}
+                      </Tab.Pane>
 
-    <Col md={9} className="MasterCol2">
+                      <Tab.Pane eventKey="userEditAttendance">
+                        {this.state.selectedUser === null && (
+                          <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                            Select a Staff member from the Master List below
+                          </Button>
+                        )}
 
-        <Container className="containerCombinedDetail">
+                        {this.state.selectedUser !== null &&
+                          this.context.user.role === "admin"
+                          && (
+                          <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance as Admin</Button>
+                        )}
+                        {this.state.selectedUser !== null &&
+                          this.state.selectedUser._id === this.context.user._id
+                          && (
+                          <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance</Button>
+                        )}
+                        {this.state.selectedUser !== null &&
+                          this.state.selectedUser._id === this.context.user._id && (
+                          <Button variant="outline-success" className="confirmEditButton" size="lg">
+                            Your Profile
+                          </Button>
+                        )}
+                        {this.state.selectedUser !== null &&
+                          this.state.selectedUser._id !== this.context.user._id && (
+                          <Button variant="outline-danger" className="confirmEditButton" size="lg">
+                            Not my profile
+                          </Button>
+                        )}
 
-        <Tab.Container id="left-tabs-example" defaultActiveKey="userDetail">
-          <Row>
-            <Col sm={2}>
-              <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link eventKey="MasterList">MASTER LIST</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="userDetail">Selected</Nav.Link>
-                </Nav.Item>
-                { this.context.user.role === "admin" && (
-                <Nav.Item>
-                  <Nav.Link eventKey="userCreate">Create New</Nav.Link>
-                </Nav.Item>
-                )}
-                <Nav.Item>
-                  <Nav.Link eventKey="disabled" disabled>Edit:</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="userEditDemographics">Demographics</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="userEditField">Single Field</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="disabled" disabled>Add:</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="userEditAttendance">Attendance</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="userEditLeave">Leave</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="userEditAttachment">Attachment</Nav.Link>
-                </Nav.Item>
+                        {this.state.userUpdateField === 'attendance' &&
+                        this.state.selectedUser !== null
+                         && (
+                           <UpdateUserAttendanceForm
+                          authUserId={this.context.userId}
+                          canCancel
+                            canConfirm
+                            onCancel={this.modalCancelHandler}
+                            onConfirm={this.updateUserAttendanceHandler}
+                            confirmText="Confirm"
+                            user={this.state.selectedUser}
+                          />
+                        )}
+                      </Tab.Pane>
 
-                <Nav.Item>
-                  <Nav.Link eventKey="disabled" disabled>Search:</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="SearchInput">Input</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="SearchResult">Results</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Col>
+                      <Tab.Pane eventKey="userEditLeave">
+                      {this.state.selectedUser === null && (
+                        <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                          Select a Staff member from the Master List
+                        </Button>
+                      )}
 
-            <Col sm={10}>
-              <Tab.Content>
-                <Tab.Pane eventKey="userDetail">
-                  {this.state.selectedUser === null && (
-                    <Button variant="outline-warning" size="lg" className="confirmEditButton">
-                      Select a Staff member from the Master List
-                    </Button>
-                  )}
-                  {this.state.isLoading === false &&
-                    this.state.selectedUser !== null
-                    && (
-                      <UserDetail
-                      authUserId={this.context.userId}
-                      AuthContext={this.context}
-                      user={this.state.selectedUser}
-                      onEdit={this.startUpdateUserHandler}
-                      canDelete={this.state.canDelete}
-                      onDelete={this.modalDeleteHandler}
-                      attendanceDelete={this.deleteUserAttendanceItem}
-                      leaveDelete={this.deleteUserLeaveItem}
-                      attachmentDelete={this.deleteUserAttachmentItem}
-                      onViewAttachment={this.onViewAttachment}
-                      onCreatePdf={this.createPdf}
-                      />
-                    )}
-                </Tab.Pane>
+                      {this.state.selectedUser !== null &&
+                        this.context.user.role === "admin"
+                        && (
+                        <Button variant="outline-primary" size="lg" className="confirmEditButton" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave as Admin</Button>
+                      )}
+                      {this.state.selectedUser !== null &&
+                        this.state.selectedUser._id === this.context.user._id
+                        && (
+                        <Button variant="outline-primary" size="lg" className="confirmEditButton" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave</Button>
+                      )}
+                      {this.state.selectedUser !== null &&
+                        this.state.selectedUser._id === this.context.user._id && (
+                        <Button variant="outline-success" className="confirmEditButton" size="lg">
+                          Your Profile
+                        </Button>
+                      )}
+                      {this.state.selectedUser !== null &&
+                        this.state.selectedUser._id !== this.context.user._id && (
+                        <Button variant="outline-danger" className="confirmEditButton" size="lg">
+                          Not my profile
+                        </Button>
+                      )}
 
-                { this.context.user.role === "admin" && (
-                  <Tab.Pane eventKey="userCreate">
-                  <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startCreateUserHandler} >Create a NEW Staff Profile</Button>
-                    {this.state.creating && (
-                      <CreateUserForm
+                      {this.state.userUpdateField === 'leave' &&
+                      this.state.selectedUser !== null
+                      && (<UpdateUserLeaveForm
                         authUserId={this.context.userId}
                         canCancel
-                        canConfirm
-                        onCancel={this.modalCancelHandler}
-                        onConfirm={this.modalConfirmHandler}
-                        onSubmit={this.modalConfirmHandler}
-                        confirmText="Confirm"
-                      />
-                    )}
-                  </Tab.Pane>
-                )}
+                          canConfirm
+                          onCancel={this.modalCancelHandler}
+                          onConfirm={this.updateUserLeaveHandler}
+                          confirmText="Confirm"
+                          user={this.state.selectedUser}
+                        />)}
+                      </Tab.Pane>
 
+                      <Tab.Pane eventKey="userEditAttachment">
+                      {this.state.selectedUser === null && (
+                        <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                          Select a Staff member from the Master List
+                        </Button>
+                      )}
 
-                <Tab.Pane eventKey="userEditDemographics">
-                  {this.state.selectedUser === null && (
-                    <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                      Select a Staff member from the Master List
-                    </Button>
-                  )}
-                  {this.state.selectedUser !== null &&
-                    this.context.user.role === "admin"
-                    && (
-                    <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Demographics as Admin</Button>
-                  )}
-                  {this.state.selectedUser !== null &&
-                    this.state.selectedUser._id === this.context.user._id
-                    && (
-                    <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Demographics</Button>
-                  )}
-                  {this.state.selectedUser !== null &&
-                    this.state.selectedUser._id === this.context.user._id && (
-                    <Button variant="outline-danger" className="confirmEditButton" size="lg">
-                      Your Profile
-                    </Button>
-                  )}
-                  {this.state.selectedUser !== null &&
-                    this.state.selectedUser._id !== this.context.user._id && (
-                    <Button variant="outline-danger" className="confirmEditButton" size="lg">
-                      Not my profile
-                    </Button>
-                  )}
-                  {this.state.updating &&
-                    this.state.selectedUser !== null
-                    && (
-                    <UpdateUserForm
-                      authUserId={this.context.userId}
-                      canCancel
-                      canConfirm
-                      onCancel={this.modalCancelHandler}
-                      onConfirm={this.modalConfirmUpdateHandler}
-                      confirmText="Confirm"
-                      user={this.context.selectedUser}
-                    />
-                  )}
-                </Tab.Pane>
+                      {this.state.selectedUser !== null &&
+                        this.context.user.role === "admin"
+                        && (
+                        <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment as Admin</Button>
+                      )}
+                      {this.state.selectedUser !== null &&
+                        this.state.selectedUser._id === this.context.user._id
+                        && (
+                        <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment</Button>
+                      )}
+                      {this.state.selectedUser !== null &&
+                        this.state.selectedUser._id === this.context.user._id && (
+                        <Button variant="outline-success" className="confirmEditButton" size="lg">
+                          Your Profile
+                        </Button>
+                      )}
+                      {this.state.selectedUser !== null &&
+                        this.state.selectedUser._id !== this.context.user._id && (
+                        <Button variant="outline-danger" className="confirmEditButton" size="lg">
+                          Not my profile
+                        </Button>
+                      )}
 
-                <Tab.Pane eventKey="userEditField">
-                  {this.state.selectedUser === null && (
-                    <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                      Select a Staff member from the Master List
-                    </Button>
-                  )}
-
-                  {this.state.selectedUser !== null &&
-                    this.context.user.role === "admin"
-                    && (
-                    <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Field as Admin</Button>
-                  )}
-                  {this.state.selectedUser !== null &&
-                    this.state.selectedUser._id === this.context.user._id
-                    && (
-                    <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit a Single Field</Button>
-                  )}
-                  {this.state.selectedUser !== null &&
-                    this.state.selectedUser._id === this.context.user._id && (
-                    <Button variant="outline-success" className="confirmEditButton" size="lg">
-                      Your Profile
-                    </Button>
-                  )}
-                  {this.state.selectedUser !== null &&
-                    this.state.selectedUser._id !== this.context.user._id && (
-                    <Button variant="outline-danger" className="confirmEditButton" size="lg">
-                      Not my profile
-                    </Button>
-                  )}
-                  {this.state.updating &&
-                    this.state.selectedUser !== null
-                    && (
-                      <UpdateUserFieldForm
+                      {this.state.userUpdateField === 'attachments' &&
+                      this.state.selectedUser !== null
+                      && (<UpdateUserAttachmentForm
                         authUserId={this.context.userId}
                         canCancel
-                        canConfirm
-                        onCancel={this.modalCancelHandler}
-                        onConfirm={this.modalConfirmUpdateFieldHandler}
-                        confirmText="Confirm"
-                        user={this.state.selectedUser}
-                      />
-                  )}
-                </Tab.Pane>
+                          canConfirm
+                          onCancel={this.modalCancelHandler}
+                          onConfirm={this.updateUserAttachmentHandler}
+                          confirmText="Confirm"
+                          user={this.state.selectedUser}
+                        />)}
+                      </Tab.Pane>
 
-                <Tab.Pane eventKey="userEditAttendance">
-                  {this.state.selectedUser === null && (
-                    <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                      Select a Staff member from the Master List below
-                    </Button>
-                  )}
+                      <Tab.Pane eventKey="MasterList">
+                        <Container className="containerUserMasterList">
+                        <Row className="searchListRow">
+                        <Button variant="primary" size="sm" onClick={this.fetchUsersAsc}>
+                           Sort Asc
+                         </Button>
+                        <Button variant="info" size="sm" onClick={this.fetchUsersDesc}>
+                           Sort Desc
+                         </Button>
+                         {this.state.isLoading ? (
+                           <Spinner />
+                         ) : (
+                           <UserList
+                             users={this.state.users}
+                             authUserId={this.context.userId}
+                             onViewDetail={this.showDetailHandler}
+                           />
+                         )}
+                        </Row>
+                        </Container>
+                      </Tab.Pane>
 
-                  {this.state.selectedUser !== null &&
-                    this.context.user.role === "admin"
-                    && (
-                    <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance as Admin</Button>
-                  )}
-                  {this.state.selectedUser !== null &&
-                    this.state.selectedUser._id === this.context.user._id
-                    && (
-                    <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attendance' onClick={this.updateUserSpecial.bind(this)}>Add Attendance</Button>
-                  )}
-                  {this.state.selectedUser !== null &&
-                    this.state.selectedUser._id === this.context.user._id && (
-                    <Button variant="outline-success" className="confirmEditButton" size="lg">
-                      Your Profile
-                    </Button>
-                  )}
-                  {this.state.selectedUser !== null &&
-                    this.state.selectedUser._id !== this.context.user._id && (
-                    <Button variant="outline-danger" className="confirmEditButton" size="lg">
-                      Not my profile
-                    </Button>
-                  )}
+                      <Tab.Pane eventKey="SearchInput">
+                        <Container className="containerSearchUserInput">
 
-                  {this.state.userUpdateField === 'attendance' &&
-                  this.state.selectedUser !== null
-                   && (
-                     <UpdateUserAttendanceForm
-                    authUserId={this.context.userId}
-                    canCancel
-                      canConfirm
-                      onCancel={this.modalCancelHandler}
-                      onConfirm={this.updateUserAttendanceHandler}
-                      confirmText="Confirm"
-                      user={this.state.selectedUser}
-                    />
-                  )}
-                </Tab.Pane>
+                        <Row className="searchUserRowAdd">
+                        <Button variant="primary" onClick={this.startSearchUserHandler}>Search</Button>
+                        </Row>
 
-                <Tab.Pane eventKey="userEditLeave">
-                {this.state.selectedUser === null && (
-                  <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                    Select a Staff member from the Master List
-                  </Button>
-                )}
+                        <Row className="searchUserRowForm">
+                        <Col md={10} className="searchUserColForm">
+                        <Tabs defaultActiveKey="Field" id="uncontrolled-tab-example">
+                        <Tab eventKey="Search" title="Search:" disabled>
+                        </Tab>
+                        <Tab eventKey="Field" title="Search by Field:">
+                        {this.state.searching !== true && (
+                          <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                            Click the 'Search' Button start
+                          </Button>
+                        )}
+                        {this.state.searching === true && (
+                          <SearchUserForm
+                          authUserId={this.context.userId}
+                          canCancel
+                            canConfirm
+                            onCancel={this.modalCancelHandler}
+                            onConfirm={this.modalConfirmSearchHandler}
+                            confirmText="Search"
+                            user={this.context.selectedUser}
+                          />)}
+                        </Tab>
+                        <Tab eventKey="Id" title="Search by ID:">
+                        {this.state.searching !== true && (
+                          <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                            Click the 'Search' Button start
+                          </Button>
+                        )}
+                        {this.state.searching === true && (
+                          <SearchUserIdForm
+                          authUserId={this.context.userId}
+                          canCancel
+                            canConfirm
+                            onCancel={this.modalCancelHandler}
+                            onConfirm={this.modalConfirmSearchIdHandler}
+                            confirmText="Search"
+                            user={this.context.selectedUser}
+                          />
+                          )}
+                        </Tab>
+                        <Tab eventKey="Attendance" title="Search by Attendance:">
+                        {this.state.searching !== true && (
+                          <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                            Click the 'Search' Button start
+                          </Button>
+                        )}
+                        {this.state.searching === true && (
+                          <SearchUserAttendanceDateForm
+                          authUserId={this.context.userId}
+                          canCancel
+                            canConfirm
+                            onCancel={this.modalCancelHandler}
+                            onConfirm={this.modalConfirmSearchAttendanceDateHandler}
+                            confirmText="Search"
+                            user={this.context.selectedUser}
+                          />
+                          )}
+                        </Tab>
+                        <Tab eventKey="Leave" title="Search by Leave:">
+                        {this.state.searching !== true && (
+                          <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                            Click the 'Search' Button start
+                          </Button>
+                        )}
+                        {this.state.searching === true && (
+                          <SearchUserLeaveDateRangeForm
+                          authUserId={this.context.userId}
+                          canCancel
+                            canConfirm
+                            onCancel={this.modalCancelHandler}
+                            onConfirm={this.modalConfirmSearchLeaveDateRangeHandler}
+                            confirmText="Search"
+                            user={this.context.selectedUser}
+                          />
+                          )}
+                        </Tab>
+                        <Tab eventKey="Name" title="Search by Name:">
+                        {this.state.searching !== true && (
+                          <Button variant="outline-warning" className="confirmEditButton" size="lg">
+                            Click the 'Search' Button start
+                          </Button>
+                        )}
+                        {this.state.searching === true && (
+                          <SearchUserNameForm
+                          authUserId={this.context.userId}
+                          canCancel
+                            canConfirm
+                            onCancel={this.modalCancelHandler}
+                            onConfirm={this.modalConfirmSearchNameHandler}
+                            confirmText="Search"
+                            user={this.context.selectedUser}
+                          />
+                        )}
+                        </Tab>
+                        </Tabs>
+                        </Col>
+                        <Col md={10}>
+                        </Col>
+                        </Row>
 
-                {this.state.selectedUser !== null &&
-                  this.context.user.role === "admin"
-                  && (
-                  <Button variant="outline-primary" size="lg" className="confirmEditButton" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave as Admin</Button>
-                )}
-                {this.state.selectedUser !== null &&
-                  this.state.selectedUser._id === this.context.user._id
-                  && (
-                  <Button variant="outline-primary" size="lg" className="confirmEditButton" value='leave' onClick={this.updateUserSpecial.bind(this)}>Add Leave</Button>
-                )}
-                {this.state.selectedUser !== null &&
-                  this.state.selectedUser._id === this.context.user._id && (
-                  <Button variant="outline-success" className="confirmEditButton" size="lg">
-                    Your Profile
-                  </Button>
-                )}
-                {this.state.selectedUser !== null &&
-                  this.state.selectedUser._id !== this.context.user._id && (
-                  <Button variant="outline-danger" className="confirmEditButton" size="lg">
-                    Not my profile
-                  </Button>
-                )}
+                        </Container>
+                      </Tab.Pane>
 
-                {this.state.userUpdateField === 'leave' &&
-                this.state.selectedUser !== null
-                && (<UpdateUserLeaveForm
-                  authUserId={this.context.userId}
-                  canCancel
-                    canConfirm
-                    onCancel={this.modalCancelHandler}
-                    onConfirm={this.updateUserLeaveHandler}
-                    confirmText="Confirm"
-                    user={this.state.selectedUser}
-                  />)}
-                </Tab.Pane>
+                      <Tab.Pane eventKey="SearchResult">
+                        <Container className="containerSearchUserResults">
+                        <Row>
+                          <Card className="searchCard">
+                            <Card.Body className="searchCardBody">
+                              <Card.Title>Your Search</Card.Title>
+                              <Card.Text>
+                                Field: {this.state.userSearchField}
+                              </Card.Text>
+                              <Card.Text>
+                                Query: {this.state.userSearchQuery}
+                              </Card.Text>
+                            </Card.Body>
+                          </Card>
+                        </Row>
+                        <Row className="searchListRow">
 
-                <Tab.Pane eventKey="userEditAttachment">
-                {this.state.selectedUser === null && (
-                  <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                    Select a Staff member from the Master List
-                  </Button>
-                )}
-
-                {this.state.selectedUser !== null &&
-                  this.context.user.role === "admin"
-                  && (
-                  <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment as Admin</Button>
-                )}
-                {this.state.selectedUser !== null &&
-                  this.state.selectedUser._id === this.context.user._id
-                  && (
-                  <Button variant="outline-primary" size="lg" className="confirmEditButton" value='attachments' onClick={this.updateUserSpecial.bind(this)}>Add Attachment</Button>
-                )}
-                {this.state.selectedUser !== null &&
-                  this.state.selectedUser._id === this.context.user._id && (
-                  <Button variant="outline-success" className="confirmEditButton" size="lg">
-                    Your Profile
-                  </Button>
-                )}
-                {this.state.selectedUser !== null &&
-                  this.state.selectedUser._id !== this.context.user._id && (
-                  <Button variant="outline-danger" className="confirmEditButton" size="lg">
-                    Not my profile
-                  </Button>
-                )}
-
-                {this.state.userUpdateField === 'attachments' &&
-                this.state.selectedUser !== null
-                && (<UpdateUserAttachmentForm
-                  authUserId={this.context.userId}
-                  canCancel
-                    canConfirm
-                    onCancel={this.modalCancelHandler}
-                    onConfirm={this.updateUserAttachmentHandler}
-                    confirmText="Confirm"
-                    user={this.state.selectedUser}
-                  />)}
-                </Tab.Pane>
-
-                <Tab.Pane eventKey="MasterList">
-                  <Container className="containerUserMasterList">
-                  <Row className="searchListRow">
-                  <Button variant="primary" size="sm" onClick={this.fetchUsersAsc}>
-                     Sort Asc
-                   </Button>
-                  <Button variant="info" size="sm" onClick={this.fetchUsersDesc}>
-                     Sort Desc
-                   </Button>
-                   {this.state.isLoading ? (
-                     <Spinner />
-                   ) : (
-                     <UserList
-                       users={this.state.users}
-                       authUserId={this.context.userId}
-                       onViewDetail={this.showDetailHandler}
-                     />
-                   )}
-                  </Row>
-                  </Container>
-                </Tab.Pane>
-
-                <Tab.Pane eventKey="SearchInput">
-                  <Container className="containerSearchUserInput">
-
-                  <Row className="searchUserRowAdd">
-                  <Button variant="primary" onClick={this.startSearchUserHandler}>Search</Button>
-                  </Row>
-
-                  <Row className="searchUserRowForm">
-                  <Col md={10} className="searchUserColForm">
-                  <Tabs defaultActiveKey="Field" id="uncontrolled-tab-example">
-                  <Tab eventKey="Search" title="Search:" disabled>
-                  </Tab>
-                  <Tab eventKey="Field" title="Search by Field:">
-                  {this.state.searching !== true && (
-                    <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                      Click the 'Search' Button start
-                    </Button>
-                  )}
-                  {this.state.searching === true && (
-                    <SearchUserForm
-                    authUserId={this.context.userId}
-                    canCancel
-                      canConfirm
-                      onCancel={this.modalCancelHandler}
-                      onConfirm={this.modalConfirmSearchHandler}
-                      confirmText="Search"
-                      user={this.context.selectedUser}
-                    />)}
-                  </Tab>
-                  <Tab eventKey="Id" title="Search by ID:">
-                  {this.state.searching !== true && (
-                    <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                      Click the 'Search' Button start
-                    </Button>
-                  )}
-                  {this.state.searching === true && (
-                    <SearchUserIdForm
-                    authUserId={this.context.userId}
-                    canCancel
-                      canConfirm
-                      onCancel={this.modalCancelHandler}
-                      onConfirm={this.modalConfirmSearchIdHandler}
-                      confirmText="Search"
-                      user={this.context.selectedUser}
-                    />
-                    )}
-                  </Tab>
-                  <Tab eventKey="Attendance" title="Search by Attendance:">
-                  {this.state.searching !== true && (
-                    <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                      Click the 'Search' Button start
-                    </Button>
-                  )}
-                  {this.state.searching === true && (
-                    <SearchUserAttendanceDateForm
-                    authUserId={this.context.userId}
-                    canCancel
-                      canConfirm
-                      onCancel={this.modalCancelHandler}
-                      onConfirm={this.modalConfirmSearchAttendanceDateHandler}
-                      confirmText="Search"
-                      user={this.context.selectedUser}
-                    />
-                    )}
-                  </Tab>
-                  <Tab eventKey="Leave" title="Search by Leave:">
-                  {this.state.searching !== true && (
-                    <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                      Click the 'Search' Button start
-                    </Button>
-                  )}
-                  {this.state.searching === true && (
-                    <SearchUserLeaveDateRangeForm
-                    authUserId={this.context.userId}
-                    canCancel
-                      canConfirm
-                      onCancel={this.modalCancelHandler}
-                      onConfirm={this.modalConfirmSearchLeaveDateRangeHandler}
-                      confirmText="Search"
-                      user={this.context.selectedUser}
-                    />
-                    )}
-                  </Tab>
-                  <Tab eventKey="Name" title="Search by Name:">
-                  {this.state.searching !== true && (
-                    <Button variant="outline-warning" className="confirmEditButton" size="lg">
-                      Click the 'Search' Button start
-                    </Button>
-                  )}
-                  {this.state.searching === true && (
-                    <SearchUserNameForm
-                    authUserId={this.context.userId}
-                    canCancel
-                      canConfirm
-                      onCancel={this.modalCancelHandler}
-                      onConfirm={this.modalConfirmSearchNameHandler}
-                      confirmText="Search"
-                      user={this.context.selectedUser}
-                    />
-                  )}
-                  </Tab>
-                  </Tabs>
+                        {this.state.searchUsers !== [] && (
+                          <SearchUserList
+                            searchUsers={this.state.searchUsers}
+                            authUserId={this.context.userId}
+                            onViewDetail={this.showDetailHandler}
+                          />
+                        )}
+                        </Row>
+                        </Container>
+                      </Tab.Pane>
+                    </Tab.Content>
                   </Col>
-                  <Col md={10}>
-                  </Col>
-                  </Row>
-
-                  </Container>
-                </Tab.Pane>
-
-                <Tab.Pane eventKey="SearchResult">
-                  <Container className="containerSearchUserResults">
-                  <Row>
-                    <Card className="searchCard">
-                      <Card.Body className="searchCardBody">
-                        <Card.Title>Your Search</Card.Title>
-                        <Card.Text>
-                          Field: {this.state.userSearchField}
-                        </Card.Text>
-                        <Card.Text>
-                          Query: {this.state.userSearchQuery}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </Row>
-                  <Row className="searchListRow">
-
-                  {this.state.searchUsers !== [] && (
-                    <SearchUserList
-                      searchUsers={this.state.searchUsers}
-                      authUserId={this.context.userId}
-                      onViewDetail={this.showDetailHandler}
-                    />
-                  )}
-                  </Row>
-                  </Container>
-                </Tab.Pane>
-              </Tab.Content>
-            </Col>
-          </Row>
-        </Tab.Container>
-
-
-
-        </Container>
-
-    </Col>
-
-  </Row>
-
-</Accordion>
+                </Row>
+              </Tab.Container>
+            </Container>
+        </Col>
+      </Row>
+  </Accordion>
 </React.Fragment>
     );
   }

@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-// import { Document, Page } from 'react-pdf';
 import { PDFViewer } from '@react-pdf/renderer';
 
 import "./AttachmentViewer.css"
