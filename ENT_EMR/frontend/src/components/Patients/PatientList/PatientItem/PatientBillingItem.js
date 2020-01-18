@@ -89,11 +89,6 @@ const patientBillingItem = props => (
           <Button variant="primary"  className="listButton">
             View
           </Button>
-          {
-          //   <Button variant="primary"  className="listButton" onClick={props.onViewAttachment.bind(this, props.attachment)}>
-          //   View
-          // </Button>
-        }
           </Card.Link>
         </Card.Body>
       </Card>

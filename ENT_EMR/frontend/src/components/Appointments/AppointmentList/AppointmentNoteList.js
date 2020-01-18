@@ -4,7 +4,6 @@ import AppointmentNoteItem from './AppointmentItem/AppointmentNoteItem';
 import './UserList.css';
 
 const appointmentNoteList = props => {
-  console.log("appointment notes list props", props.appointmentNote);
   const appointmentNote = props.appointmentNote.map(note => {
     return (
       <AppointmentNoteItem

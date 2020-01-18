@@ -4,7 +4,6 @@ import PatientConsultantItem from './PatientItem/PatientConsultantItem';
 import './UserList.css';
 
 const patientConsultantList = props => {
-  console.log("patient consultant list props", props.patientConsultant);
   const patientConsultant = props.patientConsultant.map(consultant => {
     const consultantDate = new Date(consultant.date.substr(0,10)*1000).toISOString().slice(0,10);
     let consultantId = undefined;

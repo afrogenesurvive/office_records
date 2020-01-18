@@ -4,7 +4,6 @@ import PatientAllergiesItem from './PatientItem/PatientAllergiesItem';
 import './UserList.css';
 
 const patientAllergiesList = props => {
-  console.log("patient allergies list props", props.patientAllergies);
   const patientAllergies = props.patientAllergies.map(allergies => {
     const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+allergies.attachment.path+"/"+allergies.attachment.name+"."+allergies.attachment.format;
     return (

@@ -4,7 +4,6 @@ import VisitComplaintItem from './PatientItem/VisitComplaintItem';
 import './UserList.css';
 
 const visitComplaintList = props => {
-  console.log("VisitComplaintlist props", props.complaint);
 
   let complaint = undefined;
   if (props.complaint) {
@@ -12,9 +11,7 @@ const visitComplaintList = props => {
     const visitComplaintDate = new Date(complaintItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const complaintAttachment = complaintItem.attachment;
     const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+complaintItem.attachment.path+"/"+complaintItem.attachment.name+"."+complaintItem.attachment.format;
-    console.log(`
-      visitComplaintDate: ${visitComplaintDate},
-      `);
+    
     return (
       <VisitComplaintItem
         key={complaintItem.date}

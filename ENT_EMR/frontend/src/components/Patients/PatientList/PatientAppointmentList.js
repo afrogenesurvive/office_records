@@ -5,7 +5,6 @@ import PatientAppointmentItem from './PatientItem/PatientAppointmentItem';
 import './UserList.css';
 
 const patientAppointmentList = props => {
-  console.log("patient Appointment list props", props.patientAppointment);
   const patientAppointment = props.patientAppointment.map(appointment => {
     let patientAppointmentDate = appointment.date;
     // console.log("appointment.date", appointment.date);

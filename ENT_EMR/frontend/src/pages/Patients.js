@@ -97,11 +97,6 @@ class PatientsPage extends Component {
 
   static contextType = AuthContext;
 
-  constructor(props) {
-    super(props);
-    this.nameElRef = React.createRef();
-  }
-
   componentDidMount() {
 
     if (this.context.user.name === "Lord-of-the-Manor"){
@@ -913,7 +908,7 @@ updatePatientExaminationHandler = (event) => {
 
   const examinationGeneral = event.target.formGridExaminationGeneral.value;
   let examinationArea = undefined;
-  if (event.target.formGridExaminationAreaSelect === "select") {
+  if (event.target.formGridExaminationAreaSelect.value === "select") {
     examinationArea = event.target.formGridExaminationArea.value;
   } else {
     examinationArea = event.target.formGridExaminationAreaSelect.value;

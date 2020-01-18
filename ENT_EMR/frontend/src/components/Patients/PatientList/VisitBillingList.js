@@ -4,7 +4,6 @@ import VisitBillingItem from './PatientItem/VisitBillingItem';
 import './UserList.css';
 
 const visitBillingList = props => {
-  console.log("VisitBillinglist props", props.billing);
 
   let billing = undefined;
   if (props.billing) {
@@ -12,9 +11,7 @@ const visitBillingList = props => {
     const visitBillingDate = new Date(billingItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const billingAttachment = billingItem.attachment;
     const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+billingItem.attachment.path+"/"+billingItem.attachment.name+"."+billingItem.attachment.format;
-    console.log(`
-      visitBillingDate: ${visitBillingDate},
-      `);
+
     return (
       <VisitBillingItem
         key={billingItem.date}

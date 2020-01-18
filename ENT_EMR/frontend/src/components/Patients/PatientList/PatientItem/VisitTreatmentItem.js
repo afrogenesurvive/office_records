@@ -76,11 +76,6 @@ const VisitInvestigationItem = props => (
           <Button variant="primary"  className="listButton">
             View
           </Button>
-          {
-          // <Button variant="info" onClick={props.onViewAttachment.bind(this, props.attachment)}>
-          //   View
-          // </Button>
-          }
           </Card.Link>
 
         </Card.Body>

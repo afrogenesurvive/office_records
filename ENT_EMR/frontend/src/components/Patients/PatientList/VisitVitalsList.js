@@ -4,16 +4,13 @@ import VisitVitalsItem from './PatientItem/VisitVitalsItem';
 import './UserList.css';
 
 const visitVitalsList = props => {
-  console.log("VisitVitalslist props", props.vitals);
   let vitals = undefined;
   if (props.vitals) {
 
     vitals = props.vitals.map(vitalsItem => {
       const visitVitalsDate = new Date(vitalsItem.date.substr(0,10)*1000).toISOString().slice(0,10);
       const vitalsUrine = vitalsItem.urine;
-      console.log(`
-        visitVitalsDate: ${visitVitalsDate},
-        `);
+
       return (
         <VisitVitalsItem
           key={vitalsItem.date}

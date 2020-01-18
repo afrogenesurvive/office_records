@@ -4,7 +4,6 @@ import VisitSystematicInquiryItem from './PatientItem/VisitSystematicInquiryItem
 import './UserList.css';
 
 const visitSystematicInquiryList = props => {
-  console.log("VisitSystematicInquirylist props", props.systematicInquiry);
 
   let systematicInquiry = undefined;
   if (props.systematicInquiry) {
@@ -12,9 +11,7 @@ const visitSystematicInquiryList = props => {
     const visitSystematicInquiryDate = new Date(systematicInquiryItem.date.substr(0,10)*1000).toISOString().slice(0,10);
     const systematicInquiryAttachment = systematicInquiryItem.attachment;
     const attachmentLink = "https://ent-emr-bucket.s3-us-east-2.amazonaws.com/"+systematicInquiryItem.attachment.path+"/"+systematicInquiryItem.attachment.name+"."+systematicInquiryItem.attachment.format;
-    console.log(`
-      visitSystematicInquiryDate: ${visitSystematicInquiryDate},
-      `);
+
     return (
       <VisitSystematicInquiryItem
         key={systematicInquiryItem.date}
