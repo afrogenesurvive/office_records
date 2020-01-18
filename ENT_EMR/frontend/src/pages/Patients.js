@@ -98,7 +98,9 @@ class PatientsPage extends Component {
   static contextType = AuthContext;
 
   componentDidMount() {
-
+    if (JSON.stringify(this.context.selectedPatient) !== "{}") {
+      this.setState({ selectedPatient: this.context.selectedPatient })
+    }
     if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
@@ -3417,8 +3419,8 @@ render() {
                   </Button>
                 )}
                 {this.state.isLoading === false &&
-                  this.state.selectedPatient !== null &&
-                  (<PatientDetail
+                  this.state.selectedPatient !== null && (
+                    <PatientDetail
                     authUserId={this.context.userId}
                     token={this.context.token}
                     patient={this.state.selectedPatient}

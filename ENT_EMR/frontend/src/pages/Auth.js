@@ -68,10 +68,6 @@ class AuthPage extends Component {
       })
       .then(resData => {
         const responseAlert = JSON.stringify(resData.data).slice(2,25)
-        console.log(`
-          resData slice: ${responseAlert},
-          resData: ${JSON.stringify(resData.data)},
-          `);
 
           this.setState({userAlert: responseAlert})
         if (resData.data.login.token) {
@@ -94,7 +90,6 @@ class AuthPage extends Component {
         }
       })
       .catch(err => {
-        console.log(err);
         this.setState({userAlert: err});
         // this.context.userAlert = err;
         // console.log(`
