@@ -1,11 +1,9 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-// import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const SearchPatientVisitForm = (props) => {
-// const {...search} = props.search;
 
 return (
 <div className="SearchFormContainer">

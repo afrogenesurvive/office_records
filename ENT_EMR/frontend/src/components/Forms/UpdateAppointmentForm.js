@@ -2,16 +2,11 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Accordion from 'react-bootstrap/Accordion'
-// import FormCheck from 'react-bootstrap/FormCheck'
-// import AuthContext from '../../context/auth-context';
+import Accordion from 'react-bootstrap/Accordion';
 import './CreateUserForm.css';
 
 const UpdateAppointmentForm = (props) => {
-
-console.log("UpdateAppointmentForm.props:  ", {...props});
 const {...appointment} = props.appointment;
-console.log("UpdateAppointmentForm.props.appointment:  ", {...appointment});
 
 
 return (
@@ -74,28 +69,28 @@ return (
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridInProgress">
-      <Form.Label>In Progress ?</Form.Label>
-      <Form.Control as="select">
-        <option>false</option>
-        <option>true</option>
-      </Form.Control>
-    </Form.Group>
+  <Form.Label>In Progress ?</Form.Label>
+  <Form.Control as="select">
+    <option>false</option>
+    <option>true</option>
+  </Form.Control>
+</Form.Group>
 
-    <Form.Group as={Col} controlId="formGridAttended">
-          <Form.Label>Attended ?</Form.Label>
-          <Form.Control as="select">
-            <option>false</option>
-            <option>true</option>
-          </Form.Control>
-        </Form.Group>
+<Form.Group as={Col} controlId="formGridAttended">
+  <Form.Label>Attended ?</Form.Label>
+  <Form.Control as="select">
+    <option>false</option>
+    <option>true</option>
+  </Form.Control>
+</Form.Group>
 
-        <Form.Group as={Col} controlId="formGridImportant">
-              <Form.Label>Important ?</Form.Label>
-              <Form.Control as="select">
-                <option>false</option>
-                <option>true</option>
-              </Form.Control>
-            </Form.Group>
+<Form.Group as={Col} controlId="formGridImportant">
+  <Form.Label>Important ?</Form.Label>
+  <Form.Control as="select">
+    <option>false</option>
+    <option>true</option>
+  </Form.Control>
+</Form.Group>
 </Form.Row>
 
 <Form.Row>
@@ -111,10 +106,6 @@ return (
 </Form.Row>
 
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};

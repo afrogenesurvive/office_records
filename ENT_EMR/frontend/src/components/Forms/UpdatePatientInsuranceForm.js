@@ -2,16 +2,11 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Accordion from 'react-bootstrap/Accordion'
-// import FormCheck from 'react-bootstrap/FormCheck'
-// import AuthContext from '../../context/auth-context';
+import Accordion from 'react-bootstrap/Accordion';
 import './CreateUserForm.css';
 
 const UpdatePatientInsuranceForm = (props) => {
-
-console.log("UpdatePatientInsuranceForm.props:  ", {...props});
 const {...patient} = props.patient;
-console.log("UpdatePatientInsuranceForm.props.patient:  ", {...patient});
 
 
 return (
@@ -40,7 +35,6 @@ return (
     <Form.Label>Description</Form.Label>
     <Form.Control as="textarea" rows="5" placeholder="insuranceDescription"/>
   </Form.Group>
-
 
 </Form.Row>
 

@@ -8,10 +8,7 @@ import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const UpdatePatientSystematicInquiryForm = (props) => {
-
-console.log("UpdatePatientSystematicInquiryForm.props:  ", {...props});
 const {...patient} = props.patient;
-console.log("UpdatePatientSystematicInquiryForm.props.patient:  ", {...patient});
 
 
 return (
@@ -59,12 +56,7 @@ return (
     <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="SystematicInquiryAttachmentFormat"/>
   </Form.Group>
-  {
-  //   <Form.Group as={Col} controlId="formGridAttachmentPath">
-  //   <Form.Label>Path</Form.Label>
-  //   <Form.Control type="string" placeholder="File path"/>
-  // </Form.Group>
-}
+
   <Form.Group as={Col} controlId="formGridSystematicInquiryAttachmentFile">
     <Form.Label>File</Form.Label>
     <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>

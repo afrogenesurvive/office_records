@@ -8,10 +8,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import './CreateUserForm.css';
 
 const UpdateUserLeaveForm = (props) => {
-
-console.log("UpdateUserLeaveForm.props:  ", {...props});
 const {...user} = props.user;
-console.log("UpdateUserLeaveForm.props.user:  ", {...user});
 
 
 return (

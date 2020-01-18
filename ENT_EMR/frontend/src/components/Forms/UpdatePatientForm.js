@@ -2,15 +2,10 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-// import FormCheck from 'react-bootstrap/FormCheck'
-// import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const UpdatePatientForm = (props) => {
-
-console.log("UpdatePatientForm.props:  ", {...props});
 const {...patient} = props.patient;
-console.log("UpdatePatientForm.props.patient:  ", {...patient});
 
 
 return (
@@ -198,10 +193,6 @@ return (
   </Form.Row>
 
   </Form>
-  {
-    // <AuthContext.Consumer>
-  // </AuthContext.Consumer>
-  }
   </div>
 )};
 

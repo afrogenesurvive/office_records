@@ -2,18 +2,13 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-// import FormCheck from 'react-bootstrap/FormCheck'
-// import { NavLink } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion';
-// import AuthContext from '../../context/auth-context';
-// import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const CreateUserForm = (props) => {
 
-  console.log("CreateUserForm...", {...props});
 return (
 <div className="CreateFormContainer">
 <Form onSubmit={props.onConfirm}>
@@ -62,13 +57,7 @@ return (
   <Form.Control type="date" placeholder="Date of Birth"/>
 </Form.Group>
 
-  {
-    // <DatePicker className="calendarDob"
-    //   selected={AuthContext._currentValue.fancyDate}
-    //   onChange={(e) => {console.log(e);AuthContext._currentValue.fancyDate = e}}
-    // />
-  }
-  </Form.Row>
+</Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridEmploymentDate">
@@ -139,10 +128,6 @@ return (
 <p>{props.successText}</p>
 
 </Form>
-{
-  // <AuthContext.Consumer>
-// </AuthContext.Consumer>
-}
 </div>
 
 )};
