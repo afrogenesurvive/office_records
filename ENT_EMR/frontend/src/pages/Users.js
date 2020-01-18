@@ -67,12 +67,14 @@ class UsersPage extends Component {
   static contextType = AuthContext;
 
   componentDidMount() {
-    if (JSON.stringify(this.context.selectedUser) !== "{}") {
-      this.setState({ selectedUser: this.context.selectedUser })
-    }
     if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
+    
+    if (JSON.stringify(this.context.selectedUser) !== "{}") {
+      this.setState({ selectedUser: this.context.selectedUser })
+    }
+
     this.fetchUsers();
   }
 

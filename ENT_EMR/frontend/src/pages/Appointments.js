@@ -57,12 +57,14 @@ class AppointmentsPage extends Component {
   static contextType = AuthContext;
 
   componentDidMount() {
-    if (JSON.stringify(this.context.selectedAppointment) !== "{}") {
-      this.setState({ selectedAppointment: this.context.selectedAppointment })
-    }
     if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
+
+    if (JSON.stringify(this.context.selectedAppointment) !== "{}") {
+      this.setState({ selectedAppointment: this.context.selectedAppointment })
+    }
+    
     this.fetchAppointments();
     this.fetchAppointmentToday();
     this.fetchAppointmentInProgress();

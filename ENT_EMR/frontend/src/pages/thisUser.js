@@ -480,6 +480,7 @@ class ThisUserPage extends Component {
       })
       .then(resData => {
         const thisUser = resData.data.getThisUser;
+        this.context.user = thisUser;
         if (this.isActive) {
           this.setState({ user: thisUser, isLoading: false, overlay: false });
         }
