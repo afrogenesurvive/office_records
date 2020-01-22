@@ -525,6 +525,10 @@ const PatientDetail = (props) => {
             </Tab.Pane>
 
             <Tab.Pane eventKey="20">
+            <Card.Text>
+              <span className="bold ul">Visits/Encounters for</span> : {patient.name}
+            </Card.Text>
+
             <Button variant="warning" className="formButton" onClick={props.onGetVisitList}>
               Get Visit List
             </Button>

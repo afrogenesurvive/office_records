@@ -67,10 +67,11 @@ class UsersPage extends Component {
   static contextType = AuthContext;
 
   componentDidMount() {
+
     if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
-    
+
     if (JSON.stringify(this.context.selectedUser) !== "{}") {
       this.setState({ selectedUser: this.context.selectedUser })
     }
@@ -328,7 +329,7 @@ class UsersPage extends Component {
         this.state.users.push(resData.data.updateUserField);
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+        this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserField })
         this.fetchUsers();
       })
       .catch(err => {
@@ -389,8 +390,9 @@ class UsersPage extends Component {
         this.state.users.push(resData.data.updateUserAttendance);
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+        // this.setState({ userAlert: responseAlert})
         this.fetchUsers();
+        this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserAttendance })
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -463,8 +465,9 @@ class UsersPage extends Component {
         this.state.users.push(resData.data.updateUserAttachment);
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+        // this.setState({ userAlert: responseAlert})
         this.fetchUsers();
+        this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserAttachment })
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -530,8 +533,9 @@ class UsersPage extends Component {
         this.state.users.push(resData.data.updateUserLeave);
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+        // this.setState({ userAlert: responseAlert})
         this.fetchUsers();
+        this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserLeave })
       })
       .catch(err => {
         this.setState({userAlert: err});
