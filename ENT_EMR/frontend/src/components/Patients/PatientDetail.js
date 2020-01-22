@@ -283,6 +283,12 @@ const PatientDetail = (props) => {
                       Create Pdf
                     </Button>
                   </Col>
+
+                  <Col className="detailCardCol">
+                    <Button variant="warning" onClick={props.onCreateReferral.bind(this, patient)}>
+                      Create Referral
+                    </Button>
+                  </Col>
                 </Row>
 
                 </Card.Body>

@@ -36,8 +36,10 @@ class ThisUserPage extends Component {
     overlayStatus: "test",
     canDelete: null,
     showAttachment: false,
+    creatingDocument: false,
     createPdf: false,
     pdfData: null,
+    pdfType: null,
     showThisAttachmentFile: null,
     showThisAttachmentType: null,
   };
@@ -744,8 +746,9 @@ class ThisUserPage extends Component {
         />
       )}
 
-      {this.state.createPdf === true && (
+      {this.state.creatingDocument === true && (
         <PdfCreator
+          pdfType={this.state.pdfType}
           pdfData={this.state.pdfData}
           onClosePdfCreator={this.closePdfCreator}
         />

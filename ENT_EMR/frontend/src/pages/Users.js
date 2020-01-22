@@ -59,8 +59,10 @@ class UsersPage extends Component {
     showAttachment: false,
     showThisAttachmentFile: null,
     showThisAttachmentType: null,
+    creatingDocument: false,
     createPdf: false,
     pdfData: null,
+    pdfType: null
   };
   isActive = true;
 
@@ -1125,8 +1127,9 @@ showDetailHandler = userId => {
           attachmentType={this.state.showThisAttachmentType}
         />
       )}
-      {this.state.createPdf === true && (
+      {this.state.creatingDocument === true && (
         <PdfCreator
+          pdfType={this.state.pdfType}
           pdfData={this.state.pdfData}
           onClosePdfCreator={this.closePdfCreator}
         />

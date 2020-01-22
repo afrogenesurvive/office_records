@@ -49,8 +49,10 @@ class AppointmentsPage extends Component {
     userAlert: null,
     overlay: false,
     overlayStatus: "test",
+    creatingDocument: false,
     createPdf: false,
     pdfData: null,
+    pdfType: null
   };
   isActive = true;
 
@@ -916,11 +918,12 @@ class AppointmentsPage extends Component {
     return (
       <React.Fragment>
 
-      {this.state.createPdf === true && (
-          <PdfCreator
-            pdfData={this.state.pdfData}
-            onClosePdfCreator={this.closePdfCreator}
-          />
+      {this.state.creatingDocument === true && (
+        <PdfCreator
+          pdfType={this.state.pdfType}
+          pdfData={this.state.pdfData}
+          onClosePdfCreator={this.closePdfCreator}
+        />
       )}
 
       <Accordion>
