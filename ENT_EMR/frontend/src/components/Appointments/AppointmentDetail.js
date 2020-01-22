@@ -14,6 +14,9 @@ const AppointmentDetail = (props) => {
   const appointmentDate = new Date(appointment.date.substr(0,10)*1000).toISOString().slice(0,10);
   const appointmentNote = appointment.notes;
   const appointmentPatientContact = appointment.patient.contact;
+  console.log(`
+    appointment: ${JSON.stringify(appointment)},
+    `);
 
   return (
     <div className="PatientDetailBox">

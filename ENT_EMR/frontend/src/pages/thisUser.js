@@ -47,7 +47,7 @@ class ThisUserPage extends Component {
 
   componentDidMount() {
     if (this.context.user.name === "Lord-of-the-Manor"){
-      this.setState({canDelete: true, overlay: true, overlayStatus: "loading your profile..."})
+      this.setState({canDelete: true})
     }
     this.getThisUser();
     this.getCreds();
@@ -482,7 +482,7 @@ class ThisUserPage extends Component {
         const thisUser = resData.data.getThisUser;
         this.context.user = thisUser;
         if (this.isActive) {
-          this.setState({ user: thisUser, isLoading: false, overlay: false });
+          this.setState({ user: thisUser, isLoading: false });
         }
       })
       .catch(err => {

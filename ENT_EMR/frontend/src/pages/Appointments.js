@@ -64,7 +64,7 @@ class AppointmentsPage extends Component {
     if (JSON.stringify(this.context.selectedAppointment) !== "{}") {
       this.setState({ selectedAppointment: this.context.selectedAppointment })
     }
-    
+
     this.fetchAppointments();
     this.fetchAppointmentToday();
     this.fetchAppointmentInProgress();
@@ -275,7 +275,7 @@ class AppointmentsPage extends Component {
         const slicedArray = this.state.appointments.splice(updatedAppointmentPos, 1);
         this.state.appointments.push(resData.data.updateAppointment);
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+        this.setState({ userAlert: responseAlert })
         this.fetchAppointments();
       })
       .catch(err => {

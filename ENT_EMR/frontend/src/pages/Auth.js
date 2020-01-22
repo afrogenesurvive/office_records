@@ -29,7 +29,7 @@ class AuthPage extends Component {
   submitHandler = event => {
     event.preventDefault();
 
-    this.setState({overlay: true, overlayStatus: "Signing you in...", userAlert: "Signing you in..."})
+    this.setState({ userAlert: "Signing you in..."})
 
 
     const email = event.target.formBasicEmail.value;

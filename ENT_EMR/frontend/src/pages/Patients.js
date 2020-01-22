@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import S3 from 'react-aws-s3';
 
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import SidebarPage from './Sidebar';
@@ -98,7 +98,6 @@ class PatientsPage extends Component {
   static contextType = AuthContext;
 
   componentDidMount() {
-    console.log("here", this.context.user.name);
     if (this.context.user.name === "Lord-of-the-Manor"){
       this.setState({canDelete: true})
     }
@@ -119,7 +118,6 @@ class PatientsPage extends Component {
   };
   startUpdatePatientHandler = () => {
     this.setState({ updating: true, updatingArray: true });
-    console.log("UpdatePatientForm...");
   };
   startSearchPatientHandler = () => {
     this.setState({ searching: true });
@@ -1812,8 +1810,9 @@ updatePatientNoteHandler = (event) => {
         this.state.patients.push(resData.data.updatePatientNotes);
         this.context.patients = this.state.patients;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+
         this.fetchPatients();
+        this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientNotes })
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -1864,8 +1863,8 @@ updatePatientTagHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientTags);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientTags })
     })
     .catch(err => {
       this.setState({userAlert: err});
