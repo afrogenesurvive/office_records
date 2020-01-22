@@ -177,17 +177,17 @@ class UsersPage extends Component {
       selectedUserId = null;
     }
 
-    const email = event.target.formGridEmail.value;
-    const password = event.target.formGridPassword.value;
-    const name = event.target.formGridName.value;
-    const role = this.context.selectedUser.role;
-    const dob = event.target.formGridDob.value;
-    const phone = event.target.formGridPhone.value;
-    const addressNumber = event.target.formGridAddressNumber.value;
-    const addressStreet = event.target.formGridAddressStreet.value;
-    const addressTown = event.target.formGridAddressTown.value;
-    const addressParish = event.target.formGridAddressParish.value;
-    const addressPostOffice = event.target.formGridAddressPostOffice.value;
+    let email = event.target.formGridEmail.value;
+    let password = event.target.formGridPassword.value;
+    let name = event.target.formGridName.value;
+    let role = this.context.selectedUser.role;
+    let dob = event.target.formGridDob.value;
+    let phone = event.target.formGridPhone.value;
+    let addressNumber = event.target.formGridAddressNumber.value;
+    let addressStreet = event.target.formGridAddressStreet.value;
+    let addressTown = event.target.formGridAddressTown.value;
+    let addressParish = event.target.formGridAddressParish.value;
+    let addressPostOffice = event.target.formGridAddressPostOffice.value;
     let employmentDate = event.target.formGridEmploymentDate.value;
     if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
       employmentDate = new Date().toISOString().slice(0,10);
@@ -272,13 +272,14 @@ class UsersPage extends Component {
         return res.json();
       })
       .then(resData => {
-        const updatedUser = resData.data.updateUser;
-        this.setState({user: updatedUser})
+        // const updatedUser = resData.data.updateUser;
+        // this.setState({user: updatedUser})
         this.state.users.push(resData.data.updateUser);
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({ userAlert: responseAlert})
         this.fetchUsers();
+        this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUser, user: resData.data.updateUser })
       })
       .catch(err => {
         console.log(err);
@@ -365,7 +366,7 @@ class UsersPage extends Component {
     const requestBody = {
       query:`
         mutation {updateUserAttendance(userId:"${userId}", selectedUserId:"${selectedUserId}",userInput:{attendanceDate:"${attendanceDate}",attendanceStatus:"${attendanceStatus}",attendanceDescription:"${attendanceDescription}"})
-        {_id,name,email,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description}}}
+        {_id,email,password,name,dob,address{number,street,town,parish,postOffice},phone,role,employmentDate,terminationDate,attachments{name,format,path},attendance{date,status,description},leave{type,title,startDate,endDate}}}
       `};
 
     fetch('http://localhost:10000/graphql', {
@@ -390,7 +391,6 @@ class UsersPage extends Component {
         this.state.users.push(resData.data.updateUserAttendance);
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        // this.setState({ userAlert: responseAlert})
         this.fetchUsers();
         this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserAttendance })
       })
@@ -465,7 +465,6 @@ class UsersPage extends Component {
         this.state.users.push(resData.data.updateUserAttachment);
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        // this.setState({ userAlert: responseAlert})
         this.fetchUsers();
         this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserAttachment })
       })

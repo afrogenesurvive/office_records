@@ -137,7 +137,7 @@ class AppointmentsPage extends Component {
             inProgress:${inProgress},
             attended:${attended},
             important:${important}})
-          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important}}
+          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `
     };
 
@@ -250,7 +250,7 @@ class AppointmentsPage extends Component {
     const requestBody = {
       query: `
       mutation {updateAppointment(userId:"${userId}",appointmentId:"${appointmentId}",appointmentInput:{title:"${title}",type:"${type}",date:"${date}",time:"${time}",seenTime:"${seenTime}",checkinTime:"${checkinTime}",location:"${location}",description:"${description}",inProgress:${inProgress},attended:${attended},important:${important},})
-      {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
+      {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `
     };
 
@@ -275,8 +275,9 @@ class AppointmentsPage extends Component {
         const slicedArray = this.state.appointments.splice(updatedAppointmentPos, 1);
         this.state.appointments.push(resData.data.updateAppointment);
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert })
+        // this.setState({ userAlert: responseAlert })
         this.fetchAppointments();
+        this.setState({ userAlert: responseAlert, selectedAppointment: resData.data.updateAppointment })
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -307,7 +308,7 @@ class AppointmentsPage extends Component {
       const requestBody = {
         query:`
         mutation {updateAppointmentPatient(userId:"${userId}",appointmentId:"${selectedAppointmentId}",patientId:"${selectedPatientId}")
-        {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title},consultant{reference{_id,name,role}}},inProgress,attended,important}}
+        {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `
       }
 
@@ -363,7 +364,7 @@ class AppointmentsPage extends Component {
     const requestBody = {
       query:`
       mutation {updateAppointmentField(userId:"${userId}",appointmentId:"${selectedAppointmentId}",field:"${field}",query:"${query}")
-      {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title}},inProgress,attended,important,notes}}
+      {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
       `};
 
     fetch('http://localhost:10000/graphql', {
@@ -382,7 +383,7 @@ class AppointmentsPage extends Component {
       })
       .then(resData => {
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+
         const updatedAppointmentId = resData.data.updateAppointmentField._id;
         const updatedAppointment = this.state.appointments.find(e => e._id === updatedAppointmentId);
         const updatedAppointmentPos = this.state.appointments.indexOf(updatedAppointment);
@@ -390,6 +391,7 @@ class AppointmentsPage extends Component {
         this.state.appointments.push(resData.data.updateAppointmentField);
         this.context.appointments = this.state.appointments;
         this.fetchAppointments();
+        this.setState({ userAlert: responseAlert, selectedAppointment: resData.data.updateAppointmentField })
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -423,7 +425,7 @@ class AppointmentsPage extends Component {
     const requestBody = {
       query: `
         query {getAppointmentField(userId:"${userId}", field:"${field}", query:"${query}")
-        {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,appointments{_id,date,title},consultant{reference{_id,name,role}}},inProgress,attended,important}}
+        {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
       `}
 
     fetch('http://localhost:10000/graphql', {
@@ -459,7 +461,7 @@ class AppointmentsPage extends Component {
       const requestBody = {
         query: `
           query {getAppointmentId(userId:"${userId}", appointmentId:"${selectedAppointmentId}")
-          {_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `}
 
       fetch('http://localhost:10000/graphql', {
@@ -495,7 +497,7 @@ class AppointmentsPage extends Component {
       const requestBody = {
         query: `
           query {getAppointmentPatient(userId:"${userId}", patientId:"${selectedPatientId}")
-          {_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `}
 
       fetch('http://localhost:10000/graphql', {
@@ -535,7 +537,7 @@ class AppointmentsPage extends Component {
       const requestBody = {
         query: `
           query {getAppointmentDate(userId:"${userId}",date:"${appointmentDate}")
-          {_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `}
 
       fetch('http://localhost:10000/graphql', {
@@ -573,7 +575,7 @@ class AppointmentsPage extends Component {
       const requestBody = {
         query: `
           query {getAppointmentDateRange(userId:"${userId}",startDate:"${appointmentStartDate}",endDate:"${appointmentEndDate}")
-          {_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `}
 
       fetch('http://localhost:10000/graphql', {
@@ -615,7 +617,7 @@ class AppointmentsPage extends Component {
     const requestBody = {
       query: `
             query {appointments(userId:"${userId}")
-            {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{email,phone},consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
+            {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `};
 
     fetch('http://localhost:10000/graphql', {
@@ -655,7 +657,7 @@ class AppointmentsPage extends Component {
     const requestBody = {
       query: `
             query {appointmentsDateAsc(userId:"${userId}")
-            {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{email,phone},consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
+            {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `};
 
     fetch('http://localhost:10000/graphql', {
@@ -689,7 +691,7 @@ class AppointmentsPage extends Component {
     const requestBody = {
       query: `
             query {appointmentsDateDesc(userId:"${userId}")
-            {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{email,phone},consultant{reference{_id,name,role}}},inProgress,attended,important,notes}}
+            {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `};
 
     fetch('http://localhost:10000/graphql', {
@@ -801,7 +803,7 @@ class AppointmentsPage extends Component {
     const requestBody = {
       query: `
           query {getAppointmentToday(userId:"${userId}")
-          {_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `
     };
 
@@ -837,7 +839,8 @@ class AppointmentsPage extends Component {
     const userId = this.context.userId;
     const requestBody = {
       query: `
-          query {getAppointmentField(userId:"${userId}",field:"inProgress",query:"true"){_id,title,type,date,time,patient{_id,name},location,description,inProgress,important,attended}}
+          query {getAppointmentField(userId:"${userId}",field:"inProgress",query:"true")
+          {_id,title,type,date,time,seenTime,checkinTime,location,description,patient{_id,name,contact{phone,email},appointments{_id,date,title}},inProgress,attended,important,notes}}
         `
     };
 
