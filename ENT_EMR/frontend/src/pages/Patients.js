@@ -383,8 +383,9 @@ class PatientsPage extends Component {
         const slicedArray = this.state.patients.splice(updatedPatientPos, 1);
         this.state.patients.push(resData.data.updatePatient);
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+
         this.fetchPatients();
+        this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatient })
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -436,8 +437,9 @@ class PatientsPage extends Component {
         this.state.patients.push(resData.data.updatePatientField);
         this.context.patients = this.state.patients;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+
         this.fetchPatients();
+        this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientField })
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -497,8 +499,9 @@ updatePatientConsultantHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientConsultant);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientConsultant })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -547,8 +550,9 @@ updatePatientInsuranceHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientInsurance);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientInsurance })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -594,8 +598,9 @@ updatePatientNextOfKinHandler = (event) => {
         this.state.patients.push(resData.data.updatePatientNextOfKin);
         this.context.patients = this.state.patients;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+
         this.fetchPatients();
+        this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientNextOfKin })
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -671,8 +676,9 @@ updatePatientComplaintHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientComplaint);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
-      // this.fetchPatients();
+
+      this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientComplaint })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -746,8 +752,9 @@ updatePatientSurveyHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientSurvey);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientSurvey })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -821,8 +828,9 @@ updatePatientSystematicInquiryHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientSystematicInquiry);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientSystematicInquiry })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -885,8 +893,9 @@ updatePatientVitalsHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientVitals);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientVitals })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -969,8 +978,9 @@ updatePatientExaminationHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientExamination);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientExamination })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -1042,8 +1052,9 @@ updatePatientHistoryHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientHistory);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientHistory })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -1115,8 +1126,9 @@ updatePatientAllergiesHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientAllergies);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientAllergies })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -1181,8 +1193,9 @@ updatePatientMedicationHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientMedication);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientMedication })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -1262,8 +1275,9 @@ updatePatientInvestigationHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientInvestigation);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientInvestigation })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -1336,8 +1350,9 @@ updatePatientDiagnosisHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientDiagnosis);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientDiagnosis })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -1417,8 +1432,9 @@ updatePatientTreatmentHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientTreatment);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientTreatment })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -1495,8 +1511,9 @@ updatePatientBillingHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientBilling);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientBilling })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -1688,8 +1705,9 @@ updatePatientVigilanceHandler = (event) => {
         this.state.patients.push(resData.data.updatePatientVigilance);
         this.context.patients = this.state.patients;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
-        this.setState({ userAlert: responseAlert})
+
         this.fetchPatients();
+        this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientVigilance })
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -1758,8 +1776,9 @@ updatePatientAttachmentHandler = (event) => {
       this.state.patients.push(resData.data.updatePatientAttachment);
       this.context.patients = this.state.patients;
       const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+
       this.fetchPatients();
+      this.setState({ userAlert: responseAlert, selectedPatient: resData.data.updatePatientAttachment })
     })
     .catch(err => {
       this.setState({userAlert: err});
