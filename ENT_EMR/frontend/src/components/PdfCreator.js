@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import { PDFViewer } from '@react-pdf/renderer';
 
 import "./AttachmentViewer.css"
@@ -60,16 +60,42 @@ const MyDocument = () => (
   </Document>
 );
 
+const PatientReferral = () => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+
+      {docProps.pdfData.patient && (
+      <View style={styles.section}>
+        <Image src={docProps.pdfData.letterheadImage}></Image>
+        <Text>{docProps.pdfData.title}</Text>
+        <Text>Here is some sample data</Text>
+        <Text>Patient</Text>
+        <Text>Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
+        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
+        <Text>Referral: {docProps.pdfData.referral}</Text>
+      </View>
+      )}
+
+    </Page>
+  </Document>
+);
+
 const PdfCreator = (props) =>{
     docProps = props;
 
 return (
   <div className="attachmentViewerBg">
     <div className="attachmentViewer">
-    <h5> Document Generator </h5>
+    <h5> Document Generator: {docProps.pdfType}</h5>
 
     <PDFViewer>
-      <MyDocument/>
+      {docProps.pdfType === "test" && (
+        <MyDocument/>
+      )}
+      {docProps.pdfType === "patientReferral" && (
+        <PatientReferral/>
+      )}
     </PDFViewer>
 
     <Button variant="danger" onClick={props.onClosePdfCreator}>

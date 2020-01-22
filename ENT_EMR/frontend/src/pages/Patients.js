@@ -90,8 +90,10 @@ class PatientsPage extends Component {
     showAttachment: false,
     showThisAttachmentFile: null,
     showThisAttachmentType: null,
+    creatingDocument: false,
     createPdf: false,
     pdfData: null,
+    pdfType: null
   };
   isActive = true;
 
@@ -3180,6 +3182,13 @@ closeAttachmentView = () => {
     this.setState({showAttachment: false})
 }
 
+createDocument = (args) => {
+  const pdfData = {
+    title: args.title,
+  }
+  this.setState({createPdf: true, pdfData: pdfData})
+}
+
 createPdf = (patient) => {
     const pdfData = {
     title: "This pdf is supplied with Patient data...",
@@ -3243,11 +3252,52 @@ createPdf = (patient) => {
         tags: patient.tags
       }
     }
-  this.setState({createPdf: true, pdfData: pdfData})
+  this.setState({creatingDocument: true, pdfType: "test", pdfData: pdfData})
+}
+
+createReferral = (patient) => {
+  const pdfData = {
+    title: "Patient Referral",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    referral: "test referral...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "patientReferral" })
 }
 
 closePdfCreator = () => {
-  this.setState({createPdf: false, pdfData: null} )
+  this.setState({creatingDocument: false, pdfData: null, pdfType: null } )
 }
 
 showDetailHandler = patientId => {
@@ -3312,8 +3362,9 @@ render() {
         attachmentType={this.state.showThisAttachmentType}
       />
     )}
-    {this.state.createPdf === true && (
+    {this.state.creatingDocument === true && (
     <PdfCreator
+      pdfType={this.state.pdfType}
       pdfData={this.state.pdfData}
       onClosePdfCreator={this.closePdfCreator}
     />
@@ -3474,6 +3525,7 @@ render() {
                     tagDelete={this.deletePatientTagItem}
                     onViewAttachment={this.onViewAttachment}
                     onCreatePdf={this.createPdf}
+                    onCreateReferral={this.createReferral}
                     onGetVisitList={this.getVisitList}
                     visitList={this.state.visitList}
                     onSelectVisit={this.selectVisit}
