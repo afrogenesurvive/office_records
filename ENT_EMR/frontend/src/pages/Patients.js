@@ -3182,13 +3182,6 @@ closeAttachmentView = () => {
     this.setState({showAttachment: false})
 }
 
-createDocument = (args) => {
-  const pdfData = {
-    title: args.title,
-  }
-  this.setState({createPdf: true, pdfData: pdfData})
-}
-
 createPdf = (patient) => {
     const pdfData = {
     title: "This pdf is supplied with Patient data...",
@@ -3294,6 +3287,334 @@ createReferral = (patient) => {
     letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
   }
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "patientReferral" })
+}
+
+createOperationReminder = (patient) => {
+  const pdfData = {
+    title: "Operation Reminder",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    referral: "test reminder...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "operationReminder" })
+}
+
+createMiscNote = (patient) => {
+  const pdfData = {
+    title: "Misc Note",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    referral: "test note...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "miscNote" })
+}
+
+createSickNote = (patient) => {
+  const pdfData = {
+    title: "Sick Note",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    referral: "test sick note...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "sickNote" })
+}
+
+createInsuranceNote = (patient) => {
+  const pdfData = {
+    title: "Insurance Note",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    referral: "test insurance note...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "insuranceNote" })
+}
+
+createPrescription = (patient) => {
+  const pdfData = {
+    title: "Prescription",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    referral: "test prescription...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "prescription" })
+}
+
+createProcedureConsent = (patient) => {
+  const pdfData = {
+    title: "Procedure Consent",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    referral: "test procedure consent...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "procedureConsent" })
+}
+
+createFitToFly = (patient) => {
+  const pdfData = {
+    title: "Fit-to-Fly Authorization",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    referral: "test fit-to-fly authorization...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "fitToFlyAuthorization" })
+}
+
+createTreatmentInstruction = (patient) => {
+  const pdfData = {
+    title: "Treatment Instruction",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    referral: "test Treatment Instruction...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "treatmentInstruction" })
 }
 
 closePdfCreator = () => {
@@ -3526,6 +3847,14 @@ render() {
                     onViewAttachment={this.onViewAttachment}
                     onCreatePdf={this.createPdf}
                     onCreateReferral={this.createReferral}
+                    onCreateOperationReminder={this.createOperationReminder}
+                    onCreateMiscNote={this.createMiscNote}
+                    onCreateSickNote={this.createSickNote}
+                    onCreateInsuranceNote={this.createInsuranceNote}
+                    onCreatePrescription={this.createPrescription}
+                    onCreateProcedureConsent={this.createProcedureConsent}
+                    onCreateFitToFly={this.createFitToFly}
+                    onCreateTreatmentInstruction={this.createTreatmentInstruction}
                     onGetVisitList={this.getVisitList}
                     visitList={this.state.visitList}
                     onSelectVisit={this.selectVisit}
