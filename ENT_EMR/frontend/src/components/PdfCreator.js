@@ -3,7 +3,8 @@ import Button from 'react-bootstrap/Button';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import { PDFViewer } from '@react-pdf/renderer';
 
-import "./AttachmentViewer.css"
+import "./AttachmentViewer.css";
+import letterheadImage from "../assets/img/referralLetterhead.jpg";
 
 const styles = StyleSheet.create({
   page: {
@@ -63,10 +64,9 @@ const MyDocument = () => (
 const PatientReferral = () => (
   <Document>
     <Page size="A4" style={styles.page}>
-
       {docProps.pdfData.patient && (
       <View style={styles.section}>
-        <Image src={docProps.pdfData.letterheadImage}></Image>
+        <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
         <Text>Here is some sample data</Text>
         <Text>Patient</Text>
@@ -76,7 +76,158 @@ const PatientReferral = () => (
         <Text>Referral: {docProps.pdfData.referral}</Text>
       </View>
       )}
+    </Page>
+  </Document>
+);
 
+const OperationReminder = () => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      {docProps.pdfData.patient && (
+      <View style={styles.section}>
+        <Image src={letterheadImage}></Image>
+        <Text>{docProps.pdfData.title}</Text>
+        <Text>Here is some sample data</Text>
+        <Text>Patient</Text>
+        <Text>Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
+        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
+        <Text>Referral: {docProps.pdfData.referral}</Text>
+      </View>
+      )}
+    </Page>
+  </Document>
+);
+
+const MiscNote = () => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      {docProps.pdfData.patient && (
+      <View style={styles.section}>
+        <Image src={letterheadImage}></Image>
+        <Text>{docProps.pdfData.title}</Text>
+        <Text>Here is some sample data</Text>
+        <Text>Patient</Text>
+        <Text>Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
+        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
+        <Text>Referral: {docProps.pdfData.referral}</Text>
+      </View>
+      )}
+    </Page>
+  </Document>
+);
+
+const SickNote = () => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      {docProps.pdfData.patient && (
+      <View style={styles.section}>
+        <Image src={letterheadImage}></Image>
+        <Text>{docProps.pdfData.title}</Text>
+        <Text>Here is some sample data</Text>
+        <Text>Patient</Text>
+        <Text>Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
+        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
+        <Text>Referral: {docProps.pdfData.referral}</Text>
+      </View>
+      )}
+    </Page>
+  </Document>
+);
+
+const InsuranceNote = () => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      {docProps.pdfData.patient && (
+      <View style={styles.section}>
+        <Image src={letterheadImage}></Image>
+        <Text>{docProps.pdfData.title}</Text>
+        <Text>Here is some sample data</Text>
+        <Text>Patient</Text>
+        <Text>Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
+        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
+        <Text>Referral: {docProps.pdfData.referral}</Text>
+      </View>
+      )}
+    </Page>
+  </Document>
+);
+
+const Prescription = () => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      {docProps.pdfData.patient && (
+      <View style={styles.section}>
+        <Image src={letterheadImage}></Image>
+        <Text>{docProps.pdfData.title}</Text>
+        <Text>Here is some sample data</Text>
+        <Text>Patient</Text>
+        <Text>Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
+        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
+        <Text>Referral: {docProps.pdfData.referral}</Text>
+      </View>
+      )}
+    </Page>
+  </Document>
+);
+
+const ProcedureConsent = () => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      {docProps.pdfData.patient && (
+      <View style={styles.section}>
+        <Image src={letterheadImage}></Image>
+        <Text>{docProps.pdfData.title}</Text>
+        <Text>Here is some sample data</Text>
+        <Text>Patient</Text>
+        <Text>Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
+        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
+        <Text>Referral: {docProps.pdfData.referral}</Text>
+      </View>
+      )}
+    </Page>
+  </Document>
+);
+
+const FitToFly = () => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      {docProps.pdfData.patient && (
+      <View style={styles.section}>
+        <Image src={letterheadImage}></Image>
+        <Text>{docProps.pdfData.title}</Text>
+        <Text>Here is some sample data</Text>
+        <Text>Patient</Text>
+        <Text>Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
+        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
+        <Text>Referral: {docProps.pdfData.referral}</Text>
+      </View>
+      )}
+    </Page>
+  </Document>
+);
+
+const TreatmentInstruction = () => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      {docProps.pdfData.patient && (
+      <View style={styles.section}>
+        <Image src={letterheadImage}></Image>
+        <Text>{docProps.pdfData.title}</Text>
+        <Text>Here is some sample data</Text>
+        <Text>Patient</Text>
+        <Text>Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
+        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
+        <Text>Referral: {docProps.pdfData.referral}</Text>
+      </View>
+      )}
     </Page>
   </Document>
 );
@@ -95,6 +246,30 @@ return (
       )}
       {docProps.pdfType === "patientReferral" && (
         <PatientReferral/>
+      )}
+      {docProps.pdfType === "operationReminder" && (
+        <OperationReminder/>
+      )}
+      {docProps.pdfType === "miscNote" && (
+        <MiscNote/>
+      )}
+      {docProps.pdfType === "sickNote" && (
+        <SickNote/>
+      )}
+      {docProps.pdfType === "insuranceNote" && (
+        <InsuranceNote/>
+      )}
+      {docProps.pdfType === "prescription" && (
+        <Prescription/>
+      )}
+      {docProps.pdfType === "procedureConsent" && (
+        <ProcedureConsent/>
+      )}
+      {docProps.pdfType === "fitToFlyAuthorization" && (
+        <FitToFly/>
+      )}
+      {docProps.pdfType === "treatmentInstruction" && (
+        <TreatmentInstruction/>
       )}
     </PDFViewer>
 

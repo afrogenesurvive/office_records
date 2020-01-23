@@ -289,6 +289,54 @@ const PatientDetail = (props) => {
                       Create Referral
                     </Button>
                   </Col>
+
+                  <Col className="detailCardCol">
+                    <Button variant="warning" onClick={props.onCreateOperationReminder.bind(this, patient)}>
+                      Create Operation/Admission Reminder
+                    </Button>
+                  </Col>
+
+                  <Col className="detailCardCol">
+                    <Button variant="warning" onClick={props.onCreateMiscNote.bind(this, patient)}>
+                      Create Misc Notes
+                    </Button>
+                  </Col>
+
+                  <Col className="detailCardCol">
+                    <Button variant="warning" onClick={props.onCreateSickNote.bind(this, patient)}>
+                      Create Sick Note
+                    </Button>
+                  </Col>
+
+                  <Col className="detailCardCol">
+                    <Button variant="warning" onClick={props.onCreateInsuranceNote.bind(this, patient)}>
+                      Create Insurance Note
+                    </Button>
+                  </Col>
+
+                  <Col className="detailCardCol">
+                    <Button variant="warning" onClick={props.onCreatePrescription.bind(this, patient)}>
+                      Create Prescription
+                    </Button>
+                  </Col>
+
+                  <Col className="detailCardCol">
+                    <Button variant="warning" onClick={props.onCreateProcedureConsent.bind(this, patient)}>
+                      Create Procedure Consent
+                    </Button>
+                  </Col>
+
+                  <Col className="detailCardCol">
+                    <Button variant="warning" onClick={props.onCreateFitToFly.bind(this, patient)}>
+                      Create Unfit-to-Fly Authorization
+                    </Button>
+                  </Col>
+
+                  <Col className="detailCardCol">
+                    <Button variant="warning" onClick={props.onCreateTreatmentInstruction.bind(this, patient)}>
+                      Create Treatment Instructions
+                    </Button>
+                  </Col>
                 </Row>
 
                 </Card.Body>
