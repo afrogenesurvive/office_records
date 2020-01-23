@@ -92,7 +92,7 @@ const PatientDetail = (props) => {
 
     <Tab.Container id="left-tabs-example" defaultActiveKey="20">
       <Row>
-        <Col sm={2}>
+        <Col md={2}>
           <Nav variant="pills" className="flex-column">
             <Nav.Item>
               <Nav.Link eventKey="1">Demographics</Nav.Link>
@@ -165,7 +165,7 @@ const PatientDetail = (props) => {
             </Nav.Item>
           </Nav>
         </Col>
-        <Col sm={10}>
+        <Col md={10}>
           <Tab.Content>
             <Tab.Pane eventKey="1">
                 <Card className="PatientDetailCard">
@@ -270,6 +270,107 @@ const PatientDetail = (props) => {
                 </Row>
 
                 <Row className="detailCardRow">
+                  <Card.Text>
+                    <span className="bold">Generate Documents :</span>
+                  </Card.Text>
+                </Row>
+
+
+                  <Tab.Container id="left-tabs-example" defaultActiveKey="1">
+                    <Row>
+                      <Col md={3}>
+                        <Nav variant="pills" className="flex-column">
+                          <Nav.Item>
+                            <Nav.Link eventKey="1">Test Document</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="2">Patient Referral</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="3">Operation/Admission Reminder</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="4">Miscellaneous Note</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="5">Sick Note</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="6">Insurance Note</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="7">Prescription</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="8">Procedure Consent</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="9">Unfit-to-Fly Authorization</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="10">Treatment Instructions</Nav.Link>
+                          </Nav.Item>
+                        </Nav>
+                      </Col>
+                      <Col md={9} className="docGenBox">
+                        <Tab.Content>
+                          <Tab.Pane eventKey="1">
+                            <Button variant="warning" onClick={props.onCreatePdf.bind(this, patient)}>
+                              Create Pdf
+                            </Button>
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="2">
+                            <Button variant="warning" onClick={props.onCreateReferral.bind(this, patient)}>
+                              Create Referral
+                            </Button>
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="3">
+                            <Button variant="warning" onClick={props.onCreateOperationReminder.bind(this, patient)}>
+                              Create Operation/Admission Reminder
+                            </Button>
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="4">
+                            <Button variant="warning" onClick={props.onCreateMiscNote.bind(this, patient)}>
+                              Create Misc Notes
+                            </Button>
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="5">
+                            <Button variant="warning" onClick={props.onCreateSickNote.bind(this, patient)}>
+                              Create Sick Note
+                            </Button>
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="6">
+                            <Button variant="warning" onClick={props.onCreateInsuranceNote.bind(this, patient)}>
+                              Create Insurance Note
+                            </Button>
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="7">
+                            <Button variant="warning" onClick={props.onCreatePrescription.bind(this, patient)}>
+                              Create Prescription
+                            </Button>
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="8">
+                            <Button variant="warning" onClick={props.onCreateProcedureConsent.bind(this, patient)}>
+                              Create Procedure Consent
+                            </Button>
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="9">
+                            <Button variant="warning" onClick={props.onCreateFitToFly.bind(this, patient)}>
+                              Create Unfit-to-Fly Authorization
+                            </Button>
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="10">
+                            <Button variant="warning" onClick={props.onCreateTreatmentInstruction.bind(this, patient)}>
+                              Create Treatment Instructions
+                            </Button>
+                          </Tab.Pane>
+                        </Tab.Content>
+                      </Col>
+                    </Row>
+                  </Tab.Container>
+
+
+                <Row className="detailCardRow">
                   <Col className="detailCardCol">
                     { props.canDelete === true && (
                       <Button variant="danger" onClick={props.onDelete}>
@@ -277,70 +378,10 @@ const PatientDetail = (props) => {
                       </Button>
                     )}
                   </Col>
-
-                  <Col className="detailCardCol">
-                    <Button variant="warning" onClick={props.onCreatePdf.bind(this, patient)}>
-                      Create Pdf
-                    </Button>
-                  </Col>
-
-                  <Col className="detailCardCol">
-                    <Button variant="warning" onClick={props.onCreateReferral.bind(this, patient)}>
-                      Create Referral
-                    </Button>
-                  </Col>
-
-                  <Col className="detailCardCol">
-                    <Button variant="warning" onClick={props.onCreateOperationReminder.bind(this, patient)}>
-                      Create Operation/Admission Reminder
-                    </Button>
-                  </Col>
-
-                  <Col className="detailCardCol">
-                    <Button variant="warning" onClick={props.onCreateMiscNote.bind(this, patient)}>
-                      Create Misc Notes
-                    </Button>
-                  </Col>
-
-                  <Col className="detailCardCol">
-                    <Button variant="warning" onClick={props.onCreateSickNote.bind(this, patient)}>
-                      Create Sick Note
-                    </Button>
-                  </Col>
-
-                  <Col className="detailCardCol">
-                    <Button variant="warning" onClick={props.onCreateInsuranceNote.bind(this, patient)}>
-                      Create Insurance Note
-                    </Button>
-                  </Col>
-
-                  <Col className="detailCardCol">
-                    <Button variant="warning" onClick={props.onCreatePrescription.bind(this, patient)}>
-                      Create Prescription
-                    </Button>
-                  </Col>
-
-                  <Col className="detailCardCol">
-                    <Button variant="warning" onClick={props.onCreateProcedureConsent.bind(this, patient)}>
-                      Create Procedure Consent
-                    </Button>
-                  </Col>
-
-                  <Col className="detailCardCol">
-                    <Button variant="warning" onClick={props.onCreateFitToFly.bind(this, patient)}>
-                      Create Unfit-to-Fly Authorization
-                    </Button>
-                  </Col>
-
-                  <Col className="detailCardCol">
-                    <Button variant="warning" onClick={props.onCreateTreatmentInstruction.bind(this, patient)}>
-                      Create Treatment Instructions
-                    </Button>
-                  </Col>
                 </Row>
 
                 </Card.Body>
-                </Card>
+              </Card>
             </Tab.Pane>
             <Tab.Pane eventKey="2">
               <Card.Text>
