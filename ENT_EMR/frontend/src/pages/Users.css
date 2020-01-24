@@ -116,3 +116,7 @@
 .ul {
   text-decoration: underline;
 }
+
+.vertMenu {
+  border-right: 1px solid black;
+}
