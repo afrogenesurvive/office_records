@@ -952,6 +952,15 @@ class AppointmentsPage extends Component {
                     <Nav.Link eventKey="MasterList">MASTER LIST</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
+                    <Nav.Link eventKey="disabled" disabled>Search:</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="SearchInput">Input</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="SearchResult">Results</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
                     <Nav.Link eventKey="appointmentDetail">Selected</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
@@ -969,15 +978,7 @@ class AppointmentsPage extends Component {
                   <Nav.Item>
                     <Nav.Link eventKey="appointmentEditPatient">Patient</Nav.Link>
                   </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="disabled" disabled>Search:</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="SearchInput">Input</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="SearchResult">Results</Nav.Link>
-                  </Nav.Item>
+
                 </Nav>
               </Col>
               <Col sm={10}>

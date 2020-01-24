@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 import AuthPage from './pages/Auth';
+import HelpPage from './pages/Help';
 import SignupPage from './pages/Signup';
 import UsersPage from './pages/Users';
 import PatientsPage from './pages/Patients';
@@ -119,6 +120,7 @@ class App extends Component {
 
                 { // logged in -> pages
                 this.state.token && <Redirect from="/" to="/users" exact />}
+                {this.state.token && (<Route path="/help" component={HelpPage} />)}
                 {this.state.token && (<Route path="/users" component={UsersPage} />)}
                 {this.state.token && (<Route path="/patients" component={PatientsPage} />)}
                 {this.state.token && (<Route path="/appointments" component={AppointmentsPage} />)}

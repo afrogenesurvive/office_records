@@ -69,11 +69,25 @@ const PatientReferral = () => (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
-        <Text>Dear Dr </Text>
+        <Text>Dear Dr {docProps.pdfData.patient.referringDoctor.name} </Text>
         <Text>Thank you for referring {docProps.pdfData.patient.name} </Text>
-        <Text>who I saw on </Text>
+        <Text>who I saw on {docProps.pdfData.visitDate}</Text>
         <Text>My findings are as follows:  </Text>
+        <Text>{docProps.pdfData.findings}</Text>
+        <Text>Visit Diagnosis:  </Text>
+        <Text>title: {docProps.pdfData.visitDiagnosis[0].title}</Text>
+        <Text>date: {new Date(docProps.pdfData.visitDiagnosis[0].date.substr(0,10)*1000).toISOString().slice(0,10)}</Text>
+        <Text>type: {docProps.pdfData.visitDiagnosis[0].type}</Text>
+        <Text>description: {docProps.pdfData.visitDiagnosis[0].description}</Text>
         <Text>For this I recommend the following:  </Text>
+        <Text>{docProps.pdfData.recommendation}</Text>
+        <Text>Visit Treatment:  </Text>
+        <Text>title:{docProps.pdfData.visitTreatment[0].title}</Text>
+        <Text>type:{docProps.pdfData.visitTreatment[0].type}</Text>
+        <Text>date: {new Date(docProps.pdfData.visitTreatment[0].date.substr(0,10)*1000).toISOString().slice(0,10)}</Text>
+        <Text>description:{docProps.pdfData.visitTreatment[0].description}</Text>
+        <Text>dose:{docProps.pdfData.visitTreatment[0].dose}</Text>
+        <Text>frequency:{docProps.pdfData.visitTreatment[0].frequency}</Text>
         <Text>Referral: {docProps.pdfData.referral}</Text>
       </View>
       )}

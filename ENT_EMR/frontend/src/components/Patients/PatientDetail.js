@@ -32,6 +32,7 @@ import PatientVisit from './PatientVisit';
 
 import SearchPatientVisitForm from '../../components/Forms/SearchPatientVisitForm';
 import CreateTestPdfForm from '../../components/Forms/CreateTestPdfForm';
+import CreatePatientReferralForm from '../../components/Forms/CreatePatientReferralForm';
 
 import './PatientDetail.css';
 
@@ -640,6 +641,10 @@ const PatientDetail = (props) => {
                         <Button variant="warning" onClick={props.onCreateReferral.bind(this, patient)}>
                           Create Referral
                         </Button>
+
+                        <CreatePatientReferralForm
+                          onCreateReferral={props.onCreateReferralInput}
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="3">
                         <Button variant="warning" onClick={props.onCreateOperationReminder.bind(this, patient)}>
