@@ -3447,7 +3447,8 @@ createReferralInput = (event) => {
       visitDiagnosis: visitDiagnosis,
       visitTreatment: visitTreatment,
       letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
-    }
+    };
+
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "patientReferral" })
 }
 
@@ -3492,6 +3493,89 @@ createOperationReminder = (patient) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "operationReminder" })
 }
 
+createOperationReminderInput = (event) => {
+  event.preventDefault();
+
+    const patient = this.state.selectedPatient;
+    console.log(`
+        create operation reminder user otf input here...
+      `);
+
+    const pdfData = {
+    title: "This pdf is supplied with Patient data...",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      },
+      occupation:{
+        role: patient.occupation.role,
+        employer: patient.occupation.employer,
+        contact:{
+          phone: patient.occupation.contact.phone,
+          email: patient.occupation.contact.email
+        }},
+        appointments: patient.appointments,
+        consultant: patient.consultant,
+        insurance: patient.insurance,
+        nextOfKin: patient.nextOfKin,
+        complaints: patient.complaints,
+        surveys: patient.surveys,
+        systematicInquiry: patient.systematicInquiry,
+        vitals: patient.vitals,
+        examination: patient.examination,
+        history: patient.history,
+        allergies: patient.allergies,
+        medication: patient.medication,
+        investigation: patient.investigation,
+        diagnosis: patient.diagnosis,
+        treatment: patient.treatment,
+        billing: patient.billing,
+        vigilance: patient.vigilance,
+        attachments: patient.attachments,
+        notes: patient.notes,
+        tags: patient.tags
+      },
+      date: event.target.formGridDocGenOperationReminderDate.value,
+      name: event.target.formGridDocGenOperationReminderName.value,
+      time: event.target.formGridDocGenOperationReminderTime.value,
+      hospitalName: event.target.formGridDocGenOperationReminderHospitalName.value,
+      hospitalAddress: event.target.formGridDocGenOperationReminderHopsitalAddress.value,
+      fastDate: event.target.formGridDocGenOperationReminderFastDate.value,
+      fastTime: event.target.formGridDocGenOperationReminderFastTime.value,
+      estimateCost: event.target.formGridDocGenOperationReminderEstimateCost.value,
+      letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+    };
+
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "operationReminder" })
+}
+
 createMiscNote = (patient) => {
   const pdfData = {
     title: "Misc Note",
@@ -3530,6 +3614,83 @@ createMiscNote = (patient) => {
     referral: "test note...",
     letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
   }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "miscNote" })
+}
+
+createMiscNoteInput = (event) => {
+  event.preventDefault();
+
+    const patient = this.state.selectedPatient;
+    console.log(`
+        create misc note user otf input here...
+      `);
+
+    const pdfData = {
+    title: "This pdf is supplied with Patient data...",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      },
+      occupation:{
+        role: patient.occupation.role,
+        employer: patient.occupation.employer,
+        contact:{
+          phone: patient.occupation.contact.phone,
+          email: patient.occupation.contact.email
+        }},
+        appointments: patient.appointments,
+        consultant: patient.consultant,
+        insurance: patient.insurance,
+        nextOfKin: patient.nextOfKin,
+        complaints: patient.complaints,
+        surveys: patient.surveys,
+        systematicInquiry: patient.systematicInquiry,
+        vitals: patient.vitals,
+        examination: patient.examination,
+        history: patient.history,
+        allergies: patient.allergies,
+        medication: patient.medication,
+        investigation: patient.investigation,
+        diagnosis: patient.diagnosis,
+        treatment: patient.treatment,
+        billing: patient.billing,
+        vigilance: patient.vigilance,
+        attachments: patient.attachments,
+        notes: patient.notes,
+        tags: patient.tags
+      },
+      note1: event.target.formGridDocGenMiscNote1.value,
+      note2: event.target.formGridDocGenMiscNote2.value,
+      letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+    };
+
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "miscNote" })
 }
 
@@ -4014,7 +4175,9 @@ render() {
                     onCreateReferral={this.createReferral}
                     onCreateReferralInput={this.createReferralInput}
                     onCreateOperationReminder={this.createOperationReminder}
+                    onCreateOperationReminderInput={this.createOperationReminderInput}
                     onCreateMiscNote={this.createMiscNote}
+                    onCreateMiscNoteInput={this.createMiscNoteInput}
                     onCreateSickNote={this.createSickNote}
                     onCreateInsuranceNote={this.createInsuranceNote}
                     onCreatePrescription={this.createPrescription}

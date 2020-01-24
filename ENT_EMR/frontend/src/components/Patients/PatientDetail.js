@@ -33,6 +33,8 @@ import PatientVisit from './PatientVisit';
 import SearchPatientVisitForm from '../../components/Forms/SearchPatientVisitForm';
 import CreateTestPdfForm from '../../components/Forms/CreateTestPdfForm';
 import CreatePatientReferralForm from '../../components/Forms/CreatePatientReferralForm';
+import CreatePatientOperationReminderForm from '../../components/Forms/CreatePatientOperationReminderForm';
+import CreatePatientMiscNoteForm from '../../components/Forms/CreatePatientMiscNoteForm';
 
 import './PatientDetail.css';
 
@@ -650,11 +652,19 @@ const PatientDetail = (props) => {
                         <Button variant="warning" onClick={props.onCreateOperationReminder.bind(this, patient)}>
                           Create Operation/Admission Reminder
                         </Button>
+
+                        <CreatePatientOperationReminderForm
+                          onCreateOperationReminder={props.onCreateOperationReminderInput}
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="4">
                         <Button variant="warning" onClick={props.onCreateMiscNote.bind(this, patient)}>
                           Create Misc Notes
                         </Button>
+
+                        <CreatePatientMiscNoteForm
+                          onCreateMiscNote={props.onCreateMiscNoteInput}
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="5">
                         <Button variant="warning" onClick={props.onCreateSickNote.bind(this, patient)}>
