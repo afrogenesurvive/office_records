@@ -452,6 +452,7 @@ class ThisUserPage extends Component {
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({ userAlert: responseAlert})
         this.getThisUser();
+        this.setState({ userAlert: "uploading ttachment..." });
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -565,15 +566,16 @@ class ThisUserPage extends Component {
       return res.json();
     })
     .then(resData => {
-      const updatedUserId = resData.data.deleteUserAttendance._id;
-      const updatedUser = this.state.users.find(e => e._id === updatedUserId);
-      const updatedUserPos = this.state.users.indexOf(updatedUser);
-      const slicedArray = this.state.users.splice(updatedUserPos, 1);
-      this.state.users.push(resData.data.deleteUserAttendance);
-      this.context.users = this.state.users;
-      const responseAlert = JSON.stringify(resData.data).slice(2,25);
-      this.setState({ userAlert: responseAlert})
+      // const updatedUserId = resData.data.deleteUserAttendance._id;
+      console.log(JSON.stringify(resData.data.deleteUserAttendance));
+      // const updatedUser = this.state.users.find(e => e._id === updatedUserId);
+      // const updatedUserPos = this.state.users.indexOf(updatedUser);
+      // const slicedArray = this.state.users.splice(updatedUserPos, 1);
+      // this.state.users.push(resData.data.deleteUserAttendance);
+      // this.context.users = this.state.users;
+      const responseAlert = JSON.stringify(resData.data.deleteUserAttendance).slice(2,25);
       this.getThisUser();
+      this.setState({ userAlert: responseAlert, user: resData.data.deleteUserAttendance })
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -824,7 +826,8 @@ class ThisUserPage extends Component {
 
                 <Tab.Pane eventKey="Demographics">
                   <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit Demographics</Button>
-                  {this.state.updating === true && (
+                  {this.state.updating === true &&
+                    this.state.user !== null && (
                     <UpdateUserForm
                     canCancelProfile
                       canConfirm
@@ -838,16 +841,11 @@ class ThisUserPage extends Component {
                 </Tab.Pane>
 
                 <Tab.Pane eventKey="userEditField">
-                  {this.state.selectedUser === null && (
-                    <Button variant="outline-warning" size="lg" className="confirmEditButton">
-                      Select a Staff member from the Master List
-                    </Button>
-                  )}
-                  {this.state.selectedUser !== null && (
+                  {this.state.user !== null && (
                     <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startUpdateUserHandler}>Edit a Single Field</Button>
                   )}
                   {this.state.updating &&
-                    this.state.selectedUser !== null
+                    this.state.user !== null
                     && (
                       <UpdateUserFieldForm
                         authUserId={this.context.userId}
@@ -856,7 +854,7 @@ class ThisUserPage extends Component {
                         onCancel={this.modalCancelHandler}
                         onConfirm={this.modalConfirmUpdateFieldHandler}
                         confirmText="Confirm"
-                        user={this.state.selectedUser}
+                        user={this.state.user}
                       />
                   )}
                 </Tab.Pane>
@@ -871,7 +869,7 @@ class ThisUserPage extends Component {
                       onCancel={this.modalCancelHandler}
                       onConfirm={this.updateUserAttendanceHandler}
                       confirmText="Confirm"
-                      user={this.state.selectedUser}
+                      user={this.state.user}
                     />
                   )}
                 </Tab.Pane>
@@ -886,7 +884,7 @@ class ThisUserPage extends Component {
                       onCancel={this.modalCancelHandler}
                       onConfirm={this.updateUserAttachmentHandler}
                       confirmText="Confirm"
-                      user={this.state.selectedUser}
+                      user={this.state.user}
                     />
                   )}
                 </Tab.Pane>
@@ -901,7 +899,7 @@ class ThisUserPage extends Component {
                       onCancel={this.modalCancelHandler}
                       onConfirm={this.updateUserLeaveHandler}
                       confirmText="Confirm"
-                      user={this.state.selectedUser}
+                      user={this.state.user}
                     />
                   )}
                 </Tab.Pane>

@@ -17,6 +17,12 @@ const patientSurveyItem = props => (
 
           <ul className="cardUl">
             <li className="cardLi">
+            <p className="userItemHeading"> Date:</p>
+            <p className="userItemText">
+            {props.date}
+            </p>
+            </li>
+            <li className="cardLi">
             <p className="userItemHeading"> Title:</p>
             <p className="userItemText">
             {props.title}

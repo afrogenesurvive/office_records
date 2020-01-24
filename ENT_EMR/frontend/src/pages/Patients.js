@@ -3364,6 +3364,93 @@ createReferral = (patient) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "patientReferral" })
 }
 
+createReferralInput = (event) => {
+  event.preventDefault();
+
+    const visitDate = new Date(event.target.formGridDocGenReferralVisitDate.value).toISOString().substring(0, 10);
+    const patient = this.state.selectedPatient;
+    const visitDiagnosis = patient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    const visitTreatment = patient.treatment.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    console.log(`
+        create referral user otf input here...
+        ${event.target.formGridDocGenReferralVisitDate.value},
+        ${event.target.formGridDocGenReferralRecommendation.value},
+        ${event.target.formGridDocGenReferralFindings.value},
+        visitDiagnosis: ${JSON.stringify(visitDiagnosis)},
+      `);
+
+    const pdfData = {
+    title: "This pdf is supplied with Patient data...",
+    visitDate: visitDate,
+    findings: event.target.formGridDocGenReferralFindings.value,
+    recommendation: event.target.formGridDocGenReferralRecommendation.value,
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      },
+      occupation:{
+        role: patient.occupation.role,
+        employer: patient.occupation.employer,
+        contact:{
+          phone: patient.occupation.contact.phone,
+          email: patient.occupation.contact.email
+        }},
+        appointments: patient.appointments,
+        consultant: patient.consultant,
+        insurance: patient.insurance,
+        nextOfKin: patient.nextOfKin,
+        complaints: patient.complaints,
+        surveys: patient.surveys,
+        systematicInquiry: patient.systematicInquiry,
+        vitals: patient.vitals,
+        examination: patient.examination,
+        history: patient.history,
+        allergies: patient.allergies,
+        medication: patient.medication,
+        investigation: patient.investigation,
+        diagnosis: patient.diagnosis,
+        treatment: patient.treatment,
+        billing: patient.billing,
+        vigilance: patient.vigilance,
+        attachments: patient.attachments,
+        notes: patient.notes,
+        tags: patient.tags
+      },
+      referral: "test referral... now w/ input",
+      visitDiagnosis: visitDiagnosis,
+      visitTreatment: visitTreatment,
+      letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+    }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "patientReferral" })
+}
+
 createOperationReminder = (patient) => {
   const pdfData = {
     title: "Operation Reminder",
@@ -3785,6 +3872,15 @@ render() {
                 <Nav.Link eventKey="MasterList">MASTER LIST</Nav.Link>
               </Nav.Item>
               <Nav.Item>
+                <Nav.Link eventKey="disabled" disabled>Search:</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="SearchInput">Input</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="SearchResult">Results</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
                 <Nav.Link eventKey="patientDetail">Selected</Nav.Link>
               </Nav.Item>
               <Nav.Item>
@@ -3862,15 +3958,7 @@ render() {
               <Nav.Item>
                 <Nav.Link eventKey="patientEditTag">Tag</Nav.Link>
               </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="disabled" disabled>Search:</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="SearchInput">Input</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="SearchResult">Search</Nav.Link>
-              </Nav.Item>
+
             </Nav>
           </Col>
 
@@ -3924,6 +4012,7 @@ render() {
                     onCreatePdf={this.createPdf}
                     onCreatePdfTest={this.createPdfTest}
                     onCreateReferral={this.createReferral}
+                    onCreateReferralInput={this.createReferralInput}
                     onCreateOperationReminder={this.createOperationReminder}
                     onCreateMiscNote={this.createMiscNote}
                     onCreateSickNote={this.createSickNote}

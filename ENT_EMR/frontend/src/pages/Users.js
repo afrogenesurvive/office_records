@@ -1159,6 +1159,15 @@ showDetailHandler = userId => {
                         <Nav.Link eventKey="MasterList">MASTER LIST</Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
+                        <Nav.Link eventKey="disabled" disabled>Search:</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="SearchInput">Input</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="SearchResult">Results</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
                         <Nav.Link eventKey="userDetail">Selected</Nav.Link>
                       </Nav.Item>
                       { this.context.user.role === "admin" && (
@@ -1187,15 +1196,7 @@ showDetailHandler = userId => {
                       <Nav.Item>
                         <Nav.Link eventKey="userEditAttachment">Attachment</Nav.Link>
                       </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="disabled" disabled>Search:</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="SearchInput">Input</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="SearchResult">Results</Nav.Link>
-                      </Nav.Item>
+
                     </Nav>
                   </Col>
 

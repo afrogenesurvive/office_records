@@ -120,3 +120,11 @@
 .vertMenu {
   border-right: 1px solid black;
 }
+
+.helpPageMainCol {
+  margin-top: 10rem;
+}
+
+.helpAccordion {
+  margin: 0 3rem 0 5rem;
+}
