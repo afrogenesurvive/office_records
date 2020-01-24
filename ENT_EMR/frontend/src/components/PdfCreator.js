@@ -65,8 +65,8 @@ const MyDocument = () => (
 const PatientReferral = () => (
   <Document>
     <Page size="A4" style={styles.page}>
-      {docProps.pdfData.patient && (
-      <View style={styles.section}>
+    <View style={styles.section}>
+
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
         <Text>Dear Dr {docProps.pdfData.patient.referringDoctor.name} </Text>
@@ -74,13 +74,16 @@ const PatientReferral = () => (
         <Text>who I saw on {docProps.pdfData.visitDate}</Text>
         <Text>My findings are as follows:  </Text>
         <Text>{docProps.pdfData.findings}</Text>
+        <Text>For this I recommend the following:  </Text>
+        <Text>{docProps.pdfData.recommendation}</Text>
+        <Text>Referral: {docProps.pdfData.referral}</Text>
+    
         <Text>Visit Diagnosis:  </Text>
         <Text>title: {docProps.pdfData.visitDiagnosis[0].title}</Text>
         <Text>date: {new Date(docProps.pdfData.visitDiagnosis[0].date.substr(0,10)*1000).toISOString().slice(0,10)}</Text>
         <Text>type: {docProps.pdfData.visitDiagnosis[0].type}</Text>
         <Text>description: {docProps.pdfData.visitDiagnosis[0].description}</Text>
-        <Text>For this I recommend the following:  </Text>
-        <Text>{docProps.pdfData.recommendation}</Text>
+    
         <Text>Visit Treatment:  </Text>
         <Text>title:{docProps.pdfData.visitTreatment[0].title}</Text>
         <Text>type:{docProps.pdfData.visitTreatment[0].type}</Text>
@@ -88,9 +91,8 @@ const PatientReferral = () => (
         <Text>description:{docProps.pdfData.visitTreatment[0].description}</Text>
         <Text>dose:{docProps.pdfData.visitTreatment[0].dose}</Text>
         <Text>frequency:{docProps.pdfData.visitTreatment[0].frequency}</Text>
-        <Text>Referral: {docProps.pdfData.referral}</Text>
+
       </View>
-      )}
     </Page>
   </Document>
 );
@@ -102,12 +104,22 @@ const OperationReminder = () => (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
-        <Text>Here is some sample data</Text>
-        <Text>Patient</Text>
         <Text>Name: {docProps.pdfData.patient.name}</Text>
-        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
-        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
-        <Text>Referral: {docProps.pdfData.referral}</Text>
+        <Text>Age: {docProps.pdfData.patient.age}</Text>
+        <Text>Address: {docProps.pdfData.patient.address.number}, {docProps.pdfData.patient.address.street}</Text>
+        <Text>{docProps.pdfData.patient.address.town}, {docProps.pdfData.patient.address.parish}</Text>
+        <Text>Operation Name: {docProps.pdfData.name}</Text>
+        <Text>Hospital Name: {docProps.pdfData.hospitalName}</Text>
+        <Text>Address: {docProps.pdfData.hospitalAddress}</Text>
+        <Text>Date of Operation: {docProps.pdfData.date}</Text>
+        <Text>Time: {docProps.pdfData.time}</Text>
+
+        <Text>You must attend ... {docProps.pdfData.hospitalName} Hospital</Text>
+        <Text>At... {docProps.pdfData.time} ... on ... {docProps.pdfData.date} </Text>
+        <Text>You should have NOTHING to Eat or Drink after ... {docProps.pdfData.fastTime} ... on ... {docProps.pdfData.fastDate}</Text>
+        <Text>Please take night clothes, toilet articles and hospital fee with you!</Text>
+
+        <Text>Estimated Cost: {docProps.pdfData.estimateCost}</Text>
       </View>
       )}
     </Page>
@@ -121,12 +133,9 @@ const MiscNote = () => (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
-        <Text>Here is some sample data</Text>
-        <Text>Patient</Text>
         <Text>Name: {docProps.pdfData.patient.name}</Text>
-        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
-        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
-        <Text>Referral: {docProps.pdfData.referral}</Text>
+        <Text>note #1: {docProps.pdfData.note1}</Text>
+        <Text>note #2: {docProps.pdfData.note2}</Text>
       </View>
       )}
     </Page>
