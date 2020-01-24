@@ -3182,9 +3182,84 @@ closeAttachmentView = () => {
     this.setState({showAttachment: false})
 }
 
-createPdf = (patient) => {
+createPdf = (patient, args) => {
     const pdfData = {
     title: "This pdf is supplied with Patient data...",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      },
+      occupation:{
+        role: patient.occupation.role,
+        employer: patient.occupation.employer,
+        contact:{
+          phone: patient.occupation.contact.phone,
+          email: patient.occupation.contact.email
+        }},
+        appointments: patient.appointments,
+        consultant: patient.consultant,
+        insurance: patient.insurance,
+        nextOfKin: patient.nextOfKin,
+        complaints: patient.complaints,
+        surveys: patient.surveys,
+        systematicInquiry: patient.systematicInquiry,
+        vitals: patient.vitals,
+        examination: patient.examination,
+        history: patient.history,
+        allergies: patient.allergies,
+        medication: patient.medication,
+        investigation: patient.investigation,
+        diagnosis: patient.diagnosis,
+        treatment: patient.treatment,
+        billing: patient.billing,
+        vigilance: patient.vigilance,
+        attachments: patient.attachments,
+        notes: patient.notes,
+        tags: patient.tags
+      }
+    }
+  this.setState({creatingDocument: true, pdfType: "test", pdfData: pdfData})
+}
+
+createPdfTest = (event) => {
+  event.preventDefault();
+  console.log(`
+      create pdf user otf input here...
+      ${event.target.formGridDocGenUserInput.value}
+      ${event.target.formGridDocGenVisitDate.value}
+    `);
+
+    const patient = this.state.selectedPatient;
+    const pdfData = {
+    title: "This pdf is supplied with Patient data...",
+    test: event.target.formGridDocGenUserInput.value,
     patient: {
       _id: patient._id,
       title: patient.title,
@@ -3847,6 +3922,7 @@ render() {
                     tagDelete={this.deletePatientTagItem}
                     onViewAttachment={this.onViewAttachment}
                     onCreatePdf={this.createPdf}
+                    onCreatePdfTest={this.createPdfTest}
                     onCreateReferral={this.createReferral}
                     onCreateOperationReminder={this.createOperationReminder}
                     onCreateMiscNote={this.createMiscNote}
