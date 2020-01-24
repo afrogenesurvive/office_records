@@ -31,6 +31,7 @@ import PatientVisitList from './PatientList/PatientVisitList';
 import PatientVisit from './PatientVisit';
 
 import SearchPatientVisitForm from '../../components/Forms/SearchPatientVisitForm';
+import CreateTestPdfForm from '../../components/Forms/CreateTestPdfForm';
 
 import './PatientDetail.css';
 
@@ -92,7 +93,7 @@ const PatientDetail = (props) => {
 
     <Tab.Container id="left-tabs-example" defaultActiveKey="20">
       <Row>
-        <Col md={2} className="vertMenu">
+        <Col md={3} className="vertMenu">
           <Nav variant="pills" className="flex-column">
             <Nav.Item>
               <Nav.Link eventKey="1">Demographics</Nav.Link>
@@ -168,7 +169,7 @@ const PatientDetail = (props) => {
             </Nav.Item>
           </Nav>
         </Col>
-        <Col md={10} className="leftPadBoost">
+        <Col md={9} className="leftPadBoost">
           <Tab.Content>
             <Tab.Pane eventKey="1">
                 <Card className="PatientDetailCard extraWide">
@@ -625,9 +626,15 @@ const PatientDetail = (props) => {
                   <Col md={9} className="docGenBox">
                     <Tab.Content>
                       <Tab.Pane eventKey="1">
+
                         <Button variant="warning" onClick={props.onCreatePdf.bind(this, patient)}>
                           Create Pdf
                         </Button>
+
+                        <CreateTestPdfForm
+                          onCreatePdfTest={props.onCreatePdfTest}
+                        />
+
                       </Tab.Pane>
                       <Tab.Pane eventKey="2">
                         <Button variant="warning" onClick={props.onCreateReferral.bind(this, patient)}>

@@ -28,6 +28,7 @@ const MyDocument = () => (
         <Text>This is a test document</Text>
         <Text>I could be a prescription, referral or the like.</Text>
         <Text>{docProps.pdfData.title}</Text>
+        <Text>{docProps.pdfData.test}</Text>
       </View>
 
       {docProps.pdfData.user && (
@@ -68,11 +69,11 @@ const PatientReferral = () => (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
-        <Text>Here is some sample data</Text>
-        <Text>Patient</Text>
-        <Text>Name: {docProps.pdfData.patient.name}</Text>
-        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
-        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
+        <Text>Dear Dr </Text>
+        <Text>Thank you for referring {docProps.pdfData.patient.name} </Text>
+        <Text>who I saw on </Text>
+        <Text>My findings are as follows:  </Text>
+        <Text>For this I recommend the following:  </Text>
         <Text>Referral: {docProps.pdfData.referral}</Text>
       </View>
       )}
