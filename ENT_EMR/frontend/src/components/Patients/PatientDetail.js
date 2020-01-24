@@ -91,7 +91,7 @@ const PatientDetail = (props) => {
 
 
     <Tab.Container id="left-tabs-example" defaultActiveKey="20">
-      <Row>
+      <Row className="extraWide">
         <Col md={2}>
           <Nav variant="pills" className="flex-column">
             <Nav.Item>
