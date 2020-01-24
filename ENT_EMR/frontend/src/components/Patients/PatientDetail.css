@@ -62,5 +62,13 @@
 }
 
 .extraWide {
-  width: 150%;
+  width: 150% !important;
+}
+
+.vertMenu {
+  border-right: 1px solid black;
+}
+
+.leftPadBoost {
+  padding-left: 3rem;
 }

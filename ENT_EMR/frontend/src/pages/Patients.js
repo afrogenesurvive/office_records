@@ -3704,7 +3704,7 @@ render() {
     <Container className="containerCombinedDetail">
       <Tab.Container id="left-tabs-example" defaultActiveKey="patientDetail">
         <Row>
-          <Col md={2}>
+          <Col md={2} className="vertMenu">
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
                 <Nav.Link eventKey="MasterList">MASTER LIST</Nav.Link>
@@ -3798,6 +3798,7 @@ render() {
               </Nav.Item>
             </Nav>
           </Col>
+
           <Col md={10}>
             <Tab.Content>
               <Tab.Pane eventKey="patientDetail">

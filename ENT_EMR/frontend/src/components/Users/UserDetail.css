@@ -31,3 +31,7 @@
 .detailCardCol {
   margin: .5rem auto;
 }
+
+.vertMenu {
+  border-right: 1px solid black;
+}
