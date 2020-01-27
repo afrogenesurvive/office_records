@@ -19,7 +19,8 @@
   height: 80vh;
   /* width: 50vw; */
   /* margin: 5rem 2rem 0 2rem; */
-  margin-top: 5rem;
+  margin-top: 7rem;
+  margin-left: 1rem; 
   width: 100%;
   overflow: scroll;
   padding: 0;
@@ -27,7 +28,7 @@
 .containerProfile {
   height: 85vh;
   /* width: 50vw; */
-  margin: 5rem 0 0 0;
+  margin: 7rem 0 0 0;
   width: 100%;
   overflow: scroll;
   padding: 0;

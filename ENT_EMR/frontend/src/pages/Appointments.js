@@ -5,7 +5,6 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
-import SidebarPage from './Sidebar';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
@@ -16,6 +15,8 @@ import AuthContext from '../context/auth-context';
 import AlertBox from '../components/AlertBox';
 import PdfCreator from '../components/PdfCreator';
 import LoadingOverlay from '../components/LoadingOverlay';
+import SidebarPage from './Sidebar';
+import SidebarControl from '../components/SidebarControl';
 
 import AppointmentList from '../components/Appointments/AppointmentList/AppointmentList';
 import AppointmentDetail from '../components/Appointments/AppointmentDetail';
@@ -52,7 +53,10 @@ class AppointmentsPage extends Component {
     creatingDocument: false,
     createPdf: false,
     pdfData: null,
-    pdfType: null
+    pdfType: null,
+    sidebarShow: true,
+    mCol1Size: 3,
+    mCol2Size: 9
   };
   isActive = true;
 
@@ -906,8 +910,28 @@ class AppointmentsPage extends Component {
   }
 
   closePdfCreator = () => {
-
       this.setState({createPdf: false, pdfData: null})
+  }
+
+
+  showSidebar = () => {
+    console.log(`
+      showing sidebar...
+      `);
+      this.setState({
+        sidebarShow: true,
+        mCol2Size: 9
+      })
+  }
+
+  hideSidebar = () => {
+    console.log(`
+      hiding sidebar...
+      `);
+      this.setState({
+        sidebarShow: false,
+        mCol2Size: 11
+      })
   }
 
   componentWillUnmount() {
@@ -925,20 +949,24 @@ class AppointmentsPage extends Component {
           onClosePdfCreator={this.closePdfCreator}
         />
       )}
+      <AlertBox
+        authUserId={this.context.userId}
+        alert={this.state.userAlert}
+      />
+      <SidebarControl
+        onShowSidebar={this.showSidebar}
+        onHideSidebar={this.hideSidebar}
+      />
 
       <Accordion>
 
       <Row>
 
-      <Col md={3} className="MasterCol1">
-
-      <AlertBox
-            authUserId={this.context.userId}
-            alert={this.state.userAlert}
-          />
-      <SidebarPage/>
-
-      </Col>
+      {this.state.sidebarShow === true && (
+        <Col md={3} className="MasterCol1">
+          <SidebarPage/>
+        </Col>
+      )}
 
       <Col md={9} className="MasterCol2">
 

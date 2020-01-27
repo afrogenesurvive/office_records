@@ -14,6 +14,7 @@ import AttachmentViewer from '../components/AttachmentViewer';
 import PdfCreator from '../components/PdfCreator';
 import LoadingOverlay from '../components/LoadingOverlay';
 import SidebarPage from './Sidebar';
+import SidebarControl from '../components/SidebarControl';
 
 import UpdateUserForm from '../components/Forms/UpdateUserForm';
 import ThisUserProfile from '../components/Users/thisUserProfile';
@@ -42,6 +43,9 @@ class ThisUserPage extends Component {
     pdfType: null,
     showThisAttachmentFile: null,
     showThisAttachmentType: null,
+    sidebarShow: true,
+    mCol1Size: 3,
+    mCol2Size: 9
   };
   isActive = true;
 
@@ -576,6 +580,7 @@ class ThisUserPage extends Component {
       const responseAlert = JSON.stringify(resData.data.deleteUserAttendance).slice(2,25);
       this.getThisUser();
       this.setState({ userAlert: responseAlert, user: resData.data.deleteUserAttendance })
+      return
     })
     .catch(err => {
       this.setState({userAlert: err});
@@ -730,6 +735,25 @@ class ThisUserPage extends Component {
       this.setState({createPdf: false, pdfData: null})
   }
 
+  showSidebar = () => {
+    console.log(`
+      showing sidebar...
+      `);
+      this.setState({
+        sidebarShow: true,
+        mCol2Size: 9
+      })
+  }
+
+  hideSidebar = () => {
+    console.log(`
+      hiding sidebar...
+      `);
+      this.setState({
+        sidebarShow: false,
+        mCol2Size: 11
+      })
+  }
 
 
   componentWillUnmount() {
@@ -747,7 +771,6 @@ class ThisUserPage extends Component {
           attachmentType={this.state.showThisAttachmentType}
         />
       )}
-
       {this.state.creatingDocument === true && (
         <PdfCreator
           pdfType={this.state.pdfType}
@@ -755,26 +778,31 @@ class ThisUserPage extends Component {
           onClosePdfCreator={this.closePdfCreator}
         />
       )}
-
-      <Row>
-      <Col md={3} className="MasterCol1">
       <AlertBox
         authUserId={this.context.userId}
         alert={this.state.userAlert}
       />
-
+      <SidebarControl
+        onShowSidebar={this.showSidebar}
+        onHideSidebar={this.hideSidebar}
+      />
       {this.state.overlay === true && (
         <LoadingOverlay
           status={this.state.overlayStatus}
         />
       )}
 
-      <SidebarPage
-        you={this.state.user}
-      />
-      </Col>
+      <Row>
 
-      <Col md={9} className="MasterCol2">
+      {this.state.sidebarShow === true && (
+        <Col md={3} className="MasterCol1">
+        <SidebarPage
+          you={this.state.user}
+        />
+        </Col>
+      )}
+
+      <Col md={this.state.mCol2Size} className="MasterCol2">
         <Container className="containerProfile">
 
         <Tab.Container id="left-tabs-example" defaultActiveKey="Detail">

@@ -6,7 +6,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
-import SidebarPage from './Sidebar';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
@@ -25,6 +24,8 @@ import AlertBox from '../components/AlertBox';
 import AttachmentViewer from '../components/AttachmentViewer';
 import PdfCreator from '../components/PdfCreator';
 import LoadingOverlay from '../components/LoadingOverlay';
+import SidebarPage from './Sidebar';
+import SidebarControl from '../components/SidebarControl';
 
 import CreatePatientForm from '../components/Forms/CreatePatientForm';
 import UpdatePatientForm from '../components/Forms/UpdatePatientForm';
@@ -93,7 +94,10 @@ class PatientsPage extends Component {
     creatingDocument: false,
     createPdf: false,
     pdfData: null,
-    pdfType: null
+    pdfType: null,
+    sidebarShow: true,
+    mCol1Size: 3,
+    mCol2Size: 9
   };
   isActive = true;
 
@@ -3735,6 +3739,84 @@ createSickNote = (patient) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "sickNote" })
 }
 
+createSickNoteInput = (event) => {
+  event.preventDefault();
+
+    const patient = this.state.selectedPatient;
+    console.log(`
+        create Sick note user otf input here...
+      `);
+
+    const pdfData = {
+    title: "This pdf is supplied with Patient data...",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      },
+      occupation:{
+        role: patient.occupation.role,
+        employer: patient.occupation.employer,
+        contact:{
+          phone: patient.occupation.contact.phone,
+          email: patient.occupation.contact.email
+        }},
+        appointments: patient.appointments,
+        consultant: patient.consultant,
+        insurance: patient.insurance,
+        nextOfKin: patient.nextOfKin,
+        complaints: patient.complaints,
+        surveys: patient.surveys,
+        systematicInquiry: patient.systematicInquiry,
+        vitals: patient.vitals,
+        examination: patient.examination,
+        history: patient.history,
+        allergies: patient.allergies,
+        medication: patient.medication,
+        investigation: patient.investigation,
+        diagnosis: patient.diagnosis,
+        treatment: patient.treatment,
+        billing: patient.billing,
+        vigilance: patient.vigilance,
+        attachments: patient.attachments,
+        notes: patient.notes,
+        tags: patient.tags
+      },
+      date: new Date(),
+      duration: event.target.formGridDocGenSickNoteDuration.value,
+      startDate: event.target.formGridDocGenSickNoteStartDate.value,
+      letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+    };
+
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "sickNote" })
+}
+
 createInsuranceNote = (patient) => {
   const pdfData = {
     title: "Insurance Note",
@@ -3773,6 +3855,86 @@ createInsuranceNote = (patient) => {
     referral: "test insurance note...",
     letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
   }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "insuranceNote" })
+}
+
+createInsuranceNoteInput = (event) => {
+  event.preventDefault();
+
+    const patient = this.state.selectedPatient;
+    console.log(`
+        create Insurance note user otf input here...
+      `);
+
+    const pdfData = {
+    title: "This pdf is supplied with Patient data...",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      },
+      occupation:{
+        role: patient.occupation.role,
+        employer: patient.occupation.employer,
+        contact:{
+          phone: patient.occupation.contact.phone,
+          email: patient.occupation.contact.email
+        }},
+        appointments: patient.appointments,
+        consultant: patient.consultant,
+        insurance: patient.insurance,
+        nextOfKin: patient.nextOfKin,
+        complaints: patient.complaints,
+        surveys: patient.surveys,
+        systematicInquiry: patient.systematicInquiry,
+        vitals: patient.vitals,
+        examination: patient.examination,
+        history: patient.history,
+        allergies: patient.allergies,
+        medication: patient.medication,
+        investigation: patient.investigation,
+        diagnosis: patient.diagnosis,
+        treatment: patient.treatment,
+        billing: patient.billing,
+        vigilance: patient.vigilance,
+        attachments: patient.attachments,
+        notes: patient.notes,
+        tags: patient.tags
+      },
+      operation: event.target.formGridDocGenInsuranceNoteOperation.value,
+      operationDate: event.target.formGridDocGenInsuranceNoteOperationDate.value,
+      surgeonFee: event.target.formGridDocGenInsuranceNoteSurgeonFee.value,
+      assistantSurgeonFee: event.target.formGridDocGenInsuranceNoteAssistantSurgeonFee.value,
+      anesthetistsFee: event.target.formGridDocGenInsuranceNoteAnesthetistFee.value,
+      letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+    };
+
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "insuranceNote" })
 }
 
@@ -3992,6 +4154,26 @@ newVisitComplete = () => {
   })
 }
 
+showSidebar = () => {
+  console.log(`
+    showing sidebar...
+    `);
+    this.setState({
+      sidebarShow: true,
+      mCol2Size: 9
+    })
+}
+
+hideSidebar = () => {
+  console.log(`
+    hiding sidebar...
+    `);
+    this.setState({
+      sidebarShow: false,
+      mCol2Size: 11
+    })
+}
+
 componentWillUnmount() {
   this.isActive = false;
 }
@@ -4013,17 +4195,25 @@ render() {
       onClosePdfCreator={this.closePdfCreator}
     />
     )}
-    <Accordion>
-    <Row>
-    <Col md={3} className="MasterCol1">
     <AlertBox
       authUserId={this.context.userId}
       alert={this.state.userAlert}
     />
-    <SidebarPage/>
-    </Col>
+    <SidebarControl
+      onShowSidebar={this.showSidebar}
+      onHideSidebar={this.hideSidebar}
+    />
 
-    <Col md={9} className="MasterCol2">
+    <Accordion>
+    <Row>
+
+    {this.state.sidebarShow === true && (
+      <Col md={3} className="MasterCol1">
+      <SidebarPage/>
+      </Col>
+    )}
+
+    <Col md={this.state.mCol2Size} className="MasterCol2">
     <Container className="containerCombinedDetail">
       <Tab.Container id="left-tabs-example" defaultActiveKey="patientDetail">
         <Row>
@@ -4179,7 +4369,9 @@ render() {
                     onCreateMiscNote={this.createMiscNote}
                     onCreateMiscNoteInput={this.createMiscNoteInput}
                     onCreateSickNote={this.createSickNote}
+                    onCreateSickNoteInput={this.createSickNoteInput}
                     onCreateInsuranceNote={this.createInsuranceNote}
+                    onCreateInsuranceNoteInput={this.createInsuranceNoteInput}
                     onCreatePrescription={this.createPrescription}
                     onCreateProcedureConsent={this.createProcedureConsent}
                     onCreateFitToFly={this.createFitToFly}

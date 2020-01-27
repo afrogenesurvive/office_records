@@ -18,6 +18,7 @@ import UserDetail from '../components/Users/UserDetail';
 
 import Spinner from '../components/Spinner/Spinner';
 import SidebarPage from './Sidebar';
+import SidebarControl from '../components/SidebarControl';
 import AlertBox from '../components/AlertBox';
 import LoadingOverlay from '../components/LoadingOverlay';
 import AttachmentViewer from '../components/AttachmentViewer';
@@ -62,7 +63,9 @@ class UsersPage extends Component {
     creatingDocument: false,
     createPdf: false,
     pdfData: null,
-    pdfType: null
+    pdfType: null,sidebarShow: true,
+    mCol1Size: 3,
+    mCol2Size: 9
   };
   isActive = true;
 
@@ -1113,6 +1116,26 @@ showDetailHandler = userId => {
     this.setState({searchUsers: [], userAlert: "clearing user search results"});
   }
 
+  showSidebar = () => {
+    console.log(`
+      showing sidebar...
+      `);
+      this.setState({
+        sidebarShow: true,
+        mCol2Size: 9
+      })
+  }
+
+  hideSidebar = () => {
+    console.log(`
+      hiding sidebar...
+      `);
+      this.setState({
+        sidebarShow: false,
+        mCol2Size: 11
+      })
+  }
+
   componentWillUnmount() {
     this.isActive = false;
   }
@@ -1134,22 +1157,33 @@ showDetailHandler = userId => {
           onClosePdfCreator={this.closePdfCreator}
         />
       )}
-      <Accordion>
-        <Row>
-        <Col md={3} className="MasterCol1">
-        <AlertBox
-          authUserId={this.context.userId}
-          alert={this.state.userAlert}
+      <AlertBox
+        authUserId={this.context.userId}
+        alert={this.state.userAlert}
+      />
+      <SidebarControl
+        onShowSidebar={this.showSidebar}
+        onHideSidebar={this.hideSidebar}
+      />
+      {this.state.overlay === true && (
+        <LoadingOverlay
+          status={this.state.overlayStatus}
         />
-        {this.state.overlay === true && (
-          <LoadingOverlay
-            status={this.state.overlayStatus}
-          />
-        )}
-        <SidebarPage/>
-        </Col>
+      )}
 
-        <Col md={9} className="MasterCol2">
+      <Accordion>
+
+        <Row>
+
+        {this.state.sidebarShow === true && (
+          <Col md={3} className="MasterCol1">
+          <SidebarPage
+            you={this.state.selectedUser}
+          />
+          </Col>
+        )}
+
+        <Col md={this.state.mCol2Size} className="MasterCol2">
             <Container className="containerCombinedDetail">
               <Tab.Container id="left-tabs-example" defaultActiveKey="userDetail">
                 <Row>

@@ -35,6 +35,8 @@ import CreateTestPdfForm from '../../components/Forms/CreateTestPdfForm';
 import CreatePatientReferralForm from '../../components/Forms/CreatePatientReferralForm';
 import CreatePatientOperationReminderForm from '../../components/Forms/CreatePatientOperationReminderForm';
 import CreatePatientMiscNoteForm from '../../components/Forms/CreatePatientMiscNoteForm';
+import CreatePatientSickNoteForm from '../../components/Forms/CreatePatientSickNoteForm';
+import CreatePatientInsuranceNoteForm from '../../components/Forms/CreatePatientInsuranceNoteForm';
 
 import './PatientDetail.css';
 
@@ -102,6 +104,12 @@ const PatientDetail = (props) => {
               <Nav.Link eventKey="1">Demographics</Nav.Link>
             </Nav.Item>
             <Nav.Item>
+              <Nav.Link eventKey="20">Visit List</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="21">Visit Search</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
               <Nav.Link eventKey="2">Appointments</Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -161,12 +169,7 @@ const PatientDetail = (props) => {
             <Nav.Item>
               <Nav.Link eventKey="19">Tags</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="20">Visit List</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="21">Visit Search</Nav.Link>
-            </Nav.Item>
+
             <Nav.Item>
               <Nav.Link eventKey="24">Create Documents</Nav.Link>
             </Nav.Item>
@@ -670,11 +673,19 @@ const PatientDetail = (props) => {
                         <Button variant="warning" onClick={props.onCreateSickNote.bind(this, patient)}>
                           Create Sick Note
                         </Button>
+
+                        <CreatePatientSickNoteForm
+                          onCreateSickNote={props.onCreateSickNoteInput}
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="6">
                         <Button variant="warning" onClick={props.onCreateInsuranceNote.bind(this, patient)}>
                           Create Insurance Note
                         </Button>
+
+                        <CreatePatientInsuranceNoteForm
+                          onCreateInsuranceNote={props.onCreateInsuranceNoteInput}
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="7">
                         <Button variant="warning" onClick={props.onCreatePrescription.bind(this, patient)}>
