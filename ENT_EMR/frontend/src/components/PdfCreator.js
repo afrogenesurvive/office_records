@@ -77,13 +77,13 @@ const PatientReferral = () => (
         <Text>For this I recommend the following:  </Text>
         <Text>{docProps.pdfData.recommendation}</Text>
         <Text>Referral: {docProps.pdfData.referral}</Text>
-    
+
         <Text>Visit Diagnosis:  </Text>
         <Text>title: {docProps.pdfData.visitDiagnosis[0].title}</Text>
         <Text>date: {new Date(docProps.pdfData.visitDiagnosis[0].date.substr(0,10)*1000).toISOString().slice(0,10)}</Text>
         <Text>type: {docProps.pdfData.visitDiagnosis[0].type}</Text>
         <Text>description: {docProps.pdfData.visitDiagnosis[0].description}</Text>
-    
+
         <Text>Visit Treatment:  </Text>
         <Text>title:{docProps.pdfData.visitTreatment[0].title}</Text>
         <Text>type:{docProps.pdfData.visitTreatment[0].type}</Text>
@@ -144,17 +144,19 @@ const MiscNote = () => (
 
 const SickNote = () => (
   <Document>
-    <Page size="A4" style={styles.page}>
-      {docProps.pdfData.patient && (
+      <Page size="A4" style={styles.page}>
+        {docProps.pdfData.patient && (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
-        <Text>Here is some sample data</Text>
-        <Text>Patient</Text>
-        <Text>Name: {docProps.pdfData.patient.name}</Text>
-        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
-        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
-        <Text>Referral: {docProps.pdfData.referral}</Text>
+        <Text>To Whom It May Concern</Text>
+        <Text>Dear Sir/Madam,</Text>
+        <Text>This is to certify that I have seen and examined</Text>
+        <Text>Mr. /Mrs. /Miss: {docProps.pdfData.patient.name}</Text>
+        <Text>and recommended that she /he should refrain from active duty </Text>
+        <Text>for at least ... {docProps.pdfData.duration} days</Text>
+        <Text>commencing ... {docProps.pdfData.startDate}</Text>
+        <Text>Yours Truly</Text>
       </View>
       )}
     </Page>
@@ -168,12 +170,22 @@ const InsuranceNote = () => (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
-        <Text>Here is some sample data</Text>
-        <Text>Patient</Text>
-        <Text>Name: {docProps.pdfData.patient.name}</Text>
-        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
-        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
-        <Text>Referral: {docProps.pdfData.referral}</Text>
+        <Text>Insurance</Text>
+        <Text>Patient's Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Age: {docProps.pdfData.patient.age}</Text>
+        <Text>Address: {docProps.pdfData.patient.address.number}, {docProps.pdfData.patient.address.street}</Text>
+        <Text>{docProps.pdfData.patient.address.town}, {docProps.pdfData.patient.address.parish}</Text>
+        <Text>Subscriber: {docProps.pdfData.patient.insurance[2].company}</Text>
+        <Text>Policy No: {docProps.pdfData.patient.insurance.number}</Text>
+        <Text>Plan: {docProps.pdfData.patient.insurance.description}</Text>
+        <Text>Employer: {docProps.pdfData.patient.occupation.employer}</Text>
+        <Text>Proposed Operation: {docProps.pdfData.operation}</Text>
+        <Text>Date of Operation: {docProps.pdfData.operationDate}</Text>
+        <Text>Surgeon's Fee: ${docProps.pdfData.surgeonFee}</Text>
+        <Text>Assistant Surgeon's Fee: ${docProps.pdfData.assistantSurgeonFee}</Text>
+        <Text>Anesthetist's Fee: ${docProps.pdfData.anesthetistsFee}</Text>
+        <Text>Please review for approval for Surgery and Insurance payment.</Text>
+        <Text>Thanks.</Text>
       </View>
       )}
     </Page>
@@ -258,6 +270,9 @@ const TreatmentInstruction = () => (
 
 const PdfCreator = (props) =>{
     docProps = props;
+    console.log(`
+      ${docProps.pdfData.patient.insurance[1]}
+      `);
 
 return (
   <div className="attachmentViewerBg">
