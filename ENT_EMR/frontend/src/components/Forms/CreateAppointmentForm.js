@@ -11,12 +11,11 @@ import './CreateUserForm.css';
 
 const CreateAppointmentForm = (props) => {
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [apptDate, setApptDate] = useState(new Date());
 
-   const handleChange = date => {
-     setStartDate(date);
-     AuthContext._currentValue.fancyDate = startDate;
-     console.log(`startDate ${startDate}`);
+   const handleChangeApptDate = date => {
+     setApptDate(date);
+     console.log(`apptDate ${apptDate}`);
     }
 
 return (
@@ -59,11 +58,11 @@ return (
 </Form.Row>
 
 <Form.Row>
-<Form.Group as={Col} controlId="formGridFancyDate">
-  <Form.Label>Fancy Date</Form.Label>
-  <DatePicker className="" id="newAppointmentCalendarDob"
-  selected={startDate}
-   onChange={handleChange}
+<Form.Group as={Col} controlId="formGridAppointmentFancyDate">
+  <Form.Label>Fancy Appointment Date</Form.Label>
+  <DatePicker className="" id="newAppointmentCalendarDate"
+  selected={apptDate}
+   onChange={handleChangeApptDate}
   />
 </Form.Group>
 </Form.Row>

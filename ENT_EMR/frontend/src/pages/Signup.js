@@ -31,14 +31,32 @@ class SignupPage extends Component {
     let addressParish = event.target.formGridAddressParish.value;
     let addressPostOffice = event.target.formGridAddressPostOffice.value;
 
+
     let employmentDate = event.target.formGridEmploymentDate.value;
     if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
       employmentDate = new Date().toISOString().slice(0,10);
     }
 
+    if (
+      event.target.staffCalendarEmploymentDate.value !== null &&
+      event.target.formGridEmploymentDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10));
+      employmentDate = new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10);
+    }
+
+
     let terminationDate = event.target.formGridTerminationDate.value;
     if (event.target.formGridTerminationDateTodayCheckbox.checked === true) {
       terminationDate = new Date().toISOString().slice(0,10);
+    }
+
+    if (
+      event.target.staffCalendarTerminationDate.value !== null &&
+      event.target.formGridTerminationDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10));
+      terminationDate = new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10);
     }
 
     if (
@@ -91,6 +109,7 @@ class SignupPage extends Component {
         } else {
           this.setState({success: "Signup success...Proceed to login", userAlert: "Signup success...Proceed to login" });
         }
+        this.context.selectedUser = resData.data.createUser;
       })
       .catch(err => {
         this.setState({userAlert: err});

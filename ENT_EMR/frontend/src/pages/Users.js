@@ -109,11 +109,33 @@ class UsersPage extends Component {
     const addressTown = event.target.formGridAddressTown.value;
     const addressParish = event.target.formGridAddressParish.value;
     const addressPostOffice = event.target.formGridAddressPostOffice.value;
+
     let employmentDate = event.target.formGridEmploymentDate.value;
     if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
       employmentDate = new Date().toISOString().slice(0,10);
     }
-    const terminationDate = event.target.formGridTerminationDate.value;
+
+    if (
+      event.target.staffCalendarEmploymentDate.value !== null &&
+      event.target.formGridEmploymentDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10));
+      employmentDate = new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10);
+    }
+
+    let terminationDate = event.target.formGridTerminationDate.value;
+    if (event.target.formGridTerminationDateTodayCheckbox.checked === true) {
+      terminationDate = new Date().toISOString().slice(0,10);
+    }
+
+    if (
+      event.target.staffCalendarTerminationDate.value !== null &&
+      event.target.formGridTerminationDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10));
+      terminationDate = new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10);
+    }
+
 
     if (
       email.trim().length === 0 ||
@@ -165,7 +187,7 @@ class UsersPage extends Component {
         });
         this.context.users.push(resData.data.createUser);
         const responseAlert = JSON.stringify(resData.data).slice(0,8);
-        this.setState({userAlert: responseAlert});
+        this.setState({userAlert: responseAlert, selectedUser: resData.data.createUser});
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -193,15 +215,34 @@ class UsersPage extends Component {
     let addressTown = event.target.formGridAddressTown.value;
     let addressParish = event.target.formGridAddressParish.value;
     let addressPostOffice = event.target.formGridAddressPostOffice.value;
+
     let employmentDate = event.target.formGridEmploymentDate.value;
     if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
       employmentDate = new Date().toISOString().slice(0,10);
     }
 
+    if (
+      event.target.staffCalendarEmploymentDate.value !== null &&
+      event.target.formGridEmploymentDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10));
+      employmentDate = new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10);
+    }
+
+
     let terminationDate = event.target.formGridTerminationDate.value;
     if (event.target.formGridTerminationDateTodayCheckbox.checked === true) {
       terminationDate = new Date().toISOString().slice(0,10);
     }
+
+    if (
+      event.target.staffCalendarTerminationDate.value !== null &&
+      event.target.formGridTerminationDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10));
+      terminationDate = new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10);
+    }
+
     if (email.trim().length === 0 ) {
       email = this.context.selectedUser.email;
       this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
@@ -353,9 +394,19 @@ class UsersPage extends Component {
       this.setState({ userAlert: "Not the creator or Admin! No edit permission!!"});
       selectedUserId = null;
     }
+
     let attendanceDate = event.target.formGridAttendanceDate.value;
     if (event.target.formGridAttendanceDateTodayCheckbox.checked === true) {
+      console.log("1");
       attendanceDate = new Date().toISOString().slice(0,10);
+    }
+
+    if (
+      event.target.staffAttendanceCalendarDate.value !== null &&
+      event.target.formGridAttendanceDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffAttendanceCalendarDate.value).toISOString().slice(0,10));
+      attendanceDate = new Date(event.target.staffAttendanceCalendarDate.value).toISOString().slice(0,10);
     }
 
     let attendanceStatus = event.target.formGridAttendanceStatus.value;
@@ -489,16 +540,36 @@ class UsersPage extends Component {
       this.setState({userAlert: "Not the creator or Admin! No edit permission!!"})
       selectedUserId = null;
     }
+
     let leaveType = event.target.formGridLeaveType.value;
     let leaveTitle = event.target.formGridLeaveTitle.value;
     let leaveStartDate = event.target.formGridLeaveStartDate.value;
     if (event.target.formGridLeaveStartDateTodayCheckbox.checked === true) {
       leaveStartDate = new Date().toISOString().slice(0,10);
     }
+
+    if (
+      event.target.staffLeaveCalendarStartDate.value !== null &&
+      event.target.formGridLeaveStartDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffLeaveCalendarStartDate.value).toISOString().slice(0,10));
+      leaveStartDate= new Date(event.target.staffLeaveCalendarStartDate.value).toISOString().slice(0,10);
+    }
+
+
     let leaveEndDate = event.target.formGridLeaveEndDate.value;
     if (event.target.formGridLeaveEndDateTodayCheckbox.checked === true) {
       leaveEndDate = new Date().toISOString().slice(0,10);
     }
+
+    if (
+      event.target.staffLeaveCalendarEndDate.value !== null &&
+      event.target.formGridLeaveEndDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2a", new Date(event.target.staffLeaveCalendarEndDate.value).toISOString().slice(0,10));
+      leaveEndDate= new Date(event.target.staffLeaveCalendarEndDate.value).toISOString().slice(0,10);
+    }
+
     if (
       leaveType.trim().length === 0 ||
       leaveTitle.trim().length === 0 ||
