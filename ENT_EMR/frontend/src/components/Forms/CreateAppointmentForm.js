@@ -1,13 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import Alert from 'react-bootstrap/Alert';
 import AuthContext from '../../context/auth-context';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const CreateAppointmentForm = (props) => {
+
+  const [startDate, setStartDate] = useState(new Date());
+
+   const handleChange = date => {
+     setStartDate(date);
+     AuthContext._currentValue.fancyDate = startDate;
+     console.log(`startDate ${startDate}`);
+    }
 
 return (
 <div className="CreateFormContainer">
@@ -41,9 +51,20 @@ return (
   <Form.Label>Date</Form.Label>
   <Form.Control type="date" placeholder="Date" />
 </Form.Group>
+
 <Form.Group as={Col} controlId="formGridDateTodayCheckbox">
   <Form.Label>Today ?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+</Form.Group>
+</Form.Row>
+
+<Form.Row>
+<Form.Group as={Col} controlId="formGridFancyDate">
+  <Form.Label>Fancy Date</Form.Label>
+  <DatePicker className="" id="newAppointmentCalendarDob"
+  selected={startDate}
+   onChange={handleChange}
+  />
 </Form.Group>
 </Form.Row>
 

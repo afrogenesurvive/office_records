@@ -1,13 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import './CreateUserForm.css';
 
 const UpdateUserForm = (props) => {
+
+  const [dob, setDob = useState(new Date());
+  const [employmentDate, setEmploymentDate] = useState(new Date());
+  const [terminationDate, setTerminationDate] = useState(new Date());
+
+  const handleChangeDob = date => {
+    setDob(date);
+    console.log(`Dob ${Dob}`);
+   }
+  const handleChangeEmploymentDate = date => {
+    setEmploymentDate(date);
+    console.log(`employmentDate ${employmentDate}`);
+   }
+  const handleChangeTerminationDate = date => {
+    setTermintationDate(date);
+    console.log(`termintationDate ${termintationDate}`);
+   }
+
 const {...user} = props.user;
 
 return (
@@ -55,6 +74,16 @@ return (
 </Form.Row>
 
 <Form.Row>
+<Form.Group as={Col} controlId="">
+  <Form.Label>Fancy D.O.B</Form.Label>
+  <DatePicker className="" id="staffCalendarDob"
+    selected={dob}
+    onChange={handleChangeDob}
+  />
+</Form.Group>
+</Form.Row>
+
+<Form.Row>
 <Form.Group as={Col} controlId="formGridEmploymentDate">
   <Form.Label>Employment Date</Form.Label>
   <Form.Control type="date" placeholder={user.employmentDate}/>
@@ -62,6 +91,16 @@ return (
 <Form.Group as={Col} controlId="formGridEmploymentDateTodayCheckbox">
   <Form.Label>Today ?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+</Form.Group>
+</Form.Row>
+
+<Form.Row>
+<Form.Group as={Col} controlId="">
+  <Form.Label>Fancy Employment Date</Form.Label>
+  <DatePicker className="" id="staffCalendarEmploymentDate"
+    selected={employmentDate}
+    onChange={handleChangeEmploymentDate}
+  />
 </Form.Group>
 </Form.Row>
 
@@ -76,6 +115,15 @@ return (
 </Form.Group>
 </Form.Row>
 
+<Form.Row>
+<Form.Group as={Col} controlId="">
+  <Form.Label>Fancy Termination Date</Form.Label>
+  <DatePicker className="" id="staffCalendarTerminationDate"
+    selected={terminationDate}
+    onChange={handleChangeTerminationDate}
+  />
+</Form.Group>
+</Form.Row>
 
 <Form.Row>
 <Form.Group as={Col} controlId="formGridAddressNumber">

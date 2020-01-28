@@ -21,6 +21,9 @@ export default React.createContext({
     visit: null,
     file: null,
     fancyDate: null,
+    fancyDate2: null,
+    fancyDate3: null,
+    fancyDate4: null,
     creds: null,
     login: (token, userId, tokenExpiration) => {},
     logout: () => {}
