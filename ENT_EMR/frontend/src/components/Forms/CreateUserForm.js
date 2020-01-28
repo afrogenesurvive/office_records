@@ -11,6 +11,9 @@ const CreateUserForm = (props) => {
 
 return (
 <div className="CreateFormContainer">
+{props.title && (
+  <h4 className="signupTitle">{props.title}</h4>
+)}
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
   <Form.Group as={Col} controlId="formGridEmail">

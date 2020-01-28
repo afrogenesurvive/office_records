@@ -170,6 +170,7 @@ class ThisUserPage extends Component {
         this.state.users.push(updatedUser);
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
+
         this.setState({ userAlert: responseAlert, user: updatedUser})
         this.getThisUser();
       })
@@ -226,7 +227,9 @@ class ThisUserPage extends Component {
           const slicedArray = this.state.users.splice(updatedUserPos, 1);
           this.state.users.push(resData.data.updateUserField);
           this.context.users = this.state.users;
+
           const responseAlert = JSON.stringify(resData.data).slice(2,25);
+          // console.log("responseAlert...", responseAlert);
           this.setState({ userAlert: responseAlert})
           this.getThisUser();
         })
@@ -253,13 +256,13 @@ class ThisUserPage extends Component {
       attendanceDate = new Date().toISOString().slice(0,10);
     }
 
-    // if (
-    //   AuthContext._currentValue.fancyDate !== null &&
-    //   event.target.formGridAttendanceDateTodayCheckbox.checked !== true
-    // ) {
-    //   console.log("2");
-    //   attendanceDate = new Date(AuthContext._currentValue.fancyDate).toISOString().slice(0,10);
-    // }
+    if (
+      AuthContext._currentValue.fancyDate !== null &&
+      event.target.formGridAttendanceDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.calendarDob.value).toISOString().slice(0,10));
+      attendanceDate = new Date(event.target.calendarDob.value).toISOString().slice(0,10);
+    }
 
     let attendanceStatus = event.target.formGridAttendanceStatus.value;
     let attendanceDescription = event.target.formGridAttendanceDescription.value;

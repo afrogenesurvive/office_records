@@ -16,7 +16,9 @@ return (
         <Form.Label>Operation (Days)</Form.Label>
         <Form.Control type="text" placeholder="Operation"/>
       </Form.Group>
+    </Form.Row>
 
+    <Form.Row>
       <Form.Group as={Col} controlId="formGridDocGenInsuranceNoteOperationDate">
         <Form.Label>Operation Date</Form.Label>
         <Form.Control type="date" placeholder="Operation Date"/>
