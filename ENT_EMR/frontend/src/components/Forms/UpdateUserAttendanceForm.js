@@ -14,6 +14,7 @@ const [startDate, setStartDate] = useState(new Date());
  const handleChange = date => {
    setStartDate(date);
    AuthContext._currentValue.fancyDate = startDate;
+   console.log(`startDate ${startDate}`);
   }
 const {...user} = props.user;
 
@@ -58,7 +59,16 @@ return (
     // </Form.Group>
   }
 
+  </Form.Row>
 
+  <Form.Row>
+  <Form.Group as={Col} controlId="formGridAttendanceFancyDate">
+    <Form.Label>Fancy Date</Form.Label>
+    <DatePicker className="" id="calendarDob"
+    selected={startDate}
+     onChange={handleChange}
+    />
+  </Form.Group>
   </Form.Row>
 
   <Form.Row>

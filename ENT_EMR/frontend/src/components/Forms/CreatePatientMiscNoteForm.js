@@ -14,12 +14,14 @@ return (
     <Form.Row>
       <Form.Group as={Col} controlId="formGridDocGenMiscNote1">
         <Form.Label>Note #1</Form.Label>
-        <Form.Control as="textarea" rows="3" placeholder="Note 1"/>
+        <Form.Control as="textarea" rows="5" placeholder="Note 1"/>
       </Form.Group>
+    </Form.Row>
 
+    <Form.Row>
       <Form.Group as={Col} controlId="formGridDocGenMiscNote2">
         <Form.Label>Note #2</Form.Label>
-        <Form.Control as="textarea" rows="3" placeholder="Note 2"/>
+        <Form.Control as="textarea" rows="5" placeholder="Note 2"/>
       </Form.Group>
     </Form.Row>
 

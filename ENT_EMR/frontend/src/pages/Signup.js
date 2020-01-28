@@ -120,6 +120,7 @@ class SignupPage extends Component {
           onSubmit={this.modalConfirmHandler}
           confirmText="Confirm"
           successText={this.state.success}
+          title={"Sign-Up"}
         />
       </Col>
       </Row>

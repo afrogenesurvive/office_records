@@ -9,6 +9,9 @@ import Card from 'react-bootstrap/Card';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
+import Image from 'react-bootstrap/Image';
+
+import helpImg1_1_1 from '../assets/img/help/helpImg1_1_1.png';
 
 import './Users.css';
 import AuthContext from '../context/auth-context';
@@ -99,7 +102,8 @@ class HelpPage extends Component {
                               Sign-Up :
                               <ul>
                                 <li>
-                                  The Sign-Up Page
+                                  <h6>The Sign-Up Page</h6>
+                                  <Image src="../assets/img/help/helpImg1_1_1.png" fluid />
                                 </li>
                                 <li>
                                   The Sign-Up Form

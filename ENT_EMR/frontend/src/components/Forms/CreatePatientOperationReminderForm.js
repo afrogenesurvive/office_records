@@ -16,7 +16,9 @@ return (
         <Form.Label>Operation Name</Form.Label>
         <Form.Control type="text" placeholder="Operation Name"/>
       </Form.Group>
+    </Form.Row>
 
+    <Form.Row>
       <Form.Group as={Col} controlId="formGridDocGenOperationReminderDate">
         <Form.Label>Operation Date</Form.Label>
         <Form.Control type="date" placeholder="Operation Date"/>
@@ -28,7 +30,9 @@ return (
       <Form.Label>Operation Time</Form.Label>
       <Form.Control type="time" placeholder="Operation Time"/>
     </Form.Group>
+    </Form.Row>
 
+    <Form.Row>
     <Form.Group as={Col} controlId="formGridDocGenOperationReminderHospitalName">
       <Form.Label>Hospital Name</Form.Label>
       <Form.Control type="text" placeholder="Hospital Name"/>
@@ -47,7 +51,9 @@ return (
       <Form.Label>Fasting Date</Form.Label>
       <Form.Control type="date" placeholder="Fasting date"/>
     </Form.Group>
+    </Form.Row>
 
+    <Form.Row>
     <Form.Group as={Col} controlId="formGridDocGenOperationReminderFastTime">
       <Form.Label>Fasting Start Time</Form.Label>
       <Form.Control type="time" placeholder="Fasting start time"/>

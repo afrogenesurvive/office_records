@@ -14,9 +14,11 @@ return (
     <Form.Row>
       <Form.Group as={Col} controlId="formGridDocGenSickNoteDuration">
         <Form.Label>Duration (Days)</Form.Label>
-        <Form.Control type="number" placeholder="Duration"/>
+        <Form.Control type="text" placeholder="Duration"/>
       </Form.Group>
+    </Form.Row>
 
+    <Form.Row>
       <Form.Group as={Col} controlId="formGridDocGenSickNoteStartDate">
         <Form.Label>Start Date</Form.Label>
         <Form.Control type="date" placeholder="Start Date"/>
