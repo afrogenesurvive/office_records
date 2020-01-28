@@ -78,6 +78,8 @@ class ThisUserPage extends Component {
     let name = event.target.formGridName.value;
     let role = this.context.user.role;
     let dob = event.target.formGridDob.value;
+
+
     let phone = event.target.formGridPhone.value;
     let addressNumber = event.target.formGridAddressNumber.value;
     let addressStreet = event.target.formGridAddressStreet.value;
@@ -257,11 +259,11 @@ class ThisUserPage extends Component {
     }
 
     if (
-      AuthContext._currentValue.fancyDate !== null &&
+      event.target.staffAttendanceCalendarDob.value !== null &&
       event.target.formGridAttendanceDateTodayCheckbox.checked !== true
     ) {
-      console.log("fancyDate2", new Date(event.target.calendarDob.value).toISOString().slice(0,10));
-      attendanceDate = new Date(event.target.calendarDob.value).toISOString().slice(0,10);
+      console.log("fancyDate2", new Date(event.target.staffAttendanceCalendarDob.value).toISOString().slice(0,10));
+      attendanceDate = new Date(event.target.staffAttendanceCalendarDob.value).toISOString().slice(0,10);
     }
 
     let attendanceStatus = event.target.formGridAttendanceStatus.value;
@@ -333,10 +335,29 @@ class ThisUserPage extends Component {
       leaveStartDate = new Date().toISOString().slice(0,10);
     }
 
+    if (
+      event.target.staffLeaveCalendarStartDate.value !== null &&
+      event.target.formGridLeaveStartDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffLeaveCalendarStartDate.value).toISOString().slice(0,10));
+      leaveStartDate= new Date(event.target.staffLeaveCalendarStartDate.value).toISOString().slice(0,10);
+    }
+
+
     let leaveEndDate = event.target.formGridLeaveEndDate.value;
     if (event.target.formGridLeaveEndDateTodayCheckbox.checked === true) {
       leaveEndDate = new Date().toISOString().slice(0,10);
     }
+
+    if (
+      event.target.staffLeaveCalendarEndDate.value !== null &&
+      event.target.formGridLeaveEndDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2a", new Date(event.target.staffLeaveCalendarEndDate.value).toISOString().slice(0,10));
+      leaveEndDate= new Date(event.target.staffLeaveCalendarEndDate.value).toISOString().slice(0,10);
+    }
+
+
 
     if (leaveType.trim().length === 0) {
       this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
