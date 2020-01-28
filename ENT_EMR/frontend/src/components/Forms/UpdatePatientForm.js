@@ -1,10 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const UpdatePatientForm = (props) => {
+
+  const [regDate, setRegDate] = useState(new Date());
+  const [refDate, setRefDate] = useState(new Date());
+  const [expDate, setExpDate] = useState(new Date());
+
+  const handleChangeRegDate = date => {
+    setRegDate(date);
+    console.log(`regDate ${regDate}`);
+   }
+
+  const handleChangeRefDate = date => {
+    setRefDate(date);
+    console.log(`refDate ${refDate}`);
+   }
+
+  const handleChangeExpDate = date => {
+    setExpDate(date);
+    console.log(`expDate ${expDate}`);
+   }
+
 const {...patient} = props.patient;
 
 
@@ -98,6 +120,16 @@ return (
   </Form.Row>
 
   <Form.Row>
+  <Form.Group as={Col} controlId="">
+    <Form.Label>Fancy Registration Date</Form.Label>
+    <DatePicker className="" id="patientCalendarRegistrationDate"
+      selected={regDate}
+      onChange={handleChangeRegDate}
+    />
+  </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridReferralDate">
     <Form.Label>Referral Date</Form.Label>
     <Form.Control type="date" placeholder={patient.referralDate}/>
@@ -109,6 +141,16 @@ return (
   </Form.Row>
 
   <Form.Row>
+  <Form.Group as={Col} controlId="">
+    <Form.Label>Fancy Referral Date</Form.Label>
+    <DatePicker className="" id="patientCalendarReferralDate"
+      selected={refDate}
+      onChange={handleChangeRefDate}
+    />
+  </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridExpirationDate">
     <Form.Label>Expiration Date</Form.Label>
     <Form.Control type="date" placeholder={patient.expirationDate}/>
@@ -116,6 +158,16 @@ return (
   <Form.Group as={Col} controlId="formGridExpirationDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+  </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
+  <Form.Group as={Col} controlId="">
+    <Form.Label>Fancy Expiration Date</Form.Label>
+    <DatePicker className="" id="patientCalendarExpirationDate"
+      selected={expDate}
+      onChange={handleChangeExpDate}
+    />
   </Form.Group>
   </Form.Row>
 

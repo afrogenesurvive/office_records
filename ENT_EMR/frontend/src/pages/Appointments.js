@@ -70,6 +70,7 @@ class AppointmentsPage extends Component {
     if (JSON.stringify(this.context.selectedAppointment) !== "{}") {
       this.setState({ selectedAppointment: this.context.selectedAppointment })
     }
+    this.setState({ selectedPatient: this.context.selectedPatient })
 
     this.fetchAppointments();
     this.fetchAppointmentToday();
@@ -103,6 +104,13 @@ class AppointmentsPage extends Component {
     if (event.target.formGridDateTodayCheckbox.checked === true) {
       date = new Date().toISOString().slice(0,10);
     }
+    if (
+      event.target.newAppointmentCalendarDate.value !== null &&
+      event.target.formGridDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.newAppointmentCalendarDate.value).toISOString().slice(0,10));
+      date = new Date(event.target.newAppointmentCalendarDate.value).toISOString().slice(0,10);
+    }
     const time = event.target.formGridTime.value;
     const seenTime = event.target.formGridSeenTime.value;
     const checkinTime = event.target.formGridCheckinTime.value;
@@ -117,11 +125,7 @@ class AppointmentsPage extends Component {
       type.trim().length === 0 ||
       date.trim().length === 0 ||
       time.trim().length === 0 ||
-      location.trim().length === 0 ||
-      description.trim().length === 0 ||
-      inProgress.trim().length === 0 ||
-      attended.trim().length === 0 ||
-      important.trim().length === 0
+      location.trim().length === 0
     ) {
       this.setState({userAlert: "blank fields detected!!!...Please try again..."});
       return
@@ -169,6 +173,7 @@ class AppointmentsPage extends Component {
         this.state.appointments.push(resData.data.createAppointment);
         this.context.appointments = this.state.appointments;
         this.fetchAppointments();
+        this.setState({selectedAppointment: resData.data.createAppointment})
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -197,6 +202,13 @@ class AppointmentsPage extends Component {
     let date = event.target.formGridDate.value;
     if (event.target.formGridDateTodayCheckbox.checked === true) {
       date = new Date().toISOString().slice(0,10);
+    }
+    if (
+      event.target.updateAppointmentCalendarDate.value !== null &&
+      event.target.formGridDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.updateAppointmentCalendarDate.value).toISOString().slice(0,10));
+      date = new Date(event.target.updateAppointmentCalendarDate.value).toISOString().slice(0,10);
     }
 
     let time = event.target.formGridTime.value;
@@ -341,6 +353,7 @@ class AppointmentsPage extends Component {
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({ userAlert: responseAlert})
         this.fetchAppointments();
+        this.setState({selectedAppointment: resData.data.updateAppointmentPatient})
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -1034,10 +1047,17 @@ class AppointmentsPage extends Component {
                   </Tab.Pane>
 
                   <Tab.Pane eventKey="appointmentCreate">
-                    <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startCreateAppointmentHandler} >Create New</Button>
-                    {
-                      this.state.creating &&
-                      this.context.selectedPatient._id !== null
+                  {this.context.selectedPatient === null && (
+                    <Button variant="outline-warning" size="lg" className="confirmEditButton">
+                      Select someone from the Patients Page
+                    </Button>
+                  )}
+                  {this.context.selectedPatient !== null && (
+                      <Button variant="outline-primary" size="lg" className="confirmEditButton" onClick={this.startCreateAppointmentHandler} >Create New</Button>
+                  )}
+
+                    {this.state.creating &&
+                      this.context.selectedPatient !== null
                       && (
                         <CreateAppointmentForm
                         canCancel

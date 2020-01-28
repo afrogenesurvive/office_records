@@ -79,12 +79,12 @@ class ThisUserPage extends Component {
     let role = this.context.user.role;
     let dob = event.target.formGridDob.value;
 
-    if (
-      event.target.staffCalendarDob.value !== null
-    ) {
-      console.log("fancyDate2", new Date(event.target.staffCalendarDob.value).toISOString().slice(0,10));
-      dob = new Date(event.target.staffCalendarDob.value).toISOString().slice(0,10);
-    }
+    // if (
+    //   event.target.staffCalendarDob.value !== null
+    // ) {
+    //   console.log("fancyDate2", new Date(event.target.staffCalendarDob.value).toISOString().slice(0,10));
+    //   dob = new Date(event.target.staffCalendarDob.value).toISOString().slice(0,10);
+    // }
 
     let phone = event.target.formGridPhone.value;
     let addressNumber = event.target.formGridAddressNumber.value;
@@ -286,11 +286,11 @@ class ThisUserPage extends Component {
     }
 
     if (
-      event.target.staffAttendanceCalendarDob.value !== null &&
+      event.target.staffAttendanceCalendarDate.value !== null &&
       event.target.formGridAttendanceDateTodayCheckbox.checked !== true
     ) {
-      console.log("fancyDate2", new Date(event.target.staffAttendanceCalendarDob.value).toISOString().slice(0,10));
-      attendanceDate = new Date(event.target.staffAttendanceCalendarDob.value).toISOString().slice(0,10);
+      console.log("fancyDate2", new Date(event.target.staffAttendanceCalendarDate.value).toISOString().slice(0,10));
+      attendanceDate = new Date(event.target.staffAttendanceCalendarDate.value).toISOString().slice(0,10);
     }
 
     let attendanceStatus = event.target.formGridAttendanceStatus.value;

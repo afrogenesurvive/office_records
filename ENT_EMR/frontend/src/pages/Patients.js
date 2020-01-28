@@ -151,9 +151,27 @@ class PatientsPage extends Component {
     if (event.target.formGridRegistrationDateTodayCheckbox.checked === true) {
       registrationDate = new Date().toISOString().slice(0,10);
     }
+
+    if (
+      event.target.patientCalendarRegistrationDate.value !== null &&
+      event.target.formGridRegistrationDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.patientCalendarRegistrationDate.value).toISOString().slice(0,10));
+      registrationDate = new Date(event.target.patientCalendarRegistrationDate.value).toISOString().slice(0,10);
+    }
+
+
     let referralDate = event.target.formGridReferralDate.value;
     if (event.target.formGridReferralDateTodayCheckbox.checked === true) {
       referralDate = new Date().toISOString().slice(0,10);
+    }
+
+    if (
+      event.target.patientCalendarReferralDate.value !== null &&
+      event.target.formGridReferralDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.patientCalendarReferralDate.value).toISOString().slice(0,10));
+      referralDate = new Date(event.target.patientCalendarReferralDate.value).toISOString().slice(0,10);
     }
 
     let expirationDate = event.target.formGridExpirationDate.value;
@@ -210,7 +228,7 @@ class PatientsPage extends Component {
           updatedPatients.push(newPatient);
           return { patients: updatedPatients };
         });
-
+        this.setState({selecteAppointment: resData.data.createPatient})
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -248,14 +266,38 @@ class PatientsPage extends Component {
       registrationDate = new Date().toISOString().slice(0,10);
     }
 
+    if (
+      event.target.patientCalendarRegistrationDate.value !== null &&
+      event.target.formGridRegistrationDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.patientCalendarRegistrationDate.value).toISOString().slice(0,10));
+      registrationDate = new Date(event.target.patientCalendarRegistrationDate.value).toISOString().slice(0,10);
+    }
+
+
     let referralDate = event.target.formGridReferralDate.value;
     if (event.target.formGridReferralDateTodayCheckbox.checked === true) {
       referralDate = new Date().toISOString().slice(0,10);
     }
 
+    if (
+      event.target.patientCalendarReferralDate.value !== null &&
+      event.target.formGridReferralDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.patientCalendarReferralDate.value).toISOString().slice(0,10));
+      referralDate = new Date(event.target.patientCalendarReferralDate.value).toISOString().slice(0,10);
+    }
+
     let expirationDate = event.target.formGridExpirationDate.value;
     if (event.target.formGridExpirationDateTodayCheckbox.checked === true) {
       expirationDate = new Date().toISOString().slice(0,10);
+    }
+    if (
+      event.target.patientCalendarExpirationDate.value !== null &&
+      event.target.formGridExpirationDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.patientCalendarExpirationDate.value).toISOString().slice(0,10));
+      expirationDate = new Date(event.target.patientCalendarExpirationDate.value).toISOString().slice(0,10);
     }
 
     let attendingPhysicianName = event.target.formGridAttendingPhysicianName.value;

@@ -64,7 +64,7 @@ return (
   <Form.Row>
   <Form.Group as={Col} controlId="formGridAttendanceFancyDate">
     <Form.Label>Fancy Date</Form.Label>
-    <DatePicker className="" id="staffAttendanceCalendarDob"
+    <DatePicker className="" id="staffAttendanceCalendarDate"
     selected={startDate}
      onChange={handleChange}
     />

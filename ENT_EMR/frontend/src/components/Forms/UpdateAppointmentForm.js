@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const UpdateAppointmentForm = (props) => {
+
+  const [apptDate, setApptDate] = useState(new Date());
+
+   const handleChangeApptDate = date => {
+     setApptDate(date);
+     console.log(`apptDate ${apptDate}`);
+    }
+
 const {...appointment} = props.appointment;
 
 
@@ -39,6 +49,16 @@ return (
 <Form.Group as={Col} controlId="formGridDateTodayCheckbox">
   <Form.Label>Today ?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
+</Form.Group>
+</Form.Row>
+
+<Form.Row>
+<Form.Group as={Col} controlId="formGridAppointmentFancyDate">
+  <Form.Label>Fancy Appointment Date</Form.Label>
+  <DatePicker className="" id="updateAppointmentCalendarDate"
+  selected={apptDate}
+   onChange={handleChangeApptDate}
+  />
 </Form.Group>
 </Form.Row>
 

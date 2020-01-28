@@ -21,6 +21,8 @@ const UserDetail = (props) => {
   const userAttendance = user.attendance;
   const userLeave = user.leave;
   const userAttachment = user.attachments;
+  let userDob = new Date(user.dob.substr(0,9) * 1000).toISOString().slice(0,10);
+
   const userEmploymentDate = new Date(user.employmentDate.substr(0,10)*1000).toISOString().slice(0,10);
   let userTerminationDate = user.terminationDate;
   if (user.terminationDate !== null) {
@@ -45,17 +47,21 @@ const UserDetail = (props) => {
               <span className="bold">Name :</span> {user.name}
             </Card.Text>
             <Card.Text>
+              <span className="bold">D.O.B :</span> {userDob}
+            </Card.Text>
+            <Card.Text>
               <span className="bold">Email :</span> {user.email}
             </Card.Text>
             <Card.Text>
               <span className="bold">Phone :</span> {user.phone}
             </Card.Text>
-            <Card.Text>
-              <span className="bold">Role :</span> {user.role}
-            </Card.Text>
+
           </Col>
 
           <Col className="detailCardCol">
+            <Card.Text>
+              <span className="bold">Role :</span> {user.role}
+            </Card.Text>
             <Card.Text>
               <span className="bold">Employment Date:</span> {userEmploymentDate}
             </Card.Text>
