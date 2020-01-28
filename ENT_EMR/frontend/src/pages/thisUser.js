@@ -79,6 +79,12 @@ class ThisUserPage extends Component {
     let role = this.context.user.role;
     let dob = event.target.formGridDob.value;
 
+    if (
+      event.target.staffCalendarDob.value !== null
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffCalendarDob.value).toISOString().slice(0,10));
+      dob = new Date(event.target.staffCalendarDob.value).toISOString().slice(0,10);
+    }
 
     let phone = event.target.formGridPhone.value;
     let addressNumber = event.target.formGridAddressNumber.value;
@@ -86,14 +92,35 @@ class ThisUserPage extends Component {
     let addressTown = event.target.formGridAddressTown.value;
     let addressParish = event.target.formGridAddressParish.value;
     let addressPostOffice = event.target.formGridAddressPostOffice.value;
+
     let employmentDate = event.target.formGridEmploymentDate.value;
     if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
       employmentDate = new Date().toISOString().slice(0,10);
     }
+
+    if (
+      event.target.staffCalendarEmploymentDate.value !== null &&
+      event.target.formGridEmploymentDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10));
+      employmentDate = new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10);
+    }
+
+
     let terminationDate = event.target.formGridTerminationDate.value;
     if (event.target.formGridTerminationDateTodayCheckbox.checked === true) {
       terminationDate = new Date().toISOString().slice(0,10);
     }
+
+    if (
+      event.target.staffCalendarTerminationDate.value !== null &&
+      event.target.formGridTerminationDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10));
+      terminationDate = new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10);
+    }
+
+
     if (email.trim().length === 0 ) {
       this.setState({ userAlert: "blank fields detected!!!...filling w/ previous data..."});
       email = this.context.user.email;

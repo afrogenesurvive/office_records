@@ -10,21 +10,21 @@ import './CreateUserForm.css';
 
 const UpdateUserForm = (props) => {
 
-  const [dob, setDob = useState(new Date());
+  const [dob, setDob] = useState(new Date());
   const [employmentDate, setEmploymentDate] = useState(new Date());
   const [terminationDate, setTerminationDate] = useState(new Date());
 
   const handleChangeDob = date => {
     setDob(date);
-    console.log(`Dob ${Dob}`);
+    console.log(`Dob ${dob}`);
    }
   const handleChangeEmploymentDate = date => {
     setEmploymentDate(date);
     console.log(`employmentDate ${employmentDate}`);
    }
   const handleChangeTerminationDate = date => {
-    setTermintationDate(date);
-    console.log(`termintationDate ${termintationDate}`);
+    setTerminationDate(date);
+    console.log(`terminationDate ${terminationDate}`);
    }
 
 const {...user} = props.user;
