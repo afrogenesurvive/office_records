@@ -63,6 +63,7 @@ class PatientsPage extends Component {
     searchPatients: [],
     isLoading: false,
     selectedPatient: null,
+    selectedUser: null,
     patientUpdateField: null,
     patientSearchField: null,
     patientSearchQuery: null,
@@ -111,6 +112,7 @@ class PatientsPage extends Component {
     if (JSON.stringify(this.context.selectedPatient) !== "{}") {
       this.setState({ selectedPatient: this.context.selectedPatient })
     }
+    console.log(`this.context.selectedUser, ${JSON.stringify(this.context.selectedUser)}`);
 
     this.fetchPatients();
   }
@@ -517,6 +519,14 @@ updatePatientConsultantHandler = (event) => {
     consultantDate = new Date().toISOString().slice(0,10);
   }
 
+  if (
+    event.target.patientConsultantCalendarDate.value !== null &&
+    event.target.formGridConsultantDateTodayCheckbox.checked !== true
+  ) {
+    console.log("fancyDate2", new Date(event.target.patientConsultantCalendarDate.value).toISOString().slice(0,10));
+    consultantDate = new Date(event.target.patientConsultantCalendarDate.value).toISOString().slice(0,10);
+  }
+
   const requestBody = {
     query:`
       mutation {updatePatientConsultant(userId:"${userId}", patientId:"${selectedPatientId}",patientInput:{consultantDate:" ${consultantDate}",consultantReference: "${patientConsultantReference}"})
@@ -565,6 +575,11 @@ updatePatientInsuranceHandler = (event) => {
   let insuranceCompany = event.target.formGridInsuranceCompany.value;
   let insuranceNumber = event.target.formGridInsuranceNumber.value;
   let insuranceExpiry = event.target.formGridInsuranceExpiry.value;
+  if (event.target.patientCalendarInsuranceExpiryDate.value !== null) {
+    console.log(`patientCalendarInsuranceExpiryDate: ${new Date(event.target.patientCalendarInsuranceExpiryDate.value).toISOString().slice(0,10)} `);
+    insuranceExpiry = new Date(event.target.patientCalendarInsuranceExpiryDate.value).toISOString().slice(0,10);
+  }
+
   let insuranceDescription = event.target.formGridInsuranceDescription.value;
   let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany.value;
   let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
@@ -671,6 +686,14 @@ updatePatientComplaintHandler = (event) => {
   }
   if (event.target.formGridComplaintDateTodayCheckbox.checked === true) {
     complaintDate = new Date().toISOString().slice(0,10);
+  }
+
+  if (
+    event.target.patientComplaintCalendarDate.value !== null &&
+    event.target.formGridComplaintDateTodayCheckbox.checked !== true
+  ) {
+    console.log("fancyDate2", new Date(event.target.patientComplaintCalendarDate.value).toISOString().slice(0,10));
+    complaintDate = new Date(event.target.patientComplaintCalendarDate.value).toISOString().slice(0,10);
   }
 
   let complaintDescription = event.target.formGridComplaintDescription.value;
@@ -4374,6 +4397,7 @@ render() {
                     authUserId={this.context.userId}
                     token={this.context.token}
                     patient={this.state.selectedPatient}
+                    users={this.context.users}
                     onEdit={this.startUpdatePatientHandler}
                     canDelete={this.state.canDelete}
                     onDelete={this.modalDeleteHandler}
@@ -4492,7 +4516,7 @@ render() {
                             </Button>
                           )}
                           {this.state.createVisitChecklist.consultant === false &&
-                          this.context.selectedUser === null && (
+                          JSON.stringify(this.context.selectedUser) === "{}" && (
                             <Button variant="outline-warning" size="lg" className="confirmEditButton">
                               Select someone from the Staff page
                             </Button>

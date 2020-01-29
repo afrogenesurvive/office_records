@@ -30,6 +30,8 @@ import PatientTagsList from './PatientList/PatientTagsList';
 import PatientVisitList from './PatientList/PatientVisitList';
 import PatientVisit from './PatientVisit';
 
+import AuthContext from '../../context/auth-context';
+
 import SearchPatientVisitForm from '../../components/Forms/SearchPatientVisitForm';
 import CreateTestPdfForm from '../../components/Forms/CreateTestPdfForm';
 import CreatePatientReferralForm from '../../components/Forms/CreatePatientReferralForm';
@@ -62,6 +64,10 @@ const PatientDetail = (props) => {
   const patientAttachments = patient.attachments;
   const patientNotes = patient.notes;
   const patientTags = patient.tags;
+
+  const users = props.users;
+  const consultants = users.filter(x=> x.role === "doctor")
+  console.log(`consultant list, ${consultants}, users, ${users}`);
 
   let patientRegistrationDate = 0;
   if (patient.registrationDate !== null &&

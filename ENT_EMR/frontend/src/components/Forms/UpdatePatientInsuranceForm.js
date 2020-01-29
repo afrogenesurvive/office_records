@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const UpdatePatientInsuranceForm = (props) => {
+
+  const [insuranceExpDate, setInsuranceExpDate] = useState(new Date());
+
+  const handleChangeInsuranceExpDate = date => {
+    setInsuranceExpDate(date);
+    console.log(`insuranceExpDate ${insuranceExpDate}`);
+   }
+
 const {...patient} = props.patient;
 
 
@@ -27,6 +37,16 @@ return (
   <Form.Group as={Col} controlId="formGridInsuranceExpiry">
     <Form.Label>Expiry</Form.Label>
     <Form.Control type="date" placeholder="insuranceExpiry"/>
+  </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
+  <Form.Group as={Col} controlId="">
+    <Form.Label>Fancy Expiry Date</Form.Label>
+    <DatePicker className="" id="patientCalendarInsuranceExpiryDate"
+      selected={insuranceExpDate}
+      onChange={handleChangeInsuranceExpDate}
+    />
   </Form.Group>
   </Form.Row>
 

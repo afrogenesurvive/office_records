@@ -1,14 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import AuthContext from '../../context/auth-context';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const UpdatePatientComplaintForm = (props) => {
+
+
 const {...patient} = props.patient;
 
+const [complaintDate, setComplaintDate] = useState(new Date());
+
+const handleChangeComplaintDate = date => {
+  setComplaintDate(date);
+  console.log(`complaintDate ${complaintDate}`);
+ }
 
 return (
 <div className="UpdateFormContainer">
@@ -26,11 +36,21 @@ return (
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
   )}
+  {!props.visit && (
+    <Form.Group as={Col} controlId="">
+      <Form.Label>Fancy Complaint Date</Form.Label>
+      <DatePicker className="" id="patientComplaintCalendarDate"
+        selected={complaintDate}
+        onChange={handleChangeComplaintDate}
+      />
+    </Form.Group>
+  )}
   {props.visit && (
   <Form.Group as={Col} controlId="formGridComplaintDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" defaultChecked={true}/>
   </Form.Group>
+  )}
   )}
 
   </Form.Row>
@@ -62,7 +82,7 @@ return (
     <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="historyAttachmentFormat"/>
   </Form.Group>
-  
+
   <Form.Group as={Col} controlId="formGridComplaintAttachmentFile">
     <Form.Label>File</Form.Label>
     <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>

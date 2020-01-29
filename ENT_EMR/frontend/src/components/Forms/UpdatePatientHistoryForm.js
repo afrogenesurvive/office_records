@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import AuthContext from '../../context/auth-context';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const UpdatePatientHistoryForm = (props) => {
+
+  const [historyDate, setHistoryDate] = useState(new Date());
+
+  const handleChangeHistoryDate = date => {
+    setHistoryDate(date);
+    console.log(`historyDate ${historyDate}`);
+   }
+
 const {...patient} = props.patient;
 
 
@@ -32,6 +42,16 @@ return (
   </Form.Row>
 
   <Form.Row>
+  <Form.Group as={Col} controlId="">
+    <Form.Label>Fancy History Date</Form.Label>
+    <DatePicker className="" id="patientHistoryCalendarDate"
+      selected={historyDate}
+      onChange={handleChangeHistoryDate}
+    />
+  </Form.Group>
+  </Form.Row>
+
+  <Form.Row>
   <Form.Group as={Col} controlId="formGridHistoryTitle">
     <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="Past History Title"/>
@@ -51,7 +71,7 @@ return (
     <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="Past History AttachmentFormat"/>
   </Form.Group>
-  
+
   <Form.Group as={Col} controlId="formGridHistoryAttachmentFile">
     <Form.Label>File</Form.Label>
     <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>
