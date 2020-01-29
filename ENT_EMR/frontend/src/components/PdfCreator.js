@@ -25,7 +25,7 @@ const MyDocument = () => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <Text>This is a test document</Text>
+        <Text style={styles.text}>This is a test document</Text>
         <Text>I could be a prescription, referral or the like.</Text>
         <Text>{docProps.pdfData.title}</Text>
         <Text>{docProps.pdfData.test}</Text>
