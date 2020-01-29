@@ -712,6 +712,7 @@ updatePatientComplaintHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const complaintAttachmentName = newFileName;
+  this.setState({userAlert: "uploading attachment ..."});
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -788,6 +789,7 @@ updatePatientSurveyHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const surveyAttachmentName = newFileName;
+  this.setState({userAlert: "uploading attachment ..."});
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -864,6 +866,7 @@ updatePatientSystematicInquiryHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const systematicInquiryAttachmentName = newFileName;
+  this.setState({userAlert: "uploading attachment ..."});
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1014,7 +1017,7 @@ updatePatientExaminationHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const examinationAttachmentName = newFileName;
-
+  this.setState({userAlert: "uploading attachment ..."})
   ReactS3Client
       .uploadFile(file, newFileName)
       .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
@@ -1088,6 +1091,7 @@ updatePatientHistoryHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const historyAttachmentName = newFileName;
+  this.setState({userAlert: "uploading attachment ..."});
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1162,6 +1166,7 @@ updatePatientAllergiesHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const allergiesAttachmentName = newFileName;
+  this.setState({userAlert: "uploading attachment ..."});
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1229,6 +1234,7 @@ updatePatientMedicationHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const medicationAttachmentName = newFileName;
+  this.setState({userAlert: "uploading attachment ..."});
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1311,6 +1317,7 @@ updatePatientInvestigationHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const investigationAttachmentName = newFileName;
+  this.setState({userAlert: "uploading attachment ..."});
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1386,6 +1393,7 @@ updatePatientDiagnosisHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const diagnosisAttachmentName = newFileName;
+  this.setState({userAlert: "uploading attachment ..."});
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1469,6 +1477,7 @@ updatePatientTreatmentHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const treatmentAttachmentName = newFileName;
+  this.setState({userAlert: "uploading attachment ..."});
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1547,6 +1556,7 @@ updatePatientBillingHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const billingAttachmentName = newFileName;
+  this.setState({userAlert: "uploading attachment ..."});
 
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1804,6 +1814,7 @@ updatePatientAttachmentHandler = (event) => {
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
     const attachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
 
     ReactS3Client
         .uploadFile(file, newFileName)
