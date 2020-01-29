@@ -478,6 +478,7 @@ class UsersPage extends Component {
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
     const attachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
 
     ReactS3Client
         .uploadFile(file, newFileName)
