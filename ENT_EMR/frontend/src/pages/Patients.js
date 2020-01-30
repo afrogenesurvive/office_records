@@ -574,11 +574,13 @@ updatePatientInsuranceHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Insurance..." });
   let insuranceCompany = event.target.formGridInsuranceCompany.value;
   let insuranceNumber = event.target.formGridInsuranceNumber.value;
-  let insuranceExpiry = event.target.formGridInsuranceExpiry.value;
-  if (event.target.patientCalendarInsuranceExpiryDate.value !== null) {
-    console.log(`patientCalendarInsuranceExpiryDate: ${new Date(event.target.patientCalendarInsuranceExpiryDate.value).toISOString().slice(0,10)} `);
-    insuranceExpiry = new Date(event.target.patientCalendarInsuranceExpiryDate.value).toISOString().slice(0,10);
-  }
+  let insuranceExpiry = event.target.patientCalendarInsuranceExpiryDate.value;
+  // if (event.target.patientCalendarInsuranceExpiryDate.value !== null &&
+  //   event.target.formGridInsuranceExpiry.value === null
+  //   ) {
+  //   console.log(`patientCalendarInsuranceExpiryDate: ${new Date(event.target.patientCalendarInsuranceExpiryDate.value).toISOString().slice(0,10)} `);
+  //   insuranceExpiry = new Date(event.target.patientCalendarInsuranceExpiryDate.value).toISOString().slice(0,10);
+  // }
 
   let insuranceDescription = event.target.formGridInsuranceDescription.value;
   let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany.value;
@@ -772,6 +774,13 @@ updatePatientSurveyHandler = (event) => {
   if (event.target.formGridSurveyDateTodayCheckbox.checked === true) {
     surveyDate = new Date().toISOString().slice(0,10);
   }
+  if (
+    event.target.patientSurveyCalendarDate.value !== null &&
+    event.target.formGridSurveyDateTodayCheckbox.checked !== true
+  ) {
+    console.log("fancyDate2", new Date(event.target.patientSurveyCalendarDate.value).toISOString().slice(0,10));
+    surveyDate = new Date(event.target.patientSurveyCalendarDate.value).toISOString().slice(0,10);
+  }
 
   let surveyTitle = event.target.formGridSurveyTitle.value;
   let surveyDescription = event.target.formGridSurveyDescription.value;
@@ -849,6 +858,13 @@ updatePatientSystematicInquiryHandler = (event) => {
   if (event.target.formGridSystematicInquiryDateTodayCheckbox.checked === true) {
     systematicInquiryDate = new Date().toISOString().slice(0,10);
   }
+  if (
+    event.target.patientSystematicInquiryCalendarDate.value !== null &&
+    event.target.formGridSystematicInquiryDateTodayCheckbox.checked !== true
+  ) {
+    console.log("fancyDate2", new Date(event.target.patientSystematicInquiryCalendarDate.value).toISOString().slice(0,10));
+    systematicInquiryDate = new Date(event.target.patientSystematicInquiryCalendarDate.value).toISOString().slice(0,10);
+  }
 
   let systematicInquiryTitle = event.target.formGridSystematicInquiryTitle.value;
   let systematicInquiryDescription = event.target.formGridSystematicInquiryDescription.value;
@@ -868,10 +884,10 @@ updatePatientSystematicInquiryHandler = (event) => {
   const systematicInquiryAttachmentName = newFileName;
   this.setState({userAlert: "uploading attachment ..."});
 
-  ReactS3Client
-      .uploadFile(file, newFileName)
-      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+  // ReactS3Client
+  //     .uploadFile(file, newFileName)
+  //     .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+  //     .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const requestBody = {
     query:`
@@ -925,6 +941,13 @@ updatePatientVitalsHandler = (event) => {
   }
   if (event.target.formGridVitalsDateTodayCheckbox.checked === true) {
     vitalsDate = new Date().toISOString().slice(0,10);
+  }
+  if (
+    event.target.patientVitalsCalendarDate.value !== null &&
+    event.target.formGridVitalsDateTodayCheckbox.checked !== true
+  ) {
+    console.log("fancyDate2", new Date(event.target.patientVitalsCalendarDate.value).toISOString().slice(0,10));
+    vitalsDate = new Date(event.target.patientVitalsCalendarDate.value).toISOString().slice(0,10);
   }
 
   const vitalsPr = event.target.formGridVitalsPr.value;
@@ -991,6 +1014,13 @@ updatePatientExaminationHandler = (event) => {
   if (event.target.formGridExaminationDateTodayCheckbox.checked === true) {
     examinationDate = new Date().toISOString().slice(0,10);
   }
+  if (
+    event.target.patientExaminationCalendarDate.value !== null &&
+    event.target.formGridExaminationDateTodayCheckbox.checked !== true
+  ) {
+    console.log("fancyDate2", new Date(event.target.patientExaminationCalendarDate.value).toISOString().slice(0,10));
+    examinationDate = new Date(event.target.patientExaminationCalendarDate.value).toISOString().slice(0,10);
+  }
 
   const examinationGeneral = event.target.formGridExaminationGeneral.value;
   let examinationArea = undefined;
@@ -1017,6 +1047,7 @@ updatePatientExaminationHandler = (event) => {
   const ReactS3Client = new S3(config);
   const newFileName = file.name;
   const examinationAttachmentName = newFileName;
+
   this.setState({userAlert: "uploading attachment ..."})
   ReactS3Client
       .uploadFile(file, newFileName)
@@ -1074,6 +1105,14 @@ updatePatientHistoryHandler = (event) => {
   let historyDate = event.target.formGridHistoryDate.value;
   if (event.target.formGridHistoryDateTodayCheckbox.checked === true) {
     historyDate = new Date().toISOString().slice(0,10);
+  }
+
+  if (
+    event.target.patientHistoryCalendarDate.value !== null &&
+    event.target.formGridHistoryDateTodayCheckbox.checked !== true
+  ) {
+    console.log("fancyDate2", new Date(event.target.patientHistoryCalendarDate.value).toISOString().slice(0,10));
+    historyDate = new Date(event.target.patientHistoryCalendarDate.value).toISOString().slice(0,10);
   }
 
   const historyTitle = event.target.formGridHistoryTitle.value;
