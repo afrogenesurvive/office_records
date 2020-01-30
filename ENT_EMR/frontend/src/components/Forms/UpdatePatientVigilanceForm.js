@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import AuthContext from '../../context/auth-context';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const UpdatePatientVigilanceForm = (props) => {
+
+  const [vigilanceDate, setVigilanceDate] = useState(new Date());
+
+  const handleChangeVigilanceDate = date => {
+    setVigilanceDate(date);
+    console.log(`vigilanceDate ${vigilanceDate}`);
+   }
+
 const {...patient} = props.patient;
 
 
@@ -37,6 +47,18 @@ return (
   )}
 
   </Form.Row>
+
+  {!props.visit && (
+  <Form.Row>
+  <Form.Group as={Col} controlId="">
+    <Form.Label>Fancy Date</Form.Label>
+    <DatePicker className="" id="patientVigilanceCalendarDate"
+      selected={vigilanceDate}
+      onChange={handleChangeVigilanceDate}
+    />
+  </Form.Group>
+  </Form.Row>
+  )}
 
   <Form.Row>
   <h6>Chronic Illness </h6>

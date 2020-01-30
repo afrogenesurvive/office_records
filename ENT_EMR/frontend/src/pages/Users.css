@@ -20,7 +20,7 @@
   /* width: 50vw; */
   /* margin: 5rem 2rem 0 2rem; */
   margin-top: 7rem;
-  margin-left: 1rem; 
+  margin-left: 1rem;
   width: 100%;
   overflow: scroll;
   padding: 0;
@@ -90,6 +90,11 @@
   overflow: scroll;
 }
 
+.searchUserRowAdd {
+  margin-left: 6rem;
+  margin-bottom: 3rem;
+}
+
 .searchListRow {
   height: 40rem;
   border: 1px solid blue;
@@ -129,4 +134,8 @@
 
 .helpAccordion {
   margin: 0 3rem 0 5rem;
+}
+
+.searchButton {
+
 }

@@ -725,6 +725,15 @@ class UsersPage extends Component {
     if (event.target.formBasicDateTodayCheckbox.checked === true) {
       attendanceDate = new Date().toISOString().slice(0,10);
     }
+
+    if (
+      event.target.staffAttendanceCalendarDate.value !== null &&
+      event.target.formBasicDateTodayCheckbox.checked !== true
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffAttendanceCalendarDate.value).toISOString().slice(0,10));
+      attendanceDate = new Date(event.target.staffAttendanceCalendarDate.value).toISOString().slice(0,10);
+    }
+
     const requestBody = {
       query: `
         query {getUserAttendanceDate(userId:"${userId}",attendanceDate:"${attendanceDate}")
@@ -761,8 +770,25 @@ class UsersPage extends Component {
     this.setState({ searching: false, userAlert: "Searching for Staff by Leave Date range..." });
     let userId = this.context.userId;
     const token = this.context.token;
-    const startDate = event.target.formBasicStartDate.value;
-    const endDate = event.target.formBasicEndDate.value;
+
+    let startDate = event.target.formBasicStartDate.value;
+
+    if (
+      event.target.staffLeaveStartCalendarDate.value !== null
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffLeaveStartCalendarDate.value).toISOString().slice(0,10));
+      startDate = new Date(event.target.staffLeaveStartCalendarDate.value).toISOString().slice(0,10);
+    }
+
+    let endDate = event.target.formBasicEndDate.value;
+
+    if (
+      event.target.staffLeaveEndCalendarDate.value !== null
+    ) {
+      console.log("fancyDate2", new Date(event.target.staffLeaveEndCalendarDate.value).toISOString().slice(0,10));
+      endDate = new Date(event.target.staffLeaveEndCalendarDate.value).toISOString().slice(0,10);
+    }
+
     const requestBody = {
       query: `
         query{getUserLeaveDateRange(userId:"${userId}",startDate:"${startDate}",endDate:"${endDate}")
@@ -1595,7 +1621,7 @@ showDetailHandler = userId => {
                         <Container className="containerSearchUserInput">
 
                         <Row className="searchUserRowAdd">
-                        <Button variant="primary" onClick={this.startSearchUserHandler}>Search</Button>
+                        <Button variant="primary" className="searchButton" size="lg" onClick={this.startSearchUserHandler}>Search</Button>
                         </Row>
 
                         <Row className="searchUserRowForm">

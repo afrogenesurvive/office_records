@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import AuthContext from '../../context/auth-context';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const UpdatePatientInvestigationForm = (props) => {
+
+  const [investigationDate, setInvestigationDate] = useState(new Date());
+
+  const handleChangeInvestigationDate = date => {
+    setInvestigationDate(date);
+    console.log(`investigationDate ${investigationDate}`);
+   }
+
 const {...patient} = props.patient;
 
 
@@ -34,6 +44,18 @@ return (
   )}
 
   </Form.Row>
+
+  {!props.visit && (
+  <Form.Row>
+  <Form.Group as={Col} controlId="">
+    <Form.Label>Fancy Date</Form.Label>
+    <DatePicker className="" id="patientInvestigationCalendarDate"
+      selected={investigationDate}
+      onChange={handleChangeInvestigationDate}
+    />
+  </Form.Group>
+  </Form.Row>
+  )}
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridInvestigationTitle">
@@ -70,7 +92,7 @@ return (
     <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="InvestigationAttachmentFormat"/>
   </Form.Group>
-  
+
   <Form.Group as={Col} controlId="formGridInvestigationAttachmentFile">
     <Form.Label>File</Form.Label>
     <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>
