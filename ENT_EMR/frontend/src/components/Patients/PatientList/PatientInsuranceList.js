@@ -5,6 +5,7 @@ import './UserList.css';
 
 const patientInsuranceList = props => {
   const patientInsurance = props.patientInsurance.map(insurance => {
+    
     const patientInsuranceExpiry = new Date(insurance.expiry.substr(0,10)*1000).toISOString().slice(0,10);
     return (
       <PatientInsuranceItem

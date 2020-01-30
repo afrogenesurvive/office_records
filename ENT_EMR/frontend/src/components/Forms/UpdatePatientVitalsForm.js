@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const UpdatePatientVitalsForm = (props) => {
+
+  const [vitalsDate, setVitalsDate] = useState(new Date());
+
+  const handleChangeVitalsDate = date => {
+    setVitalsDate(date);
+    console.log(`vitalsDate ${vitalsDate}`);
+   }
+
 const {...patient} = props.patient;
 
 
@@ -25,14 +35,26 @@ return (
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
   </Form.Group>
   )}
+
   {props.visit && (
   <Form.Group as={Col} controlId="formGridVitalsDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" defaultChecked={true}/>
   </Form.Group>
   )}
-
   </Form.Row>
+  
+  {!props.visit && (
+  <Form.Row>
+  <Form.Group as={Col} controlId="">
+    <Form.Label>Fancy Date</Form.Label>
+    <DatePicker className="" id="patientVitalsCalendarDate"
+      selected={vitalsDate}
+      onChange={handleChangeVitalsDate}
+    />
+  </Form.Group>
+  </Form.Row>
+  )}
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridVitalsPr">

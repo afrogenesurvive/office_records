@@ -51,7 +51,6 @@ return (
     <Form.Control type="checkbox" defaultChecked={true}/>
   </Form.Group>
   )}
-  )}
 
   </Form.Row>
 

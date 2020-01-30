@@ -1,13 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion'
-// import FormCheck from 'react-bootstrap/FormCheck'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import AuthContext from '../../context/auth-context';
 import './CreateUserForm.css';
 
 const UpdatePatientSystematicInquiryForm = (props) => {
+
+  const [systematicInquiryDate, setSystematicInquiryDate] = useState(new Date());
+
+  const handleChangeSystematicInquiryDate = date => {
+    setSystematicInquiryDate(date);
+    console.log(`systematicInquiryDate ${systematicInquiryDate}`);
+   }
+
 const {...patient} = props.patient;
 
 
@@ -35,6 +44,18 @@ return (
   )}
 
   </Form.Row>
+
+  {!props.visit && (
+  <Form.Row>
+  <Form.Group as={Col} controlId="">
+    <Form.Label>Fancy Date</Form.Label>
+    <DatePicker className="" id="patientSystematicInquiryCalendarDate"
+      selected={systematicInquiryDate}
+      onChange={handleChangeSystematicInquiryDate}
+    />
+  </Form.Group>
+  </Form.Row>
+  )}
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridSystematicInquiryTitle">
