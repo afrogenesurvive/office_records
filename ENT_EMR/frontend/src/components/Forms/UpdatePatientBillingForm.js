@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import AuthContext from '../../context/auth-context';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const UpdatePatientBillingForm = (props) => {
+
+  const [billingDate, setBillingDate] = useState(new Date());
+
+  const handleChangeBillingDate = date => {
+    setBillingDate(date);
+    console.log(`billingDate ${billingDate}`);
+   }
+
 const {...patient} = props.patient;
 
 
@@ -37,6 +47,18 @@ return (
   )}
 
   </Form.Row>
+
+  {!props.visit && (
+  <Form.Row>
+  <Form.Group as={Col} controlId="">
+    <Form.Label>Fancy Date</Form.Label>
+    <DatePicker className="" id="patientBillingCalendarDate"
+      selected={billingDate}
+      onChange={handleChangeBillingDate}
+    />
+  </Form.Group>
+  </Form.Row>
+  )}
 
   <Form.Row>
   <Form.Group as={Col} controlId="formGridBillingTitle">
