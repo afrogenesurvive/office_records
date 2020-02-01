@@ -150,6 +150,8 @@ const SickNote = () => (
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
         <Text>To Whom It May Concern</Text>
+        <Text>Date: {docProps.pdfData.date}</Text>
+        <Text>{docProps.pdfData.receiverAddress}</Text>
         <Text>Dear Sir/Madam,</Text>
         <Text>This is to certify that I have seen and examined</Text>
         <Text>Mr. /Mrs. /Miss: {docProps.pdfData.patient.name}</Text>
@@ -157,6 +159,29 @@ const SickNote = () => (
         <Text>for at least ... {docProps.pdfData.duration} days</Text>
         <Text>commencing ... {docProps.pdfData.startDate}</Text>
         <Text>Yours Truly</Text>
+      </View>
+      )}
+    </Page>
+  </Document>
+);
+
+const DiagTest = () => (
+  <Document>
+      <Page size="A4" style={styles.page}>
+        {docProps.pdfData.patient && (
+      <View style={styles.section}>
+        <Image src={letterheadImage}></Image>
+        <Text>{docProps.pdfData.title}</Text>
+        <Text>Date: {docProps.pdfData.date}</Text>
+        <Text>To: {docProps.pdfData.receiverAddress}</Text>
+        <Text>Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Address:</Text>
+        <Text>{docProps.pdfData.patient.address.number}</Text>
+        <Text>{docProps.pdfData.patient.address.street}</Text>
+        <Text>{docProps.pdfData.patient.address.parish}</Text>
+        <Text>Diagnosis {docProps.pdfData.visitDiagnosis}</Text>
+        <Text>Test(s) Required: </Text>
+        <Text>{docProps.pdfData.requiredTests}</Text>
       </View>
       )}
     </Page>
@@ -175,9 +200,9 @@ const InsuranceNote = () => (
         <Text>Age: {docProps.pdfData.patient.age}</Text>
         <Text>Address: {docProps.pdfData.patient.address.number}, {docProps.pdfData.patient.address.street}</Text>
         <Text>{docProps.pdfData.patient.address.town}, {docProps.pdfData.patient.address.parish}</Text>
-        <Text>Subscriber: {docProps.pdfData.patient.insurance[2].company}</Text>
-        <Text>Policy No: {docProps.pdfData.patient.insurance.number}</Text>
-        <Text>Plan: {docProps.pdfData.patient.insurance.description}</Text>
+        <Text>Subscriber: {docProps.pdfData.patientInsurance.company}</Text>
+        <Text>Policy No: {docProps.pdfData.patientInsurance.number}</Text>
+        <Text>Plan: {docProps.pdfData.patientInsurance.description}</Text>
         <Text>Employer: {docProps.pdfData.patient.occupation.employer}</Text>
         <Text>Proposed Operation: {docProps.pdfData.operation}</Text>
         <Text>Date of Operation: {docProps.pdfData.operationDate}</Text>
@@ -294,6 +319,9 @@ return (
       )}
       {docProps.pdfType === "sickNote" && (
         <SickNote/>
+      )}
+      {docProps.pdfType === "diagTest" && (
+        <DiagTest/>
       )}
       {docProps.pdfType === "insuranceNote" && (
         <InsuranceNote/>

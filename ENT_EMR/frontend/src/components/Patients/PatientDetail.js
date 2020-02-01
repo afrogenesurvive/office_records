@@ -38,8 +38,12 @@ import CreatePatientReferralForm from '../../components/Forms/CreatePatientRefer
 import CreatePatientOperationReminderForm from '../../components/Forms/CreatePatientOperationReminderForm';
 import CreatePatientMiscNoteForm from '../../components/Forms/CreatePatientMiscNoteForm';
 import CreatePatientSickNoteForm from '../../components/Forms/CreatePatientSickNoteForm';
+import CreatePatientDiagTestForm from '../../components/Forms/CreatePatientDiagTestForm';
 import CreatePatientInsuranceNoteForm from '../../components/Forms/CreatePatientInsuranceNoteForm';
-
+import CreatePatientPrescriptionForm from '../../components/Forms/CreatePatientPrescriptionForm';
+import CreatePatientProcedureConsentForm from '../../components/Forms/CreatePatientProcedureConsentForm';
+import CreatePatientUnfitToFlyForm from '../../components/Forms/CreatePatientUnfitToFlyForm';
+import CreatePatientTreatmentInstructionForm from '../../components/Forms/CreatePatientTreatmentInstructionForm';
 import './PatientDetail.css';
 
 const PatientDetail = (props) => {
@@ -619,6 +623,9 @@ const PatientDetail = (props) => {
                         <Nav.Link eventKey="5">Sick Note</Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
+                        <Nav.Link eventKey="11">Tests & Screening</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
                         <Nav.Link eventKey="6">Insurance Note</Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
@@ -684,6 +691,12 @@ const PatientDetail = (props) => {
                           onCreateSickNote={props.onCreateSickNoteInput}
                         />
                       </Tab.Pane>
+                      <Tab.Pane eventKey="11">
+
+                        <CreatePatientDiagTestForm
+                          onCreateDiagTest={props.onCreateDiagTestInput}
+                        />
+                      </Tab.Pane>
                       <Tab.Pane eventKey="6">
                         <Button variant="warning" onClick={props.onCreateInsuranceNote.bind(this, patient)}>
                           Create Insurance Note
@@ -697,21 +710,37 @@ const PatientDetail = (props) => {
                         <Button variant="warning" onClick={props.onCreatePrescription.bind(this, patient)}>
                           Create Prescription
                         </Button>
+
+                        <CreatePatientPrescriptionForm
+                          onCreatePrescription={props.onCreatePrescriptionInput}
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="8">
                         <Button variant="warning" onClick={props.onCreateProcedureConsent.bind(this, patient)}>
                           Create Procedure Consent
                         </Button>
+
+                        <CreatePatientProcedureConsentForm
+                          onCreateProcedureConsent={props.onCreateProcedureConsentInput}
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="9">
                         <Button variant="warning" onClick={props.onCreateFitToFly.bind(this, patient)}>
-                          Create Unfit-to-Fly Authorization
+                          Create Unfit To Fly Authorization
                         </Button>
+
+                        <CreatePatientUnfitToFlyForm
+                          onCreateUnfitToFly={props.onCreateUnfitToFlyInput}
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="10">
                         <Button variant="warning" onClick={props.onCreateTreatmentInstruction.bind(this, patient)}>
                           Create Treatment Instructions
                         </Button>
+
+                        <CreatePatientTreatmentInstructionForm
+                          onCreateTreatmentInstruction={props.onCreateTreatmentInstructionInput}
+                        />
                       </Tab.Pane>
                     </Tab.Content>
                   </Col>

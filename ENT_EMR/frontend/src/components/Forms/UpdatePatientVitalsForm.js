@@ -43,7 +43,7 @@ return (
   </Form.Group>
   )}
   </Form.Row>
-  
+
   {!props.visit && (
   <Form.Row>
   <Form.Group as={Col} controlId="">
@@ -68,6 +68,7 @@ return (
     <Form.Label>Blood /</Form.Label>
     <Form.Control type="number" className="bpInput" placeholder="0/"/>
   </Form.Group>
+  
   <Form.Group controlId="formGridVitalsBp2" className="bpInputGroup">
     <Form.Label>Pressure</Form.Label>
     <Form.Control type="number" className="bpInput" placeholder="0"/>
