@@ -1,6 +1,5 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
-
+import Button from 'react-bootstrap/Button';
 
 import './UserItem.css';
 
@@ -19,9 +18,9 @@ const searchAppointmentItem = props => (
 
     </div>
     <div>
-    <button className="btn" onClick={props.onDetail.bind(this, props._id)}>
+    <Button className="btn" variant="primary" onClick={props.onDetail.bind(this, props._id)}>
           View Details
-        </button>
+        </Button>
     </div>
   </li>
 );

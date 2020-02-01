@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -552,6 +553,14 @@ class AppointmentsPage extends Component {
         appointmentDate = new Date().toISOString().slice(0,10);
       }
 
+      if (
+        event.target.formBasicDateTodayCheckbox.checked !== true &&
+        event.target.appointmentCalendarDate.value !== null
+      ) {
+        console.log("fancyDate2", new Date(event.target.appointmentCalendarDate.value).toISOString().slice(0,10));
+        appointmentDate = new Date(event.target.appointmentCalendarDate.value).toISOString().slice(0,10);
+      }
+
       const requestBody = {
         query: `
           query {getAppointmentDate(userId:"${userId}",date:"${appointmentDate}")
@@ -587,8 +596,22 @@ class AppointmentsPage extends Component {
       let userId = this.context.userId;
       const token = this.context.token;
       this.setState({ searching: false, userAlert: "Searching for Appointment by Date range..." });
+
       let appointmentStartDate = event.target.formBasicStartDate.value;
+      if (
+        event.target.appointmentCalendarStartDate.value !== null
+      ) {
+        console.log("fancyDate2", new Date(event.target.appointmentCalendarStartDate.value).toISOString().slice(0,10));
+        appointmentStartDate = new Date(event.target.appointmentCalendarStartDate.value).toISOString().slice(0,10);
+      }
+
       let appointmentEndDate = event.target.formBasicEndDate.value;
+      if (
+        event.target.appointmentCalendarEndDate.value !== null
+      ) {
+        console.log("fancyDate2", new Date(event.target.appointmentCalendarEndDate.value).toISOString().slice(0,10));
+        appointmentEndDate = new Date(event.target.appointmentCalendarEndDate.value).toISOString().slice(0,10);
+      }
 
       const requestBody = {
         query: `

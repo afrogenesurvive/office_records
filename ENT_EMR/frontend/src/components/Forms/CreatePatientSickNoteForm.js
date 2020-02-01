@@ -12,6 +12,13 @@ return (
   <Form onSubmit={props.onCreateSickNote}>
 
     <Form.Row>
+      <Form.Group as={Col} controlId="formGridDocGenSickNoteAddress">
+        <Form.Label>Receiver Adress</Form.Label>
+        <Form.Control as="textarea" rows="5" placeholder="Receiver Adress"/>
+      </Form.Group>
+    </Form.Row>
+
+    <Form.Row>
       <Form.Group as={Col} controlId="formGridDocGenSickNoteDuration">
         <Form.Label>Duration (Days)</Form.Label>
         <Form.Control type="text" placeholder="Duration"/>

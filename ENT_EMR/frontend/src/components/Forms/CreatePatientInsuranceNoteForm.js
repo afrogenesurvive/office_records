@@ -12,6 +12,13 @@ return (
   <Form onSubmit={props.onCreateInsuranceNote}>
 
     <Form.Row>
+      <Form.Group as={Col} controlId="formGridDocGenInsuranceNotePolicyNumber">
+        <Form.Label>Policy No.</Form.Label>
+        <Form.Control type="number" placeholder="Insurance Policy Number"/>
+      </Form.Group>
+    </Form.Row>
+
+    <Form.Row>
       <Form.Group as={Col} controlId="formGridDocGenInsuranceNoteOperation">
         <Form.Label>Operation (Days)</Form.Label>
         <Form.Control type="text" placeholder="Operation"/>

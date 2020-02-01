@@ -1529,23 +1529,33 @@ updatePatientTreatmentHandler = (event) => {
   }
   const treatmentAttachmentFormat = event.target.formGridTreatmentAttachmentFormat.value;
   const treatmentAttachmentPath = "uploads/patients/"+selectedPatientId+"/treatment";
-  const file = AuthContext._currentValue.file;
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: treatmentAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
-  }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const treatmentAttachmentName = newFileName;
-  this.setState({userAlert: "uploading attachment ..."});
 
-  ReactS3Client
-      .uploadFile(file, newFileName)
-      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+  let treatmentAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+
+    const file = AuthContext._currentValue.file;
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: treatmentAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    const treatmentAttachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+
+  }
+
 
   const requestBody = {
     query:`
@@ -1616,24 +1626,32 @@ updatePatientBillingHandler = (event) => {
   const billingNotes = event.target.formGridBillingNotes.value;
   const billingAttachmentFormat = event.target.formGridBillingAttachmentFormat.value;
   const billingAttachmentPath = "uploads/patients/"+selectedPatientId+"/billing";
-  const file = AuthContext._currentValue.file;
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: billingAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
+
+  let billingAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+    const file = AuthContext._currentValue.file;
+
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: billingAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    billingAttachmentName = newFileName;
+
+    this.setState({userAlert: "uploading attachment ..."});
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
   }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const billingAttachmentName = newFileName;
-
-  this.setState({userAlert: "uploading attachment ..."});
-
-  ReactS3Client
-      .uploadFile(file, newFileName)
-      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const requestBody = {
     query:`
@@ -3541,7 +3559,7 @@ createReferralInput = (event) => {
       `);
 
     const pdfData = {
-    title: "This pdf is supplied with Patient data...",
+    title: "Referral",
     visitDate: visitDate,
     findings: event.target.formGridDocGenReferralFindings.value,
     recommendation: event.target.formGridDocGenReferralRecommendation.value,
@@ -3655,15 +3673,15 @@ createOperationReminder = (patient) => {
 }
 
 createOperationReminderInput = (event) => {
-  event.preventDefault();
 
-    const patient = this.state.selectedPatient;
+  event.preventDefault();
+  const patient = this.state.selectedPatient;
     console.log(`
         create operation reminder user otf input here...
       `);
 
     const pdfData = {
-    title: "This pdf is supplied with Patient data...",
+    title: "Operation Reminder",
     patient: {
       _id: patient._id,
       title: patient.title,
@@ -3779,15 +3797,15 @@ createMiscNote = (patient) => {
 }
 
 createMiscNoteInput = (event) => {
-  event.preventDefault();
 
-    const patient = this.state.selectedPatient;
+  event.preventDefault();
+  const patient = this.state.selectedPatient;
     console.log(`
         create misc note user otf input here...
       `);
 
     const pdfData = {
-    title: "This pdf is supplied with Patient data...",
+    title: "Miscellaneous Note",
     patient: {
       _id: patient._id,
       title: patient.title,
@@ -3897,15 +3915,15 @@ createSickNote = (patient) => {
 }
 
 createSickNoteInput = (event) => {
-  event.preventDefault();
 
+    event.preventDefault();
     const patient = this.state.selectedPatient;
     console.log(`
         create Sick note user otf input here...
       `);
 
     const pdfData = {
-    title: "This pdf is supplied with Patient data...",
+    title: "Sick Note",
     patient: {
       _id: patient._id,
       title: patient.title,
@@ -3965,6 +3983,7 @@ createSickNoteInput = (event) => {
         notes: patient.notes,
         tags: patient.tags
       },
+      receiverAddress: event.target.formGridDocGenSickNoteAddress.value,
       date: new Date(),
       duration: event.target.formGridDocGenSickNoteDuration.value,
       startDate: event.target.formGridDocGenSickNoteStartDate.value,
@@ -3972,6 +3991,88 @@ createSickNoteInput = (event) => {
     };
 
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "sickNote" })
+}
+
+createDiagTestInput = (event) => {
+
+    event.preventDefault();
+    const visitDate = new Date(event.target.formGridDocGenDiagTestDiagDate.value).toISOString().substring(0, 10);
+    const visitDiagnosis = patient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+    const patient = this.state.selectedPatient;
+    console.log(`
+        create tests & screening user otf input here...
+      `);
+
+    const pdfData = {
+    title: "Tests & Screenings",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      },
+      occupation:{
+        role: patient.occupation.role,
+        employer: patient.occupation.employer,
+        contact:{
+          phone: patient.occupation.contact.phone,
+          email: patient.occupation.contact.email
+        }},
+        appointments: patient.appointments,
+        consultant: patient.consultant,
+        insurance: patient.insurance,
+        nextOfKin: patient.nextOfKin,
+        complaints: patient.complaints,
+        surveys: patient.surveys,
+        systematicInquiry: patient.systematicInquiry,
+        vitals: patient.vitals,
+        examination: patient.examination,
+        history: patient.history,
+        allergies: patient.allergies,
+        medication: patient.medication,
+        investigation: patient.investigation,
+        diagnosis: patient.diagnosis,
+        treatment: patient.treatment,
+        billing: patient.billing,
+        vigilance: patient.vigilance,
+        attachments: patient.attachments,
+        notes: patient.notes,
+        tags: patient.tags
+      },
+      visitDate: visitDate,
+      visitDiagnosis: visitDiagnosis,
+      receiver: event.target.formGridDocGenDiagTestReceiver.value,
+      requiredTests: event.target.formGridDocGenDiagTestReceiver.value,
+      date: new Date(),
+      letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+    };
+
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "DiagTest" })
 }
 
 createInsuranceNote = (patient) => {
@@ -4016,15 +4117,16 @@ createInsuranceNote = (patient) => {
 }
 
 createInsuranceNoteInput = (event) => {
-  event.preventDefault();
 
+    event.preventDefault();
     const patient = this.state.selectedPatient;
+    const patientInsurance = patient.insurance.filter(x=> x.number === event.target.formGridDocGenInsuranceNotePolicyNumber.value);
     console.log(`
         create Insurance note user otf input here...
       `);
 
     const pdfData = {
-    title: "This pdf is supplied with Patient data...",
+    title: "Insurance Note",
     patient: {
       _id: patient._id,
       title: patient.title,
@@ -4084,6 +4186,7 @@ createInsuranceNoteInput = (event) => {
         notes: patient.notes,
         tags: patient.tags
       },
+      patientInsurance: patientInsurance,
       operation: event.target.formGridDocGenInsuranceNoteOperation.value,
       operationDate: event.target.formGridDocGenInsuranceNoteOperationDate.value,
       surgeonFee: event.target.formGridDocGenInsuranceNoteSurgeonFee.value,
@@ -4136,6 +4239,61 @@ createPrescription = (patient) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "prescription" })
 }
 
+createPrescriptionInput = (event) => {
+
+  event.preventDefault();
+  let generic = null;
+  if (event.target.formGridDocGenPrescriptionGeneric.checked === true) {
+    generic = "yes"
+  }
+  if (event.target.formGridDocGenPrescriptionGeneric.checked !== true) {
+    generic = "no"
+  }
+
+  const patient = this.state.selectedPatient;
+  const pdfData = {
+    title: "Prescription",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    prescription: event.target.formGridDocGenPrescriptionPescription.value,
+    generic: generic,
+    repeat: event.target.formGridDocGenPrescriptionRepeat.value,
+    consultantName: this.context.selectedUser.name,
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "prescription" })
+}
+
 createProcedureConsent = (patient) => {
   const pdfData = {
     title: "Procedure Consent",
@@ -4171,6 +4329,51 @@ createProcedureConsent = (patient) => {
         email: patient.contact.email
       }
     },
+    referral: "test procedure consent...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "procedureConsent" })
+}
+
+createProcedureConsentInput = (event) => {
+
+  event.preventDefault();
+  const patient = this.state.selectedPatient;
+  const pdfData = {
+    title: "Procedure Consent",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    input: event.target.formGridDocGenProcedureConsent.value,
     referral: "test procedure consent...",
     letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
   }
@@ -4218,6 +4421,51 @@ createFitToFly = (patient) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "fitToFlyAuthorization" })
 }
 
+createFitToFlyInput = (event) => {
+
+  event.preventDefault();
+  const patient = this.state.selectedPatient;
+  const pdfData = {
+    title: "Fit-to-Fly Authorization",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    input: event.target.formGridDocGenProcedureConsent.value,
+    referral: "test fit-to-fly authorization...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "fitToFlyAuthorization" })
+}
+
 createTreatmentInstruction = (patient) => {
   const pdfData = {
     title: "Treatment Instruction",
@@ -4253,6 +4501,51 @@ createTreatmentInstruction = (patient) => {
         email: patient.contact.email
       }
     },
+    referral: "test Treatment Instruction...",
+    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
+  }
+  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "treatmentInstruction" })
+}
+
+createTreatmentInstructionInput = (event) => {
+
+  event.preventDefault();
+  const patient = this.state.selectedPatient;
+  const pdfData = {
+    title: "Treatment Instruction",
+    patient: {
+      _id: patient._id,
+      title: patient.title,
+      name: patient.name,
+      dob: patient.dob,
+      age: patient.age,
+      gender: patient.gender,
+      address:{
+        number: patient.number,
+        street: patient.street,
+        town: patient.town,
+        parish: patient.parish,
+        postOffice: patient.postOffice
+      },
+      registrationDate: patient.registrationDate,
+      referralDate: patient.referralDate,
+      expirationDate: patient.expirationDate,
+      attendingPhysician:{
+        name: patient.attendingPhysician.name,
+        email: patient.attendingPhysician.email,
+        phone: patient.attendingPhysician.phone
+      },
+      referringDoctor: {
+        name: patient.referringDoctor.name,
+        email: patient.referringDoctor.email,
+        phone: patient.referringDoctor.phone
+      },
+      contact: {
+        phone: patient.contact.phone,
+        email: patient.contact.email
+      }
+    },
+    input: event.target.formGridDocGenTreatmentInstruction.value,
     referral: "test Treatment Instruction...",
     letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
   }
@@ -4528,11 +4821,16 @@ render() {
                     onCreateMiscNoteInput={this.createMiscNoteInput}
                     onCreateSickNote={this.createSickNote}
                     onCreateSickNoteInput={this.createSickNoteInput}
+                    onCreateDiagTestInput={this.createDiagTestInput}
                     onCreateInsuranceNote={this.createInsuranceNote}
                     onCreateInsuranceNoteInput={this.createInsuranceNoteInput}
                     onCreatePrescription={this.createPrescription}
+                    onCreatePrescriptionInput={this.createPrescriptionInput}
                     onCreateProcedureConsent={this.createProcedureConsent}
+                    onCreateProcedureConsentInput={this.createProcedureConsentInput}
                     onCreateFitToFly={this.createFitToFly}
+                    onCreateFitToFlyInput={this.createFitToFlyInput}
+                    onCreateTreatmentInstructionInput={this.createTreatmentInstructionInput}
                     onCreateTreatmentInstruction={this.createTreatmentInstruction}
                     onGetVisitList={this.getVisitList}
                     visitList={this.state.visitList}

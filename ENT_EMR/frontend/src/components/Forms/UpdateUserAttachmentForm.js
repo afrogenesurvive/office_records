@@ -29,6 +29,24 @@ return (
   </Form.Group>
 </Form.Row>
 
+<Form.Row>
+<GooglePicker clientId={'gdriveCreds.clientId'}
+            developerKey={'gdriveCreds.developerKey'}
+            scope={['https://www.googleapis.com/auth/drive.readonly']}
+              onChange={data => console.log('on change:', data)}
+              onAuthFailed={data => console.log('on auth failed:', data)}
+              multiselect={true}
+              navHidden={true}
+              authImmediate={false}
+              mimeTypes={['image/png', 'image/jpeg', 'image/jpg']}
+              query={'10'}
+              viewId={'DOCS'}>
+            <Button variant="primary" className="formButton">
+            Google Picker
+            </Button>
+</GooglePicker>
+</Form.Row>
+
 {
 // <Form.Row>
 // <GooglePicker clientId={'gdriveCreds.clientId'}
