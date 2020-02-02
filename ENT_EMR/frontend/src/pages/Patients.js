@@ -702,24 +702,32 @@ updatePatientComplaintHandler = (event) => {
   let complaintAnamnesis = event.target.formGridComplaintAnamnesis.value;
   let complaintAttachmentFormat = event.target.formGridComplaintAttachmentFormat.value;
   let complaintAttachmentPath = "uploads/patients/"+selectedPatientId+"/complaints";
-  let file = AuthContext._currentValue.file;
 
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: complaintAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
+  let complaintAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+
+    const file = AuthContext._currentValue.file;
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: complaintAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    const complaintAttachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+
   }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const complaintAttachmentName = newFileName;
-  this.setState({userAlert: "uploading attachment ..."});
-
-  ReactS3Client
-      .uploadFile(file, newFileName)
-      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const requestBody = {
     query:`
@@ -786,24 +794,31 @@ updatePatientSurveyHandler = (event) => {
   let surveyDescription = event.target.formGridSurveyDescription.value;
   let surveyAttachmentFormat = event.target.formGridSurveyAttachmentFormat.value;
   let surveyAttachmentPath = "uploads/patients/"+selectedPatientId+"/surveys";
-  let file = AuthContext._currentValue.file;
 
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: surveyAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
+  let surveyAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+
+    const file = AuthContext._currentValue.file;
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: surveyAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    const surveyAttachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
   }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const surveyAttachmentName = newFileName;
-  this.setState({userAlert: "uploading attachment ..."});
-
-  ReactS3Client
-      .uploadFile(file, newFileName)
-      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const requestBody = {
     query:`
@@ -870,24 +885,32 @@ updatePatientSystematicInquiryHandler = (event) => {
   let systematicInquiryDescription = event.target.formGridSystematicInquiryDescription.value;
   let systematicInquiryAttachmentFormat = event.target.formGridSystematicInquiryAttachmentFormat.value;
   let systematicInquiryAttachmentPath = "uploads/patients/"+selectedPatientId+"/systematicInquirys";
-  let file = AuthContext._currentValue.file;
 
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: systematicInquiryAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
+  let systematicInquiryAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+
+    const file = AuthContext._currentValue.file;
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: systematicInquiryAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    const systematicInquiryAttachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
+
+    // ReactS3Client
+    //     .uploadFile(file, newFileName)
+    //     .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+    //     .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+
   }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const systematicInquiryAttachmentName = newFileName;
-  this.setState({userAlert: "uploading attachment ..."});
-
-  // ReactS3Client
-  //     .uploadFile(file, newFileName)
-  //     .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-  //     .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
 
   const requestBody = {
     query:`
@@ -1036,23 +1059,32 @@ updatePatientExaminationHandler = (event) => {
   const examinationFollowUp = event.target.formGridExaminationFollowUp.value;
   const examinationAttachmentFormat = event.target.formGridExaminationAttachmentFormat.value;
   const examinationAttachmentPath = "uploads/patients/"+selectedPatientId+"/examinations";
-  const file = AuthContext._currentValue.file;
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: examinationAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
-  }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const examinationAttachmentName = newFileName;
 
-  this.setState({userAlert: "uploading attachment ..."})
-  ReactS3Client
-      .uploadFile(file, newFileName)
-      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+  let examinationAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+
+    const file = AuthContext._currentValue.file;
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: examinationAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    const examinationAttachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+
+  }
 
   const requestBody = {
     query:`
@@ -1119,23 +1151,32 @@ updatePatientHistoryHandler = (event) => {
   const historyDescription = event.target.formGridHistoryDescription.value;
   const historyAttachmentFormat = event.target.formGridHistoryAttachmentFormat.value;
   const historyAttachmentPath = "uploads/patients/"+selectedPatientId+"/history";
-  const file = AuthContext._currentValue.file;
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: historyAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
-  }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const historyAttachmentName = newFileName;
-  this.setState({userAlert: "uploading attachment ..."});
 
-  ReactS3Client
-      .uploadFile(file, newFileName)
-      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+  let historyAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+
+    const file = AuthContext._currentValue.file;
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: historyAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    const historyAttachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+
+  }
 
   const requestBody = {
     query:`
@@ -1194,23 +1235,32 @@ updatePatientAllergiesHandler = (event) => {
   const allergiesDescription = event.target.formGridAllergiesDescription.value;
   const allergiesAttachmentFormat = event.target.formGridAllergiesAttachmentFormat.value;
   const allergiesAttachmentPath = "uploads/patients/"+selectedPatientId+"/allergies";
-  const file = AuthContext._currentValue.file;
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: allergiesAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
-  }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const allergiesAttachmentName = newFileName;
-  this.setState({userAlert: "uploading attachment ..."});
 
-  ReactS3Client
-      .uploadFile(file, newFileName)
-      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+  let allergiesAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+
+    const file = AuthContext._currentValue.file;
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: allergiesAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    const allergiesAttachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+
+  }
 
   const requestBody = {
     query:`
@@ -1262,23 +1312,32 @@ updatePatientMedicationHandler = (event) => {
   const medicationDescription = event.target.formGridMedicationDescription.value;
   const medicationAttachmentFormat = event.target.formGridMedicationAttachmentFormat.value;
   const medicationAttachmentPath = "uploads/patients/"+selectedPatientId+"/medication";
-  const file = AuthContext._currentValue.file;
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: medicationAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
-  }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const medicationAttachmentName = newFileName;
-  this.setState({userAlert: "uploading attachment ..."});
 
-  ReactS3Client
-      .uploadFile(file, newFileName)
-      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+  let medicationAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+
+    const file = AuthContext._currentValue.file;
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: medicationAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    const medicationAttachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+
+  }
 
   const requestBody = {
     query:`
@@ -1353,24 +1412,32 @@ updatePatientInvestigationHandler = (event) => {
   const investigationDescription = event.target.formGridInvestigationDescription.value;
   const investigationAttachmentFormat = event.target.formGridInvestigationAttachmentFormat.value;
   const investigationAttachmentPath = "uploads/patients/"+selectedPatientId+"/investigation";
-  const file = AuthContext._currentValue.file;
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: investigationAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
-  }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const investigationAttachmentName = newFileName;
 
-  // this.setState({userAlert: "uploading attachment ..."});
-  //
-  // ReactS3Client
-  //     .uploadFile(file, newFileName)
-  //     .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-  //     .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+  let investigationAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+
+    const file = AuthContext._currentValue.file;
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: investigationAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    const investigationAttachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+
+  }
 
   const requestBody = {
     query:`
@@ -1438,23 +1505,32 @@ updatePatientDiagnosisHandler = (event) => {
   const diagnosisDescription = event.target.formGridDiagnosisDescription.value;
   const diagnosisAttachmentFormat = event.target.formGridDiagnosisAttachmentFormat.value;
   const diagnosisAttachmentPath = "uploads/patients/"+selectedPatientId+"/diagnosis";
-  const file = AuthContext._currentValue.file;
-  const config = {
-    bucketName: this.context.creds.s3.bucketName,
-    dirName: diagnosisAttachmentPath,
-    region: this.context.creds.s3.region,
-    accessKeyId: this.context.creds.s3.accessKeyId,
-    secretAccessKey: this.context.creds.s3.secretAccessKey,
-  }
-  const ReactS3Client = new S3(config);
-  const newFileName = file.name;
-  const diagnosisAttachmentName = newFileName;
-  this.setState({userAlert: "uploading attachment ..."});
 
-  ReactS3Client
-      .uploadFile(file, newFileName)
-      .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-      .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+  let diagnosisAttachmentName = null;
+
+  if (event.target.fileInput.value !== null ||
+      event.target.fileInput.value !== ""
+  ) {
+
+    const file = AuthContext._currentValue.file;
+    const config = {
+      bucketName: this.context.creds.s3.bucketName,
+      dirName: diagnosisAttachmentPath,
+      region: this.context.creds.s3.region,
+      accessKeyId: this.context.creds.s3.accessKeyId,
+      secretAccessKey: this.context.creds.s3.secretAccessKey,
+    }
+    const ReactS3Client = new S3(config);
+    const newFileName = file.name;
+    const diagnosisAttachmentName = newFileName;
+    this.setState({userAlert: "uploading attachment ..."});
+
+    ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+
+  }
 
   const requestBody = {
     query:`
@@ -1902,23 +1978,32 @@ updatePatientAttachmentHandler = (event) => {
     this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Attachment..." });
     const attachmentFormat = event.target.formGridPatientAttachmentFormat.value;
     const attachmentPath = "uploads/patients/"+selectedPatientId+"/attachments"
-    const file = AuthContext._currentValue.file;
-    const config = {
-      bucketName: this.context.creds.s3.bucketName,
-      dirName: attachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
-    }
-    const ReactS3Client = new S3(config);
-    const newFileName = file.name;
-    const attachmentName = newFileName;
-    this.setState({userAlert: "uploading attachment ..."});
 
-    ReactS3Client
-        .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+    let attachmentName = null;
+
+    if (event.target.fileInput.value !== null ||
+        event.target.fileInput.value !== ""
+    ) {
+      let file = AuthContext._currentValue.file;
+
+      const config = {
+        bucketName: this.context.creds.s3.bucketName,
+        dirName: attachmentPath,
+        region: this.context.creds.s3.region,
+        accessKeyId: this.context.creds.s3.accessKeyId,
+        secretAccessKey: this.context.creds.s3.secretAccessKey,
+      }
+      const ReactS3Client = new S3(config);
+      const newFileName = file.name;
+      attachmentName = newFileName;
+      this.setState({userAlert: "uploading attachment ..."});
+
+      ReactS3Client
+          .uploadFile(file, newFileName)
+          .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+          .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+    }
+
 
     if (
       attachmentName.trim().length === 0 ||
@@ -3438,6 +3523,7 @@ createPdfTest = (event) => {
     const patient = this.state.selectedPatient;
     const pdfData = {
     title: "This pdf is supplied with Patient data...",
+    date: new Date(),
     test: event.target.formGridDocGenUserInput.value,
     patient: {
       _id: patient._id,
@@ -3622,6 +3708,7 @@ createReferralInput = (event) => {
         notes: patient.notes,
         tags: patient.tags
       },
+      date: new Date(),
       referral: "test referral... now w/ input",
       visitDiagnosis: visitDiagnosis,
       visitTreatment: visitTreatment,
@@ -3675,6 +3762,10 @@ createOperationReminder = (patient) => {
 createOperationReminderInput = (event) => {
 
   event.preventDefault();
+  let date = event.target.formGridDocGenOperationReminderDate.value;
+  if (event.target.formGridDocGenOperationReminderDate.value === null ) {
+    date = event.target.patientOperationReminderCalendarOperationDate.value;
+  }
   const patient = this.state.selectedPatient;
     console.log(`
         create operation reminder user otf input here...
@@ -3741,7 +3832,8 @@ createOperationReminderInput = (event) => {
         notes: patient.notes,
         tags: patient.tags
       },
-      date: event.target.formGridDocGenOperationReminderDate.value,
+      today: new Date(),
+      date: date,
       name: event.target.formGridDocGenOperationReminderName.value,
       time: event.target.formGridDocGenOperationReminderTime.value,
       hospitalName: event.target.formGridDocGenOperationReminderHospitalName.value,
@@ -3865,6 +3957,7 @@ createMiscNoteInput = (event) => {
         notes: patient.notes,
         tags: patient.tags
       },
+      date: new Date(),
       note1: event.target.formGridDocGenMiscNote1.value,
       note2: event.target.formGridDocGenMiscNote2.value,
       letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
@@ -3917,6 +4010,10 @@ createSickNote = (patient) => {
 createSickNoteInput = (event) => {
 
     event.preventDefault();
+    let startDate = event.target.formGridDocGenSickNoteStartDate.value;
+    if (event.target.formGridDocGenSickNoteStartDate.value === null ) {
+      startDate = event.target.patientSickNoteCalendarStartDate.value;
+    }
     const patient = this.state.selectedPatient;
     console.log(`
         create Sick note user otf input here...
@@ -3986,7 +4083,7 @@ createSickNoteInput = (event) => {
       receiverAddress: event.target.formGridDocGenSickNoteAddress.value,
       date: new Date(),
       duration: event.target.formGridDocGenSickNoteDuration.value,
-      startDate: event.target.formGridDocGenSickNoteStartDate.value,
+      startDate: startDate,
       letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
     };
 
@@ -3996,11 +4093,15 @@ createSickNoteInput = (event) => {
 createDiagTestInput = (event) => {
 
     event.preventDefault();
-    const visitDate = new Date(event.target.formGridDocGenDiagTestDiagDate.value).toISOString().substring(0, 10);
+    let visitDate = new Date(event.target.formGridDocGenDiagTestDiagDate.value).toISOString().substring(0, 10);
+    if (event.target.formGridDocGenDiagTestDiagDate.value !== null ) {
+      visitDate = event.target.patientDiagTestCalendarVisitDate.value;
+    }
     const visitDiagnosis = patient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
     const patient = this.state.selectedPatient;
     console.log(`
         create tests & screening user otf input here...
+        ${visitDate}
       `);
 
     const pdfData = {
@@ -4119,6 +4220,10 @@ createInsuranceNote = (patient) => {
 createInsuranceNoteInput = (event) => {
 
     event.preventDefault();
+    let operationDate = event.target.formGridDocGenInsuranceNoteOperationDate.value;
+    if (event.target.formGridDocGenInsuranceNoteOperationDate.value === null ) {
+      operationDate = event.target.patientInsuranceNoteCalendarOperationDate.value;
+    }
     const patient = this.state.selectedPatient;
     const patientInsurance = patient.insurance.filter(x=> x.number === event.target.formGridDocGenInsuranceNotePolicyNumber.value);
     console.log(`
@@ -4186,9 +4291,10 @@ createInsuranceNoteInput = (event) => {
         notes: patient.notes,
         tags: patient.tags
       },
+      date: new Date(),
       patientInsurance: patientInsurance,
       operation: event.target.formGridDocGenInsuranceNoteOperation.value,
-      operationDate: event.target.formGridDocGenInsuranceNoteOperationDate.value,
+      operationDate: operationDate,
       surgeonFee: event.target.formGridDocGenInsuranceNoteSurgeonFee.value,
       assistantSurgeonFee: event.target.formGridDocGenInsuranceNoteAssistantSurgeonFee.value,
       anesthetistsFee: event.target.formGridDocGenInsuranceNoteAnesthetistFee.value,
@@ -4285,6 +4391,7 @@ createPrescriptionInput = (event) => {
         email: patient.contact.email
       }
     },
+    date: new Date(),
     prescription: event.target.formGridDocGenPrescriptionPescription.value,
     generic: generic,
     repeat: event.target.formGridDocGenPrescriptionRepeat.value,
@@ -4340,7 +4447,7 @@ createProcedureConsentInput = (event) => {
   event.preventDefault();
   const patient = this.state.selectedPatient;
   const pdfData = {
-    title: "Procedure Consent",
+    title: "Consent for Medical/Surgical Treatment",
     patient: {
       _id: patient._id,
       title: patient.title,
@@ -4373,7 +4480,10 @@ createProcedureConsentInput = (event) => {
         email: patient.contact.email
       }
     },
-    input: event.target.formGridDocGenProcedureConsent.value,
+    date: new Date(),
+    consentGiver: event.target.formGridDocGenProcedureConsentGiver.value,
+    consentGiverRelation: event.target.formGridDocGenProcedureConsentGiverRelation.value,
+    consentProcedure: event.target.formGridDocGenProcedureConsentProcedure.value,
     referral: "test procedure consent...",
     letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
   }
@@ -4426,7 +4536,7 @@ createFitToFlyInput = (event) => {
   event.preventDefault();
   const patient = this.state.selectedPatient;
   const pdfData = {
-    title: "Fit-to-Fly Authorization",
+    title: "Unfit-to-Fly Authorization",
     patient: {
       _id: patient._id,
       title: patient.title,
@@ -4459,6 +4569,10 @@ createFitToFlyInput = (event) => {
         email: patient.contact.email
       }
     },
+    date: new Date(),
+    clinicalFeatures: event.target.formGridDocGenUnfitToFlyClinicalFeatures.value,
+    provisionalInvestigation: event.target.formGridDocGenUnfitToFlyProvisonalInvestigation.value,
+    conclusion: event.target.formGridDocGenUnfitToFlyConclusion.value,
     input: event.target.formGridDocGenProcedureConsent.value,
     referral: "test fit-to-fly authorization...",
     letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
@@ -4512,7 +4626,7 @@ createTreatmentInstructionInput = (event) => {
   event.preventDefault();
   const patient = this.state.selectedPatient;
   const pdfData = {
-    title: "Treatment Instruction",
+    title: "Treatment Instructions",
     patient: {
       _id: patient._id,
       title: patient.title,
@@ -4545,7 +4659,8 @@ createTreatmentInstructionInput = (event) => {
         email: patient.contact.email
       }
     },
-    input: event.target.formGridDocGenTreatmentInstruction.value,
+    date: new Date(),
+    treatmentInstruction: event.target.formGridDocGenTreatmentInstruction.value,
     referral: "test Treatment Instruction...",
     letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
   }

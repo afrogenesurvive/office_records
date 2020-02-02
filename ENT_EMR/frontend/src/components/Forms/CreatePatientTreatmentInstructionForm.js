@@ -14,7 +14,7 @@ return (
     <Form.Row>
       <Form.Group as={Col} controlId="formGridDocGenTreatmentInstruction">
         <Form.Label>Treatment Instructions</Form.Label>
-        <Form.Control as="textarea" rows="5" placeholder="TreatmentInstruction"/>
+        <Form.Control as="textarea" rows="12" placeholder="TreatmentInstruction"/>
       </Form.Group>
     </Form.Row>
 

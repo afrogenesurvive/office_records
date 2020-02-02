@@ -12,8 +12,28 @@ return (
   <Form onSubmit={props.onCreateProcedureConsent}>
 
     <Form.Row>
-      <Form.Group as={Col} controlId="formGridDocGenProcedureConsent">
-        <Form.Label>Procedure Consent </Form.Label>
+      <Form.Group as={Col} controlId="formGridDocGenProcedureConsentGiver">
+        <Form.Label>Consent Giver </Form.Label>
+        <Form.Control type="text" placeholder="ProcedureConsentGiver"/>
+      </Form.Group>
+    </Form.Row>
+
+    <Form.Row>
+      <Form.Group as={Col} controlId="formGridDocGenProcedureConsentGiverRelation">
+        <Form.Label>Consent Giver Relation </Form.Label>
+        <Form.Control as="select">
+          <option>select</option>
+          <option>Myself</option>
+          <option>My Daughter</option>
+          <option>My Son</option>
+          <option>My Spouse</option>
+        </Form.Control>
+      </Form.Group>
+    </Form.Row>
+
+    <Form.Row>
+      <Form.Group as={Col} controlId="formGridDocGenProcedureConsentProcedure">
+        <Form.Label>Procedure </Form.Label>
         <Form.Control as="textarea" rows="5" placeholder="ProcedureConsent"/>
       </Form.Group>
     </Form.Row>

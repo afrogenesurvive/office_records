@@ -467,23 +467,31 @@ class UsersPage extends Component {
     }
     let attachmentFormat = event.target.formGridAttachmentFormat.value;
     let attachmentPath = "uploads/staff/"+selectedUserId+"/attachments";
-    let file = AuthContext._currentValue.file;
-    const config = {
-      bucketName: this.context.creds.s3.bucketName,
-      dirName: attachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
-    }
-    const ReactS3Client = new S3(config);
-    const newFileName = file.name;
-    const attachmentName = newFileName;
-    this.setState({userAlert: "uploading attachment ..."});
 
-    ReactS3Client
-        .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+    let attachmentName = null;
+
+    if (event.target.fileInput.value !== null ||
+        event.target.fileInput.value !== ""
+    ) {
+      let file = AuthContext._currentValue.file;
+
+      const config = {
+        bucketName: this.context.creds.s3.bucketName,
+        dirName: attachmentPath,
+        region: this.context.creds.s3.region,
+        accessKeyId: this.context.creds.s3.accessKeyId,
+        secretAccessKey: this.context.creds.s3.secretAccessKey,
+      }
+      const ReactS3Client = new S3(config);
+      const newFileName = file.name;
+      attachmentName = newFileName;
+      this.setState({userAlert: "uploading attachment ..."});
+
+      ReactS3Client
+          .uploadFile(file, newFileName)
+          .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
+          .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+    }
 
     if (
       attachmentName.trim().length === 0 ||
