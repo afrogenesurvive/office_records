@@ -243,12 +243,21 @@ const ProcedureConsent = () => (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
-        <Text>Here is some sample data</Text>
-        <Text>Patient</Text>
-        <Text>Name: {docProps.pdfData.patient.name}</Text>
-        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
-        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
-        <Text>Referral: {docProps.pdfData.referral}</Text>
+        <Text>Date: {docProps.pdfData.date}</Text>
+        <Text>Patient's Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Patient's Age: {docProps.pdfData.patient.age}</Text>
+        <Text>I    {docProps.pdfData.consentGiver}    do hereby give consent to have </Text>
+        <Text>   {docProps.pdfData.procedure}    performed upon</Text>
+        <Text> {docProps.pdfData.consentGiverRelation} </Text>
+        <Text> The procedure, its risks and possible complications have been fully explained to me. </Text>
+        <Text> This procedure will be done uder local anesthetic and/or sedation. </Text>
+        <Text> I understand and am in agreement with proceeding with same. </Text>
+        <Text> Signed: </Text>
+        <Text> Name: </Text>
+        <Text> Signed: </Text>
+        <Text> Witness: </Text>
+        <Text> Doctor/Surgeon Signature: </Text>
+        <Text> Name: </Text>
       </View>
       )}
     </Page>
@@ -262,12 +271,17 @@ const FitToFly = () => (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
-        <Text>Here is some sample data</Text>
-        <Text>Patient</Text>
-        <Text>Name: {docProps.pdfData.patient.name}</Text>
-        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
-        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
-        <Text>Referral: {docProps.pdfData.referral}</Text>
+        <Text>Date: {docProps.pdfData.date}</Text>
+        <Text>Patient's Name: {docProps.pdfData.patient.name}</Text>
+        <Text>Patient's D.O.B: {docProps.pdfData.patient.dob}</Text>
+        <Text>Patient's Age: {docProps.pdfData.patient.age}</Text>
+        <Text>Patient's Sex: {docProps.pdfData.patient.gender}</Text>
+        <Text>Clinical Features:</Text>
+        <Text>{docProps.pdfData.clinicalFeatures}</Text>
+        <Text>Provisional Investigation:</Text>
+        <Text>{docProps.pdfData.provisionalInvestigation}</Text>
+        <Text>Conclusion:</Text>
+        <Text>{docProps.pdfData.conclusion}</Text>
       </View>
       )}
     </Page>
@@ -281,12 +295,10 @@ const TreatmentInstruction = () => (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
-        <Text>Here is some sample data</Text>
+        <Text>Date: {docProps.pdfData.date}</Text>
         <Text>Patient</Text>
         <Text>Name: {docProps.pdfData.patient.name}</Text>
-        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
-        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
-        <Text>Referral: {docProps.pdfData.referral}</Text>
+        <Text>Instructions: {docProps.pdfData.treatmentInstruction}</Text>
       </View>
       )}
     </Page>

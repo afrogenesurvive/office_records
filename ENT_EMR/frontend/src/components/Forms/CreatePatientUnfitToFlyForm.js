@@ -4,24 +4,38 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import './CreateUserForm.css';
 
-const CreatePatientTreatmentInstructionForm = (props) => {
+const CreatePatientUnfitToFlyForm = (props) => {
 const {...patient} = props.patient;
 
 return (
 <div className="UpdateFormContainer">
-  <Form onSubmit={props.onCreateTreatmentInstruction}>
+  <Form onSubmit={props.onCreateUnfitToFly}>
 
     <Form.Row>
-      <Form.Group as={Col} controlId="formGridDocGenTreatmentInstruction">
-        <Form.Label>Treatment Instruction</Form.Label>
-        <Form.Control as="textarea" rows="5" placeholder="TreatmentInstruction"/>
+      <Form.Group as={Col} controlId="formGridDocGenUnfitToFlyClinicalFeatures">
+        <Form.Label>Clinical Features</Form.Label>
+        <Form.Control as="textarea" rows="9" placeholder="Clinical Features"/>
+      </Form.Group>
+    </Form.Row>
+
+    <Form.Row>
+      <Form.Group as={Col} controlId="formGridDocGenUnfitToFlyProvisonalInvestigation">
+        <Form.Label>Provisional Investigation</Form.Label>
+        <Form.Control as="textarea" rows="9" placeholder="Provisional Investigation"/>
+      </Form.Group>
+    </Form.Row>
+
+    <Form.Row>
+      <Form.Group as={Col} controlId="formGridDocGenUnfitToFlyConclusion">
+        <Form.Label>Conclusion</Form.Label>
+        <Form.Control as="textarea" rows="5" placeholder="Conclusion"/>
       </Form.Group>
     </Form.Row>
 
   <Form.Row>
 
     <Button variant="primary" className="formButton" type="submit">
-    No no Create Treatment Instruction Authorization
+    No no Create Unfit to Fly Authorization
     </Button>
   </Form.Row>
 
@@ -30,4 +44,4 @@ return (
 
 )};
 
-export default CreatePatientTreatmentInstructionForm;
+export default CreatePatientUnfitToFlyForm;

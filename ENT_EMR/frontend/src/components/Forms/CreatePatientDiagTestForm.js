@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './CreateUserForm.css';
 
 const CreatePatientDiagTestForm = (props) => {
+
+  const [date, setDate] = useState(new Date());
+
+  const handleChangeDate = date => {
+    setDate(date);
+    console.log(`date ${date}`);
+   }
+
 const {...patient} = props.patient;
 
 return (
@@ -16,6 +26,16 @@ return (
         <Form.Label>Diagnosis Visit Date</Form.Label>
         <Form.Control type="date" placeholder="Visit Date"/>
       </Form.Group>
+    </Form.Row>
+
+    <Form.Row>
+    <Form.Group as={Col} controlId="">
+      <Form.Label>Fancy Visit Date</Form.Label>
+      <DatePicker className="" id="patientDiagTestCalendarVisitDate"
+        selected={date}
+        onChange={handleChangeDate}
+      />
+    </Form.Group>
     </Form.Row>
 
     <Form.Row>

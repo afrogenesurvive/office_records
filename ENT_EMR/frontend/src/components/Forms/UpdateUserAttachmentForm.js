@@ -25,7 +25,7 @@ return (
   <Form.Row>
   <Form.Group as={Col} controlId="formGridAttachmentFile">
     <Form.Label>File</Form.Label>
-    <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>
+    <Form.Control type="file" id="fileInput" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>
   </Form.Group>
 </Form.Row>
 
@@ -34,12 +34,12 @@ return (
             developerKey={'gdriveCreds.developerKey'}
             scope={['https://www.googleapis.com/auth/drive.readonly']}
               onChange={data => console.log('on change:', data)}
+              onAuthenticate={token => console.log('oauth token:', token)}
               onAuthFailed={data => console.log('on auth failed:', data)}
               multiselect={true}
               navHidden={true}
               authImmediate={false}
               mimeTypes={['image/png', 'image/jpeg', 'image/jpg']}
-              query={'10'}
               viewId={'DOCS'}>
             <Button variant="primary" className="formButton">
             Google Picker

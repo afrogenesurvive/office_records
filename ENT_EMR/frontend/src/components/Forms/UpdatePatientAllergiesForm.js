@@ -48,10 +48,10 @@ return (
     <Form.Label>Attachment Format</Form.Label>
     <Form.Control type="text" placeholder="AllergiesAttachmentFormat"/>
   </Form.Group>
-  
+
   <Form.Group as={Col} controlId="formGridAllergiesAttachmentFile">
     <Form.Label>File</Form.Label>
-    <Form.Control type="file" placeholder="File" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>
+    <Form.Control type="file" placeholder="File" id="fileInput" onChange={(e) => {console.log(e.target.files[0]);AuthContext._currentValue.file = e.target.files[0];console.log(AuthContext._currentValue.file);}}/>
   </Form.Group>
   </Form.Row>
 
