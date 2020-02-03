@@ -36,13 +36,6 @@ return (
     </Form.Row>
 
     <Form.Row>
-      <Form.Group as={Col} controlId="formGridDocGenSickNoteStartDate">
-        <Form.Label>Start Date</Form.Label>
-        <Form.Control type="date" placeholder="Start Date"/>
-      </Form.Group>
-    </Form.Row>
-
-    <Form.Row>
     <Form.Group as={Col} controlId="">
       <Form.Label>Fancy Start Date</Form.Label>
       <DatePicker className="" id="patientSickNoteCalendarStartDate"

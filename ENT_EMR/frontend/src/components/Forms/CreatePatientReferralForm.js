@@ -22,15 +22,8 @@ return (
 <Form onSubmit={props.onCreateReferral}>
 
 <Form.Row>
-  <Form.Group as={Col} controlId="formGridDocGenReferralVisitDate">
-    <Form.Label>Visit Date</Form.Label>
-    <Form.Control type="date" placeholder="VisitDate"/>
-  </Form.Group>
-</Form.Row>
-
-<Form.Row>
 <Form.Group as={Col} controlId="">
-  <Form.Label>Fancy Start Date</Form.Label>
+  <Form.Label>Fancy Visit Date</Form.Label>
   <DatePicker className="" id="patientReferralCalendarVisitDate"
     selected={date}
     onChange={handleChangeDate}

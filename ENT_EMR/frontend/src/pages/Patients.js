@@ -3446,72 +3446,6 @@ closeAttachmentView = () => {
     this.setState({showAttachment: false})
 }
 
-createPdf = (patient, args) => {
-    const pdfData = {
-    title: "This pdf is supplied with Patient data...",
-    patient: {
-      _id: patient._id,
-      title: patient.title,
-      name: patient.name,
-      dob: patient.dob,
-      age: patient.age,
-      gender: patient.gender,
-      address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
-      },
-      registrationDate: patient.registrationDate,
-      referralDate: patient.referralDate,
-      expirationDate: patient.expirationDate,
-      attendingPhysician:{
-        name: patient.attendingPhysician.name,
-        email: patient.attendingPhysician.email,
-        phone: patient.attendingPhysician.phone
-      },
-      referringDoctor: {
-        name: patient.referringDoctor.name,
-        email: patient.referringDoctor.email,
-        phone: patient.referringDoctor.phone
-      },
-      contact: {
-        phone: patient.contact.phone,
-        email: patient.contact.email
-      },
-      occupation:{
-        role: patient.occupation.role,
-        employer: patient.occupation.employer,
-        contact:{
-          phone: patient.occupation.contact.phone,
-          email: patient.occupation.contact.email
-        }},
-        appointments: patient.appointments,
-        consultant: patient.consultant,
-        insurance: patient.insurance,
-        nextOfKin: patient.nextOfKin,
-        complaints: patient.complaints,
-        surveys: patient.surveys,
-        systematicInquiry: patient.systematicInquiry,
-        vitals: patient.vitals,
-        examination: patient.examination,
-        history: patient.history,
-        allergies: patient.allergies,
-        medication: patient.medication,
-        investigation: patient.investigation,
-        diagnosis: patient.diagnosis,
-        treatment: patient.treatment,
-        billing: patient.billing,
-        vigilance: patient.vigilance,
-        attachments: patient.attachments,
-        notes: patient.notes,
-        tags: patient.tags
-      }
-    }
-  this.setState({creatingDocument: true, pdfType: "test", pdfData: pdfData})
-}
-
 createPdfTest = (event) => {
   event.preventDefault();
   console.log(`
@@ -3588,61 +3522,39 @@ createPdfTest = (event) => {
   this.setState({creatingDocument: true, pdfType: "test", pdfData: pdfData})
 }
 
-createReferral = (patient) => {
-  const pdfData = {
-    title: "Patient Referral",
-    patient: {
-      _id: patient._id,
-      title: patient.title,
-      name: patient.name,
-      dob: patient.dob,
-      age: patient.age,
-      gender: patient.gender,
-      address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
-      },
-      registrationDate: patient.registrationDate,
-      referralDate: patient.referralDate,
-      expirationDate: patient.expirationDate,
-      attendingPhysician:{
-        name: patient.attendingPhysician.name,
-        email: patient.attendingPhysician.email,
-        phone: patient.attendingPhysician.phone
-      },
-      referringDoctor: {
-        name: patient.referringDoctor.name,
-        email: patient.referringDoctor.email,
-        phone: patient.referringDoctor.phone
-      },
-      contact: {
-        phone: patient.contact.phone,
-        email: patient.contact.email
-      }
-    },
-    referral: "test referral...",
-    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
-  }
-  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "patientReferral" })
-}
 
 createReferralInput = (event) => {
   event.preventDefault();
 
-    const visitDate = new Date(event.target.formGridDocGenReferralVisitDate.value).toISOString().substring(0, 10);
+  if (
+    event.target.patientReferralCalendarVisitDate.value.trim().length === 0 ||
+    event.target.formGridDocGenReferralFindings.value.trim().length === 0 ||
+    event.target.formGridDocGenReferralRecommendation.value.trim().length === 0
+  ) {
+    this.setState({userAlert: "Blank fields detected... please check your info and try again"});
+    return;
+  }
+
+    const visitDate = new Date(event.target.patientReferralCalendarVisitDate.value).toISOString().substring(0, 10);
     const patient = this.state.selectedPatient;
     const visitDiagnosis = patient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
     const visitTreatment = patient.treatment.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
     console.log(`
         create referral user otf input here...
-        ${event.target.formGridDocGenReferralVisitDate.value},
+        ${visitDate}
+        ${event.target.patientReferralCalendarVisitDate.value},
         ${event.target.formGridDocGenReferralRecommendation.value},
         ${event.target.formGridDocGenReferralFindings.value},
         visitDiagnosis: ${JSON.stringify(visitDiagnosis)},
       `);
+
+    if (
+      JSON.stringify(visitTreatment) === "[]" ||
+      JSON.stringify(visitDiagnosis) === "[]"
+    ) {
+      this.setState({userAlert: `Incomplete or No Visit found for : ${visitDate}. Check your info and try again.`});
+      return;
+    }
 
     const pdfData = {
     title: "Referral",
@@ -3718,54 +3630,27 @@ createReferralInput = (event) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "patientReferral" })
 }
 
-createOperationReminder = (patient) => {
-  const pdfData = {
-    title: "Operation Reminder",
-    patient: {
-      _id: patient._id,
-      title: patient.title,
-      name: patient.name,
-      dob: patient.dob,
-      age: patient.age,
-      gender: patient.gender,
-      address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
-      },
-      registrationDate: patient.registrationDate,
-      referralDate: patient.referralDate,
-      expirationDate: patient.expirationDate,
-      attendingPhysician:{
-        name: patient.attendingPhysician.name,
-        email: patient.attendingPhysician.email,
-        phone: patient.attendingPhysician.phone
-      },
-      referringDoctor: {
-        name: patient.referringDoctor.name,
-        email: patient.referringDoctor.email,
-        phone: patient.referringDoctor.phone
-      },
-      contact: {
-        phone: patient.contact.phone,
-        email: patient.contact.email
-      }
-    },
-    referral: "test reminder...",
-    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
-  }
-  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "operationReminder" })
-}
 
 createOperationReminderInput = (event) => {
 
   event.preventDefault();
-  let date = event.target.formGridDocGenOperationReminderDate.value;
-  if (event.target.formGridDocGenOperationReminderDate.value === null ) {
-    date = event.target.patientOperationReminderCalendarOperationDate.value;
+
+  if (
+    event.target.formGridDocGenOperationReminderName.value.trim().length === 0 ||
+    event.target.patientOperationReminderCalendarOperationDate.value.trim().length === 0 ||
+    event.target.formGridDocGenOperationReminderTime.value.trim().length === 0 ||
+    event.target.formGridDocGenOperationReminderHospitalName.value.trim().length === 0 ||
+    event.target.formGridDocGenOperationReminderHopsitalAddress.value.trim().length === 0 ||
+    event.target.patientOperationReminderCalendarFastDate.value.trim().length === 0 ||
+    event.target.formGridDocGenOperationReminderFastTime.value.trim().length === 0 ||
+    event.target.formGridDocGenOperationReminderEstimateCost.value.trim().length === 0
+  ) {
+    this.setState({userAlert: "Blank fields detected... please check your info and try again"});
+    return;
   }
+
+  const date = new Date(event.target.patientOperationReminderCalendarOperationDate.value).toISOString().substring(0, 10);
+  const fastDate = new Date(event.target.patientOperationReminderCalendarFastDate.value).toISOString().substring(0, 10);
   const patient = this.state.selectedPatient;
     console.log(`
         create operation reminder user otf input here...
@@ -3838,7 +3723,7 @@ createOperationReminderInput = (event) => {
       time: event.target.formGridDocGenOperationReminderTime.value,
       hospitalName: event.target.formGridDocGenOperationReminderHospitalName.value,
       hospitalAddress: event.target.formGridDocGenOperationReminderHopsitalAddress.value,
-      fastDate: event.target.formGridDocGenOperationReminderFastDate.value,
+      fastDate: fastDate,
       fastTime: event.target.formGridDocGenOperationReminderFastTime.value,
       estimateCost: event.target.formGridDocGenOperationReminderEstimateCost.value,
       letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
@@ -3847,50 +3732,19 @@ createOperationReminderInput = (event) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "operationReminder" })
 }
 
-createMiscNote = (patient) => {
-  const pdfData = {
-    title: "Misc Note",
-    patient: {
-      _id: patient._id,
-      title: patient.title,
-      name: patient.name,
-      dob: patient.dob,
-      age: patient.age,
-      gender: patient.gender,
-      address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
-      },
-      registrationDate: patient.registrationDate,
-      referralDate: patient.referralDate,
-      expirationDate: patient.expirationDate,
-      attendingPhysician:{
-        name: patient.attendingPhysician.name,
-        email: patient.attendingPhysician.email,
-        phone: patient.attendingPhysician.phone
-      },
-      referringDoctor: {
-        name: patient.referringDoctor.name,
-        email: patient.referringDoctor.email,
-        phone: patient.referringDoctor.phone
-      },
-      contact: {
-        phone: patient.contact.phone,
-        email: patient.contact.email
-      }
-    },
-    referral: "test note...",
-    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
-  }
-  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "miscNote" })
-}
 
 createMiscNoteInput = (event) => {
 
   event.preventDefault();
+
+  if (
+    event.target.formGridDocGenMiscNote1.value.trim().length === 0 ||
+    event.target.formGridDocGenMiscNote2.value.trim().length === 0
+  ) {
+    this.setState({userAlert: "Blank fields detected... please check your info and try again"});
+    return;
+  }
+
   const patient = this.state.selectedPatient;
     console.log(`
         create misc note user otf input here...
@@ -3966,54 +3820,22 @@ createMiscNoteInput = (event) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "miscNote" })
 }
 
-createSickNote = (patient) => {
-  const pdfData = {
-    title: "Sick Note",
-    patient: {
-      _id: patient._id,
-      title: patient.title,
-      name: patient.name,
-      dob: patient.dob,
-      age: patient.age,
-      gender: patient.gender,
-      address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
-      },
-      registrationDate: patient.registrationDate,
-      referralDate: patient.referralDate,
-      expirationDate: patient.expirationDate,
-      attendingPhysician:{
-        name: patient.attendingPhysician.name,
-        email: patient.attendingPhysician.email,
-        phone: patient.attendingPhysician.phone
-      },
-      referringDoctor: {
-        name: patient.referringDoctor.name,
-        email: patient.referringDoctor.email,
-        phone: patient.referringDoctor.phone
-      },
-      contact: {
-        phone: patient.contact.phone,
-        email: patient.contact.email
-      }
-    },
-    referral: "test sick note...",
-    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
-  }
-  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "sickNote" })
-}
 
 createSickNoteInput = (event) => {
 
     event.preventDefault();
-    let startDate = event.target.formGridDocGenSickNoteStartDate.value;
-    if (event.target.formGridDocGenSickNoteStartDate.value === null ) {
-      startDate = event.target.patientSickNoteCalendarStartDate.value;
+
+    if (
+      event.target.formGridDocGenSickNoteAddress.value.trim().length === 0 ||
+      event.target.formGridDocGenSickNoteDuration.value.trim().length === 0 ||
+      event.target.patientSickNoteCalendarStartDate.value.trim().length === 0
+    ) {
+      this.setState({userAlert: "Blank fields detected... please check your info and try again"});
+      return;
     }
+
+    const date = new Date().toISOString().substring(0, 10);
+    const startDate = new Date(event.target.patientSickNoteCalendarStartDate.value).toISOString().substring(0, 10);
     const patient = this.state.selectedPatient;
     console.log(`
         create Sick note user otf input here...
@@ -4081,7 +3903,7 @@ createSickNoteInput = (event) => {
         tags: patient.tags
       },
       receiverAddress: event.target.formGridDocGenSickNoteAddress.value,
-      date: new Date(),
+      date: date,
       duration: event.target.formGridDocGenSickNoteDuration.value,
       startDate: startDate,
       letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
@@ -4093,16 +3915,32 @@ createSickNoteInput = (event) => {
 createDiagTestInput = (event) => {
 
     event.preventDefault();
-    let visitDate = new Date(event.target.formGridDocGenDiagTestDiagDate.value).toISOString().substring(0, 10);
-    if (event.target.formGridDocGenDiagTestDiagDate.value !== null ) {
-      visitDate = event.target.patientDiagTestCalendarVisitDate.value;
+
+    if (
+      event.target.patientDiagTestCalendarVisitDate.value.trim().length === 0 ||
+      event.target.formGridDocGenDiagTestReceiver.value.trim().length === 0 ||
+      event.target.formGridDocGenDiagTestRequired.value.trim().length === 0
+    ) {
+      this.setState({userAlert: "Blank fields detected... please check your info and try again"});
+      return;
     }
-    const visitDiagnosis = patient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+
     const patient = this.state.selectedPatient;
+    const date = new Date().toISOString().substring(0, 10);
+    const visitDate = new Date(event.target.patientDiagTestCalendarVisitDate.value).toISOString().substring(0, 10);
+    const visitDiagnosis = patient.diagnosis.filter(x=> new Date(x.date.substr(0,10)*1000).toISOString().substring(0, 10) === visitDate);
+
     console.log(`
         create tests & screening user otf input here...
         ${visitDate}
       `);
+
+    if (
+      JSON.stringify(visitDiagnosis) === "[]"
+    ) {
+      this.setState({userAlert: `Incomplete or No Visit found for : ${visitDate}. Check your info and try again.`});
+      return;
+    }
 
     const pdfData = {
     title: "Tests & Screenings",
@@ -4169,65 +4007,38 @@ createDiagTestInput = (event) => {
       visitDiagnosis: visitDiagnosis,
       receiver: event.target.formGridDocGenDiagTestReceiver.value,
       requiredTests: event.target.formGridDocGenDiagTestReceiver.value,
-      date: new Date(),
+      date: date,
       letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
     };
 
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "DiagTest" })
 }
 
-createInsuranceNote = (patient) => {
-  const pdfData = {
-    title: "Insurance Note",
-    patient: {
-      _id: patient._id,
-      title: patient.title,
-      name: patient.name,
-      dob: patient.dob,
-      age: patient.age,
-      gender: patient.gender,
-      address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
-      },
-      registrationDate: patient.registrationDate,
-      referralDate: patient.referralDate,
-      expirationDate: patient.expirationDate,
-      attendingPhysician:{
-        name: patient.attendingPhysician.name,
-        email: patient.attendingPhysician.email,
-        phone: patient.attendingPhysician.phone
-      },
-      referringDoctor: {
-        name: patient.referringDoctor.name,
-        email: patient.referringDoctor.email,
-        phone: patient.referringDoctor.phone
-      },
-      contact: {
-        phone: patient.contact.phone,
-        email: patient.contact.email
-      }
-    },
-    referral: "test insurance note...",
-    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
-  }
-  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "insuranceNote" })
-}
 
 createInsuranceNoteInput = (event) => {
 
     event.preventDefault();
-    let operationDate = event.target.formGridDocGenInsuranceNoteOperationDate.value;
-    if (event.target.formGridDocGenInsuranceNoteOperationDate.value === null ) {
-      operationDate = event.target.patientInsuranceNoteCalendarOperationDate.value;
+
+    if (
+      event.target.formGridDocGenInsuranceNotePolicyNumber.value.trim().length === 0 ||
+      event.target.formGridDocGenInsuranceNoteOperation.value.trim().length === 0 ||
+      event.target.patientInsuranceNoteCalendarOperationDate.value.trim().length === 0 ||
+      event.target.formGridDocGenInsuranceNoteSurgeonFee.value.trim().length === 0 ||
+      event.target.formGridDocGenInsuranceNoteAssistantSurgeonFee.value.trim().length === 0 ||
+      event.target.formGridDocGenInsuranceNoteAnesthetistFee.value.trim().length === 0
+    ) {
+      this.setState({userAlert: "Blank fields detected... please check your info and try again"});
+      return;
     }
+
+    const date = new Date().toISOString().substring(0, 10);
+    const operationDate = new Date(event.target.patientInsuranceNoteCalendarOperationDate.value).toISOString().substring(0, 10);
     const patient = this.state.selectedPatient;
-    const patientInsurance = patient.insurance.filter(x=> x.number === event.target.formGridDocGenInsuranceNotePolicyNumber.value);
+    const policyNumber = event.target.formGridDocGenInsuranceNotePolicyNumber.value;
+    const patientInsurance = patient.insurance.filter(x=> x.number === policyNumber);
     console.log(`
         create Insurance note user otf input here...
+        ${JSON.stringify(patientInsurance)}
       `);
 
     const pdfData = {
@@ -4291,8 +4102,8 @@ createInsuranceNoteInput = (event) => {
         notes: patient.notes,
         tags: patient.tags
       },
-      date: new Date(),
-      patientInsurance: patientInsurance,
+      date: date,
+      patientInsurance: JSON.stringify(patientInsurance),
       operation: event.target.formGridDocGenInsuranceNoteOperation.value,
       operationDate: operationDate,
       surgeonFee: event.target.formGridDocGenInsuranceNoteSurgeonFee.value,
@@ -4304,50 +4115,20 @@ createInsuranceNoteInput = (event) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "insuranceNote" })
 }
 
-createPrescription = (patient) => {
-  const pdfData = {
-    title: "Prescription",
-    patient: {
-      _id: patient._id,
-      title: patient.title,
-      name: patient.name,
-      dob: patient.dob,
-      age: patient.age,
-      gender: patient.gender,
-      address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
-      },
-      registrationDate: patient.registrationDate,
-      referralDate: patient.referralDate,
-      expirationDate: patient.expirationDate,
-      attendingPhysician:{
-        name: patient.attendingPhysician.name,
-        email: patient.attendingPhysician.email,
-        phone: patient.attendingPhysician.phone
-      },
-      referringDoctor: {
-        name: patient.referringDoctor.name,
-        email: patient.referringDoctor.email,
-        phone: patient.referringDoctor.phone
-      },
-      contact: {
-        phone: patient.contact.phone,
-        email: patient.contact.email
-      }
-    },
-    referral: "test prescription...",
-    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
-  }
-  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "prescription" })
-}
 
 createPrescriptionInput = (event) => {
 
   event.preventDefault();
+
+  if (
+    event.target.formGridDocGenPrescriptionPescription.value.trim().length === 0 ||
+    event.target.formGridDocGenPrescriptionGeneric.value.trim().length === 0 ||
+    event.target.formGridDocGenPrescriptionRepeat.value.trim().length === 0
+  ) {
+    this.setState({userAlert: "Blank fields detected... please check your info and try again"});
+    return;
+  }
+
   let generic = null;
   if (event.target.formGridDocGenPrescriptionGeneric.checked === true) {
     generic = "yes"
@@ -4356,6 +4137,7 @@ createPrescriptionInput = (event) => {
     generic = "no"
   }
 
+  const date = new Date().toISOString().substring(0, 10);
   const patient = this.state.selectedPatient;
   const pdfData = {
     title: "Prescription",
@@ -4391,7 +4173,7 @@ createPrescriptionInput = (event) => {
         email: patient.contact.email
       }
     },
-    date: new Date(),
+    date: date,
     prescription: event.target.formGridDocGenPrescriptionPescription.value,
     generic: generic,
     repeat: event.target.formGridDocGenPrescriptionRepeat.value,
@@ -4401,50 +4183,21 @@ createPrescriptionInput = (event) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "prescription" })
 }
 
-createProcedureConsent = (patient) => {
-  const pdfData = {
-    title: "Procedure Consent",
-    patient: {
-      _id: patient._id,
-      title: patient.title,
-      name: patient.name,
-      dob: patient.dob,
-      age: patient.age,
-      gender: patient.gender,
-      address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
-      },
-      registrationDate: patient.registrationDate,
-      referralDate: patient.referralDate,
-      expirationDate: patient.expirationDate,
-      attendingPhysician:{
-        name: patient.attendingPhysician.name,
-        email: patient.attendingPhysician.email,
-        phone: patient.attendingPhysician.phone
-      },
-      referringDoctor: {
-        name: patient.referringDoctor.name,
-        email: patient.referringDoctor.email,
-        phone: patient.referringDoctor.phone
-      },
-      contact: {
-        phone: patient.contact.phone,
-        email: patient.contact.email
-      }
-    },
-    referral: "test procedure consent...",
-    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
-  }
-  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "procedureConsent" })
-}
 
 createProcedureConsentInput = (event) => {
 
   event.preventDefault();
+
+  if (
+    event.target.formGridDocGenProcedureConsentGiver.value.trim().length === 0 ||
+    event.target.formGridDocGenProcedureConsentGiverRelation.value.trim().length === 0 ||
+    event.target.formGridDocGenProcedureConsentProcedure.value.trim().length === 0
+  ) {
+    this.setState({userAlert: "Blank fields detected... please check your info and try again"});
+    return;
+  }
+
+  const date = new Date().toISOString().substring(0, 10);
   const patient = this.state.selectedPatient;
   const pdfData = {
     title: "Consent for Medical/Surgical Treatment",
@@ -4480,7 +4233,7 @@ createProcedureConsentInput = (event) => {
         email: patient.contact.email
       }
     },
-    date: new Date(),
+    date: date,
     consentGiver: event.target.formGridDocGenProcedureConsentGiver.value,
     consentGiverRelation: event.target.formGridDocGenProcedureConsentGiverRelation.value,
     consentProcedure: event.target.formGridDocGenProcedureConsentProcedure.value,
@@ -4490,50 +4243,21 @@ createProcedureConsentInput = (event) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "procedureConsent" })
 }
 
-createFitToFly = (patient) => {
-  const pdfData = {
-    title: "Fit-to-Fly Authorization",
-    patient: {
-      _id: patient._id,
-      title: patient.title,
-      name: patient.name,
-      dob: patient.dob,
-      age: patient.age,
-      gender: patient.gender,
-      address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
-      },
-      registrationDate: patient.registrationDate,
-      referralDate: patient.referralDate,
-      expirationDate: patient.expirationDate,
-      attendingPhysician:{
-        name: patient.attendingPhysician.name,
-        email: patient.attendingPhysician.email,
-        phone: patient.attendingPhysician.phone
-      },
-      referringDoctor: {
-        name: patient.referringDoctor.name,
-        email: patient.referringDoctor.email,
-        phone: patient.referringDoctor.phone
-      },
-      contact: {
-        phone: patient.contact.phone,
-        email: patient.contact.email
-      }
-    },
-    referral: "test fit-to-fly authorization...",
-    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
-  }
-  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "fitToFlyAuthorization" })
-}
 
 createFitToFlyInput = (event) => {
 
   event.preventDefault();
+
+  if (
+    event.target.formGridDocGenUnfitToFlyClinicalFeatures.value.trim().length === 0 ||
+    event.target.formGridDocGenUnfitToFlyProvisonalInvestigation.value.trim().length === 0 ||
+    event.target.formGridDocGenUnfitToFlyConclusion.value.trim().length === 0
+  ) {
+    this.setState({userAlert: "Blank fields detected... please check your info and try again"});
+    return;
+  }
+
+  const date = new Date().toISOString().substring(0, 10);
   const patient = this.state.selectedPatient;
   const pdfData = {
     title: "Unfit-to-Fly Authorization",
@@ -4569,7 +4293,7 @@ createFitToFlyInput = (event) => {
         email: patient.contact.email
       }
     },
-    date: new Date(),
+    date: date,
     clinicalFeatures: event.target.formGridDocGenUnfitToFlyClinicalFeatures.value,
     provisionalInvestigation: event.target.formGridDocGenUnfitToFlyProvisonalInvestigation.value,
     conclusion: event.target.formGridDocGenUnfitToFlyConclusion.value,
@@ -4580,50 +4304,18 @@ createFitToFlyInput = (event) => {
   this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "fitToFlyAuthorization" })
 }
 
-createTreatmentInstruction = (patient) => {
-  const pdfData = {
-    title: "Treatment Instruction",
-    patient: {
-      _id: patient._id,
-      title: patient.title,
-      name: patient.name,
-      dob: patient.dob,
-      age: patient.age,
-      gender: patient.gender,
-      address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
-      },
-      registrationDate: patient.registrationDate,
-      referralDate: patient.referralDate,
-      expirationDate: patient.expirationDate,
-      attendingPhysician:{
-        name: patient.attendingPhysician.name,
-        email: patient.attendingPhysician.email,
-        phone: patient.attendingPhysician.phone
-      },
-      referringDoctor: {
-        name: patient.referringDoctor.name,
-        email: patient.referringDoctor.email,
-        phone: patient.referringDoctor.phone
-      },
-      contact: {
-        phone: patient.contact.phone,
-        email: patient.contact.email
-      }
-    },
-    referral: "test Treatment Instruction...",
-    letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
-  }
-  this.setState({ creatingDocument: true, pdfData: pdfData, pdfType: "treatmentInstruction" })
-}
-
 createTreatmentInstructionInput = (event) => {
 
   event.preventDefault();
+
+  if (
+    event.target.formGridDocGenTreatmentInstruction.value.trim().length === 0
+  ) {
+    this.setState({userAlert: "Blank fields detected... please check your info and try again"});
+    return;
+  }
+
+  const date = new Date().toISOString().substring(0, 10);
   const patient = this.state.selectedPatient;
   const pdfData = {
     title: "Treatment Instructions",
@@ -4659,7 +4351,7 @@ createTreatmentInstructionInput = (event) => {
         email: patient.contact.email
       }
     },
-    date: new Date(),
+    date: date,
     treatmentInstruction: event.target.formGridDocGenTreatmentInstruction.value,
     referral: "test Treatment Instruction...",
     letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
@@ -4926,27 +4618,17 @@ render() {
                     noteDelete={this.deletePatientNoteItem}
                     tagDelete={this.deletePatientTagItem}
                     onViewAttachment={this.onViewAttachment}
-                    onCreatePdf={this.createPdf}
                     onCreatePdfTest={this.createPdfTest}
-                    onCreateReferral={this.createReferral}
                     onCreateReferralInput={this.createReferralInput}
-                    onCreateOperationReminder={this.createOperationReminder}
                     onCreateOperationReminderInput={this.createOperationReminderInput}
-                    onCreateMiscNote={this.createMiscNote}
                     onCreateMiscNoteInput={this.createMiscNoteInput}
-                    onCreateSickNote={this.createSickNote}
                     onCreateSickNoteInput={this.createSickNoteInput}
                     onCreateDiagTestInput={this.createDiagTestInput}
-                    onCreateInsuranceNote={this.createInsuranceNote}
                     onCreateInsuranceNoteInput={this.createInsuranceNoteInput}
-                    onCreatePrescription={this.createPrescription}
                     onCreatePrescriptionInput={this.createPrescriptionInput}
-                    onCreateProcedureConsent={this.createProcedureConsent}
                     onCreateProcedureConsentInput={this.createProcedureConsentInput}
-                    onCreateFitToFly={this.createFitToFly}
                     onCreateFitToFlyInput={this.createFitToFlyInput}
                     onCreateTreatmentInstructionInput={this.createTreatmentInstructionInput}
-                    onCreateTreatmentInstruction={this.createTreatmentInstruction}
                     onGetVisitList={this.getVisitList}
                     visitList={this.state.visitList}
                     onSelectVisit={this.selectVisit}

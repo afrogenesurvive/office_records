@@ -22,13 +22,6 @@ return (
   <Form onSubmit={props.onCreateDiagTest}>
 
     <Form.Row>
-      <Form.Group as={Col} controlId="formGridDocGenDiagTestDiagDate">
-        <Form.Label>Diagnosis Visit Date</Form.Label>
-        <Form.Control type="date" placeholder="Visit Date"/>
-      </Form.Group>
-    </Form.Row>
-
-    <Form.Row>
     <Form.Group as={Col} controlId="">
       <Form.Label>Fancy Visit Date</Form.Label>
       <DatePicker className="" id="patientDiagTestCalendarVisitDate"
