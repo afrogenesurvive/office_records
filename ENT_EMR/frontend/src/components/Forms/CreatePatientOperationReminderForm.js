@@ -15,6 +15,13 @@ const CreatePatientOperationReminderForm = (props) => {
     console.log(`date ${date}`);
    }
 
+  const [date2, setDate2] = useState(new Date());
+
+  const handleChangeDate2 = date => {
+    setDate2(date);
+    console.log(`date2 ${date2}`);
+   }
+
 const {...patient} = props.patient;
 
 return (
@@ -25,13 +32,6 @@ return (
       <Form.Group as={Col} controlId="formGridDocGenOperationReminderName">
         <Form.Label>Operation Name</Form.Label>
         <Form.Control type="text" placeholder="Operation Name"/>
-      </Form.Group>
-    </Form.Row>
-
-    <Form.Row>
-      <Form.Group as={Col} controlId="formGridDocGenOperationReminderDate">
-        <Form.Label>Operation Date</Form.Label>
-        <Form.Control type="date" placeholder="Operation Date"/>
       </Form.Group>
     </Form.Row>
 
@@ -67,9 +67,12 @@ return (
     </Form.Row>
 
     <Form.Row>
-    <Form.Group as={Col} controlId="formGridDocGenOperationReminderFastDate">
-      <Form.Label>Fasting Date</Form.Label>
-      <Form.Control type="date" placeholder="Fasting date"/>
+    <Form.Group as={Col} controlId="">
+      <Form.Label>Fancy Start Date</Form.Label>
+      <DatePicker className="" id="patientOperationReminderCalendarFastDate"
+        selected={date2}
+        onChange={handleChangeDate2}
+      />
     </Form.Group>
     </Form.Row>
 

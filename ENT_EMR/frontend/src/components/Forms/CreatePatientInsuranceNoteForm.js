@@ -36,13 +36,6 @@ return (
     </Form.Row>
 
     <Form.Row>
-      <Form.Group as={Col} controlId="formGridDocGenInsuranceNoteOperationDate">
-        <Form.Label>Operation Date</Form.Label>
-        <Form.Control type="date" placeholder="Operation Date"/>
-      </Form.Group>
-    </Form.Row>
-
-    <Form.Row>
     <Form.Group as={Col} controlId="">
       <Form.Label>Fancy Operation Date</Form.Label>
       <DatePicker className="" id="patientInsuranceNoteCalendarOperationDate"

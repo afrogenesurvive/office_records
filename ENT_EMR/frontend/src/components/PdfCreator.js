@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
     padding: 10,
     flexGrow: 1,
     width: 80,
+  },
+  text:{
+    color: "red"
   }
 });
 
@@ -132,7 +135,7 @@ const MiscNote = () => (
       {docProps.pdfData.patient && (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
-        <Text>{docProps.pdfData.title}</Text>
+        <Text style={styles.text}>{docProps.pdfData.title}</Text>
         <Text>Name: {docProps.pdfData.patient.name}</Text>
         <Text>note #1: {docProps.pdfData.note1}</Text>
         <Text>note #2: {docProps.pdfData.note2}</Text>
@@ -179,7 +182,6 @@ const DiagTest = () => (
         <Text>{docProps.pdfData.patient.address.number}</Text>
         <Text>{docProps.pdfData.patient.address.street}</Text>
         <Text>{docProps.pdfData.patient.address.parish}</Text>
-        <Text>Diagnosis {docProps.pdfData.visitDiagnosis}</Text>
         <Text>Test(s) Required: </Text>
         <Text>{docProps.pdfData.requiredTests}</Text>
       </View>
@@ -307,9 +309,6 @@ const TreatmentInstruction = () => (
 
 const PdfCreator = (props) =>{
     docProps = props;
-    console.log(`
-      ${docProps.pdfData.patient.insurance[1]}
-      `);
 
 return (
   <div className="attachmentViewerBg">
