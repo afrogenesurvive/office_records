@@ -56,7 +56,6 @@ class ThisUserPage extends Component {
       this.setState({canDelete: true})
     }
     this.getThisUser();
-    this.getCreds();
   }
 
   startUpdateUserHandler = () => {
@@ -585,7 +584,7 @@ class ThisUserPage extends Component {
         const creds = resData.data.getCreds;
         if (this.isActive) {
           this.setState({ isLoading: false });
-          this.context.creds = creds;
+          // this.context.creds = creds;
         }
       })
       .catch(err => {
