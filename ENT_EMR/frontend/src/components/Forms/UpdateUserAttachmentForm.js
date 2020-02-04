@@ -9,7 +9,7 @@ import './CreateUserForm.css';
 
 const UpdateUserAttachmentForm = (props) => {
 const {...user} = props.user;
-const gdriveCreds = AuthContext._currentValue.creds.gdrive;
+// const gdriveCreds = AuthContext._currentValue.creds.gdrive;
 
 return (
 <div className="UpdateFormContainer">
@@ -29,36 +29,18 @@ return (
   </Form.Group>
 </Form.Row>
 
-<Form.Row>
-<GooglePicker clientId={'gdriveCreds.clientId'}
-            developerKey={'gdriveCreds.developerKey'}
-            scope={['https://www.googleapis.com/auth/drive.readonly']}
-              onChange={data => console.log('on change:', data)}
-              onAuthenticate={token => console.log('oauth token:', token)}
-              onAuthFailed={data => console.log('on auth failed:', data)}
-              multiselect={true}
-              navHidden={true}
-              authImmediate={false}
-              mimeTypes={['image/png', 'image/jpeg', 'image/jpg']}
-              viewId={'DOCS'}>
-            <Button variant="primary" className="formButton">
-            Google Picker
-            </Button>
-</GooglePicker>
-</Form.Row>
-
 {
 // <Form.Row>
 // <GooglePicker clientId={'gdriveCreds.clientId'}
 //             developerKey={'gdriveCreds.developerKey'}
 //             scope={['https://www.googleapis.com/auth/drive.readonly']}
 //               onChange={data => console.log('on change:', data)}
+//               onAuthenticate={token => console.log('oauth token:', token)}
 //               onAuthFailed={data => console.log('on auth failed:', data)}
 //               multiselect={true}
 //               navHidden={true}
 //               authImmediate={false}
 //               mimeTypes={['image/png', 'image/jpeg', 'image/jpg']}
-//               query={'10'}
 //               viewId={'DOCS'}>
 //             <Button variant="primary" className="formButton">
 //             Google Picker
@@ -66,6 +48,7 @@ return (
 // </GooglePicker>
 // </Form.Row>
 }
+
 
 <Form.Row>
 {props.canCancel && (
