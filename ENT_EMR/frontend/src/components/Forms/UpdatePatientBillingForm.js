@@ -26,13 +26,6 @@ return (
 <Form.Row>
 
   {!props.visit && (
-  <Form.Group as={Col} controlId="formGridBillingDate">
-    <Form.Label>Date</Form.Label>
-    <Form.Control type="date" placeholder="BillingDate"/>
-  </Form.Group>
-  )}
-
-  {!props.visit && (
   <Form.Group as={Col} controlId="formGridBillingDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>

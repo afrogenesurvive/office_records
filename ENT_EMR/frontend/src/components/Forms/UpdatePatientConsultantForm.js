@@ -25,13 +25,6 @@ return (
 <Form.Row>
 
   {!props.visit && (
-    <Form.Group as={Col} controlId="formGridConsultantDate">
-    <Form.Label>Consultation Date</Form.Label>
-    <Form.Control type="date" placeholder="ConsultantDate"/>
-    </Form.Group>
-    )}
-  {!props.visit && (
-
     <Form.Row>
     <Form.Group as={Col} controlId="formGridConsultantDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>

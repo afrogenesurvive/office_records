@@ -116,6 +116,7 @@ class PatientsPage extends Component {
     console.log(`this.context.selectedUser, ${JSON.stringify(this.context.selectedUser)}`);
 
     this.fetchPatients();
+    this.getCreds();
   }
 
 
@@ -150,31 +151,15 @@ class PatientsPage extends Component {
     let contactPhone = event.target.formGridContactPhone.value;
     let contactEmail = event.target.formGridContactEmail.value;
 
-    let registrationDate = event.target.formGridRegistrationDate.value;
+    let registrationDate = new Date(event.target.patientCalendarRegistrationDate.value).toISOString().slice(0,10);
     if (event.target.formGridRegistrationDateTodayCheckbox.checked === true) {
       registrationDate = new Date().toISOString().slice(0,10);
     }
 
-    if (
-      event.target.patientCalendarRegistrationDate.value !== null &&
-      event.target.formGridRegistrationDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.patientCalendarRegistrationDate.value).toISOString().slice(0,10));
-      registrationDate = new Date(event.target.patientCalendarRegistrationDate.value).toISOString().slice(0,10);
-    }
 
-
-    let referralDate = event.target.formGridReferralDate.value;
+    let referralDate = new Date(event.target.patientCalendarReferralDate.value).toISOString().slice(0,10);
     if (event.target.formGridReferralDateTodayCheckbox.checked === true) {
       referralDate = new Date().toISOString().slice(0,10);
-    }
-
-    if (
-      event.target.patientCalendarReferralDate.value !== null &&
-      event.target.formGridReferralDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.patientCalendarReferralDate.value).toISOString().slice(0,10));
-      referralDate = new Date(event.target.patientCalendarReferralDate.value).toISOString().slice(0,10);
     }
 
     let expirationDate = event.target.formGridExpirationDate.value;
@@ -264,43 +249,19 @@ class PatientsPage extends Component {
     let contactPhone = event.target.formGridContactPhone.value;
     let contactEmail = event.target.formGridContactEmail.value;
 
-    let registrationDate = event.target.formGridRegistrationDate.value;
+    let registrationDate = new Date(event.target.patientCalendarRegistrationDate.value).toISOString().slice(0,10);
     if (event.target.formGridRegistrationDateTodayCheckbox.checked === true) {
       registrationDate = new Date().toISOString().slice(0,10);
     }
 
-    if (
-      event.target.patientCalendarRegistrationDate.value !== null &&
-      event.target.formGridRegistrationDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.patientCalendarRegistrationDate.value).toISOString().slice(0,10));
-      registrationDate = new Date(event.target.patientCalendarRegistrationDate.value).toISOString().slice(0,10);
-    }
-
-
-    let referralDate = event.target.formGridReferralDate.value;
+    let referralDate = new Date(event.target.patientCalendarReferralDate.value).toISOString().slice(0,10);
     if (event.target.formGridReferralDateTodayCheckbox.checked === true) {
       referralDate = new Date().toISOString().slice(0,10);
     }
 
-    if (
-      event.target.patientCalendarReferralDate.value !== null &&
-      event.target.formGridReferralDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.patientCalendarReferralDate.value).toISOString().slice(0,10));
-      referralDate = new Date(event.target.patientCalendarReferralDate.value).toISOString().slice(0,10);
-    }
-
-    let expirationDate = event.target.formGridExpirationDate.value;
+    let expirationDate = new Date(event.target.patientCalendarExpirationDate.value).toISOString().slice(0,10);
     if (event.target.formGridExpirationDateTodayCheckbox.checked === true) {
       expirationDate = new Date().toISOString().slice(0,10);
-    }
-    if (
-      event.target.patientCalendarExpirationDate.value !== null &&
-      event.target.formGridExpirationDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.patientCalendarExpirationDate.value).toISOString().slice(0,10));
-      expirationDate = new Date(event.target.patientCalendarExpirationDate.value).toISOString().slice(0,10);
     }
 
     let attendingPhysicianName = event.target.formGridAttendingPhysicianName.value;
@@ -512,20 +473,9 @@ updatePatientConsultantHandler = (event) => {
 
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Consultant..." });
 
-  let consultantDate = null;
-  if (event.target.formGridConsultantDate) {
-    consultantDate = event.target.formGridConsultantDate.value;
-  }
+  let consultantDate = new Date(event.target.patientConsultantCalendarDate.value).toISOString().slice(0,10);
   if (event.target.formGridConsultantDateTodayCheckbox.checked === true) {
     consultantDate = new Date().toISOString().slice(0,10);
-  }
-
-  if (
-    event.target.patientConsultantCalendarDate.value !== null &&
-    event.target.formGridConsultantDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientConsultantCalendarDate.value).toISOString().slice(0,10));
-    consultantDate = new Date(event.target.patientConsultantCalendarDate.value).toISOString().slice(0,10);
   }
 
   const requestBody = {
@@ -576,13 +526,6 @@ updatePatientInsuranceHandler = (event) => {
   let insuranceCompany = event.target.formGridInsuranceCompany.value;
   let insuranceNumber = event.target.formGridInsuranceNumber.value;
   let insuranceExpiry = event.target.patientCalendarInsuranceExpiryDate.value;
-  // if (event.target.patientCalendarInsuranceExpiryDate.value !== null &&
-  //   event.target.formGridInsuranceExpiry.value === null
-  //   ) {
-  //   console.log(`patientCalendarInsuranceExpiryDate: ${new Date(event.target.patientCalendarInsuranceExpiryDate.value).toISOString().slice(0,10)} `);
-  //   insuranceExpiry = new Date(event.target.patientCalendarInsuranceExpiryDate.value).toISOString().slice(0,10);
-  // }
-
   let insuranceDescription = event.target.formGridInsuranceDescription.value;
   let insuranceSubscriberCompany = event.target.formGridInsuranceSubscriberCompany.value;
   let insuranceSubscriberDescription = event.target.formGridInsuranceSubscriberDescription.value;
@@ -684,20 +627,9 @@ updatePatientComplaintHandler = (event) => {
 
   let complaintTitle = event.target.formGridComplaintTitle.value;
 
-  let complaintDate = null;
-  if (event.target.formGridComplaintDate) {
-    complaintDate = event.target.formGridComplaintDate.value;
-  }
+  let complaintDate = new Date(event.target.patientComplaintCalendarDate.value).toISOString().slice(0,10);
   if (event.target.formGridComplaintDateTodayCheckbox.checked === true) {
     complaintDate = new Date().toISOString().slice(0,10);
-  }
-
-  if (
-    event.target.patientComplaintCalendarDate.value !== null &&
-    event.target.formGridComplaintDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientComplaintCalendarDate.value).toISOString().slice(0,10));
-    complaintDate = new Date(event.target.patientComplaintCalendarDate.value).toISOString().slice(0,10);
   }
 
   let complaintDescription = event.target.formGridComplaintDescription.value;
@@ -777,19 +709,9 @@ updatePatientSurveyHandler = (event) => {
   let selectedPatientId = this.context.selectedPatient._id;
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Survey..." });
 
-  let surveyDate = null;
-  if (event.target.formGridSurveyDate) {
-    surveyDate = event.target.formGridSurveyDate.value;
-  }
+  let surveyDate = new Date(event.target.patientSurveyCalendarDate.value).toISOString().slice(0,10);
   if (event.target.formGridSurveyDateTodayCheckbox.checked === true) {
     surveyDate = new Date().toISOString().slice(0,10);
-  }
-  if (
-    event.target.patientSurveyCalendarDate.value !== null &&
-    event.target.formGridSurveyDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientSurveyCalendarDate.value).toISOString().slice(0,10));
-    surveyDate = new Date(event.target.patientSurveyCalendarDate.value).toISOString().slice(0,10);
   }
 
   let surveyTitle = event.target.formGridSurveyTitle.value;
@@ -867,19 +789,9 @@ updatePatientSystematicInquiryHandler = (event) => {
   let selectedPatientId = this.context.selectedPatient._id;
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Systematic Inquiry..." });
 
-  let systematicInquiryDate = null;
-  if (event.target.formGridSystematicInquiryDate) {
-    systematicInquiryDate = event.target.formGridSystematicInquiryDate.value;
-  }
+  let systematicInquiryDate = new Date(event.target.patientSystematicInquiryCalendarDate.value).toISOString().slice(0,10);
   if (event.target.formGridSystematicInquiryDateTodayCheckbox.checked === true) {
     systematicInquiryDate = new Date().toISOString().slice(0,10);
-  }
-  if (
-    event.target.patientSystematicInquiryCalendarDate.value !== null &&
-    event.target.formGridSystematicInquiryDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientSystematicInquiryCalendarDate.value).toISOString().slice(0,10));
-    systematicInquiryDate = new Date(event.target.patientSystematicInquiryCalendarDate.value).toISOString().slice(0,10);
   }
 
   let systematicInquiryTitle = event.target.formGridSystematicInquiryTitle.value;
@@ -959,19 +871,10 @@ updatePatientVitalsHandler = (event) => {
   const selectedPatientId = this.context.selectedPatient._id;
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Vitals..." });
 
-  let vitalsDate = null;
-  if (event.target.formGridVitalsDate) {
-    vitalsDate = event.target.formGridVitalsDate.value;
-  }
+  let vitalsDate = new Date(event.target.patientVitalsCalendarDate.value).toISOString().slice(0,10);
+
   if (event.target.formGridVitalsDateTodayCheckbox.checked === true) {
     vitalsDate = new Date().toISOString().slice(0,10);
-  }
-  if (
-    event.target.patientVitalsCalendarDate.value !== null &&
-    event.target.formGridVitalsDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientVitalsCalendarDate.value).toISOString().slice(0,10));
-    vitalsDate = new Date(event.target.patientVitalsCalendarDate.value).toISOString().slice(0,10);
   }
 
   const vitalsPr = event.target.formGridVitalsPr.value;
@@ -1031,19 +934,10 @@ updatePatientExaminationHandler = (event) => {
   const selectedPatientId = this.context.selectedPatient._id;
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Examination..." });
 
-  let examinationDate = null;
-  if (event.target.formGridExaminationDate) {
-    examinationDate = event.target.formGridExaminationDate.value;
-  }
+  let examinationDate = new Date(event.target.patientExaminationCalendarDate.value).toISOString().slice(0,10);
+
   if (event.target.formGridExaminationDateTodayCheckbox.checked === true) {
     examinationDate = new Date().toISOString().slice(0,10);
-  }
-  if (
-    event.target.patientExaminationCalendarDate.value !== null &&
-    event.target.formGridExaminationDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientExaminationCalendarDate.value).toISOString().slice(0,10));
-    examinationDate = new Date(event.target.patientExaminationCalendarDate.value).toISOString().slice(0,10);
   }
 
   const examinationGeneral = event.target.formGridExaminationGeneral.value;
@@ -1135,17 +1029,10 @@ updatePatientHistoryHandler = (event) => {
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient History..." });
 
   const historyType = event.target.formGridHistoryType.value;
-  let historyDate = event.target.formGridHistoryDate.value;
+
+  let historyDate = new Date(event.target.patientHistoryCalendarDate.value).toISOString().slice(0,10);
   if (event.target.formGridHistoryDateTodayCheckbox.checked === true) {
     historyDate = new Date().toISOString().slice(0,10);
-  }
-
-  if (
-    event.target.patientHistoryCalendarDate.value !== null &&
-    event.target.formGridHistoryDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientHistoryCalendarDate.value).toISOString().slice(0,10));
-    historyDate = new Date(event.target.patientHistoryCalendarDate.value).toISOString().slice(0,10);
   }
 
   const historyTitle = event.target.formGridHistoryTitle.value;
@@ -1388,19 +1275,10 @@ updatePatientInvestigationHandler = (event) => {
   const selectedPatientId = this.context.selectedPatient._id;
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Investigation..." });
 
-  let investigationDate = null;
-  if (event.target.formGridInvestigationDate) {
-    investigationDate = event.target.formGridInvestigationDate.value;
-  }
+  let investigationDate = new Date(event.target.patientInvestigationCalendarDate.value).toISOString().slice(0,10);
+
   if (event.target.formGridInvestigationDateTodayCheckbox.checked === true) {
     investigationDate = new Date().toISOString().slice(0,10);
-  }
-  if (
-    event.target.patientInvestigationCalendarDate.value !== null &&
-    event.target.formGridInvestigationDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientInvestigationCalendarDate.value).toISOString().slice(0,10));
-    investigationDate = new Date(event.target.patientInvestigationCalendarDate.value).toISOString().slice(0,10);
   }
 
   const investigationTitle = event.target.formGridInvestigationTitle.value;
@@ -1486,19 +1364,10 @@ updatePatientDiagnosisHandler = (event) => {
   const selectedPatientId = this.context.selectedPatient._id;
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Diagnosis..." });
 
-  let diagnosisDate = null;
-  if (event.target.formGridDiagnosisDate) {
-    diagnosisDate = event.target.formGridDiagnosisDate.value;
-  }
+  let diagnosisDate = new Date(event.target.patientDiagnosisCalendarDate.value).toISOString().slice(0,10);
+
   if (event.target.formGridDiagnosisDateTodayCheckbox.checked === true) {
     diagnosisDate = new Date().toISOString().slice(0,10);
-  }
-  if (
-    event.target.patientDiagnosisCalendarDate.value !== null &&
-    event.target.formGridDiagnosisDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientDiagnosisCalendarDate.value).toISOString().slice(0,10));
-    diagnosisDate = new Date(event.target.patientDiagnosisCalendarDate.value).toISOString().slice(0,10);
   }
 
   const diagnosisTitle = event.target.formGridDiagnosisTitle.value;
@@ -1579,19 +1448,10 @@ updatePatientTreatmentHandler = (event) => {
   const selectedPatientId = this.context.selectedPatient._id;
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Treatment..." });
 
-  let treatmentDate = null;
-  if (event.target.formGridTreatmentDate) {
-    treatmentDate = event.target.formGridTreatmentDate.value;
-  }
+  let treatmentDate = new Date(event.target.patientTreatmentCalendarDate.value).toISOString().slice(0,10);
+
   if (event.target.formGridTreatmentDateTodayCheckbox.checked === true) {
     treatmentDate = new Date().toISOString().slice(0,10);
-  }
-  if (
-    event.target.patientTreatmentCalendarDate.value !== null &&
-    event.target.formGridTreatmentDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientTreatmentCalendarDate.value).toISOString().slice(0,10));
-    treatmentDate = new Date(event.target.patientTreatmentCalendarDate.value).toISOString().slice(0,10);
   }
 
   const treatmentTitle = event.target.formGridTreatmentTitle.value;
@@ -1679,20 +1539,10 @@ updatePatientBillingHandler = (event) => {
   const selectedPatientId = this.context.selectedPatient._id;
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Billing..." });
 
-  let billingDate = null;
-  if (event.target.formGridBillingDate !== null ) {
-    billingDate = event.target.formGridBillingDate.value;
-  }
+  let billingDate = new Date(event.target.patientBillingCalendarDate.value).toISOString().slice(0,10);
+
   if (event.target.formGridBillingDateTodayCheckbox.checked === true) {
     billingDate = new Date().toISOString().slice(0,10);
-  }
-
-  if (
-    event.target.patientBillingCalendarDate.value !== null &&
-    event.target.formGridBillingDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientBillingCalendarDate.value).toISOString().slice(0,10));
-    billingDate = new Date(event.target.patientBillingCalendarDate.value).toISOString().slice(0,10);
   }
 
   const billingTitle = event.target.formGridBillingTitle.value;
@@ -1776,20 +1626,10 @@ updatePatientVigilanceHandler = (event) => {
   const selectedPatientId = this.context.selectedPatient._id;
   this.setState({ updating: false , patientUpdateField: null, userAlert: "Adding selected Patient Vigilance..." });
 
-  let vigilanceDate = null;
-  if (event.target.formGridVigilanceDate) {
-    vigilanceDate = event.target.formGridVigilanceDate.value;
-  }
+  let vigilanceDate = new Date(event.target.patientVigilanceCalendarDate.value).toISOString().slice(0,10);
+
   if (event.target.formGridVigilanceDateTodayCheckbox.checked === true) {
     vigilanceDate = new Date().toISOString().slice(0,10);
-  }
-
-  if (
-    event.target.patientVigilanceCalendarDate.value !== null &&
-    event.target.formGridVigilanceDateTodayCheckbox.checked !== true
-  ) {
-    console.log("fancyDate2", new Date(event.target.patientVigilanceCalendarDate.value).toISOString().slice(0,10));
-    vigilanceDate = new Date(event.target.patientVigilanceCalendarDate.value).toISOString().slice(0,10);
   }
 
   const vigilanceChronicIllnessDiabetesMedication = event.target.formGridVigilanceChronicIllnessDiabetesMedication.checked;

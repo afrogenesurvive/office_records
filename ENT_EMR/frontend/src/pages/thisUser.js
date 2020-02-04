@@ -94,31 +94,15 @@ class ThisUserPage extends Component {
     let addressParish = event.target.formGridAddressParish.value;
     let addressPostOffice = event.target.formGridAddressPostOffice.value;
 
-    let employmentDate = event.target.formGridEmploymentDate.value;
+    let employmentDate = new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10);
     if (event.target.formGridEmploymentDateTodayCheckbox.checked === true) {
       employmentDate = new Date().toISOString().slice(0,10);
     }
 
-    if (
-      event.target.staffCalendarEmploymentDate.value !== null &&
-      event.target.formGridEmploymentDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10));
-      employmentDate = new Date(event.target.staffCalendarEmploymentDate.value).toISOString().slice(0,10);
-    }
 
-
-    let terminationDate = event.target.formGridTerminationDate.value;
+    let terminationDate = new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10);
     if (event.target.formGridTerminationDateTodayCheckbox.checked === true) {
       terminationDate = new Date().toISOString().slice(0,10);
-    }
-
-    if (
-      event.target.staffCalendarTerminationDate.value !== null &&
-      event.target.formGridTerminationDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10));
-      terminationDate = new Date(event.target.staffCalendarTerminationDate.value).toISOString().slice(0,10);
     }
 
 
@@ -280,18 +264,10 @@ class ThisUserPage extends Component {
       `);
     this.setState({ updating: false , userUpdateField: null, userAlert: "Adding Attendance for selected Staff..." });
 
-    let attendanceDate = event.target.formGridAttendanceDate.value;
+    let attendanceDate = new Date(event.target.staffAttendanceCalendarDate.value).toISOString().slice(0,10);
     if (event.target.formGridAttendanceDateTodayCheckbox.checked === true) {
       console.log("1");
       attendanceDate = new Date().toISOString().slice(0,10);
-    }
-
-    if (
-      event.target.staffAttendanceCalendarDate.value !== null &&
-      event.target.formGridAttendanceDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.staffAttendanceCalendarDate.value).toISOString().slice(0,10));
-      attendanceDate = new Date(event.target.staffAttendanceCalendarDate.value).toISOString().slice(0,10);
     }
 
     let attendanceStatus = event.target.formGridAttendanceStatus.value;
@@ -358,33 +334,17 @@ class ThisUserPage extends Component {
 
     let leaveType = event.target.formGridLeaveType.value;
     let leaveTitle = event.target.formGridLeaveTitle.value;
-    let leaveStartDate = event.target.formGridLeaveStartDate.value;
+
+    let leaveStartDate = new Date(event.target.staffLeaveCalendarStartDate.value).toISOString().slice(0,10);
     if (event.target.formGridLeaveStartDateTodayCheckbox.checked === true) {
       leaveStartDate = new Date().toISOString().slice(0,10);
     }
 
-    if (
-      event.target.staffLeaveCalendarStartDate.value !== null &&
-      event.target.formGridLeaveStartDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.staffLeaveCalendarStartDate.value).toISOString().slice(0,10));
-      leaveStartDate= new Date(event.target.staffLeaveCalendarStartDate.value).toISOString().slice(0,10);
-    }
 
-
-    let leaveEndDate = event.target.formGridLeaveEndDate.value;
+    let leaveEndDate = new Date(event.target.staffLeaveCalendarEndDate.value).toISOString().slice(0,10);
     if (event.target.formGridLeaveEndDateTodayCheckbox.checked === true) {
       leaveEndDate = new Date().toISOString().slice(0,10);
     }
-
-    if (
-      event.target.staffLeaveCalendarEndDate.value !== null &&
-      event.target.formGridLeaveEndDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2a", new Date(event.target.staffLeaveCalendarEndDate.value).toISOString().slice(0,10));
-      leaveEndDate= new Date(event.target.staffLeaveCalendarEndDate.value).toISOString().slice(0,10);
-    }
-
 
 
     if (leaveType.trim().length === 0) {
@@ -568,7 +528,6 @@ class ThisUserPage extends Component {
   }
 
   getCreds() {
-    console.log("get creds");
     // this.setState({ isLoading: true });
     const requestBody = {
       query: `
@@ -591,7 +550,6 @@ class ThisUserPage extends Component {
       })
       .then(resData => {
         const creds = resData.data.getCreds;
-        console.log("creds", creds);
           this.setState({ creds: creds })
           // this.state.creds = creds;
       })

@@ -23,16 +23,6 @@ return (
 <div className="SearchFormContainer">
   <Form onSubmit={props.onConfirm}>
 
-<Form.Group controlId="formBasicStartDate">
-<Form.Label>Start Date</Form.Label>
-<Form.Control type="date" placeholder="StartDate"/>
-</Form.Group>
-
-<Form.Group controlId="formBasicEndDate">
-<Form.Label>End Date</Form.Label>
-<Form.Control type="date" placeholder="EndDate"/>
-</Form.Group>
-
 <Form.Group controlId="">
   <Form.Label>Fancy Start Date</Form.Label>
   <DatePicker className="" id="staffLeaveStartCalendarDate"

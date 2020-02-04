@@ -24,12 +24,7 @@ return (
 <div className="UpdateFormContainer">
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
-  {!props.visit && (
-  <Form.Group as={Col} controlId="formGridExaminationDate">
-    <Form.Label>Date</Form.Label>
-    <Form.Control type="date" placeholder="ExaminationDate"/>
-  </Form.Group>
-  )}
+
   {!props.visit && (
   <Form.Group as={Col} controlId="formGridExaminationDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>

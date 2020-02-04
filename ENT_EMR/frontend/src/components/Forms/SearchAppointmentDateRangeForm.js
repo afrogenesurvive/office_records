@@ -23,11 +23,6 @@ return (
 <div className="SearchFormContainer">
   <Form onSubmit={props.onConfirm}>
 
-<Form.Group controlId="formBasicStartDate">
-<Form.Label>Appointment Start Date</Form.Label>
-<Form.Control type="date" placeholder="Appointment Date Range"/>
-</Form.Group>
-
 <Form.Group controlId="">
   <Form.Label>Fancy Start Date</Form.Label>
   <DatePicker className="" id="appointmentCalendarStartDate"
@@ -36,10 +31,6 @@ return (
   />
 </Form.Group>
 
-<Form.Group controlId="formBasicEndDate">
-<Form.Label>Appointment End Date</Form.Label>
-<Form.Control type="date" placeholder="Appointment Date Range"/>
-</Form.Group>
 
 <Form.Group controlId="">
   <Form.Label>Fancy End Date</Form.Label>

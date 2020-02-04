@@ -23,11 +23,6 @@ return (
 <Form.Control type="date" placeholder="Appointment Date"/>
 </Form.Group>
 
-<Form.Group controlId="formBasicDateTodayCheckbox">
-  <Form.Label>Today's Date?</Form.Label>
-  <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
-</Form.Group>
-
 <Form.Group controlId="">
   <Form.Label>Fancy Date</Form.Label>
   <DatePicker className="" id="appointmentCalendarDate"

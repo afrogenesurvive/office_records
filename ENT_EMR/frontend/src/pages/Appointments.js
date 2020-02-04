@@ -100,17 +100,12 @@ class AppointmentsPage extends Component {
       }
     const title = event.target.formGridTitle.value;
     const type = event.target.formGridType.value;
-    let date = event.target.formGridDate.value;
+
+    let date = new Date(event.target.newAppointmentCalendarDate.value).toISOString().slice(0,10);
     if (event.target.formGridDateTodayCheckbox.checked === true) {
       date = new Date().toISOString().slice(0,10);
     }
-    if (
-      event.target.newAppointmentCalendarDate.value !== null &&
-      event.target.formGridDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.newAppointmentCalendarDate.value).toISOString().slice(0,10));
-      date = new Date(event.target.newAppointmentCalendarDate.value).toISOString().slice(0,10);
-    }
+
     const time = event.target.formGridTime.value;
     const seenTime = event.target.formGridSeenTime.value;
     const checkinTime = event.target.formGridCheckinTime.value;
@@ -199,16 +194,9 @@ class AppointmentsPage extends Component {
     let title = event.target.formGridTitle.value;
     let type = event.target.formGridType.value;
 
-    let date = event.target.formGridDate.value;
+    let date = new Date(event.target.updateAppointmentCalendarDate.value).toISOString().slice(0,10);
     if (event.target.formGridDateTodayCheckbox.checked === true) {
       date = new Date().toISOString().slice(0,10);
-    }
-    if (
-      event.target.updateAppointmentCalendarDate.value !== null &&
-      event.target.formGridDateTodayCheckbox.checked !== true
-    ) {
-      console.log("fancyDate2", new Date(event.target.updateAppointmentCalendarDate.value).toISOString().slice(0,10));
-      date = new Date(event.target.updateAppointmentCalendarDate.value).toISOString().slice(0,10);
     }
 
     let time = event.target.formGridTime.value;
@@ -548,17 +536,10 @@ class AppointmentsPage extends Component {
       let userId = this.context.userId;
       const token = this.context.token;
       this.setState({ searching: false, userAlert: "Searching for Appointment by Date..." });
-      let appointmentDate = event.target.formBasicDate.value;
+
+      let appointmentDate = new Date(event.target.appointmentCalendarDate.value).toISOString().slice(0,10);
       if (event.target.formBasicDateTodayCheckbox.checked === true) {
         appointmentDate = new Date().toISOString().slice(0,10);
-      }
-
-      if (
-        event.target.formBasicDateTodayCheckbox.checked !== true &&
-        event.target.appointmentCalendarDate.value !== null
-      ) {
-        console.log("fancyDate2", new Date(event.target.appointmentCalendarDate.value).toISOString().slice(0,10));
-        appointmentDate = new Date(event.target.appointmentCalendarDate.value).toISOString().slice(0,10);
       }
 
       const requestBody = {
@@ -597,21 +578,8 @@ class AppointmentsPage extends Component {
       const token = this.context.token;
       this.setState({ searching: false, userAlert: "Searching for Appointment by Date range..." });
 
-      let appointmentStartDate = event.target.formBasicStartDate.value;
-      if (
-        event.target.appointmentCalendarStartDate.value !== null
-      ) {
-        console.log("fancyDate2", new Date(event.target.appointmentCalendarStartDate.value).toISOString().slice(0,10));
-        appointmentStartDate = new Date(event.target.appointmentCalendarStartDate.value).toISOString().slice(0,10);
-      }
-
-      let appointmentEndDate = event.target.formBasicEndDate.value;
-      if (
-        event.target.appointmentCalendarEndDate.value !== null
-      ) {
-        console.log("fancyDate2", new Date(event.target.appointmentCalendarEndDate.value).toISOString().slice(0,10));
-        appointmentEndDate = new Date(event.target.appointmentCalendarEndDate.value).toISOString().slice(0,10);
-      }
+      let appointmentStartDate = new Date(event.target.appointmentCalendarStartDate.value).toISOString().slice(0,10);
+      let appointmentEndDate = new Date(event.target.appointmentCalendarEndDate.value).toISOString().slice(0,10);
 
       const requestBody = {
         query: `

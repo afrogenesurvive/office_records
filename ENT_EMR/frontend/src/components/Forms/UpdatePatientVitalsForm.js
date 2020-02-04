@@ -23,12 +23,7 @@ return (
 <div className="UpdateFormContainer">
 <Form onSubmit={props.onConfirm}>
 <Form.Row>
-  {!props.visit && (
-  <Form.Group as={Col} controlId="formGridVitalsDate">
-    <Form.Label>Date</Form.Label>
-    <Form.Control type="date" placeholder="VitalsDate"/>
-  </Form.Group>
-  )}
+
   {!props.visit && (
   <Form.Group as={Col} controlId="formGridVitalsDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
@@ -68,7 +63,7 @@ return (
     <Form.Label>Blood /</Form.Label>
     <Form.Control type="number" className="bpInput" placeholder="0/"/>
   </Form.Group>
-  
+
   <Form.Group controlId="formGridVitalsBp2" className="bpInputGroup">
     <Form.Label>Pressure</Form.Label>
     <Form.Control type="number" className="bpInput" placeholder="0"/>

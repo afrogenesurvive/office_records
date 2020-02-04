@@ -34,10 +34,6 @@ return (
     <Form.Label>Number</Form.Label>
     <Form.Control type="number" placeholder="insuranceNumber"/>
   </Form.Group>
-  <Form.Group as={Col} controlId="formGridInsuranceExpiry">
-    <Form.Label>Expiry</Form.Label>
-    <Form.Control type="date" placeholder="insuranceExpiry"/>
-  </Form.Group>
   </Form.Row>
 
   <Form.Row>

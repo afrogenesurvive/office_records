@@ -31,10 +31,6 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridHistoryDate">
-    <Form.Label>Date</Form.Label>
-    <Form.Control type="date" placeholder="Past History Date"/>
-  </Form.Group>
   <Form.Group as={Col} controlId="formGridHistoryDateTodayCheckbox">
     <Form.Label>Today ?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
