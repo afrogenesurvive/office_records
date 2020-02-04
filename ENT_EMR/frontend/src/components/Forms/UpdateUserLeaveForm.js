@@ -43,13 +43,6 @@ return (
   </Form.Row>
 
   <Form.Row>
-  <Form.Group as={Col} controlId="formGridLeaveStartDate">
-    <Form.Label>Start Date</Form.Label>
-    <Form.Control type="date" placeholder="Start Date"/>
-  </Form.Group>
-  </Form.Row>
-
-  <Form.Row>
   <Form.Group as={Col} controlId="formGridLeaveStartDateTodayCheckbox">
     <Form.Label>Today?</Form.Label>
     <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
@@ -63,13 +56,6 @@ return (
       selected={startDate}
      onChange={handleChangeStart}
     />
-  </Form.Group>
-  </Form.Row>
-
-  <Form.Row>
-  <Form.Group as={Col} controlId="formGridLeaveEndDate">
-    <Form.Label>End Date</Form.Label>
-    <Form.Control type="date" placeholder="End Date"/>
   </Form.Group>
   </Form.Row>
 

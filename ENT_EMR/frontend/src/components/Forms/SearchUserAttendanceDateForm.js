@@ -18,11 +18,6 @@ return (
 <div className="SearchFormContainer">
   <Form onSubmit={props.onConfirm}>
 
-<Form.Group controlId="formBasicDate">
-<Form.Label>Attendance Date</Form.Label>
-<Form.Control type="date" placeholder="Date"/>
-</Form.Group>
-
 <Form.Group controlId="formBasicDateTodayCheckbox">
   <Form.Label>Today's Date?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>

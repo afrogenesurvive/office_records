@@ -27,13 +27,7 @@ return (
   <Form.Label>Today's Date?</Form.Label>
   <Form.Control type="checkbox" onChange={(e) => {console.log(e.target.checked)}}/>
 </Form.Group>
-</Form.Row>
 
-  <Form.Row>
-    <Form.Group as={Col} controlId="formGridAttendanceDate">
-      <Form.Label>Other Date</Form.Label>
-      <Form.Control type="date" placeholder="Date"/>
-    </Form.Group>
   {
     // <Form.Row>
     //   <Form.Group as={Col} controlId="formGridAttendanceDate">
