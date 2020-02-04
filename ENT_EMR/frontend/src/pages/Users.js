@@ -65,7 +65,8 @@ class UsersPage extends Component {
     pdfData: null,
     pdfType: null,sidebarShow: true,
     mCol1Size: 3,
-    mCol2Size: 9
+    mCol2Size: 9,
+    creds: null
   };
   isActive = true;
 
@@ -82,6 +83,7 @@ class UsersPage extends Component {
     }
 
     this.fetchUsers();
+    this.getCreds();
   }
 
   startCreateUserHandler = () => {
@@ -456,6 +458,12 @@ class UsersPage extends Component {
   }
 
     updateUserAttachmentHandler = (event) => {
+      event.preventDefault();
+
+    if (event.target.fileInput.value === "") {
+      this.setState({ userAlert: "no file present! Please try again"})
+      return
+    }
 
     this.setState({ updating: false , userUpdateField: null, userAlert: "adding user attatchment item..." });
     const token = this.context.token;
@@ -470,17 +478,18 @@ class UsersPage extends Component {
 
     let attachmentName = null;
 
-    if (event.target.fileInput.value !== null ||
+    if (
         event.target.fileInput.value !== ""
     ) {
+
       let file = AuthContext._currentValue.file;
 
       const config = {
-        bucketName: this.context.creds.s3.bucketName,
+        bucketName: this.state.creds.s3.bucketName,
         dirName: attachmentPath,
-        region: this.context.creds.s3.region,
-        accessKeyId: this.context.creds.s3.accessKeyId,
-        secretAccessKey: this.context.creds.s3.secretAccessKey,
+        region: this.state.creds.s3.region,
+        accessKeyId: this.state.creds.s3.accessKeyId,
+        secretAccessKey: this.state.creds.s3.secretAccessKey,
       }
       const ReactS3Client = new S3(config);
       const newFileName = file.name;
@@ -489,8 +498,8 @@ class UsersPage extends Component {
 
       ReactS3Client
           .uploadFile(file, newFileName)
-          .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-          .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+          .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+          .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
     }
 
     if (
@@ -531,7 +540,7 @@ class UsersPage extends Component {
         this.context.users = this.state.users;
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.fetchUsers();
-        this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserAttachment })
+        this.setState({ userAlert: responseAlert, selectedUser: resData.data.updateUserAttachment})
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -842,6 +851,38 @@ class UsersPage extends Component {
   modalCancelHandler = () => {
     this.setState({ creating: false, updating: false, deleting: false, searching: false});
   };
+
+  getCreds() {
+    console.log("get creds");
+    // this.setState({ isLoading: true });
+    const requestBody = {
+      query: `
+      query {getCreds
+        {atlas{user,pw,db},s3{bucketName,region,accessKeyId,secretAccessKey},jwt{encode},gdrive{clientId,developerKey}}}
+        `};
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.context.token
+      }})
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        const creds = resData.data.getCreds;
+          this.setState({ creds: creds });
+          // this.context.creds = creds;
+      })
+      .catch(err => {
+        this.setState({userAlert: err});
+      });
+  }
 
   fetchUsers() {
 

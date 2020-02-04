@@ -45,7 +45,8 @@ class ThisUserPage extends Component {
     showThisAttachmentType: null,
     sidebarShow: true,
     mCol1Size: 3,
-    mCol2Size: 9
+    mCol2Size: 9,
+    creds: null
   };
   isActive = true;
 
@@ -56,6 +57,7 @@ class ThisUserPage extends Component {
       this.setState({canDelete: true})
     }
     this.getThisUser();
+    this.getCreds();
   }
 
   startUpdateUserHandler = () => {
@@ -439,6 +441,12 @@ class ThisUserPage extends Component {
 
   updateUserAttachmentHandler = (event) => {
 
+    event.preventDefault();
+
+  if (event.target.fileInput.value === "") {
+    this.setState({ userAlert: "no file present! Please try again"})
+    return
+  }
   const token = this.context.token;
   const userId = this.context.userId;
 
@@ -449,17 +457,17 @@ class ThisUserPage extends Component {
 
   let attachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
     let file = AuthContext._currentValue.file;
 
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: attachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -468,8 +476,8 @@ class ThisUserPage extends Component {
 
     ReactS3Client
         .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
   }
 
 
@@ -515,7 +523,7 @@ class ThisUserPage extends Component {
         const responseAlert = JSON.stringify(resData.data).slice(2,25);
         this.setState({ userAlert: responseAlert})
         this.getThisUser();
-        this.setState({ userAlert: "uploading ttachment..." });
+        this.setState({ userAlert: "uploading ttachment..."});
       })
       .catch(err => {
         this.setState({userAlert: err});
@@ -560,7 +568,8 @@ class ThisUserPage extends Component {
   }
 
   getCreds() {
-    this.setState({ isLoading: true });
+    console.log("get creds");
+    // this.setState({ isLoading: true });
     const requestBody = {
       query: `
       query {getCreds
@@ -582,16 +591,12 @@ class ThisUserPage extends Component {
       })
       .then(resData => {
         const creds = resData.data.getCreds;
-        if (this.isActive) {
-          this.setState({ isLoading: false });
-          // this.context.creds = creds;
-        }
+        console.log("creds", creds);
+          this.setState({ creds: creds })
+          // this.state.creds = creds;
       })
       .catch(err => {
         this.setState({userAlert: err});
-        if (this.isActive) {
-          this.setState({ isLoading: false });
-        }
       });
   }
 
@@ -692,11 +697,11 @@ class ThisUserPage extends Component {
     let userId = this.context.userId;
 
       //   const config = {
-      //     bucketName: this.context.creds.s3.bucketName,
+      //     bucketName: this.state.creds.s3.bucketName,
       //     dirName: props.path,
-      //     region: this.context.creds.s3.region,
-      //     accessKeyId: this.context.creds.s3.accessKeyId,
-      //     secretAccessKey: this.context.creds.s3.secretAccessKey,
+      //     region: this.state.creds.s3.region,
+      //     accessKeyId: this.state.creds.s3.accessKeyId,
+      //     secretAccessKey: this.state.creds.s3.secretAccessKey,
       //   }
       // const ReactS3Client = new S3(config);
       // const filename = props.name;

@@ -98,7 +98,8 @@ class PatientsPage extends Component {
     pdfType: null,
     sidebarShow: true,
     mCol1Size: 3,
-    mCol2Size: 9
+    mCol2Size: 9,
+    creds: null
   };
   isActive = true;
 
@@ -675,6 +676,7 @@ updatePatientNextOfKinHandler = (event) => {
 updatePatientComplaintHandler = (event) => {
 
   event.preventDefault();
+
   const token = this.context.token;
   const userId = this.context.userId;
   let selectedPatientId = this.context.selectedPatient._id;
@@ -705,17 +707,17 @@ updatePatientComplaintHandler = (event) => {
 
   let complaintAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
 
     const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: complaintAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -724,8 +726,8 @@ updatePatientComplaintHandler = (event) => {
 
     ReactS3Client
         .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
 
   }
 
@@ -797,17 +799,16 @@ updatePatientSurveyHandler = (event) => {
 
   let surveyAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
-
     const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: surveyAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -816,8 +817,8 @@ updatePatientSurveyHandler = (event) => {
 
     ReactS3Client
         .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
   }
 
   const requestBody = {
@@ -888,17 +889,17 @@ updatePatientSystematicInquiryHandler = (event) => {
 
   let systematicInquiryAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
 
     const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: systematicInquiryAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -907,8 +908,8 @@ updatePatientSystematicInquiryHandler = (event) => {
 
     // ReactS3Client
     //     .uploadFile(file, newFileName)
-    //     .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-    //     .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+    //     .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+    //     .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
 
   }
 
@@ -1062,17 +1063,17 @@ updatePatientExaminationHandler = (event) => {
 
   let examinationAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
 
     const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: examinationAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -1081,8 +1082,8 @@ updatePatientExaminationHandler = (event) => {
 
     ReactS3Client
         .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
 
   }
 
@@ -1154,17 +1155,17 @@ updatePatientHistoryHandler = (event) => {
 
   let historyAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
 
     const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: historyAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -1173,8 +1174,8 @@ updatePatientHistoryHandler = (event) => {
 
     ReactS3Client
         .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
 
   }
 
@@ -1238,17 +1239,17 @@ updatePatientAllergiesHandler = (event) => {
 
   let allergiesAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
 
     const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: allergiesAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -1315,17 +1316,17 @@ updatePatientMedicationHandler = (event) => {
 
   let medicationAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
 
     const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: medicationAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -1334,8 +1335,8 @@ updatePatientMedicationHandler = (event) => {
 
     ReactS3Client
         .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
 
   }
 
@@ -1415,17 +1416,17 @@ updatePatientInvestigationHandler = (event) => {
 
   let investigationAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
 
     const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: investigationAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -1434,8 +1435,8 @@ updatePatientInvestigationHandler = (event) => {
 
     ReactS3Client
         .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
 
   }
 
@@ -1508,17 +1509,17 @@ updatePatientDiagnosisHandler = (event) => {
 
   let diagnosisAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
 
     const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: diagnosisAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -1527,8 +1528,8 @@ updatePatientDiagnosisHandler = (event) => {
 
     ReactS3Client
         .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
 
   }
 
@@ -1608,17 +1609,17 @@ updatePatientTreatmentHandler = (event) => {
 
   let treatmentAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
 
     const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: treatmentAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -1627,8 +1628,8 @@ updatePatientTreatmentHandler = (event) => {
 
     ReactS3Client
         .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
 
   }
 
@@ -1705,17 +1706,17 @@ updatePatientBillingHandler = (event) => {
 
   let billingAttachmentName = null;
 
-  if (event.target.fileInput.value !== null ||
+  if (
       event.target.fileInput.value !== ""
   ) {
-    const file = AuthContext._currentValue.file;
 
+    const file = AuthContext._currentValue.file;
     const config = {
-      bucketName: this.context.creds.s3.bucketName,
+      bucketName: this.state.creds.s3.bucketName,
       dirName: billingAttachmentPath,
-      region: this.context.creds.s3.region,
-      accessKeyId: this.context.creds.s3.accessKeyId,
-      secretAccessKey: this.context.creds.s3.secretAccessKey,
+      region: this.state.creds.s3.region,
+      accessKeyId: this.state.creds.s3.accessKeyId,
+      secretAccessKey: this.state.creds.s3.secretAccessKey,
     }
     const ReactS3Client = new S3(config);
     const newFileName = file.name;
@@ -1725,8 +1726,8 @@ updatePatientBillingHandler = (event) => {
 
     ReactS3Client
         .uploadFile(file, newFileName)
-        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!"});})
-        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err});})
+        .then(data => {console.log(data);this.setState({userAlert: "attachment upload success!" });})
+        .catch(err => {console.error(err);this.setState({userAlert: "upload error:  "+err });})
   }
 
   const requestBody = {
@@ -1971,7 +1972,11 @@ updatePatientVigilanceHandler = (event) => {
 }
 
 updatePatientAttachmentHandler = (event) => {
-
+    event.preventDefault();
+    if (event.target.fileInput.value === "") {
+      this.setState({ userAlert: "no file chosen. Please try again"})
+      return
+    }
     const token = this.context.token;
     const userId = this.context.userId;
     const selectedPatientId = this.context.selectedPatient._id;
@@ -1981,17 +1986,17 @@ updatePatientAttachmentHandler = (event) => {
 
     let attachmentName = null;
 
-    if (event.target.fileInput.value !== null ||
+    if (
         event.target.fileInput.value !== ""
     ) {
       let file = AuthContext._currentValue.file;
 
       const config = {
-        bucketName: this.context.creds.s3.bucketName,
+        bucketName: this.state.creds.s3.bucketName,
         dirName: attachmentPath,
-        region: this.context.creds.s3.region,
-        accessKeyId: this.context.creds.s3.accessKeyId,
-        secretAccessKey: this.context.creds.s3.secretAccessKey,
+        region: this.state.creds.s3.region,
+        accessKeyId: this.state.creds.s3.accessKeyId,
+        secretAccessKey: this.state.creds.s3.secretAccessKey,
       }
       const ReactS3Client = new S3(config);
       const newFileName = file.name;
@@ -2376,6 +2381,36 @@ getVisitListDesc = () => {
     this.setState({ creating: false, updating: false, searching: false, selectedPatient: null });
   };
 
+  getCreds() {
+    // this.setState({ isLoading: true });
+    const requestBody = {
+      query: `
+      query {getCreds
+        {atlas{user,pw,db},s3{bucketName,region,accessKeyId,secretAccessKey},jwt{encode},gdrive{clientId,developerKey}}}
+        `};
+
+    fetch('http://localhost:10000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.context.token
+      }})
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        const creds = resData.data.getCreds;
+          this.setState({ creds: creds });
+          // this.state.creds = creds;
+      })
+      .catch(err => {
+        this.setState({userAlert: err});
+      });
+  }
 
   fetchPatients() {
 
@@ -3293,11 +3328,11 @@ deletePatientAttachmentItem = (props) => {
   const userId = this.context.userId;
   const patientId = this.state.selectedPatient._id;
   //   const config = {
-  //     bucketName: this.context.creds.s3.bucketName,
+  //     bucketName: this.state.creds.s3.bucketName,
   //     dirName: props.path,
-  //     region: this.context.creds.s3.region,
-  //     accessKeyId: this.context.creds.s3.accessKeyId,
-  //     secretAccessKey: this.context.creds.s3.secretAccessKey,
+  //     region: this.state.creds.s3.region,
+  //     accessKeyId: this.state.creds.s3.accessKeyId,
+  //     secretAccessKey: this.state.creds.s3.secretAccessKey,
   //   }
   // const ReactS3Client = new S3(config);
   // const filename = props.name;
