@@ -7,8 +7,8 @@ const creds = {
     s3: {
       bucketName: 'ent-emr-bucket',
       region: 'us-east-2',
-      accessKeyId: "AKIARFTS6Q6DALQKT4QR",
-      secretAccessKey: "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"
+      accessKeyId: "AKIARFTS6Q6DBPGMDU5G",
+      secretAccessKey: "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"
     },
     jwt: {
       encode: 'MsBarbri'
