@@ -50,7 +50,7 @@ return (
         <Form.Label>Surgeon's Fee</Form.Label>
         <Form.Control type="number" step="0.01" placeholder="Surgeon's Fee"/>
       </Form.Group>
-    </Form.Row>
+    </Form.Row> 
 
     <Form.Row>
       <Form.Group as={Col} controlId="formGridDocGenInsuranceNoteAssistantSurgeonFee">
