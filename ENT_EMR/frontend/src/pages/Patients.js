@@ -3342,11 +3342,11 @@ createPdfTest = (event) => {
       age: patient.age,
       gender: patient.gender,
       address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
       },
       registrationDate: patient.registrationDate,
       referralDate: patient.referralDate,
@@ -3444,11 +3444,11 @@ createReferralInput = (event) => {
       age: patient.age,
       gender: patient.gender,
       address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
       },
       registrationDate: patient.registrationDate,
       referralDate: patient.referralDate,
@@ -3915,6 +3915,11 @@ createInsuranceNoteInput = (event) => {
         create Insurance note user otf input here...
         ${JSON.stringify(patientInsurance)}
       `);
+      if (JSON.stringify(patientInsurance) === "[]") {
+        this.setState({userAlert: `No Insurance w/ policy No. ${policyNumber} found for Patient! Check your info and try again.`});
+        return;
+      }
+
 
     const pdfData = {
     title: "Insurance Note",
@@ -3978,7 +3983,7 @@ createInsuranceNoteInput = (event) => {
         tags: patient.tags
       },
       date: date,
-      patientInsurance: JSON.stringify(patientInsurance),
+      patientInsurance: patientInsurance,
       operation: event.target.formGridDocGenInsuranceNoteOperation.value,
       operationDate: operationDate,
       surgeonFee: event.target.formGridDocGenInsuranceNoteSurgeonFee.value,
@@ -4024,11 +4029,11 @@ createPrescriptionInput = (event) => {
       age: patient.age,
       gender: patient.gender,
       address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
       },
       registrationDate: patient.registrationDate,
       referralDate: patient.referralDate,
@@ -4084,11 +4089,11 @@ createProcedureConsentInput = (event) => {
       age: patient.age,
       gender: patient.gender,
       address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
       },
       registrationDate: patient.registrationDate,
       referralDate: patient.referralDate,
@@ -4119,10 +4124,9 @@ createProcedureConsentInput = (event) => {
 }
 
 
-createFitToFlyInput = (event) => {
+createUnfitToFlyInput = (event) => {
 
   event.preventDefault();
-
   if (
     event.target.formGridDocGenUnfitToFlyClinicalFeatures.value.trim().length === 0 ||
     event.target.formGridDocGenUnfitToFlyProvisonalInvestigation.value.trim().length === 0 ||
@@ -4144,11 +4148,11 @@ createFitToFlyInput = (event) => {
       age: patient.age,
       gender: patient.gender,
       address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
       },
       registrationDate: patient.registrationDate,
       referralDate: patient.referralDate,
@@ -4172,7 +4176,6 @@ createFitToFlyInput = (event) => {
     clinicalFeatures: event.target.formGridDocGenUnfitToFlyClinicalFeatures.value,
     provisionalInvestigation: event.target.formGridDocGenUnfitToFlyProvisonalInvestigation.value,
     conclusion: event.target.formGridDocGenUnfitToFlyConclusion.value,
-    input: event.target.formGridDocGenProcedureConsent.value,
     referral: "test fit-to-fly authorization...",
     letterheadImage: "https://photos.app.goo.gl/SrVuahmr14khGBoM9"
   }
@@ -4202,11 +4205,11 @@ createTreatmentInstructionInput = (event) => {
       age: patient.age,
       gender: patient.gender,
       address:{
-        number: patient.number,
-        street: patient.street,
-        town: patient.town,
-        parish: patient.parish,
-        postOffice: patient.postOffice
+        number: patient.address.number,
+        street: patient.address.street,
+        town: patient.address.town,
+        parish: patient.address.parish,
+        postOffice: patient.address.postOffice
       },
       registrationDate: patient.registrationDate,
       referralDate: patient.referralDate,
@@ -4502,7 +4505,7 @@ render() {
                     onCreateInsuranceNoteInput={this.createInsuranceNoteInput}
                     onCreatePrescriptionInput={this.createPrescriptionInput}
                     onCreateProcedureConsentInput={this.createProcedureConsentInput}
-                    onCreateFitToFlyInput={this.createFitToFlyInput}
+                    onCreateUnfitToFlyInput={this.createUnfitToFlyInput}
                     onCreateTreatmentInstructionInput={this.createTreatmentInstructionInput}
                     onGetVisitList={this.getVisitList}
                     visitList={this.state.visitList}

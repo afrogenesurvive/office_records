@@ -202,9 +202,9 @@ const InsuranceNote = () => (
         <Text>Age: {docProps.pdfData.patient.age}</Text>
         <Text>Address: {docProps.pdfData.patient.address.number}, {docProps.pdfData.patient.address.street}</Text>
         <Text>{docProps.pdfData.patient.address.town}, {docProps.pdfData.patient.address.parish}</Text>
-        <Text>Subscriber: {docProps.pdfData.patientInsurance.company}</Text>
-        <Text>Policy No: {docProps.pdfData.patientInsurance.number}</Text>
-        <Text>Plan: {docProps.pdfData.patientInsurance.description}</Text>
+        <Text>Subscriber: {docProps.pdfData.patientInsurance[0].company}</Text>
+        <Text>Policy No: {docProps.pdfData.patientInsurance[0].number}</Text>
+        <Text>Plan: {docProps.pdfData.patientInsurance[0].description}</Text>
         <Text>Employer: {docProps.pdfData.patient.occupation.employer}</Text>
         <Text>Proposed Operation: {docProps.pdfData.operation}</Text>
         <Text>Date of Operation: {docProps.pdfData.operationDate}</Text>
@@ -226,12 +226,17 @@ const Prescription = () => (
       <View style={styles.section}>
         <Image src={letterheadImage}></Image>
         <Text>{docProps.pdfData.title}</Text>
-        <Text>Here is some sample data</Text>
-        <Text>Patient</Text>
+        <Text>Date: {docProps.pdfData.date}</Text>
         <Text>Name: {docProps.pdfData.patient.name}</Text>
-        <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
-        <Text>Town: {docProps.pdfData.patient.address.town}</Text>
-        <Text>Referral: {docProps.pdfData.referral}</Text>
+        <Text>Age: {docProps.pdfData.patient.age}</Text>
+        <Text>Address:</Text>
+        <Text>{docProps.pdfData.patient.address.number}, {docProps.pdfData.patient.address.street}</Text>
+        <Text>{docProps.pdfData.patient.address.town}, {docProps.pdfData.patient.address.parish}</Text>
+        <Text>Prescription: {docProps.pdfData.prescription}</Text>
+        <Text>Generic? {docProps.pdfData.generic}</Text>
+        <Text>Repeat: {docProps.pdfData.repeat}</Text>
+        <Text>Doctor: {docProps.pdfData.consultantName}</Text>
+        <Text>Signature: _______</Text>
       </View>
       )}
     </Page>
