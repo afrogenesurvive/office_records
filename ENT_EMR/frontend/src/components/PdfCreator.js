@@ -3,9 +3,14 @@ import Button from 'react-bootstrap/Button';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import { PDFViewer } from '@react-pdf/renderer';
 import styled from '@react-pdf/styled-components';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 
 import "./AttachmentViewer.css";
 import letterheadImage from "../assets/img/referralLetterhead.jpg";
+
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const styles = StyleSheet.create({
   page: {
@@ -15,13 +20,28 @@ const styles = StyleSheet.create({
   section: {
     margin: 10,
     padding: 10,
+    paddingBottom: 15,
     flexGrow: 1,
     width: 80,
   },
+  letterhead: {
+    margin: 3
+  },
+  title: {
+
+    lineHeight: 3
+  },
+  label: {
+    fontWeight: '5pt',
+    lineHeight: 3
+  },
+  value: {
+    lineHeight: 2
+  }
 });
 
 const Title = styled.Text`
-
+  color: 'green';
 `;
 
 const Heading = styled.Text`
@@ -29,11 +49,11 @@ const Heading = styled.Text`
 `;
 
 const Label = styled.Text`
-
+  color: 'red';
 `;
 
 const Value = styled.Text`
-
+  color: 'green';
 `;
 
 const Basic = styled.Text`
@@ -41,7 +61,7 @@ const Basic = styled.Text`
 `;
 
 const Letterhead = styled.Image`
-  margin: 1.5rem auto;
+  margin-bottom: 5px;
 `;
 
 let docProps = null;
@@ -91,7 +111,7 @@ const PatientReferral = () => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <Image src={letterheadImage} style={styles.letterHead}></Image>
+        <Image src={letterheadImage} style={styles.letterhead}></Image>
         <Text>{docProps.pdfData.title}</Text>
         <Text>Dear Dr {docProps.pdfData.patient.referringDoctor.name} </Text>
         <Text>Thank you for referring {docProps.pdfData.patient.name} </Text>
@@ -155,17 +175,42 @@ const MiscNote = () => (
     <Page size="A4" style={styles.page}>
       {docProps.pdfData.patient && (
       <View style={styles.section}>
-        <Image src={letterheadImage} style={styles.letterHead}></Image>
-        <Text>{docProps.pdfData.title}</Text>
-        <Text>Name: {docProps.pdfData.patient.name}</Text>
-        <Text>note #1: {docProps.pdfData.note1}</Text>
-        <Text>note #2: {docProps.pdfData.note2}</Text>
+      <Image style={styles.letterhead} src={letterheadImage}></Image>
+      <Text style={styles.title}>{docProps.pdfData.title}</Text>
+      <Text style={styles.label}>Name:</Text>
+      <Text style={styles.value}>{docProps.pdfData.patient.name}</Text>
+      <Text style={styles.label}>note #1:</Text>
+      <Text style={styles.value}>{docProps.pdfData.note1}</Text>
+      <Text style={styles.label}>note #2:</Text>
+      <Text style={styles.value}>{docProps.pdfData.note2}</Text>
+      </View>
+      )}
+    </Page>
+
+    <Page size="A4" style={styles.page}>
+      {docProps.pdfData.patient && (
+      <View style={styles.section}>
+      <Letterhead src={letterheadImage}></Letterhead>
+      <Title>{docProps.pdfData.title}</Title>
+      <Label>Name:</Label>
+      <Value>{docProps.pdfData.patient.name}</Value>
+      <Label>note #1:</Label>
+      <Value>{docProps.pdfData.note1}</Value>
+      <Label>note #2:</Label>
+      <Value>{docProps.pdfData.note2}</Value>
       </View>
       )}
     </Page>
   </Document>
 );
 
+{
+  // <Letterhead src={letterheadImage}></Letterhead>
+  // <Title>{docProps.pdfData.title}</Title>
+  // <Label>Name:</Label> <Value>{docProps.pdfData.patient.name}</Value>
+  // <Label>note #1:</Label> <Value>{docProps.pdfData.note1}</Value>
+  // <Label>note #2:</Label> <Value>{docProps.pdfData.note2}</Value>
+}
 const SickNote = () => (
   <Document>
       <Page size="A4" style={styles.page}>
@@ -333,8 +378,17 @@ const TreatmentInstruction = () => (
   </Document>
 );
 
+let docDefinition = { content: 'This is an sample PDF printed with pdfMake' };
+
+
 const PdfCreator = (props) =>{
     docProps = props;
+
+
+    // pdfMake.createPdf(docDefinition).download();
+    pdfMake.createPdf(docDefinition).open();
+
+
 
 return (
   <div className="attachmentViewerBg">
