@@ -2,6 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import { PDFViewer } from '@react-pdf/renderer';
+import styled from '@react-pdf/styled-components';
 
 import "./AttachmentViewer.css";
 import letterheadImage from "../assets/img/referralLetterhead.jpg";
@@ -17,10 +18,31 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     width: 80,
   },
-  text:{
-    color: "red"
-  }
 });
+
+const Title = styled.Text`
+
+`;
+
+const Heading = styled.Text`
+
+`;
+
+const Label = styled.Text`
+
+`;
+
+const Value = styled.Text`
+
+`;
+
+const Basic = styled.Text`
+
+`;
+
+const Letterhead = styled.Image`
+  margin: 1.5rem auto;
+`;
 
 let docProps = null;
 
@@ -28,7 +50,7 @@ const MyDocument = () => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <Text style={styles.text}>This is a test document</Text>
+        <Title>This is a test document</Title>
         <Text>I could be a prescription, referral or the like.</Text>
         <Text>{docProps.pdfData.title}</Text>
         <Text>{docProps.pdfData.test}</Text>
@@ -36,8 +58,8 @@ const MyDocument = () => (
 
       {docProps.pdfData.user && (
       <View style={styles.section}>
-        <Text>Here is some sample data</Text>
-        <Text>Staff:</Text>
+        <Title>Here is some sample data</Title>
+        <Heading>Staff:</Heading>
         <Text>Name: {docProps.pdfData.user.name}</Text>
         <Text>Phone: {docProps.pdfData.user.phone}</Text>
         <Text>Town: {docProps.pdfData.user.address.town}</Text>
@@ -45,8 +67,8 @@ const MyDocument = () => (
       )}
       {docProps.pdfData.patient && (
       <View style={styles.section}>
-        <Text>Here is some sample data</Text>
-        <Text>Patient</Text>
+        <Title>Here is some sample data</Title>
+        <Heading>Patient</Heading>
         <Text>Name: {docProps.pdfData.patient.name}</Text>
         <Text>Phone: {docProps.pdfData.patient.contact.phone}</Text>
         <Text>Town: {docProps.pdfData.patient.address.town}</Text>
@@ -54,11 +76,11 @@ const MyDocument = () => (
       )}
       {docProps.pdfData.appointment && (
       <View style={styles.section}>
-        <Text>Here is some sample data</Text>
-        <Text>Appointment</Text>
-        <Text>Name: {docProps.pdfData.appointment.title}</Text>
-        <Text>Patient: {docProps.pdfData.appointment.patient.name}</Text>
-        <Text>Time: {docProps.pdfData.appointment.time}</Text>
+        <Title>Here is some sample data</Title>
+        <Heading>Appointment</Heading>
+        <Label>Name:</Label> <Value>{docProps.pdfData.appointment.title}</Value>
+        <Label>Patient:</Label> <Value>{docProps.pdfData.appointment.patient.name}</Value>
+        <Label>Time:</Label> <Value>{docProps.pdfData.appointment.time}</Value>
       </View>
       )}
     </Page>
@@ -68,9 +90,8 @@ const MyDocument = () => (
 const PatientReferral = () => (
   <Document>
     <Page size="A4" style={styles.page}>
-    <View style={styles.section}>
-
-        <Image src={letterheadImage}></Image>
+      <View style={styles.section}>
+        <Image src={letterheadImage} style={styles.letterHead}></Image>
         <Text>{docProps.pdfData.title}</Text>
         <Text>Dear Dr {docProps.pdfData.patient.referringDoctor.name} </Text>
         <Text>Thank you for referring {docProps.pdfData.patient.name} </Text>
@@ -105,7 +126,7 @@ const OperationReminder = () => (
     <Page size="A4" style={styles.page}>
       {docProps.pdfData.patient && (
       <View style={styles.section}>
-        <Image src={letterheadImage}></Image>
+        <Image src={letterheadImage} style={styles.letterHead}></Image>
         <Text>{docProps.pdfData.title}</Text>
         <Text>Name: {docProps.pdfData.patient.name}</Text>
         <Text>Age: {docProps.pdfData.patient.age}</Text>
@@ -134,8 +155,8 @@ const MiscNote = () => (
     <Page size="A4" style={styles.page}>
       {docProps.pdfData.patient && (
       <View style={styles.section}>
-        <Image src={letterheadImage}></Image>
-        <Text style={styles.text}>{docProps.pdfData.title}</Text>
+        <Image src={letterheadImage} style={styles.letterHead}></Image>
+        <Text>{docProps.pdfData.title}</Text>
         <Text>Name: {docProps.pdfData.patient.name}</Text>
         <Text>note #1: {docProps.pdfData.note1}</Text>
         <Text>note #2: {docProps.pdfData.note2}</Text>
