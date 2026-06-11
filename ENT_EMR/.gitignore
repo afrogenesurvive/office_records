@@ -1,3 +1,5 @@
 /node_modules
 package-lock.json
+.env
 /helpers/this.js
+/middleware/auth-verify.js

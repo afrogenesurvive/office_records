@@ -4,12 +4,14 @@ const graphqlHttp = require('express-graphql');
 const graphQlSchema = require('./graphql/schema/index');
 const graphQlResolvers = require('./graphql/resolvers/index');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const { pocketVariables } = require('./helpers/pocketVars');
-const { creds } = require('./helpers/this');
 
 const mongoose = require('mongoose');
 const mongodb = require('mongodb');
-const isAuth = require('./middleware/is-auth');
+const isAuth = require('./middleware/auth-verify');
 const path = require('path');
 
 const app = express();

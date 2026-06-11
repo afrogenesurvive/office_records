@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../../models/user');
 const { pocketVariables } = require('../../helpers/pocketVars');
-const { creds } = require('../../helpers/this');
 
 module.exports = {
   login: async ({ email, password }) => {
@@ -16,7 +15,7 @@ module.exports = {
     if (!isEqual) {
       throw new Error('Password is incorrect!');
     }
-    const token = jwt.sign({ userId: user.id },'MsBarbri',{expiresIn: '2h'});
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '2h' });
 
     pocketVariables.token = token;
     pocketVariables.userId = user.id;
@@ -30,10 +29,24 @@ module.exports = {
 
     }
       return {
-        atlas: creds.atlas,
-        s3: creds.s3,
-        jwt: creds.jwt,
-        gdrive: creds.gdrive
+        atlas: {
+          user: process.env.ATLAS_USER,
+          pw: process.env.ATLAS_PW,
+          db: process.env.ATLAS_DB
+        },
+        s3: {
+          bucketName: process.env.S3_BUCKET_NAME,
+          region: process.env.S3_REGION,
+          accessKeyId: process.env.S3_ACCESS_KEY_ID,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
+        },
+        jwt: {
+          encode: process.env.JWT_SECRET
+        },
+        gdrive: {
+          clientId: process.env.GDRIVE_CLIENT_ID,
+          developerKey: process.env.GDRIVE_DEVELOPER_KEY
+        }
       };
   }
 };
